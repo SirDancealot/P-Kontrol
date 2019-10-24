@@ -22,7 +22,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
         <!-- HEADER  -->
@@ -30,39 +30,37 @@
             android:id="@+id/topMsgPopDown_text_hdr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-
             android:fontFamily="@font/ubuntu_bold"
-            android:textColor="@color/colorText1"
-            android:textSize="25dp"
 
             android:text="2 hours free(8-18)"
-            />
+            android:textAlignment="center"
+            android:textColor="@color/colorText1"
+
+            android:textSize="25dp" />
         <!-- Description  -->
         <TextView
             android:id="@+id/topMsgPopDown_text_dsc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-
             android:fontFamily="@font/ubuntu_medium"
-            android:textColor="@color/colorText2"
-            android:textSize="20dp"
 
             android:text="Last Updated: 15min ago"
+            android:textAlignment="center"
+            android:textColor="@color/colorText2"
+
+            android:textSize="20dp"
 
             />
         <!-- Line under Description -->
         <View
             android:id="@+id/topMsgPopDown_text_dsc_line"
 
+            android:layout_width="125dp"
             android:layout_height="1dp"
-            android:translationY="5dp"
             android:layout_gravity="center"
 
             android:background="@color/colorText2"
-            android:layout_width="125dp"
-            />
+            android:translationY="5dp" />
 
     </LinearLayout>
 </LinearLayout>
