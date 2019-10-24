@@ -3,4 +3,22 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- ColorScheme -->
+    <color name="colorScheme1">#93ABBF</color>
+    <color name="colorScheme2">#619CCB</color>
+    <color name="colorScheme3">#7DBF5E</color>
+    <color name="colorScheme4">#BF9004</color>
+    <color name="colorScheme5">#D93223</color>
+
+    <!-- ColorScheme NonColors -->
+    <color name="color_matWhite">#EEEEEE</color>
+    <color name="color_lightGray">#A0A0A0</color>
+    <color name="color_darkGray">#4B4B4B</color>
+    <color name="color_matBlack">#222222</color>
+
+    <!-- textColorScheme -->
+    <color name="colorText1">#ffffff</color>
+    <color name="colorText2">#555555</color>
+
 </resources>
