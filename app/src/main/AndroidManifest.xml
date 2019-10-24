@@ -11,13 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.ActivityProfile"></activity>
+        <activity android:name=".Activities.ActivityMessageWrite" />
         <activity
-            android:name=".Activity_MapView"
+            android:name=".Activities.ActivityMapView"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity__map_view"
-            android:theme="@style/FullscreenTheme"></activity>
-        <activity android:name=".LoginScreen" />
-        <activity android:name=".MainActivity">
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".Activities.ActivityLoginScreen" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
