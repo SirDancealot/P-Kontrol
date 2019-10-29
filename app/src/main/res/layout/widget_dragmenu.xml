@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menu_Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <!-- Dragging Handle -->
     <LinearLayout
@@ -45,6 +45,7 @@
         <TableRow>
             <!-- profile btn -->
             <Button
+                android:onClick="menuBtn_profile"
                 android:id="@+id/menuBtn_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
                 android:textAllCaps="false" />
             <!-- Free Park btn -->
             <Button
+                android:onClick="menuBtn_FreePark"
                 android:id="@+id/menuBtn_FreePark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +65,7 @@
                 android:textAllCaps="false" />
             <!-- Contribute btn -->
             <Button
+                android:onClick="menuBtn_Contribute"
                 android:id="@+id/menuBtn_Contribute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,6 +78,7 @@
         <TableRow>
             <!-- Community btn -->
             <Button
+                android:onClick="menuBtn_Community"
                 android:id="@+id/menuBtn_Community"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,6 +88,7 @@
                 android:textAllCaps="false" />
             <!-- Free Park btn -->
             <Button
+                android:onClick="menuBtn_ParkAlarm"
                 android:id="@+id/menuBtn_ParkAlarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,6 +98,7 @@
                 android:textAllCaps="false" />
             <!-- Park Alarm btn -->
             <Button
+                android:onClick=" menuBtn_PVagt"
                 android:id="@+id/menuBtn_PVagt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -42,7 +42,7 @@
     <TextView
         android:id="@+id/blueloginsquare"
         android:layout_width="424dp"
-        android:layout_height="220"
+        android:layout_height="220dp"
         android:background="@drawable/shape_login_blue_square"
         android:text=""
         android:textSize="24sp"
@@ -128,7 +128,7 @@
         android:layout_marginBottom="35dp"
         android:text="Login"
         android:textColor="#656D74"
-        android:textSize="20"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/editTextemail"
         app:layout_constraintEnd_toEndOf="parent"
