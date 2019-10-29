@@ -1,14 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.FragBottomMenu">
+    android:background="#00923B3B"
+    tools:context=".Fragments.FragBottomMenu"
+    android:animateLayoutChanges="true"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Dragging Handle -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
-</FrameLayout>
+        <FrameLayout
+            android:layout_centerInParent="true"
+            android:id="@+id/menuBtn_draggingHandle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bottom_popup_handle"
+            >
+
+            <ImageView
+                android:paddingTop="3dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:contentDescription="@string/hello_blank_fragment"
+                app:srcCompat="?attr/actionModePasteDrawable"
+                />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <!-- Container of All Menu Buttons -->
+    <TableLayout
+        android:id="@+id/menu_btnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bottom_popup"
+        android:paddingTop="15dp"
+        android:showDividers="middle"
+        android:stretchColumns="*"
+        >
+        <TableRow>
+            <!-- profile btn -->
+            <Button
+                android:id="@+id/menuBtn_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/menu_txt_profile"
+                android:textAllCaps="false"
+                />
+            <!-- Free Park btn -->
+            <Button
+                android:id="@+id/menuBtn_FreePark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/menu_txt_freePark"
+                android:textAllCaps="false"
+
+
+
+                />
+            <!-- Contribute btn -->
+            <Button
+                android:id="@+id/menuBtn_Contribute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/menu_txt_contribute"
+                android:textAllCaps="false" />
+        </TableRow>
+        <TableRow>
+            <!-- Community btn -->
+            <Button
+                android:id="@+id/menuBtn_Community"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/menu_txt_community"
+                android:textAllCaps="false" />
+            <!-- Park Alarm btn -->
+            <Button
+                android:id="@+id/menuBtn_ParkAlarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/menu_txt_parkAlarm"
+                android:textAllCaps="false" />
+            <!-- P Vagt btn -->
+            <Button
+                android:id="@+id/menuBtn_PVagt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@mipmap/ic_launcher"
+                android:text="@string/menu_txt_pVagt"
+                android:textAllCaps="false" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

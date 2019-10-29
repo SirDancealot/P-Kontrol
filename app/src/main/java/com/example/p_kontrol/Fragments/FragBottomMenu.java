@@ -1,98 +1,84 @@
 package com.example.p_kontrol.Fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 
 import com.example.p_kontrol.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragBottomMenu.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragBottomMenu#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragBottomMenu extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // Menu Code.
+    View menuBtnContainer       ;
+    View dragHandle          ;
+
+    Button menuBtn_profile   ;
+    Button menuBtn_FreePark  ;
+    Button menuBtn_Contribute;
+    Button menuBtn_Community ;
+    Button menuBtn_ParkAlarm ;
+    Button menuBtn_PVagt     ;
+
+    View view;
+    boolean drag_State;
+    TableLayout.LayoutParams openParam;
+    TableLayout.LayoutParams closeParam;
 
     private OnFragmentInteractionListener mListener;
 
     public FragBottomMenu() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragBottomMenu.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragBottomMenu newInstance(String param1, String param2) {
-        FragBottomMenu fragment = new FragBottomMenu();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_frag_bottom_menu, container, false);
-    }
+       view = inflater.inflate(R.layout.fragment_frag_bottom_menu, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+       // Menu Buttons.
+        menuBtnContainer       = (View)   view.findViewById(R.id.menu_btnContainer)         ;
+        dragHandle             = (View)   view.findViewById(R.id.menuBtn_draggingHandle)    ;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+        menuBtn_profile      = (Button) view.findViewById(R.id.menuBtn_profile)             ;
+        menuBtn_FreePark     = (Button) view.findViewById(R.id.menuBtn_FreePark)            ;
+        menuBtn_Contribute   = (Button) view.findViewById(R.id.menuBtn_Contribute)          ;
+        menuBtn_Community    = (Button) view.findViewById(R.id.menuBtn_Community)           ;
+        menuBtn_ParkAlarm    = (Button) view.findViewById(R.id.menuBtn_ParkAlarm)           ;
+        menuBtn_PVagt        = (Button) view.findViewById(R.id.menuBtn_PVagt)               ;
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+        setupMenuListeners(
+                dragHandle          ,
+                menuBtn_profile     ,
+                menuBtn_FreePark    ,
+                menuBtn_Contribute  ,
+                menuBtn_Community   ,
+                menuBtn_ParkAlarm   ,
+                menuBtn_PVagt
+        );
+
+        // Setup Menu Toggle Position
+        drag_State = false;
+
+        // SetupMenuBtnListeners(menuBtn_profile, menuBtn_FreePark, menuBtn_Contribute, menuBtn_Community, menuBtn_ParkAlarm, menuBtn_PVagt);
+        return view ;
     }
 
     /**
@@ -108,5 +94,110 @@ public class FragBottomMenu extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void setupMenuListeners(
+            View dragHandle,
+            Button menuBtn_profile,
+            Button menuBtn_FreePark,
+            Button menuBtn_Contribute,
+            Button menuBtn_Community,
+            Button menuBtn_ParkAlarm,
+            Button menuBtn_PVagt
+    ){
+
+        // Dragging Handle
+        dragHandle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu_dragHandle(v);
+            }
+        });
+
+    // Menu Buttons Row 1
+
+        // Profile
+        menuBtn_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuBtn_profile(v);
+            }
+        });
+
+        // FreePark
+        menuBtn_FreePark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuBtn_FreePark(v);
+            }
+        });
+
+        // Contribute
+        menuBtn_Contribute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuBtn_Contribute(v);
+            }
+        });
+
+    // Menu Buttons Row 2
+
+        // Community
+        menuBtn_Community.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuBtn_Community(v);
+            }
+        });
+
+        // Park Alarm
+        menuBtn_ParkAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuBtn_ParkAlarm(v);
+            }
+        });
+
+        // P-Vagt
+        menuBtn_PVagt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuBtn_PVagt(v);
+            }
+        });
+    }
+
+    // Dragging Handle
+    private void menu_dragHandle( View view ){
+        // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
+        if(drag_State){
+            Log.v("click","Menu Container Closed\n");
+            menuBtnContainer.setVisibility(View.GONE);
+            drag_State = false;
+        }else{
+            Log.v("click","Menu Container Open\n");
+            menuBtnContainer.setVisibility(View.VISIBLE);
+            drag_State = true;
+        }
+    }
+
+    // Menu Buttons on click functions.
+    private void menuBtn_profile(View view){
+        Log.i("click","Profile btn clicked \n");
+    }
+    private void menuBtn_FreePark(View view){
+        Log.i("click","FreePark btn clicked \n");
+    }
+    private void menuBtn_Contribute(View view){
+        Log.i("click","Contribute btn clicked \n");
+    }
+    private void menuBtn_Community(View view){
+        Log.i("click","Community btn clicked \n");
+    }
+    private void menuBtn_ParkAlarm(View view){
+        Log.i("click","Park Alarm btn clicked \n");
+    }
+    private void menuBtn_PVagt(View view){
+        Log.i("click","P-Vagt btn clicked \n");
     }
 }
