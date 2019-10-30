@@ -7,8 +7,8 @@
     <color name="colorSecondary">       #ADDCF1</color><!-- lightBlue -->
     <color name="colorHighlight">       #86DEB7</color><!-- lightGreen -->
     <color name="colorHighlightSecond"> #ADEEE3</color><!-- lighterGreen -->
+    <color name="colorAccent">#D81B60</color>
 
-    <!-- to be removed -->
     <color name="colorScheme1">#93ABBF</color>
     <color name="colorScheme2">#619CCB</color>
     <color name="colorScheme3">#7DBF5E</color>
