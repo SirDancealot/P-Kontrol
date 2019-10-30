@@ -19,7 +19,7 @@
 
         <ImageView
             android:id="@+id/topMsgPopDown_img"
-            app:srcCompat="@mipmap/ic_launcher"
+            tools:srcCompat="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
