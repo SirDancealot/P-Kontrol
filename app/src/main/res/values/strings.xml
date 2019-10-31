@@ -21,4 +21,10 @@
     <string name="menu_txt_pVagt">P-Vagt</string>
 
 
+
+
+    <string name="tip1">earlier versions of Access, we used the Memo data type to store large amounts of text, and the Text data type to store shorter strings (up to 255 characters). In Access 2013 and Access 2016, these two data types have been renamed “Long Text” and “Short Text” respectively, and they have different properties and size limits depending on whether you’re using a desktop database or an Access web app. Here are the details:</string>
+    <string name="tip2">pas på</string>
+
+
 </resources>
