@@ -14,9 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="103dp"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -48,35 +47,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <AbsoluteLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="220dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/circleGreen"
-            android:layout_width="256dp"
-            android:layout_height="252dp"
-            android:layout_x="307dp"
-            android:layout_y="218dp"
-            android:background="@drawable/shape_circle_green"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="1dp" />
-
-        <TextView
-            android:id="@+id/scene1lightgreen"
-            android:layout_width="321dp"
-            android:layout_height="319dp"
-            android:layout_x="-152dp"
-            android:layout_y="-165dp"
-            android:background="@drawable/shape_circle_lightgreen" />
-
-    </AbsoluteLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
