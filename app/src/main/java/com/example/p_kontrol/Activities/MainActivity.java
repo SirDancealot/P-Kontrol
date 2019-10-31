@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public void splashTransition() {
         Intent login_intent = new Intent(MainActivity.this, ActivityLoginScreen.class);
         startActivity(login_intent);
-        //OverridePendingTransition(R.anim.fade_in, R.anim.slide_up);
+        overridePendingTransition(R.anim.fade_in, R.anim.slide_up);
 
     }
 }
