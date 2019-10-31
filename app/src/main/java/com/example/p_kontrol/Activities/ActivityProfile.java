@@ -58,31 +58,6 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         super.onBackPressed();
     }
 
-    //    private void pickProfilePictureFromGallery() {
-//        //Create an Intent with action as ACTION_PICK
-//        Intent intent=new Intent(Intent.ACTION_PICK);
-//        // Sets the type as image/*. This ensures only components of type image are selected
-//        intent.setType("image/*");
-//        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
-//        String[] mimeTypes = {"image/jpeg", "image/png"};
-//        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-//        // Launching the Intent
-//        startActivityForResult(intent,GALLERY_REQUEST_CODE);
-//    }
-
-//    @Override
-//    public void onActivityResult(int requestCode,int resultCode,Intent data){
-//        // Result code is RESULT_OK only if the user selects an Image
-//        if (resultCode == Activity.RESULT_OK)
-//            switch (requestCode){
-//                case GALLERY_REQUEST_CODE:
-//                    //data.getData returns the content URI for the selected Image
-//                    Uri selectedImage = data.getData();
-//                    ImageView imageView = (ImageView) findViewById(R.id.profilePicImageView);
-//                    imageView.setImageURI(selectedImage);
-//                    break;
-//            }
-//    }
 
     private void openGallery() {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
