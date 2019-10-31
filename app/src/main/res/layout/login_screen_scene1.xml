@@ -62,7 +62,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/logo" />
 
         <TextView
             android:id="@+id/LoginScreen_LogoText"
@@ -90,7 +90,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <Button
+
+     <Button
          android:id="@+id/LoginScreen_1_SignUpBtn"
          android:layout_width="320dp"
          android:layout_height="55dp"
