@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">P-Kontrol</string>
     <string name="round_corner">Round Corner</string>
@@ -10,5 +11,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Menu Texts -->
+    <string name="menu_txt_profile">Profile</string>
+    <string name="menu_txt_freePark">Free Park</string>
+    <string name="menu_txt_contribute">Contribute</string>
+    <string name="menu_txt_community">Community</string>
+    <string name="menu_txt_parkAlarm">Park Alarm</string>
+    <string name="menu_txt_pVagt">P-Vagt</string>
+
 
 </resources>
