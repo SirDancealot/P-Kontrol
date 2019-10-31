@@ -34,6 +34,7 @@ public class ActivityLoginScreen extends AppCompatActivity implements View.OnCli
         if (view == findViewById(R.id.login_button)){
             Intent mapView_intent = new Intent(this, ActivityMapView.class);
             startActivity(mapView_intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.slide_up);
         }
     }
 }
