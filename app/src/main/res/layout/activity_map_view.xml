@@ -15,6 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <!-- Map -->
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
@@ -24,9 +26,21 @@
 
         <!-- Upper UI -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <fragment
+                android:id="@+id/tip"
+                android:name="com.example.p_kontrol.Fragments.FragTipBobble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                app:layout_constraintVertical_bias="0.47000003" />
 
             <!-- top message box -->
             <FrameLayout
@@ -36,20 +50,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <include layout="@layout/widget_topmessagebar" />
+                <include layout="@layout/fragment_top_message_bar" />
 
             </FrameLayout>
 
 
             <!-- Drag Menu Container -->
             <fragment
-                android:name="com.example.p_kontrol.Fragments.FragBottomMenu"
                 android:id="@+id/fragContainer_menu"
+                android:name="com.example.p_kontrol.Fragments.FragBottomMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-            />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
