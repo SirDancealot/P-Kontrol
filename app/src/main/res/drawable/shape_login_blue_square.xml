@@ -16,11 +16,7 @@
 
     <shape android:shape="rectangle">
 
-        <gradient
-            android:startColor="@color/colorHighlight"
-            android:endColor="@color/colorHighlightSecond"
-            android:angle="-90"
-            />
+        <solid android:color="#7DCBED"" />
         <corners
             android:bottomLeftRadius="50dip"
             android:bottomRightRadius="50dip"
