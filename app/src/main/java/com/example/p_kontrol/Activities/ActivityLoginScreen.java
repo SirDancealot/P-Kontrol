@@ -15,21 +15,17 @@ public class ActivityLoginScreen extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen_scene1);
-
         Button login = findViewById(R.id.login_button);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
             }
         });
 
-
     }
 
+    // todo ?? hvad er dette view == ... det lyder sært.
     @Override
     public void onClick(View view) {
         if (view == findViewById(R.id.login_button)){
@@ -39,6 +35,5 @@ public class ActivityLoginScreen extends AppCompatActivity implements View.OnCli
             Intent mapView_intent = new Intent(this, ActivityMapView.class);
             startActivity(mapView_intent);
         }
-
     }
 }

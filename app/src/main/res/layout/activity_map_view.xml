@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activities.ActivityMapView"
 
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
 
     <!-- Layers such that elements can lie ontop of others -->
     <androidx.constraintlayout.widget.ConstraintLayout

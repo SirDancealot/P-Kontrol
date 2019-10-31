@@ -169,6 +169,7 @@ public class FragBottomMenu extends Fragment {
 
     // Dragging Handle
     private void menu_dragHandle( View view ){
+
         // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
         if(drag_State){
             Log.v("click","Menu Container Closed\n");
@@ -179,6 +180,7 @@ public class FragBottomMenu extends Fragment {
             menuBtnContainer.setVisibility(View.VISIBLE);
             drag_State = true;
         }
+
     }
 
     // Menu Buttons on click functions.
