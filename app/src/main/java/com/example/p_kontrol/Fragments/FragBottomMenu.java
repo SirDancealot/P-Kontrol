@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,6 +18,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 
+import com.example.p_kontrol.Activities.ActivityMapView;
+import com.example.p_kontrol.Activities.ActivityProfile;
 import com.example.p_kontrol.R;
 
 
@@ -186,6 +189,8 @@ public class FragBottomMenu extends Fragment {
     // Menu Buttons on click functions.
     private void menuBtn_profile(View view){
         Log.i("click","Profile btn clicked \n");
+        Intent changeActivity = new Intent( getActivity() , ActivityProfile.class );
+        startActivity(changeActivity);
     }
     private void menuBtn_FreePark(View view){
         Log.i("click","FreePark btn clicked \n");
