@@ -38,8 +38,6 @@ public class FragBottomMenu extends Fragment {
 
     View view;
     boolean drag_State;
-    TableLayout.LayoutParams openParam;
-    TableLayout.LayoutParams closeParam;
 
     private OnFragmentInteractionListener mListener;
 

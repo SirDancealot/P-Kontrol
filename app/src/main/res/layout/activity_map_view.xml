@@ -44,8 +44,8 @@
                 app:layout_constraintVertical_bias="0.47000003" />-->
 
             <!-- Write Tip  -->
-            <fragment
-                android:id="@+id/fragContainer_WriteTip"
+            <FrameLayout
+                android:id="@+id/midScreenFragmentContainer"
                 android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,13 +69,16 @@
 
 
             <!-- Drag Menu Container -->
-            <fragment
+            <FrameLayout
                 android:id="@+id/fragContainer_menu"
-                android:name="com.example.p_kontrol.Fragments.FragBottomMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <include layout="@layout/fragment_frag_bottom_menu" />
+
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
