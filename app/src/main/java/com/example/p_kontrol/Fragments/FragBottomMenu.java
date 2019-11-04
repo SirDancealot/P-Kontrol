@@ -57,8 +57,8 @@ public class FragBottomMenu extends Fragment {
        view = inflater.inflate(R.layout.fragment_frag_bottom_menu, container, false);
 
        // Menu Buttons.
-        menuBtnContainer       = (View)   view.findViewById(R.id.menu_btnContainer)         ;
-        dragHandle             = (View)   view.findViewById(R.id.menuBtn_draggingHandle)    ;
+        menuBtnContainer     = (View)   view.findViewById(R.id.menu_btnContainer)           ;
+        dragHandle           = (View)   view.findViewById(R.id.menuBtn_draggingHandle)      ;
 
         menuBtn_profile      = (Button) view.findViewById(R.id.menuBtn_profile)             ;
         menuBtn_FreePark     = (Button) view.findViewById(R.id.menuBtn_FreePark)            ;
@@ -108,7 +108,6 @@ public class FragBottomMenu extends Fragment {
             Button menuBtn_ParkAlarm,
             Button menuBtn_PVagt
     ){
-
         // Dragging Handle
         dragHandle.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -28,7 +28,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+/*
         backpress = findViewById(R.id.backpressImageView);
 
 
@@ -39,7 +39,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
 
         backpress.setOnClickListener(this);
-        changeProfilePic.setOnClickListener(this);
+        changeProfilePic.setOnClickListener(this);*/
     }
 
 

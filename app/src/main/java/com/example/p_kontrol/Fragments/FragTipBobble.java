@@ -50,9 +50,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_tip_bobble, container, false);
 
-
-
-
         tip = (TextView) view.findViewById(R.id.bobbelTiptextView);
         readMore = (TextView) view.findViewById(R.id.bobbelTipreadMore);
         readMore.setOnClickListener(this);

@@ -31,6 +31,7 @@
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!-- tip bobble
             <fragment
                 android:id="@+id/tip"
                 android:name="com.example.p_kontrol.Fragments.FragTipBobble"
@@ -40,7 +41,19 @@
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-                app:layout_constraintVertical_bias="0.47000003" />
+                app:layout_constraintVertical_bias="0.47000003" />-->
+
+            <!-- Write Tip  -->
+            <fragment
+                android:id="@+id/fragContainer_WriteTip"
+                android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintBottom_toTopOf="@+id/fragContainer_menu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
             <!-- top message box -->
             <FrameLayout

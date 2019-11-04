@@ -10,9 +10,10 @@
     android:animateLayoutChanges="true"
     >
 
-
+    <!-- Circles -->
     <AbsoluteLayout
         android:id="@+id/LoginScreen_BackgroundBlue"
+        android:transitionName="LoginScreen_BackgroundBlue"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#7DCBED"
@@ -22,17 +23,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <TextView
+        <View
             android:id="@+id/LoginScreen_Circle1"
-            android:layout_width="487dp"
-            android:layout_height="526dp"
-            android:layout_x="-204dp"
-            android:layout_y="-281dp"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_x="-150dp"
+            android:layout_y="-150dp"
             android:background="@drawable/shape_circle_lightgreen"
-            tools:layout_editor_absoluteX="-198dp"
-            tools:layout_editor_absoluteY="-259dp" />
+            android:transitionName="LoginScreen_Circle1"
+            />
 
-        <TextView
+        <View
             android:id="@+id/LoginScreen_Circle2"
             android:background="@drawable/shape_circle_green"
 
@@ -41,12 +42,15 @@
 
             android:layout_x="270dp"
             android:layout_y="403dp"
+            android:transitionName="LoginScreen_Circle2"
             />
 
     </AbsoluteLayout>
 
     <LinearLayout
         android:id="@+id/LoginScreen_LogoContainer"
+        android:transitionName="LoginScreen_LogoContainer"
+
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

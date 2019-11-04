@@ -1,9 +1,11 @@
 package com.example.p_kontrol.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,7 @@ public class ActivityLoginScreen extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen_scene1);
 
@@ -98,7 +101,6 @@ public class ActivityLoginScreen extends AppCompatActivity{
         Log.v("screen 2","login Google btn clicked \n");
         changeto_Activiy_MapView();
     }
-
     private void changeto_Activiy_MapView(){
         Intent changeActivity = new Intent(this, ActivityMapView.class);
         startActivity(changeActivity);

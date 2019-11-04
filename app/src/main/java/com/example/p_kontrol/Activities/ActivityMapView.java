@@ -27,21 +27,25 @@ import java.util.List;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class ActivityMapView extends AppCompatActivity {
 
+public class ActivityMapView extends AppCompatActivity  {
 
-    //ViewPager menuFragment;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
+
+        fragmentManager = this.getSupportFragmentManager();
+
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
     }
+
 
 
 }
