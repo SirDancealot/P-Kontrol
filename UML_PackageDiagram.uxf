@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLHierarchy</id>
+    <coordinates>
+      <x>400</x>
+      <y>270</y>
+      <w>250</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>type=Package
+UI
+	Activities
+	Fragments
+
+Client 
+
+Data access &lt;&lt;Rest&gt;&gt;
+
+Database &lt;&lt;Firebase - geofire&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
