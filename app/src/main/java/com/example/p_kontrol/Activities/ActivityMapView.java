@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -12,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,12 +21,15 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.example.p_kontrol.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.Fragments.FragBottomMenu;
 import com.example.p_kontrol.Fragments.FragMessageWrite;
 import com.example.p_kontrol.Fragments.FragTipBobble;
 import com.example.p_kontrol.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.Temp.tipDTO;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,13 +39,15 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class ActivityMapView extends AppCompatActivity  {
+public class ActivityMapView extends AppCompatActivity implements View.OnClickListener{
+
+    String TAG="MapView Activity";
 
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
     boolean firstTransAction;
 
-    // Menu Code.
+    ConstraintLayout rootContainer;
     View menuBtnContainer,dragHandle;
     Button  menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
             menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
@@ -50,6 +57,10 @@ public class ActivityMapView extends AppCompatActivity  {
     boolean boolFragMessageWrite    ;
     boolean boolFragTipBobble       ;
     boolean boolFragTopMessageBar   ;
+
+    //ViewPager - Tip bobbles.
+    FragmentStatePagerAdapter adapter_TipBobbles;
+    ViewPager viewPager_tipBobles;
 
     //Fragments
     FragMessageWrite    fragment_messageWrite   ;
@@ -64,6 +75,7 @@ public class ActivityMapView extends AppCompatActivity  {
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
+        setupTipBobblesPagerViewer();
         firstTransAction = true;
     }
 
@@ -72,9 +84,10 @@ public class ActivityMapView extends AppCompatActivity  {
         super.onPostCreate(savedInstanceState);
     }
 
-
     // setups
     private void setupMenu(){
+
+        rootContainer       = findViewById(R.id.ActivityMapView_RootContainer);
         // Menu Buttons.
         menuBtnContainer     = findViewById(R.id.menu_btnContainer)           ;
         dragHandle           = findViewById(R.id.menuBtn_draggingHandle)      ;
@@ -86,6 +99,18 @@ public class ActivityMapView extends AppCompatActivity  {
         menuBtn_ParkAlarm    = findViewById(R.id.menuBtn_ParkAlarm)           ;
         menuBtn_PVagt        = findViewById(R.id.menuBtn_PVagt)               ;
 
+        dragHandle.setOnClickListener(this);
+        menuBtn_profile.setOnClickListener(this);
+        menuBtn_FreePark.setOnClickListener(this);
+        menuBtn_Contribute.setOnClickListener(this);
+        menuBtn_Community.setOnClickListener(this);
+        menuBtn_ParkAlarm.setOnClickListener(this);
+        menuBtn_PVagt.setOnClickListener(this);
+
+        // ViewPager
+        viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
+
+        /*
         setupMenuListeners(
                 dragHandle          ,
                 menuBtn_profile     ,
@@ -94,8 +119,7 @@ public class ActivityMapView extends AppCompatActivity  {
                 menuBtn_Community   ,
                 menuBtn_ParkAlarm   ,
                 menuBtn_PVagt
-        );
-
+        );*/
         // Setup Menu Toggle Position
         drag_State = false;
         menuBtnContainer.setVisibility(View.GONE);
@@ -110,78 +134,52 @@ public class ActivityMapView extends AppCompatActivity  {
         fragment_tipBobble    = new FragTipBobble()     ;
         fragment_topMessage   = new FragTopMessageBar() ;
     }
+    private void setupTipBobblesPagerViewer(){
 
-    // Listener
-    private void setupMenuListeners(
-            View dragHandle             ,
-            Button menuBtn_profile      ,
-            Button menuBtn_FreePark     ,
-            Button menuBtn_Contribute   ,
-            Button menuBtn_Community    ,
-            Button menuBtn_ParkAlarm    ,
-            Button menuBtn_PVagt        ){
-        // Dragging Handle
-        dragHandle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menu_dragHandle(v);
-            }
-        });
+        List<tipDTO> tipsList = new LinkedList();
+        tipsList.add(new tipDTO("Mig","lad være at parkere her! det er min plads og kun min!!!! "));
+        tipsList.add(new tipDTO("Dig","sur gammel dame kaster egg efter min bil"));
+        tipsList.add(new tipDTO("bente"," fugle der skider på bilen hvis dine spejle ikke er dækkede"));
+        tipsList.add(new tipDTO("gurli"," ulovlig parking mellem 10 - 12. med mindre den er gul, eller det er onsdag"));
+        tipsList.add(new tipDTO("Bob"," ny besked "));
 
-        // Menu Buttons Row 1
+        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager,tipsList);
+        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
 
-        // Profile
-        menuBtn_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuBtn_profile(v);
-            }
-        });
-
-        // FreePark
-        menuBtn_FreePark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuBtn_FreePark(v);
-            }
-        });
-
-        // Contribute
-        menuBtn_Contribute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuBtn_Contribute(v);
-            }
-        });
-
-        // Menu Buttons Row 2
-
-        // Community
-        menuBtn_Community.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuBtn_Community(v);
-            }
-        });
-
-        // Park Alarm
-        menuBtn_ParkAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuBtn_ParkAlarm(v);
-            }
-        });
-
-        // P-Vagt
-        menuBtn_PVagt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                menuBtn_PVagt(v);
-            }
-        });
     }
 
-    // Dragging Handle
+    // Listener
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case ( R.id.menuBtn_draggingHandle):
+                menu_dragHandle(v);
+                break;
+                // Menu Line 1.
+            case (R.id.menuBtn_profile):
+                menuBtn_profile(v);
+                break;
+            case (R.id.menuBtn_FreePark):
+                menuBtn_FreePark(v);
+                break;
+            case (R.id.menuBtn_Contribute):
+                menuBtn_Contribute(v);
+                break;
+                // Menu Line 2.
+            case (R.id.menuBtn_Community):
+                menuBtn_Community(v);
+                break;
+            case (R.id.menuBtn_ParkAlarm):
+                menuBtn_ParkAlarm(v);
+                break;
+            case (R.id.menuBtn_PVagt):
+                menuBtn_PVagt(v);
+                break;
+                // TipBobbleViewPager
+        }
+
+    }
+
     private void menu_dragHandle( View view ){
 
         // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
@@ -196,8 +194,6 @@ public class ActivityMapView extends AppCompatActivity  {
         }
 
     }
-
-    // Menu Buttons on click functions.
     private void menuBtn_profile(View view){
         Log.i("click","Profile btn clicked \n");
         Intent changeActivity = new Intent( this , ActivityProfile.class );
@@ -212,7 +208,26 @@ public class ActivityMapView extends AppCompatActivity  {
             Log.v("bool","bool true");
             fragment_messageWrite = new FragMessageWrite();
         }
-        useTransaction (R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+
+        if(firstTransAction){
+            transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.midScreenFragmentContainer, fragment_messageWrite);
+            transaction.commit();
+            firstTransAction = false;
+            Log.i("transaction","First TransAction");
+        }else {
+            if(!boolFragMessageWrite){
+                Log.i("transaction","Replacing fragment");
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.midScreenFragmentContainer, fragment_messageWrite);
+                transaction.commit();
+            }else{
+                transaction = fragmentManager.beginTransaction();
+                transaction.remove(fragment_messageWrite);
+                transaction.commit();
+                Log.i("transaction","Removing fragment");
+            }
+        }
         boolFragMessageWrite = !boolFragMessageWrite;
 
         Log.i("click", "Contribute btn clicked \n");
@@ -226,27 +241,15 @@ public class ActivityMapView extends AppCompatActivity  {
     }
     private void menuBtn_PVagt(View view){
         Log.i("click","P-Vagt btn clicked \n");
+        viewPager_tipBobles.setVisibility(View.VISIBLE);
+
     }
 
-    private void useTransaction (int containerId, Fragment fragment, boolean openOrClose){
-        if(firstTransAction){
-            transaction = fragmentManager.beginTransaction();
-            transaction.add(containerId, fragment);
-            transaction.commit();
-            firstTransAction = false;
-            Log.i("transaction","First TransAction");
-        }else {
-            if(!openOrClose){
-                Log.i("transaction","Replacing fragment");
-                transaction = fragmentManager.beginTransaction();
-                transaction.replace(containerId, fragment);
-                transaction.commit();
-            }else{
-                transaction = fragmentManager.beginTransaction();
-                transaction.remove(fragment);
-                transaction.commit();
-                Log.i("transaction","Removing fragment");
-            }
-        }
+    // TipBobbles View Pager
+    public void CloseTipBobbleViewPager(){
+      //  rootContainer.removeView(viewPager_tipBobles);
+        viewPager_tipBobles.setVisibility(View.GONE);
+        Log.i(TAG, "CloseTipBobbleViewPager: Closed");
     }
+
 }

@@ -6,19 +6,40 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml" line="24" />
+    <bookmark url="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml" line="25" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="db6842ea-baba-472f-8271-7766d77d3197" name="Default Changelist" comment="extra lille rettelse">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Adapters/TipBobblesAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/BlankFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Temp/tipDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_alarm.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_chat.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_coins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_lines.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_person.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_pin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/menu_shape_container.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_blank.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityLoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityLoginScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/login_screen_scene1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/login_screen_scene1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityMapView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityMapView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragTipBobble.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragTipBobble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/shape_bottom_popup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/menu_shape_handle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/shape_bottom_popup_handle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_map_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_map_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_frag_bottom_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_frag_bottom_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_message_write.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_message_write.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tip_bobble.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tip_bobble.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/widget_dragmenu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/widget_dragmenu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,75 +73,29 @@
     <favorites_list name="P-Kontrol" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/login_screen_scene1.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="105" column="11" lean-forward="true" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
-              <folding>
-                <element signature="e#556#1672#0" />
-                <element signature="e#537#1763#0" />
-                <element signature="e#2837#3351#0" />
-                <element signature="e#3359#3916#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_signup_button.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_scene1_loginbutton.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityLoginScreen.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_frag_bottom_menu.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+            <state relative-caret-position="323">
+              <caret line="139" column="15" lean-forward="true" selection-start-line="139" selection-start-column="15" selection-end-line="139" selection-end-column="15" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#setupListeners#0;class#ActivityLoginScreen#0" />
-                <element signature="e#956#1109#0" expanded="true" />
-                <element signature="e#1108#1109#0" expanded="true" />
-                <element signature="e#1104#1258#0" expanded="true" />
-                <element signature="e#1257#1258#0" expanded="true" />
+                <element signature="e#500#1501#0" />
+                <element signature="e#1550#5182#0" />
+                <element signature="e#1881#3606#0" />
+                <element signature="e#3523#5163#0" />
+                <element signature="e#4491#4519#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_alarm.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
@@ -131,20 +106,25 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile_vertical" />
-        <option value="Class" />
         <option value="resourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>none</find>
-      <find>gl</find>
-      <find>Con</find>
-      <find>Container</find>
-      <find>id=</find>
-      <find>:id=</find>
-      <find>Circle_1</find>
+      <find>backpressImageView</find>
+      <find>false</find>
+      <find>PTip_navigation_ProgressBar</find>
+      <find>stepCounter</find>
+      <find>swipeChangeViewLevel</find>
+      <find>on Scroll</find>
+      <find>PagerAdapter</find>
+      <find>viewPager</find>
+      <find>writeMessage_Adapter</find>
+      <find>stepContainer</find>
+      <find>viewPager_tipBobles</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -152,71 +132,103 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ViewDevelopment" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/ViewDevelopment" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/androidTest/java/com/example/p_kontrol/ExampleInstrumentedTest.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/topmessage_gradient.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_roundedbox_bottomedge.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_topmessage_background.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_roundedbox_topedge.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_menu_btn.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/menu_btn.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_bottom_popup.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/font/ubuntu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activity_MapView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/ActivityMapView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/custom_login_button.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/animation.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_top_message_bar.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_tip_bobble.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/anim/slide_up.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/anim/fade_in.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityProfile.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_message_write.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login_screen.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_login_blue_square.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/login_screen_scene1.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/CustomFragmentPagerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/widget_topmessagebar.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/widget_dragmenu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/anim/menu_pop_down.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_bottom_popup_handle.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_frag_bottom_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityMapView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragBottomMenu.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_map_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/custom_scene1_loginbutton.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/custom_signup_button.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/login_screen_scene1.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityLoginScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/login_screen_scene1.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/login_screen_scene1.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login_screen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/progressbar_navigation_indicator.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/CustomViews/Ptip_CustomProgressBar.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/CustomClasses/CustomGestureDetector.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/PagerAdapters/WriteMessage_Adapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/PagerAdapters/writeMessage_Adapter.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/anim/slideout_right.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/anim/slideout_left.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/anim/slidein_right.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/anim/slidein_left.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragMessageWrite.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/writetip_navbar_top_shape.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/writetip_navbar_shape.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragBottomMenu.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/shape_bottom_popup.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Temp/tipDTO.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Adapters/TipBobblesAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_tip_bobble.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragTipBobble.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_map_view.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityMapView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_message_write.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/menu_shape_handle.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/widget_dragmenu.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/icon_profile.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/icon_alarmclock.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/menu_shape_container.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_coins.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_lines.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_person.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_pin.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_iconclockalarm.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_chat.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_alarm.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_frag_bottom_menu.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="431" />
-    <option name="width" value="1498" />
-    <option name="height" value="1048" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="542" />
+    <option name="width" value="1383" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
@@ -267,29 +279,26 @@
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
               <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
-            <path>
-              <item name="P-Kontrol" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3a_XL_Edited_API_28" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-10-31T11:14:19.061Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-11-05T11:10:43.720Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MyApplication" />
+    <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Android Logcat" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Default Config" />
@@ -305,6 +314,9 @@
     </key>
     <key name="android.template.parentActivityClass">
       <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Grobax\AndroidStudioProjects\P-Kontrol\app\src\main\res\drawable-v21" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Grobax\AndroidStudioProjects\P-Kontrol\app\src\main\res\drawable" />
@@ -416,49 +428,28 @@
       <option name="project" value="LOCAL" />
       <updated>1571927754540</updated>
     </task>
-    <task id="LOCAL-00004" summary="fælles Arbejde med arbejds udeligering er pushed nu her">
-      <created>1571940975435</created>
+    <task id="LOCAL-00004" summary="Static Login">
+      <created>1572234998723</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1571940975435</updated>
+      <updated>1572234998723</updated>
     </task>
-    <task id="LOCAL-00005" summary="extra lille rettelse">
-      <created>1571941099982</created>
+    <task id="LOCAL-00005" summary="Merging er færdig. og kan nu lukke Profile op">
+      <created>1572539490585</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1571941099982</updated>
+      <updated>1572539490585</updated>
     </task>
-    <task id="LOCAL-00006" summary="fixet fejl så den ikke kunne køre. fra push til møde.">
-      <created>1572361682555</created>
+    <task id="LOCAL-00006" summary="login Tranisition Animation fra LoadingScreen. &#10;Profil Re-Lavet. &#10;WriteMessage swipe animation, custom Navigation View object, done">
+      <created>1572857030790</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1572361682555</updated>
+      <updated>1572857030790</updated>
     </task>
-    <task id="LOCAL-00007" summary="Menupopup Fragment done, with animation, satisfying sound, and Function call on the Menu buttons.">
-      <created>1572385796854</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1572385796854</updated>
-    </task>
-    <task id="LOCAL-00008" summary="ny Branch til mig og Valdemar">
-      <created>1572531792528</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1572531792528</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Login_Screen 1 er nu færdig i layoutet og tomme on click listeners der logger til consolen.">
-      <created>1572533062923</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1572533062923</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -471,7 +462,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="434" y="0" width="1106" height="840" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50547445" side_tool="true" weight="0.22222222" />
@@ -480,26 +471,26 @@
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" sideWeight="0.49452555" visible="true" weight="0.2261745" />
-      <window_info id="Resources Explorer" order="7" sideWeight="0.49635038" weight="0.32996634" />
-      <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Find" order="0" weight="0.3286119" />
-      <window_info anchor="bottom" id="Version Control" order="1" sideWeight="0.49902344" weight="0.32808024" />
-      <window_info anchor="bottom" id="Logcat" order="2" sideWeight="0.49804688" weight="0.32719547" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49804688" weight="0.32719547" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50097656" side_tool="true" weight="0.3295129" />
-      <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49902344" weight="0.32719547" />
-      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.49902344" weight="0.31586403" />
-      <window_info anchor="bottom" id="Android Profiler" order="7" sideWeight="0.49902344" weight="0.3295129" />
-      <window_info active="true" anchor="bottom" id="Messages" order="8" visible="true" weight="0.3289941" />
-      <window_info anchor="bottom" id="Run" order="9" visible="true" weight="0.32577905" />
-      <window_info anchor="bottom" id="Debug" order="10" weight="0.3295129" />
+      <window_info id="Resources Explorer" order="6" sideWeight="0.49635038" weight="0.3295302" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info content_ui="combo" id="Project" order="8" sideWeight="0.49452555" visible="true" weight="0.05927342" />
+      <window_info anchor="bottom" id="Version Control" order="0" weight="0.3282989" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49731544" weight="0.3286119" />
+      <window_info anchor="bottom" id="Logcat" order="2" weight="0.3286119" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.51409394" side_tool="true" weight="0.61331445" />
+      <window_info anchor="bottom" id="TODO" order="5" weight="0.3298887" />
+      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.490604" weight="0.21468927" />
+      <window_info anchor="bottom" id="Android Profiler" order="7" />
+      <window_info anchor="bottom" id="Messages" order="8" visible="true" weight="0.3282989" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.48590603" weight="0.61331445" />
+      <window_info anchor="bottom" id="Debug" order="10" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.32996634" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" weight="0.32996634" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info anchor="right" id="Preview" order="5" weight="0.27986577" />
+      <window_info active="true" anchor="right" id="Preview" order="5" visible="true" weight="0.30210325" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -507,380 +498,415 @@
     <MESSAGE value="Target API Changed before Group Wide Download" />
     <MESSAGE value="Include ´klare Layout.xmls klar, og Font implementeret." />
     <MESSAGE value="Font filer som var glemt er her" />
-    <MESSAGE value="fælles Arbejde med arbejds udeligering er pushed nu her" />
-    <MESSAGE value="extra lille rettelse" />
-    <MESSAGE value="fixet fejl så den ikke kunne køre. fra push til møde." />
-    <MESSAGE value="Menupopup Fragment done, with animation, satisfying sound, and Function call on the Menu buttons." />
-    <MESSAGE value="ny Branch til mig og Valdemar" />
-    <MESSAGE value="Login_Screen 1 er nu færdig i layoutet og tomme on click listeners der logger til consolen." />
-    <option name="LAST_COMMIT_MESSAGE" value="Login_Screen 1 er nu færdig i layoutet og tomme on click listeners der logger til consolen." />
+    <MESSAGE value="Static Login" />
+    <MESSAGE value="Two extra scenes minus animation" />
+    <MESSAGE value="Two extra scenes minus animation&#10;layout changes" />
+    <MESSAGE value="Merging er færdig. og kan nu lukke Profile op" />
+    <MESSAGE value="login Tranisition Animation fra LoadingScreen. &#10;Profil Re-Lavet. &#10;WriteMessage swipe animation, custom Navigation View object, done" />
+    <option name="LAST_COMMIT_MESSAGE" value="login Tranisition Animation fra LoadingScreen. &#10;Profil Re-Lavet. &#10;WriteMessage swipe animation, custom Navigation View object, done" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/ic_launcher_background.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/PagerAdapters/writeMessage_Adapter.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/slideout_right.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" lean-forward="true" selection-start-column="5" selection-end-column="6" />
+        <state relative-caret-position="85">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/facebooklogo.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attrs.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/slideout_left.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="38" selection-start-column="38" selection-end-column="38" />
+        <state relative-caret-position="85">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/google_logo.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/animation.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/slidein_right.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        <state relative-caret-position="85">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragTopMessageBar.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/slidein_left.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="110" column="5" lean-forward="true" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="5" />
+        <state relative-caret-position="85">
+          <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragTipBobble.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_fb_button.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="8" lean-forward="true" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityProfile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityMessageWrite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.fragment/fragment/1.1.0/b9ebb04df2cb0cad4419af3c658690bc82aa5706/fragment-1.1.0-sources.jar!/androidx/fragment/app/FragmentStatePagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="46" column="2" lean-forward="true" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/PagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="48" column="29" lean-forward="true" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="7135" selection-start-line="7135" selection-end-line="7135" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/font/ubuntu_bold.ttf">
-      <provider selected="true" editor-type-id="fontseditor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/font/ubuntu_bolditalic.ttf">
-      <provider selected="true" editor-type-id="fontseditor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/font/ubuntu_italic.ttf">
-      <provider selected="true" editor-type-id="fontseditor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/font/ubuntu.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="39" lean-forward="true" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_top_message_bar.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/widget_topmessagebar.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/CustomFragmentPagerAdapter.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/widget_dragmenu.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="39" lean-forward="true" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.fragment/fragment/1.1.0/b9ebb04df2cb0cad4419af3c658690bc82aa5706/fragment-1.1.0-sources.jar!/androidx/fragment/app/Fragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="1601" column="16" selection-start-line="1601" selection-start-column="16" selection-end-line="1601" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/animation/ObjectAnimator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="441" column="33" selection-start-line="441" selection-start-column="33" selection-end-line="441" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/animation/ValueAnimator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="910" column="16" selection-start-line="910" selection-start-column="16" selection-end-line="910" selection-end-column="16" />
-          <folding>
-            <element signature="e#38875#38876#0" expanded="true" />
-            <element signature="e#38910#38911#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/menu_pop_down.xml" />
-    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/ViewGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="7856" column="19" selection-start-line="7856" selection-start-column="19" selection-end-line="7856" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_top_msg_popdown.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="38" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_circle_lightgreen.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_circle_green.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="4" lean-forward="true" selection-start-column="4" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_login_button.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="89" selection-start-line="1" selection-start-column="87" selection-end-line="1" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_google_button.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="89" selection-start-line="1" selection-start-column="87" selection-end-line="1" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/login_screen_scene1.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="38" selection-start-column="38" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_bottom_popup.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_bottom_popup_handle.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/writetip_navbar_shape.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="11" lean-forward="true" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_frag_bottom_menu.xml">
-      <provider editor-type-id="android-designer2" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/writetip_navbar_top_shape.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" selection-start-line="10" selection-end-line="10" selection-end-column="39" />
+        <state>
+          <caret selection-end-line="12" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/CustomViews/Ptip_CustomProgressBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="92" column="77" lean-forward="true" selection-start-line="92" selection-start-column="77" selection-end-line="92" selection-end-column="77" />
           <folding>
-            <element signature="e#3560#3588#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#6841#6842#0" expanded="true" />
+            <element signature="e#6880#6881#0" expanded="true" />
+            <element signature="e#7821#7822#0" expanded="true" />
+            <element signature="e#7860#7861#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.fragment/fragment/1.1.0/b9ebb04df2cb0cad4419af3c658690bc82aa5706/fragment-1.1.0-sources.jar!/androidx/fragment/app/FragmentTransaction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="47" selection-start-line="47" selection-end-line="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-743">
+          <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="94" selection-end-column="38" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="59" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="59" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityLoginScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="105" column="38" selection-start-line="104" selection-start-column="8" selection-end-line="105" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setupListeners_Screen1#0;class#ActivityLoginScreen#0" />
+            <element signature="method#setupListeners_Screen2#0;class#ActivityLoginScreen#0" />
+            <element signature="method#screen1_loginBtn#0;class#ActivityLoginScreen#0" />
+            <element signature="method#screen2_loginManual#0;class#ActivityLoginScreen#0" />
+            <element signature="method#screen2_loginFaceB#0;class#ActivityLoginScreen#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragBottomMenu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="27" selection-start-line="27" selection-end-line="39" selection-end-column="23" />
+          <folding>
+            <element signature="docComment;class#OnFragmentInteractionListener#0;class#FragBottomMenu#0" />
+            <element signature="class#OnFragmentInteractionListener#0;class#FragBottomMenu#0" />
+            <element signature="method#setupMenuListeners#0;class#FragBottomMenu#0" />
+            <element signature="method#menu_dragHandle#0;class#FragBottomMenu#0" />
+            <element signature="method#menuBtn_profile#0;class#FragBottomMenu#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragMessageWrite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1921">
+          <caret line="146" selection-start-line="146" selection-end-line="146" />
+          <folding>
+            <element signature="method#onTouch#0;class#FragMessageWrite#0" />
+            <element signature="method#onDown#0;class#FragMessageWrite#0" />
+            <element signature="method#onShowPress#0;class#FragMessageWrite#0" />
+            <element signature="method#onSingleTapUp#0;class#FragMessageWrite#0" />
+            <element signature="method#onScroll#0;class#FragMessageWrite#0" />
+            <element signature="method#onLongPress#0;class#FragMessageWrite#0" />
+            <element signature="method#closeKeyboard#0;class#FragMessageWrite#0" />
+            <element signature="class#animOutThenAnimIn#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="472">
+          <caret line="32" column="3" selection-start-line="32" selection-start-column="3" selection-end-line="32" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/slide_up.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/com/example/p_kontrol/ExampleUnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+        <state relative-caret-position="153">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/shape_login_blue_square.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="45" lean-forward="true" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login_screen.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="60" column="52" lean-forward="true" selection-start-line="60" selection-start-column="52" selection-end-line="60" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_map_view.xml">
-      <provider editor-type-id="android-designer2" />
+    <entry file="file://$PROJECT_DIR$/app/src/androidTest/java/com/example/p_kontrol/ExampleInstrumentedTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="13" column="3" lean-forward="true" selection-start-line="13" selection-start-column="3" selection-end-line="45" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragBottomMenu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="116" column="4" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
-          <folding>
-            <element signature="method#FragBottomMenu#0;class#FragBottomMenu#0" />
-            <element signature="e#3732#3884#0" expanded="true" />
-            <element signature="e#3883#3884#0" expanded="true" />
-            <element signature="e#4585#4606#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityMapView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
+        <state relative-caret-position="64">
+          <caret line="53" column="37" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_scene1_loginbutton.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Temp/tipDTO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="43" />
+        <state relative-caret-position="34">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="19" />
+          <folding>
+            <element signature="e#274#275#0" expanded="true" />
+            <element signature="e#307#308#0" expanded="true" />
+            <element signature="e#359#360#0" expanded="true" />
+            <element signature="e#403#404#0" expanded="true" />
+            <element signature="e#437#438#0" expanded="true" />
+            <element signature="e#467#468#0" expanded="true" />
+            <element signature="e#513#514#0" expanded="true" />
+            <element signature="e#551#552#0" expanded="true" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.viewpager/viewpager/1.0.0/db045f92188b9d247d5f556866f8861ab68528f0/viewpager-1.0.0-sources.jar!/androidx/viewpager/widget/ViewPager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="626" column="23" selection-start-line="626" selection-start-column="15" selection-end-line="626" selection-end-column="23" />
+          <folding>
+            <element signature="e#23691#23692#0" expanded="true" />
+            <element signature="e#23722#23723#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/BlankFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="106" selection-start-line="106" selection-end-line="109" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_blank.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Adapters/TipBobblesAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="48" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Fragments/FragTipBobble.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="87" selection-start-line="87" selection-end-line="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_map_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="72" column="23" selection-start-line="72" selection-start-column="23" selection-end-line="72" selection-end-column="26" />
+          <folding>
+            <element signature="e#633#861#0" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_tip_bobble.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="44" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="44" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/icon_chat.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/icon_alarm_clock.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/icon_location.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/icon_coins.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/icon_person.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/icon_settings.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_message_write.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="216" column="49" selection-start-line="216" selection-start-column="49" selection-end-line="216" selection-end-column="49" />
+          <folding>
+            <element signature="e#1036#2298#0" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="32" />
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/custom_signup_button.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-v21/icon_settings.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_profile.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="707" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="707" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/icon_alarmclock.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="36" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/menu_shape_container.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="8" lean-forward="true" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <caret line="8" column="51" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/login_screen_scene1.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/menu_shape_handle.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/widget_dragmenu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="619">
+          <caret line="45" column="12" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_access_alarm_black_24dp.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="105" column="11" lean-forward="true" selection-start-line="105" selection-start-column="11" selection-end-line="105" selection-end-column="11" />
-          <folding>
-            <element signature="e#556#1672#0" />
-            <element signature="e#537#1763#0" />
-            <element signature="e#2837#3351#0" />
-            <element signature="e#3359#3916#0" />
-          </folding>
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="3" selection-start-column="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityLoginScreen.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_coins.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="4" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_pin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_person.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_lines.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_chat.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/p_kontrol/Activities/ActivityMapView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="143" column="19" lean-forward="true" selection-start-line="143" selection-start-column="19" selection-end-line="143" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#setupListeners#0;class#ActivityLoginScreen#0" />
-            <element signature="e#956#1109#0" expanded="true" />
-            <element signature="e#1108#1109#0" expanded="true" />
-            <element signature="e#1104#1258#0" expanded="true" />
-            <element signature="e#1257#1258#0" expanded="true" />
+            <element signature="method#setupFragments#0;class#ActivityMapView#0" />
+            <element signature="method#onClick#0;class#ActivityMapView#0" />
+            <element signature="method#menu_dragHandle#0;class#ActivityMapView#0" />
+            <element signature="method#menuBtn_profile#0;class#ActivityMapView#0" />
+            <element signature="method#menuBtn_Contribute#0;class#ActivityMapView#0" />
+            <element signature="method#menuBtn_PVagt#0;class#ActivityMapView#0" />
+            <element signature="method#CloseTipBobbleViewPager#0;class#ActivityMapView#0" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_iconclockalarm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_icon_alarm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_frag_bottom_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="139" column="15" lean-forward="true" selection-start-line="139" selection-start-column="15" selection-end-line="139" selection-end-column="15" />
+          <folding>
+            <element signature="e#500#1501#0" />
+            <element signature="e#1550#5182#0" />
+            <element signature="e#1881#3606#0" />
+            <element signature="e#3523#5163#0" />
+            <element signature="e#4491#4519#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
   </component>
 </project>

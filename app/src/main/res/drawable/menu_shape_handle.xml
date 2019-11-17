@@ -6,7 +6,7 @@
                 android:topLeftRadius="20dp"
                 android:topRightRadius="20dp"
                 />
-            <solid android:color="@color/color_matWhite"/>
+            <solid android:color="@color/color_pureWhite"/>
             <!--<size android:width="100pt" android:height="20dp"/>-->
         </shape>
     </item>

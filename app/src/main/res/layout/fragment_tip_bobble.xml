@@ -6,16 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.FragTipBobble"
-    android:animateLayoutChanges="true">
-
+    android:animateLayoutChanges="true"
+    >
 
     <FrameLayout
+        android:id="@+id/bobbelTip_container"
         android:layout_width="310dp"
         android:layout_height="110dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,8 +27,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingRight="8dp"
-        android:paddingLeft="8dp"
-        tools:context=".Fragments.FragTipBobble">
+        android:paddingLeft="8dp">
 
 
 
@@ -37,7 +39,7 @@
 
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/bobbelTipImg"
+                android:id="@+id/bobbelTip_Img"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -46,7 +48,7 @@
 
 
             <TextView
-                android:id="@+id/bobbelTipPerson"
+                android:id="@+id/bobbelTip_PersonName"
                 android:fontFamily="@font/ubuntu"
                 android:textSize="15dp"
                 android:layout_width="wrap_content"
@@ -64,7 +66,7 @@
 
 
             <TextView
-                android:id="@+id/bobbelTiptextView"
+                android:id="@+id/bobbelTip_mainTextView"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:fontFamily="@font/ubuntu"
@@ -74,7 +76,7 @@
 
 
             <TextView
-                android:id="@+id/bobbelTipreadMore"
+                android:id="@+id/bobbelTip_readMore"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ubuntu_bold"
