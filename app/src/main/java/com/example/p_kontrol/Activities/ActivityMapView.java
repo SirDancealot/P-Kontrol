@@ -275,7 +275,6 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
 
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.logo));
 
-        // Add a marker in Sydney and move the camera
         LatLng tip = new LatLng(	55.675098, 	12.569337);
         LatLng currentGeo = new LatLng(	55.676098, 	12.568337);
         mMap.addMarker(markerOptions.position(tip).title("tip"));
@@ -290,7 +289,11 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        System.out.println("yeeer");
+
+        // jeg kan ikke finde ud af at navigerer til ActivtyProfile så har bare gjort
+        // så når man trykker på et tip kommer man derover. lav gerne om!
+        Intent i = new Intent(ActivityMapView.this, ActivityProfile.class);
+        startActivity(i);
 
         //Toast.makeText(ActivityMapView.this, "tip", Toast.LENGTH_SHORT).show();
         return true;
