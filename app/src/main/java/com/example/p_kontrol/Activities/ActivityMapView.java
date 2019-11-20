@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,12 +20,21 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.p_kontrol.Fragments.FragBottomMenu;
 import com.example.p_kontrol.Fragments.FragMessageWrite;
 import com.example.p_kontrol.Fragments.FragTipBobble;
 import com.example.p_kontrol.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +44,7 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class ActivityMapView extends AppCompatActivity  {
+public class ActivityMapView extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
@@ -56,10 +66,18 @@ public class ActivityMapView extends AppCompatActivity  {
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
 
+    // Maps
+    private GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
+
+        // maps
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
@@ -248,5 +266,27 @@ public class ActivityMapView extends AppCompatActivity  {
                 Log.i("transaction","Removing fragment");
             }
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.logo));
+
+        // Add a marker in Sydney and move the camera
+        LatLng tip = new LatLng(	55.676098, 	12.568337);
+        mMap.addMarker(markerOptions.position(tip).title("tip"));
+        mMap.setOnMarkerClickListener(this);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(tip));
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        System.out.println("yeeer");
+
+        //Toast.makeText(ActivityMapView.this, "tip", Toast.LENGTH_SHORT).show();
+        return true;
     }
 }

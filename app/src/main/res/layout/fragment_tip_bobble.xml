@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.FragTipBobble"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    android:clickable="true"
+    android:focusable="true">
 
 
     <FrameLayout
@@ -15,76 +17,76 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@drawable/shape_tip_img"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingRight="8dp"
-        android:paddingLeft="8dp"
-        tools:context=".Fragments.FragTipBobble">
-
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/bobbelTipImg"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/color_matWhite"/>
-
-
-            <TextView
-                android:id="@+id/bobbelTipPerson"
-                android:fontFamily="@font/ubuntu"
-                android:textSize="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lola Mongola"/>
-
-        </LinearLayout>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="2dp">
+            android:background="@drawable/shape_tip_img"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp"
+            tools:context=".Fragments.FragTipBobble">
 
 
-            <TextView
-                android:id="@+id/bobbelTiptextView"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:fontFamily="@font/ubuntu"
-                android:textSize="17dp"
-                android:paddingBottom="5dp"
-                android:text="@string/tip1" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
-            <TextView
-                android:id="@+id/bobbelTipreadMore"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/bobbelTipImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:civ_border_color="@color/color_matWhite"
+                    app:civ_border_width="2dp" />
+
+
+                <TextView
+                    android:id="@+id/bobbelTipPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu"
+                    android:text="Lola Mongola"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/ubuntu_bold"
-                android:paddingBottom="4dp"
-                android:textSize="17dp"
-                android:gravity="center"
-                android:text="Se Mere" />
+                android:orientation="vertical"
+                android:paddingLeft="2dp">
 
+
+                <TextView
+                    android:id="@+id/bobbelTiptextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:fontFamily="@font/ubuntu"
+                    android:paddingBottom="5dp"
+                    android:text="@string/tip1"
+                    android:textSize="17dp" />
+
+
+                <TextView
+                    android:id="@+id/bobbelTipreadMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:text="Se Mere"
+                    android:textSize="17dp" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
     </FrameLayout>
 
 
