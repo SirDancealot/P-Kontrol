@@ -18,8 +18,7 @@ import com.example.p_kontrol.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    //todo slet denne myBtn, erstat mead timed load.
-    Button myBtn;
+
 
     // Listing elemenets to change when it has been loaded
     View trans_circle_1;
@@ -39,8 +38,15 @@ public class MainActivity extends AppCompatActivity {
         trans_logo      = findViewById(R.id.LoginScreen_LogoContainer)  ;
         trans_background= findViewById(R.id.LoginScreen_BackgroundBlue) ;
 
-        myBtn = findViewById(R.id.LoginScreen_LogoImg);
-        myBtn.setOnClickListener(new View.OnClickListener() {
+
+        trans_logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                splashTransition();
+            }
+
+        });
+        trans_background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 splashTransition();

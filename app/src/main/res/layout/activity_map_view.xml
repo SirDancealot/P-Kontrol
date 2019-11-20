@@ -18,23 +18,15 @@
 
 
         <!-- Map -->
-        <com.google.android.gms.maps.MapView
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:id="@+id/mapVi"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <!-- Upper UI -->
+        <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".Activities.MapsActivity" />
 
-        <!-- Upper UI -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
@@ -54,6 +46,7 @@
                 app:layout_constraintVertical_bias="0.47000003" />-->
 
             <!-- Write Tip  -->
+
             <FrameLayout
                 android:id="@+id/midScreenFragmentContainer"
                 android:name="com.example.p_kontrol.Fragments.FragMessageWrite"

@@ -32,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -275,11 +276,16 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.logo));
 
         // Add a marker in Sydney and move the camera
-        LatLng tip = new LatLng(	55.676098, 	12.568337);
+        LatLng tip = new LatLng(	55.675098, 	12.569337);
+        LatLng currentGeo = new LatLng(	55.676098, 	12.568337);
         mMap.addMarker(markerOptions.position(tip).title("tip"));
         mMap.setOnMarkerClickListener(this);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(tip));
-        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(currentGeo)
+                .zoom(15).build();
+        //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     }
 
     @Override
