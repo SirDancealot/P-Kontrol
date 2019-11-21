@@ -1,4 +1,4 @@
-package com.example.p_kontrol.Activities;
+package com.example.p_kontrol.UI.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

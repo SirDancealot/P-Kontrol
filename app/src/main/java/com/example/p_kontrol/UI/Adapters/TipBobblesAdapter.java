@@ -1,4 +1,4 @@
-package com.example.p_kontrol.Adapters;
+package com.example.p_kontrol.UI.Adapters;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.p_kontrol.Fragments.FragTipBobble;
+import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.Temp.tipDTO;
 
 import java.util.List;

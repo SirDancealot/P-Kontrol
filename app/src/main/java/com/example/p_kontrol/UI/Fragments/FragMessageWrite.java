@@ -1,4 +1,4 @@
-package com.example.p_kontrol.Fragments;
+package com.example.p_kontrol.UI.Fragments;
 
 import androidx.fragment.app.Fragment;
 
@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 
-import com.example.p_kontrol.CustomViews.Ptip_CustomProgressBar;
+import com.example.p_kontrol.UI.CustomViews.Ptip_CustomProgressBar;
 import com.example.p_kontrol.R;
 
 public class FragMessageWrite extends Fragment  implements View.OnTouchListener, GestureDetector.OnGestureListener {

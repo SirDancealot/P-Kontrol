@@ -1,8 +1,5 @@
-package com.example.p_kontrol.Fragments;
+package com.example.p_kontrol.UI.Fragments;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.p_kontrol.Activities.ActivityMapView;
+import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;

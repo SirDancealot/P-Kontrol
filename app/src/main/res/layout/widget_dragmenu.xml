@@ -7,7 +7,7 @@
     android:orientation="vertical"
 
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Fragments.FragBottomMenu"
+    tools:context=".UI.Fragments.FragBottomMenu"
     >
 
     <!-- Dragging Handle -->

@@ -1,4 +1,4 @@
-package com.example.p_kontrol.dto;
+package com.example.p_kontrol.DataBase.dto;
 
 public class UserInfoDTO {
 

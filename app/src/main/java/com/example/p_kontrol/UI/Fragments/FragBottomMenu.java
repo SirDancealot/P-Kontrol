@@ -1,9 +1,5 @@
-package com.example.p_kontrol.Fragments;
+package com.example.p_kontrol.UI.Fragments;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 
-import com.example.p_kontrol.Activities.ActivityMapView;
-import com.example.p_kontrol.Activities.ActivityProfile;
+import com.example.p_kontrol.UI.Activities.ActivityProfile;
 import com.example.p_kontrol.R;
 
 

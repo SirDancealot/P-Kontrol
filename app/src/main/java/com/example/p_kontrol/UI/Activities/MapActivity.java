@@ -1,41 +1,17 @@
-package com.example.p_kontrol.Activities;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
+package com.example.p_kontrol.UI.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.p_kontrol.Adapters.TipBobblesAdapter;
-import com.example.p_kontrol.Fragments.FragBottomMenu;
-import com.example.p_kontrol.Fragments.FragMessageWrite;
-import com.example.p_kontrol.Fragments.FragTipBobble;
-import com.example.p_kontrol.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.Temp.tipDTO;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -49,10 +25,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

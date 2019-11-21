@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context=".Fragments.FragMessageWrite"
+    tools:context=".UI.Fragments.FragMessageWrite"
     android:animateLayoutChanges="true"
     >
 
@@ -205,7 +205,7 @@
                 />
 
             <!-- circles and lines bar -->
-            <com.example.p_kontrol.CustomViews.Ptip_CustomProgressBar
+            <com.example.p_kontrol.UI.CustomViews.Ptip_CustomProgressBar
                 android:id="@+id/WriteTip_NavBar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

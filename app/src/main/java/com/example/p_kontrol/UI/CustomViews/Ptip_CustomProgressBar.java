@@ -1,4 +1,4 @@
-package com.example.p_kontrol.CustomViews;
+package com.example.p_kontrol.UI.CustomViews;
 
 import com.example.p_kontrol.R;
 import android.content.Context;
@@ -6,12 +6,8 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
-
-import androidx.annotation.ColorInt;
 
 public class Ptip_CustomProgressBar extends View {
 

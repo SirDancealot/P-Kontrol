@@ -1,8 +1,8 @@
-package com.example.p_kontrol.dao;
+package com.example.p_kontrol.DataBase.dao;
 
 import android.location.Location;
 
-import com.example.p_kontrol.dto.TipDTO;
+import com.example.p_kontrol.DataBase.dto.TipDTO;
 
 import java.util.List;
 

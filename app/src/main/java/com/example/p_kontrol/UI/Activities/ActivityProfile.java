@@ -1,13 +1,11 @@
-package com.example.p_kontrol.Activities;
+package com.example.p_kontrol.UI.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.dto.UserInfoDTO;
+import com.example.p_kontrol.DataBase.dto.UserInfoDTO;
 import com.facebook.AccessToken;
 
 import de.hdodenhof.circleimageview.CircleImageView;

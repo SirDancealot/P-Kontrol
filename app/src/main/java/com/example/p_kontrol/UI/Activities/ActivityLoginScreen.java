@@ -1,19 +1,17 @@
-package com.example.p_kontrol.Activities;
+package com.example.p_kontrol.UI.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.dto.UserInfoDTO;
+import com.example.p_kontrol.DataBase.dto.UserInfoDTO;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
