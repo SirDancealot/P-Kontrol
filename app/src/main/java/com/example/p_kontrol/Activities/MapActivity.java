@@ -59,7 +59,7 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener ,View.OnClickListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
 
     // Maps
@@ -68,7 +68,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private boolean mLocationPermissionGranted;
     private final LatLng mDefaultLocation = new LatLng(55.676098, 	12.56833);
     private Location mLastKnownLocation;
-    private Button center;
     private static final int DEFAULT_ZOOM = 15;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
@@ -94,9 +93,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        center = findViewById(R.id.centerBut);
-
-        center.setOnClickListener(this);
 
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.logo));
 
@@ -169,12 +165,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 
 
-    @Override
-    public void onClick(View v) {
-        if (v == center){
-            getDeviceLocation();
-        }
-    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
