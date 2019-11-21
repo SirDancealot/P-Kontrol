@@ -307,6 +307,15 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
     private void menuBtn_PVagt(View view){
         Log.i("click","P-Vagt btn clicked \n");
+
+        updateDeviceLocation();
+        Toast.makeText(ActivityMapView.this,
+                "Alarm P-vagt ved: " + String.valueOf(mLastKnownLocation.getLatitude())
+                        + " " + String.valueOf(mLastKnownLocation.getLongitude()),
+                Toast.LENGTH_SHORT).show();
+
+
+
     }
 
     private void useTransaction (int containerId, Fragment fragment, boolean openOrClose){
@@ -409,7 +418,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     //https://stackoverflow.com/questions/14851641/change-marker-size-in-google-maps-api-v2
 
     private void getDeviceLocation() {
-
         try {
             Task locationResult = mFusedLocationProviderClient.getLastLocation();
             locationResult.addOnCompleteListener(this, new OnCompleteListener() {
@@ -421,6 +429,29 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(mLastKnownLocation.getLatitude(),
                                         mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                    } else {
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                    }
+                }
+            });
+
+        } catch(SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+    private void updateDeviceLocation() {
+
+        try {
+            Task locationResult = mFusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener(this, new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        mLastKnownLocation = (Location) task.getResult();
+
                     } else {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                         mMap.getUiSettings().setMyLocationButtonEnabled(false);
