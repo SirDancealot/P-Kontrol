@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,7 +13,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,15 +20,13 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.example.p_kontrol.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.Fragments.FragBottomMenu;
 import com.example.p_kontrol.Fragments.FragMessageWrite;
 import com.example.p_kontrol.Fragments.FragTipBobble;
 import com.example.p_kontrol.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.Temp.tipDTO;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,9 +36,7 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class ActivityMapView extends AppCompatActivity implements View.OnClickListener{
-
-    String TAG="MapView Activity";
+public class ActivityMapView extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener ,View.OnClickListener {
 
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
@@ -67,10 +62,18 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
 
+    // Maps
+    private GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
+
+        // maps
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
@@ -208,7 +211,23 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             Log.v("bool","bool true");
             fragment_messageWrite = new FragMessageWrite();
         }
+        useTransaction (R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        boolFragMessageWrite = !boolFragMessageWrite;
 
+        Log.i("click", "Contribute btn clicked \n");
+
+    }
+    private void menuBtn_Community(View view){
+        Log.i("click","Community btn clicked \n");
+    }
+    private void menuBtn_ParkAlarm(View view){
+        Log.i("click","Park Alarm btn clicked \n");
+    }
+    private void menuBtn_PVagt(View view){
+        Log.i("click","P-Vagt btn clicked \n");
+    }
+
+    private void useTransaction (int containerId, Fragment fragment, boolean openOrClose){
         if(firstTransAction){
             transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.midScreenFragmentContainer, fragment_messageWrite);
@@ -252,4 +271,34 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         Log.i(TAG, "CloseTipBobbleViewPager: Closed");
     }
 
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.logo));
+
+        LatLng tip = new LatLng(	55.675098, 	12.569337);
+        LatLng currentGeo = new LatLng(	55.676098, 	12.568337);
+        mMap.addMarker(markerOptions.position(tip).title("tip"));
+        mMap.setOnMarkerClickListener(this);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(currentGeo)
+                .zoom(15).build();
+        //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        // jeg kan ikke finde ud af at navigerer til ActivtyProfile så har bare gjort
+        // så når man trykker på et tip kommer man derover. lav gerne om!
+        Intent i = new Intent(ActivityMapView.this, ActivityProfile.class);
+        startActivity(i);
+
+        //Toast.makeText(ActivityMapView.this, "tip", Toast.LENGTH_SHORT).show();
+        return true;
+    }
 }
