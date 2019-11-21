@@ -12,38 +12,46 @@
 
     <!-- Layers such that elements can lie ontop of others -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ActivityMapView_RootContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <!-- Map -->
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Upper UI -->
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".Activities.MapsActivity" />
+
+
+        <Button
+            android:id="@+id/centerBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.86"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+            app:layout_constraintVertical_bias="0.16000003" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <!-- tip bobble
-            <fragment
-                android:id="@+id/tip"
-                android:name="com.example.p_kontrol.Fragments.FragTipBobble"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-                app:layout_constraintVertical_bias="0.47000003" />-->
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
 
             <!-- Write Tip  -->
+
             <FrameLayout
                 android:id="@+id/midScreenFragmentContainer"
                 android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
@@ -81,6 +89,20 @@
             </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- EvenHigher UI -->
+        <!-- tip bobble-->
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager_TipBobbles"
+            android:name="com.example.p_kontrol.Fragments.FragTipBobble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

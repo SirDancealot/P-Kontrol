@@ -27,7 +27,7 @@
                 android:layout_marginLeft="160dp"
 
                 android:layout_marginRight="160dp"
-                android:background="@drawable/shape_bottom_popup_handle"
+                android:background="@drawable/menu_shape_handle"
                 app:srcCompat="?attr/actionModePasteDrawable" />
         </FrameLayout>
 
@@ -36,12 +36,11 @@
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_bottom_popup"
+        android:background="@drawable/menu_shape_container"
         android:paddingTop="15dp"
         android:showDividers="middle"
         android:stretchColumns="*"
         >
-
         <TableRow>
             <!-- profile btn -->
             <Button

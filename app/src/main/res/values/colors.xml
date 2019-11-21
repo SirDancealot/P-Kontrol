@@ -7,7 +7,7 @@
     <color name="colorSecondary">       #ADDCF1</color><!-- lightBlue -->
     <color name="colorHighlight">       #86DEB7</color><!-- lightGreen -->
     <color name="colorHighlightSecond"> #ADEEE3</color><!-- lighterGreen -->
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#D8AF1B</color>
 
     <color name="colorScheme1">#93ABBF</color>
     <color name="colorScheme2">#619CCB</color>
@@ -16,10 +16,12 @@
     <color name="colorScheme5">#D93223</color>
 
     <!-- ColorScheme NonColors -->
+    <color name="color_pureWhite">#fff</color>
     <color name="color_matWhite">#EEEEEE</color>
     <color name="color_lightGray">#A0A0A0</color>
     <color name="color_darkGray">#4B4B4B</color>
     <color name="color_matBlack">#222222</color>
+
 
     <!-- textColorScheme -->
     <color name="colorText1">#ffffff</color>

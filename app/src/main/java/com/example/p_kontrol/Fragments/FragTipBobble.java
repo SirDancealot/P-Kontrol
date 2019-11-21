@@ -1,45 +1,40 @@
 package com.example.p_kontrol.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.example.p_kontrol.Activities.ActivityMapView;
 import com.example.p_kontrol.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class FragTipBobble extends Fragment implements View.OnClickListener {
+public class FragTipBobble extends Fragment implements View.OnClickListener{
+    // Settings
+    final int TIP_SHORT_MAX_LENGTH = 250;
+    final String TAG ="FragTipBobble";
+    // Argument Keys
+    final String BOBBLE_NAME = "bobbleTip_name";
+    final String BOBBLE_TEXT = "bobbleTip_text";
 
-
-    private TextView readMore;
-    private TextView tip;
-    private CircleImageView tipPerson;
-    private String string;
-    private View view;
-    private boolean dragState;
-
-    private View con;
-
-    private FragBottomMenu.OnFragmentInteractionListener mListener;
-
+    // regular Variables
+    private View view, container,suroundings;
+    private TextView readMore, tip, name;
+    private CircleImageView profImg;
 
     public FragTipBobble() {
-        // Required empty public constructor
+        // Requiired empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
@@ -50,69 +45,69 @@ public class FragTipBobble extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_tip_bobble, container, false);
 
-        tip = (TextView) view.findViewById(R.id.bobbelTiptextView);
-        readMore = (TextView) view.findViewById(R.id.bobbelTipreadMore);
+        // find View objects
+        name        = view.findViewById(R.id.bobbelTip_PersonName)  ;
+        profImg     = view.findViewById(R.id.bobbelTip_Img)         ;
+        tip         = view.findViewById(R.id.bobbelTip_mainTextView);
+        readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
+        suroundings = view.findViewById(R.id.fagTip)                ;
+        container   = view.findViewById(R.id.bobbelTip_container)   ;
+        //Get Arguments
+        try{
+
+            //name of Profile
+            name.setText(getArguments().getString(BOBBLE_NAME));
+
+            // tip Shortend Text.
+            String tipText = getArguments().getString(BOBBLE_TEXT);
+            tipText = tipText.substring(0, Math.min(tipText.length(), TIP_SHORT_MAX_LENGTH));
+            tip.setText(tipText);
+
+        }catch (Exception e){
+            // if nothing is recieved.
+            name.setText("Unknown Name");
+            tip.setText("Unknown Tip");
+        }
+
+        //Litseners
+        container.setOnClickListener(this);
+        view.setOnClickListener(this);
         readMore.setOnClickListener(this);
-        con = view.findViewById(R.id.fagTip);
-        con.setOnClickListener(this);
-        tipPerson = (CircleImageView) view.findViewById(R.id.bobbelTipImg);
-        RequestOptions requestOptions = new RequestOptions();
+
+
+        /*RequestOptions requestOptions = new RequestOptions();
         requestOptions.dontAnimate();
-        Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(tipPerson);
+        Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
         string = getString(R.string.tip1);
         if (string.length() > 65)
         {
             string = string.substring(0, 65) + "...";
         }
         tip.setText(string);
-
+        */
 
 
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     @Override
     public void onClick(View v) {
-
-        if (v == con){
-            con.setVisibility(View.GONE);
-        } else if (v == readMore){
-            readMore.setText("ikke lavet endnu");
+        switch (v.getId()){
+            case (R.id.fagTip): // clicking on the Suroundings of the TipBobble Closes it
+                ActivityMapView act = (ActivityMapView) getActivity();
+                act.CloseTipBobbleViewPager();
+            break;
+            case (R.id.bobbelTip_container):
+                // do nothing.
+                Log.i(TAG, "onClick:bobbelTip_container  ");
+                break;
+            case (R.id.bobbelTip_readMore):
+                //todo Impl: exspand Tip Box.
+                Log.i(TAG, "onClick: ReadBox ");
+                break;
+            default:
+                // do nothing
+            break;
         }
-
-    }
-
-
-    public void showTip(){
-        con.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

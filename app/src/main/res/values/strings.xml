@@ -2,8 +2,7 @@
 <resources>
     <string name="app_name">C5 P-Kontrol</string>
     <string name="round_corner">Round Corner</string>
-    <string name="facebook_app_id">[APP_ID]</string>
-    <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
+
 
     <string name="title_activity__map_view">Activity_MapView</string>
     <string name="dummy_button">Dummy Button</string>
@@ -12,7 +11,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-<!-- Menu -->
+    <!-- Menu -->
     <!-- Menu Texts -->
     <string name="menu_txt_profile">Profile</string>
     <string name="menu_txt_freePark">Free Park</string>
@@ -21,7 +20,7 @@
     <string name="menu_txt_parkAlarm">Park Alarm</string>
     <string name="menu_txt_pVagt">P-Vagt</string>
 
-<!-- Profile -->
+    <!-- Profile -->
     <!-- Profile Texts -->
     <string name="profile_template_name">[name here]</string>
     <string name="profile_template_numTips">number of tips </string>
@@ -41,7 +40,7 @@
     <string name="profile_template_tableColumn_2">antal</string>
     <string name="profile_template_tableColumn_3">resultat</string>
 
-<!-- Fragment Write a Tip  -->
+    <!-- Fragment Write a Tip  -->
     <!-- Write Tip Headers -->
     <string name="writeTip_title_step1">Choose location of your tip</string>
     <string name="writeTip_title_step2">Tell us about the area</string>
@@ -62,16 +61,18 @@
         <item>category 4 </item>
         <item>category 5 </item>
     </string-array>
-    
+
     <!-- Write Tip Navigation texts -->
     <string name="writeTip_Navigation_continue">Tap to continue</string>
     <string name="writeTip_Navigation_finish">Tap to finish</string>
 
 
-
-
     <string name="tip1">earlier versions of Access, we used the Memo data type to store large amounts of text, and the Text data type to store shorter strings (up to 255 characters). In Access 2013 and Access 2016, these two data types have been renamed “Long Text” and “Short Text” respectively, and they have different properties and size limits depending on whether you’re using a desktop database or an Access web app. Here are the details:</string>
     <string name="tip2">pas på</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="facebook_app_id">1045192295818256</string>
+    <string name="fb_login_protocol_scheme">fb1045192295818256</string>
 
 
 </resources>

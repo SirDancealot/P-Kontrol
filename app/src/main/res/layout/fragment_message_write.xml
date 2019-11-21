@@ -210,14 +210,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
 
-                app:ptip_progress_ColorBorder="@color/color_darkGray"
+                app:ptip_progress_ColorBorder="@color/color_lightGray"
                 app:ptip_progress_ColorNonProgress="@color/color_matWhite"
-                app:ptip_progress_ColorProgress="@color/colorScheme2"
+                app:ptip_progress_ColorProgress="@color/colorAccent"
 
                 app:ptip_progressPointMargin="25"
-                app:ptip_progressBarHeight="15"
+                app:ptip_progressBarHeight="0"
                 app:ptip_progressPointdiagonal="10"
-                app:ptip_progressBorderThickness="10"
+                app:ptip_progressBorderThickness="2"
 
                 app:ptip_progressNumSteps="5"
                 app:ptip_progressValue="3"

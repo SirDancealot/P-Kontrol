@@ -10,10 +10,18 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.dto.UserInfoDTO;
+import com.facebook.AccessToken;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityProfile extends AppCompatActivity implements View.OnClickListener {
     ImageView backpress;
@@ -22,12 +30,30 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     TextView changeProfilePic;
     Uri imageUri;
     private static final int PICK_IMAGE = 100;
+    private CircleImageView fimg;
+    private TextView fname, femail;
+    private UserInfoDTO userInfoDTO;
+    private Button logud;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+
+        fimg = findViewById(R.id.profilePic);
+        fname = findViewById(R.id.profile_profileName);
+        logud = findViewById(R.id.logud);
+        logud.setOnClickListener(this);
+
+
+
+
+        setContent();
+
 /*
         backpress = findViewById(R.id.backpressImageView);
 
@@ -51,6 +77,16 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         if (v == changeProfilePic) {
             openGallery();
         }
+        if (v == logud){
+            userInfoDTO.setLogin(false);
+            userInfoDTO.setUrl("");
+            userInfoDTO.setEmail("");
+            userInfoDTO.setName("");
+            userInfoDTO.setName2("");
+            Toast.makeText(ActivityProfile.this,"Logget ud",Toast.LENGTH_LONG).show();
+            setContent();
+            AccessToken.setCurrentAccessToken(null);
+        }
     }
 
     @Override
@@ -71,6 +107,19 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             profilePic.setImageURI(imageUri);
+        }
+    }
+
+
+    public void setContent(){
+        if (userInfoDTO.getLogin()) {
+            fname.setText(userInfoDTO.getName() + " " + userInfoDTO.getName2());
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.dontAnimate();
+            Glide.with(ActivityProfile.this).load(userInfoDTO.getUrl()).into(fimg);
+        } else {
+            fname.setText("Name");
+            fimg.setImageResource(0);
         }
     }
 }
