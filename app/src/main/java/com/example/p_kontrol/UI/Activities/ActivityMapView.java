@@ -87,8 +87,6 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
