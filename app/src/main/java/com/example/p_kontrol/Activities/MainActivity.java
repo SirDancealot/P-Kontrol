@@ -6,6 +6,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
 import android.transition.Fade;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.example.p_kontrol.DataLayer.ExampleDB;
 import com.example.p_kontrol.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
+        ExampleDB db = new ExampleDB();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            db.testDB();
+        }
     }
 
     public void splashTransition() {
