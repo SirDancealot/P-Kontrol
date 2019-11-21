@@ -1,6 +1,7 @@
 package com.example.p_kontrol.UI.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -32,7 +33,7 @@ import com.google.android.gms.tasks.Task;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
 
     // Maps

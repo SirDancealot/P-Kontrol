@@ -3,6 +3,7 @@ package com.example.p_kontrol.UI.Activities;
 import android.Manifest;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -12,14 +13,20 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.p_kontrol.DataBase.dao.ITipDAO;
+import com.example.p_kontrol.DataBase.dto.TipDTO;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
@@ -41,6 +48,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,7 +57,7 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class ActivityMapView extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener ,View.OnClickListener {
+public class ActivityMapView extends AppCompatActivity implements OnMapReadyCallback ,View.OnClickListener {
 
     final String TAG = "tag";
     FragmentManager fragmentManager;
@@ -81,10 +89,20 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
     private final LatLng mDefaultLocation = new LatLng(55.676098, 	12.56833);
+    private LatLng currentMarker;
     private Location mLastKnownLocation;
     private Button center;
     private static final int DEFAULT_ZOOM = 15;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+
+
+    // temp hardcode
+    List<TipDTO> dtoList = new ArrayList<TipDTO>();
+    TipDTO tip1, tip2;
+
+
+    private boolean tempBool = false;
+    private int tempID = 0;
 
 
     @Override
@@ -233,6 +251,56 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
     }
     private void menuBtn_Community(View view){
         Log.i("click","Community btn clicked \n");
+
+
+        if (tempBool){
+            zoomCamara(DEFAULT_ZOOM);
+
+            // temp løsning
+            String text;
+            if (currentMarker == null) {
+                text = "Ingen marker sat";
+            } else {
+                // lav sej metode her!
+                text = currentMarker.toString();
+
+                TipDTO newTip = new TipDTO();
+                newTip.setLocation(currentMarker);
+                newTip.setTipId(getNewID());
+                dtoList.add(newTip);
+
+            }
+
+            Toast.makeText(ActivityMapView.this, text, Toast.LENGTH_SHORT).show();
+
+
+            mMap.clear();
+            mMap.setOnMapClickListener(null);
+
+            tempBool = false;
+            currentMarker = null;
+
+            updateMapTips(dtoList);
+        } else {
+            zoomCamara(17);
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                  return true;
+                }
+            });
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    mMap.clear();
+                    currentMarker = latLng;
+                    mMap.addMarker(new MarkerOptions().position(latLng));
+                }
+            });
+            tempBool = true;
+        }
+
+
     }
     private void menuBtn_ParkAlarm(View view){
         Log.i("click","Park Alarm btn clicked \n");
@@ -279,15 +347,19 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         center = findViewById(R.id.centerBut);
-
         center.setOnClickListener(this);
 
-        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.logo));
+        tip1 = new TipDTO();
+        tip1.setTipId(getNewID());
+        tip1.setLocation(new LatLng(	55.676098, 	12.568337));
+        tip2 = new TipDTO();
+        tip2.setTipId(getNewID());
+        tip2.setLocation(new LatLng(	55.679098, 	12.569337));
+        dtoList.add(tip1);
+        dtoList.add(tip2);
 
-        LatLng tip = new LatLng(	55.675098, 	12.569337);
-        LatLng currentGeo = new LatLng(	55.676098, 	12.568337);
-        mMap.addMarker(markerOptions.position(tip).title("tip"));
-        mMap.setOnMarkerClickListener(this);
+
+        updateMapTips(dtoList);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -305,30 +377,39 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-
-        // jeg kan ikke finde ud af at navigerer til ActivtyProfile så har bare gjort
-        // så når man trykker på et tip kommer man derover. lav gerne om!
-        Intent i = new Intent(ActivityMapView.this, ActivityProfile.class);
-        startActivity(i);
-
-        //Toast.makeText(ActivityMapView.this, "tip", Toast.LENGTH_SHORT).show();
-        return true;
+    public void zoomCamara(int zoom){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(mMap.getCameraPosition().target)
+                .zoom(zoom).build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        //mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
+    public void updateMapTips(List<TipDTO> tips){
+        for(TipDTO tip: tips){
+            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
+            mMap.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(tip.getTipId())));
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    // kald den metode du gerne vil have
+                    Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+        }
 
+    }
 
-
-
-
-
+    public Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
+    }
+    //https://stackoverflow.com/questions/14851641/change-marker-size-in-google-maps-api-v2
 
     private void getDeviceLocation() {
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         */
+
         try {
             Task locationResult = mFusedLocationProviderClient.getLastLocation();
             locationResult.addOnCompleteListener(this, new OnCompleteListener() {
@@ -346,9 +427,17 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
                     }
                 }
             });
+
         } catch(SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+
+    }
+
+
+    private int getNewID(){
+        tempID++;
+        return tempID;
     }
 
 }

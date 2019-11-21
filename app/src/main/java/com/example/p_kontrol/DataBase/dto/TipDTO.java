@@ -2,12 +2,14 @@ package com.example.p_kontrol.DataBase.dto;
 
 import android.location.Location;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class TipDTO {
 
     private int tipId;
     private String author;
     private String messege;
-    private Location location;      //Dette er måske ikke den rigtige type lokation
+    private LatLng location;      //Dette er måske ikke den rigtige type lokation
 
     public int getTipId() {
         return tipId;
@@ -33,11 +35,11 @@ public class TipDTO {
         this.messege = messege;
     }
 
-    public Location getLocation() {
+    public LatLng getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(LatLng location) {
         this.location = location;
     }
 
