@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -22,11 +23,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.p_kontrol.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.Fragments.FragBottomMenu;
 import com.example.p_kontrol.Fragments.FragMessageWrite;
 import com.example.p_kontrol.Fragments.FragTipBobble;
 import com.example.p_kontrol.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.Temp.tipDTO;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +49,8 @@ import java.util.List;
  */
 
 public class ActivityMapView extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener ,View.OnClickListener {
+
+    final String TAG = "tag";
 
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
@@ -82,11 +96,6 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
         firstTransAction = true;
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-    }
-
     // setups
     private void setupMenu(){
 
@@ -113,16 +122,6 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
         // ViewPager
         viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
 
-        /*
-        setupMenuListeners(
-                dragHandle          ,
-                menuBtn_profile     ,
-                menuBtn_FreePark    ,
-                menuBtn_Contribute  ,
-                menuBtn_Community   ,
-                menuBtn_ParkAlarm   ,
-                menuBtn_PVagt
-        );*/
         // Setup Menu Toggle Position
         drag_State = false;
         menuBtnContainer.setVisibility(View.GONE);
@@ -250,17 +249,6 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
         boolFragMessageWrite = !boolFragMessageWrite;
 
         Log.i("click", "Contribute btn clicked \n");
-
-    }
-    private void menuBtn_Community(View view){
-        Log.i("click","Community btn clicked \n");
-    }
-    private void menuBtn_ParkAlarm(View view){
-        Log.i("click","Park Alarm btn clicked \n");
-    }
-    private void menuBtn_PVagt(View view){
-        Log.i("click","P-Vagt btn clicked \n");
-        viewPager_tipBobles.setVisibility(View.VISIBLE);
 
     }
 
