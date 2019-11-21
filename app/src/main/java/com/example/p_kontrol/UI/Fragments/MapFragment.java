@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Activities;
+package com.example.p_kontrol.UI.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Activities.ActivityProfile;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,7 +32,7 @@ import com.google.android.gms.tasks.Task;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapFragment extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
 
     // Maps
@@ -100,7 +101,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         // jeg kan ikke finde ud af at navigerer til ActivtyProfile så har bare gjort
         // så når man trykker på et tip kommer man derover. lav gerne om!
-        Intent i = new Intent(MapActivity.this, ActivityProfile.class);
+        Intent i = new Intent(MapFragment.this, ActivityProfile.class);
         startActivity(i);
 
         //Toast.makeText(ActivityMapView.this, "tip", Toast.LENGTH_SHORT).show();
