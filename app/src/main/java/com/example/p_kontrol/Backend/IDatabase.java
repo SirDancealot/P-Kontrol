@@ -10,7 +10,15 @@ public interface IDatabase {
 
     List<ITipDTO> getTipList(LatLng location, double radius);
 
-    IUserDTO getUser(id id);
+    void createTip(ITipDTO tip);
+
+    void updateTip(ITipDTO tip);
+
+    IUserDTO getUser(int id);
+
+    boolean checkPAlert(LatLng location);
+
+
 
 
 

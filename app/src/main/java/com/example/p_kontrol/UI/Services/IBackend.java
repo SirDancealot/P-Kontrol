@@ -19,10 +19,10 @@ public interface IBackend {
 
      boolean isNewTipAvalible();
 
-     
+
      //User
 
-    IUserDTO getUser(id id);
+    IUserDTO getUser(int id);
 
 
 
