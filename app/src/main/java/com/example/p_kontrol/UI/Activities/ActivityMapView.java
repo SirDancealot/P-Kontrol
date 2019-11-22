@@ -236,6 +236,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
     private void menuBtn_FreePark(View view){
         Log.i("click","FreePark btn clicked \n");
+        setupTipBobblesPagerViewer();
     }
     private void menuBtn_Contribute(View view){
 
@@ -307,13 +308,13 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
     private void menuBtn_PVagt(View view){
         Log.i("click","P-Vagt btn clicked \n");
-
+/*
         updateDeviceLocation();
         Toast.makeText(ActivityMapView.this,
                 "Alarm P-vagt ved: " + String.valueOf(mLastKnownLocation.getLatitude())
                         + " " + String.valueOf(mLastKnownLocation.getLongitude()),
                 Toast.LENGTH_SHORT).show();
-
+*/
 
 
     }
@@ -321,7 +322,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     private void useTransaction (int containerId, Fragment fragment, boolean openOrClose){
         if(firstTransAction){
             transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.midScreenFragmentContainer, fragment_messageWrite);
+            transaction.add(containerId, fragment);
             transaction.commit();
             firstTransAction = false;
             Log.i("transaction","First TransAction");
@@ -329,16 +330,16 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
             if(!boolFragMessageWrite){
                 Log.i("transaction","Replacing fragment");
                 transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.midScreenFragmentContainer, fragment_messageWrite);
+                transaction.replace(containerId, fragment);
                 transaction.commit();
             }else{
                 transaction = fragmentManager.beginTransaction();
-                transaction.remove(fragment_messageWrite);
+                transaction.remove(fragment);
                 transaction.commit();
                 Log.i("transaction","Removing fragment");
             }
         }
-        boolFragMessageWrite = !boolFragMessageWrite;
+        openOrClose = !openOrClose;
 
         Log.i("click", "Contribute btn clicked \n");
 
@@ -377,7 +378,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
 
         getDeviceLocation();
     }
-
     public void moveCamara(LatLng geo){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(geo)
@@ -385,7 +385,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
     public void zoomCamara(int zoom){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(mMap.getCameraPosition().target)
@@ -393,7 +392,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         //mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
     public void updateMapTips(List<TipDTO> tips){
         for(TipDTO tip: tips){
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
@@ -409,14 +407,12 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         }
 
     }
-
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
     //https://stackoverflow.com/questions/14851641/change-marker-size-in-google-maps-api-v2
-
     private void getDeviceLocation() {
         try {
             Task locationResult = mFusedLocationProviderClient.getLastLocation();
@@ -464,8 +460,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         }
 
     }
-
-
     private int getNewID(){
         tempID++;
         return tempID;
