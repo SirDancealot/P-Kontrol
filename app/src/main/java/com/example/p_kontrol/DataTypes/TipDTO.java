@@ -1,4 +1,4 @@
-package com.example.p_kontrol.DataBase.dto;
+package com.example.p_kontrol.DataTypes;
 
 import android.location.Location;
 
