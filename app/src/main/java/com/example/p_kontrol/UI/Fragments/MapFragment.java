@@ -5,12 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.p_kontrol.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +25,16 @@ import com.example.p_kontrol.R;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements OnMapReadyCallback {
+
+
+    SupportMapFragment mapFragment;
+
+
+
+
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,8 +80,25 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
+
+
+
+
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        if (mapFragment == null){
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            mapFragment = SupportMapFragment.newInstance();
+            ft.replace(R.id.map, mapFragment).commit();
+
+        }
+        mapFragment.getMapAsync(this);
+
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,6 +123,11 @@ public class MapFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 
     /**
