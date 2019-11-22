@@ -10,9 +10,12 @@ public interface IBackend {
     List<ITipDTO> getTips(LatLng location);
     void createTip(ITipDTO tip);
     void rateTip(int star, ITipDTO tip);
+
     boolean checkPAlert(LatLng location);
+    int getPAlert(int metersAwayPVagtHasBeenSpotted);
+
     boolean isNewTipAvalible();
 
-     //User
+    //User
     IUserDTO getUser(int id);
 }
