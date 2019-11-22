@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.p_kontrol.DataBase.dao.ITipDAO;
 import com.example.p_kontrol.DataBase.dto.TipDTO;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;

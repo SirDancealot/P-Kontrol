@@ -10,7 +10,7 @@ public interface IDatabase {
 
     List<ITipDTO> getTipList(LatLng location, double radius);
 
-    IUserDTO getUser(id id);
+    IUserDTO getUser(int id);
 
 
 
