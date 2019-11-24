@@ -381,7 +381,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
 
         getDeviceLocation();
     }
-
     public void moveCamara(LatLng geo){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(geo)
@@ -389,7 +388,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
     public void zoomCamara(int zoom){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(mMap.getCameraPosition().target)
@@ -397,7 +395,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         //mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
     public void updateMapTips(List<TipDTO> tips){
         for(TipDTO tip: tips){
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
@@ -422,14 +419,12 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         }
 
     }
-
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
     //https://stackoverflow.com/questions/14851641/change-marker-size-in-google-maps-api-v2
-
     private void getDeviceLocation() {
         try {
             Task locationResult = mFusedLocationProviderClient.getLastLocation();
@@ -477,8 +472,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         }
 
     }
-
-
     private int getNewID(){
         tempID++;
         return tempID;
