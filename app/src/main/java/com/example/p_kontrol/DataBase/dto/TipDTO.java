@@ -14,6 +14,7 @@ public class TipDTO {
     private LatLng location;      //Dette er måske ikke den rigtige type lokation
     private String url;
     private LocalDate date;
+    private String type;
 
     public int getTipId() {
         return tipId;
@@ -70,5 +71,13 @@ public class TipDTO {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
