@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:visibility="visible"
     tools:context=".UI.Fragments.FragMessageWrite"
-    android:animateLayoutChanges="true"
+    android:clickable="true"
     >
 
     <!-- Content Container : This is where the Selection of Location, and Writing the text selecting category, happens  -->
