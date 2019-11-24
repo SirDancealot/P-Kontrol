@@ -26,6 +26,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     final String BOBBLE_NAME = "bobbleTip_name";
     final String BOBBLE_TEXT = "bobbleTip_text";
     final String BOBBLE_URL = "bobbleTip_URL";
+    final String BOBBLE_DATE = "bobbleTip_DATE";
 
     // regular Variables
     private View view, container,suroundings;
@@ -65,6 +66,8 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
             if (tipText.length() > 65) {
                 tipText = tipText.substring(0, 65) + "...";
+            } else {
+                readMore.setText(getArguments().getString(BOBBLE_DATE));
             }
             tip.setText(tipText);
 
@@ -114,7 +117,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 Log.i(TAG, "onClick:bobbelTip_container  ");
                 break;
             case (R.id.bobbelTip_readMore):
-                //todo Impl: exspand Tip Box.
+                readMore.setText(getArguments().getString(BOBBLE_DATE));
+                tip.setText(getArguments().getString(BOBBLE_TEXT));
+
+
                 Log.i(TAG, "onClick: ReadBox ");
                 break;
             default:

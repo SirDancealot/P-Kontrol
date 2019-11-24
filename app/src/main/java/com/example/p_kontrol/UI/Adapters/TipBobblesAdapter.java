@@ -21,6 +21,7 @@ public class TipBobblesAdapter extends FragmentStatePagerAdapter {
     final String BOBBLE_NAME = "bobbleTip_name";
     final String BOBBLE_TEXT = "bobbleTip_text";
     final String BOBBLE_URL = "bobbleTip_URL";
+    final String BOBBLE_DATE = "bobbleTip_DATE";
 
 
     // Variables
@@ -39,6 +40,7 @@ public class TipBobblesAdapter extends FragmentStatePagerAdapter {
         TipDTO thisElement = tips.get(position);
         bundle.putString(BOBBLE_NAME, thisElement.getAuthor() );
         bundle.putString(BOBBLE_TEXT, thisElement.getMessege() );
+        bundle.putString(BOBBLE_DATE, thisElement.getDate().toString().replace("\n", "") );
         try {
             bundle.putString(BOBBLE_URL, thisElement.getUrl());
         } catch (Exception e){

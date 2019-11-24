@@ -52,6 +52,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -280,6 +281,10 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
                 if (UserInfoDTO.getUserInfoDTO().getUrl() != null){
                     newTip.setUrl(UserInfoDTO.getUserInfoDTO().getUrl());
                 }
+                if (UserInfoDTO.getUserInfoDTO().getName() != null) {
+                    newTip.setAuthor(UserInfoDTO.getUserInfoDTO().getName());
+                }
+                newTip.setMessege("xxx"); // write tip
                 dtoList.add(newTip);
 
             }
@@ -484,12 +489,20 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         tip1.setUrl("https://graph.facebook.com/" + "1224894504" + "/picture?type=normal");
         tip1.setAuthor("August");
         tip1.setMessege(getResources().getString(R.string.tip1));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDate tempDate = LocalDate.of(2019, 2, 9);
+            tip1.setDate(tempDate);
+        }
         tip2 = new TipDTO();
         tip2.setTipId(getNewID());
         tip2.setLocation(new LatLng(	55.679098, 	12.569337));
         tip2.setUrl("https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal");
         tip2.setAuthor("Hans the Human");
         tip2.setMessege(getResources().getString(R.string.tip2));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDate tempDate = LocalDate.of(2019, 7, 13);
+            tip2.setDate(tempDate);
+        }
         dtoList.add(tip1);
         dtoList.add(tip2);
 
