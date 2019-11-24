@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,10 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
     Fragment stage0,stage1,stage2;
 
     public FragMessageWrite() {
+        fragmentList = null;
+        stage0 = null;
+        stage1 = null;
+        stage2 = null;
     }
 
     /* -- FRAGMENT IMPLEMENTATION -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
@@ -111,4 +116,5 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
             // Call Activity With Method.
         }
     }
+
 }

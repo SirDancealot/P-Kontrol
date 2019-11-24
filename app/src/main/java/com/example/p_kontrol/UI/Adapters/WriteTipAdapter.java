@@ -3,11 +3,12 @@ package com.example.p_kontrol.UI.Adapters;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class WriteTipAdapter extends FragmentStatePagerAdapter {
+public class WriteTipAdapter extends FragmentPagerAdapter {
 
     List<Fragment> fragmentList;
     public WriteTipAdapter(@NonNull FragmentManager fm, List<Fragment> fragmentList) {

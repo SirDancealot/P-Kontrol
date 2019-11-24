@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
@@ -63,7 +64,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     final String TAG = "tag";
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
-    boolean firstTransAction;
 
     ConstraintLayout rootContainer;
     View menuBtnContainer,dragHandle;
@@ -78,7 +78,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     boolean boolFragTopMessageBar   ;
 
     //ViewPager - Tip bobbles.
-    FragmentStatePagerAdapter adapter_TipBobbles;
+    FragmentPagerAdapter adapter_TipBobbles;
     ViewPager viewPager_tipBobles;
 
     //Fragments
@@ -125,7 +125,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
-        firstTransAction = true;
     }
 
     // setups
@@ -273,13 +272,9 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         mMap.setOnMapClickListener(null);
         contino.setVisibility(View.GONE);
 
-
-        if(!boolFragMessageWrite){
-            Log.v("bool","bool true");
-            fragment_messageWrite = new FragMessageWrite();
-        }
+        fragment_messageWrite = new FragMessageWrite();
         FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-
+        boolFragMessageWrite =!boolFragMessageWrite;
     }
 
 
@@ -365,17 +360,16 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
 
     private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
-        if(firstTransAction){
-            transaction = fragmentManager.beginTransaction();
-            transaction.add(containerId, fragment);
-            transaction.commit();
-            firstTransAction = false;
-            Log.i("transaction","First TransAction");
-        }else {
-            if(Open){
-                Log.v("transaction","Replacing fragment");
+
+            if(!Open){
                 transaction = fragmentManager.beginTransaction();
-                transaction.replace(containerId, fragment);
+                try {
+                    Log.v("transaction", "Adding fragment");
+                    transaction.add(containerId, fragment);
+                }catch (IllegalStateException e){
+                    Log.v("transaction", "Replacing fragment");
+                    transaction.replace(containerId, fragment);
+                }
                 transaction.commit();
             }else{
                 transaction = fragmentManager.beginTransaction();
@@ -383,11 +377,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
                 transaction.commit();
                 Log.v("transaction","Removing fragment");
             }
-        }
-        Open = !Open;
-
-        Log.i("click", "Contribute btn clicked \n");
-
     }
 
     // TipBobbles View Pager
@@ -553,11 +542,9 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         }
         dtoList.add(tip);
         zoomCamara(DEFAULT_ZOOM);
-
         updateMapTips(dtoList);
-
         FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-
+        boolFragMessageWrite =!boolFragMessageWrite;
     }
 
 

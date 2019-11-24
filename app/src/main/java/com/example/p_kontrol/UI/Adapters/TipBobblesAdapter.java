@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 
@@ -13,7 +14,7 @@ import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 
 import java.util.List;
 
-public class TipBobblesAdapter extends FragmentStatePagerAdapter {
+public class TipBobblesAdapter extends FragmentPagerAdapter {
 
     // Settings
     final int TIP_SHORT_MAX_LENGTH = 250;
