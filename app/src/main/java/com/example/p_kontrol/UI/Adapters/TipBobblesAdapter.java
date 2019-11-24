@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.p_kontrol.DataBase.dto.TipDTO;
+
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 
 import java.util.List;

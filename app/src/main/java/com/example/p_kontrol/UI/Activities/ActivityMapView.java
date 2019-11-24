@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,11 +25,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.Temp.tipDTO;
-import com.example.p_kontrol.DataBase.dao.ITipDAO;
-import com.example.p_kontrol.DataBase.dto.TipDTO;
-import com.example.p_kontrol.DataBase.dto.UserInfoDTO;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
@@ -69,7 +68,8 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     ConstraintLayout rootContainer;
     View menuBtnContainer,dragHandle;
     Button  menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
+            menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ,
+            contino;
     boolean drag_State;
 
     //Booleans for Open Closing Fragments.
@@ -120,11 +120,11 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        contino = findViewById(R.id.contino);
 
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
-        //setupTipBobblesPagerViewer();
         firstTransAction = true;
     }
 
@@ -150,6 +150,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         menuBtn_Community.setOnClickListener(this);
         menuBtn_ParkAlarm.setOnClickListener(this);
         menuBtn_PVagt.setOnClickListener(this);
+        contino.setOnClickListener(this);
 
         // ViewPager
         viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
@@ -167,20 +168,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         fragment_messageWrite = new FragMessageWrite()  ;
         fragment_tipBobble    = new FragTipBobble()     ;
         fragment_topMessage   = new FragTopMessageBar() ;
-    }
-    private void setupTipBobblesPagerViewer(){
-
-
-        List<tipDTO> tipsList = new LinkedList();
-        tipsList.add(new tipDTO("Mig","lad være at parkere her! det er min plads og kun min!!!! "));
-        tipsList.add(new tipDTO("Dig","sur gammel dame kaster egg efter min bil"));
-        tipsList.add(new tipDTO("bente"," fugle der skider på bilen hvis dine spejle ikke er dækkede"));
-        tipsList.add(new tipDTO("gurli"," ulovlig parking mellem 10 - 12. med mindre den er gul, eller det er onsdag"));
-        tipsList.add(new tipDTO("Bob"," ny besked "));
-
-        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
-        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-
     }
 
     // Listener
@@ -212,6 +199,9 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
                 break;
             case (R.id.menuBtn_PVagt):
                 menuBtn_PVagt(v);
+                break;
+            case (R.id.contino):
+                continueContribute();
                 break;
                 // TipBobbleViewPager
         }
@@ -247,16 +237,54 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
     private void menuBtn_Contribute(View view){
 
+        contino.setVisibility(View.VISIBLE);
+        contino.setEnabled(false);
+        menu_dragHandle(view);
+
+        zoomCamara(17);
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return true;
+            }
+        });
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                contino.setEnabled(true);
+                mMap.clear();
+                currentMarker = latLng;
+                mMap.addMarker(new MarkerOptions().position(latLng));
+            }
+        });
+
+
+
+
+
+        Log.i("click", "Contribute btn clicked \n");
+
+    }
+
+    private void continueContribute(){
+
+
+        mMap.clear();
+        mMap.setOnMapClickListener(null);
+        contino.setVisibility(View.GONE);
+
+
         if(!boolFragMessageWrite){
             Log.v("bool","bool true");
             fragment_messageWrite = new FragMessageWrite();
         }
         FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-        boolFragMessageWrite = !boolFragMessageWrite;
-
-        Log.i("click", "Contribute btn clicked \n");
 
     }
+
+
+
+
     private void menuBtn_Community(View view){
         Log.i("click","Community btn clicked \n");
 
@@ -344,7 +372,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
             firstTransAction = false;
             Log.i("transaction","First TransAction");
         }else {
-            if(!boolFragMessageWrite){
+            if(!openOrClose){
                 Log.i("transaction","Replacing fragment");
                 transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.midScreenFragmentContainer, fragment_messageWrite);
@@ -356,7 +384,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
                 Log.i("transaction","Removing fragment");
             }
         }
-        boolFragMessageWrite = !boolFragMessageWrite;
+        openOrClose = !openOrClose;
 
         Log.i("click", "Contribute btn clicked \n");
 
@@ -509,8 +537,32 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
 
 
-    public void setCurrentTip(TipDTO tip){
-        currentTip = tip;
+    public void makeTip(TipDTO tip){
+
+
+        tip.setLocation(currentMarker);
+        tip.setTipId(getNewID());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            tip.setDate(LocalDate.now());
+        }
+        if (UserInfoDTO.getUserInfoDTO().getUrl() != null){
+            tip.setUrl(UserInfoDTO.getUserInfoDTO().getUrl());
+        }
+        if (UserInfoDTO.getUserInfoDTO().getName() != null) {
+            tip.setAuthor(UserInfoDTO.getUserInfoDTO().getName());
+        }
+        dtoList.add(tip);
+        zoomCamara(DEFAULT_ZOOM);
+
+        updateMapTips(dtoList);
+
+        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+
     }
+
+
+
+
+
 
 }

@@ -46,6 +46,6 @@ public class WriteTip_Stage0 extends Fragment implements  IWriteTipStage{
 
     @Override
     public String getOther() {
-        return category.getSelectedItem().toString();
+        return null;
     }
 }

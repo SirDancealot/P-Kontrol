@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.UI.Adapters.WriteTipAdapter;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.IWriteTipStage;
@@ -89,7 +90,8 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
             TipDTO dto = new TipDTO();
             dto.setMessege(tipText);
 
-
+            ActivityMapView parentAct = (ActivityMapView) getActivity();
+            parentAct.makeTip(dto);
             // Call Activity With Method.
         }
     }
