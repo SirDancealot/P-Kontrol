@@ -37,7 +37,7 @@ public class WriteTip_Stage2 extends Fragment implements IWriteTipStage {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //parentFrag.finishTip();
+                parentFrag.finishTip();
             }
         });
 

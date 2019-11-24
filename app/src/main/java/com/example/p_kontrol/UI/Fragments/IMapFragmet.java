@@ -1,6 +1,6 @@
 package com.example.p_kontrol.UI.Fragments;
 
-import com.example.p_kontrol.DataBase.dto.TipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;

@@ -7,7 +7,7 @@
     <color name="colorSecondary">       #ADDCF1</color><!-- lightBlue -->
     <color name="colorHighlight">       #86DEB7</color><!-- lightGreen -->
     <color name="colorHighlightSecond"> #ADEEE3</color><!-- lighterGreen -->
-    <color name="colorAccent">#D8AF1B</color>
+    <color name="colorAccent">#FFCE64</color>
 
     <color name="colorScheme1">#93ABBF</color>
     <color name="colorScheme2">#619CCB</color>

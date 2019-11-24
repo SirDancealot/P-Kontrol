@@ -1,19 +1,6 @@
 package com.example.p_kontrol.UI.Activities;
 
 import android.Manifest;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
-
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -26,6 +13,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.R;
+import com.example.p_kontrol.Temp.tipDTO;
 import com.example.p_kontrol.DataBase.dao.ITipDAO;
 import com.example.p_kontrol.DataBase.dto.TipDTO;
 import com.example.p_kontrol.DataBase.dto.UserInfoDTO;
@@ -33,8 +33,8 @@ import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
-import com.example.p_kontrol.R;
-import com.example.p_kontrol.Temp.tipDTO;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,8 +44,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -98,6 +96,8 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     private Button center;
     private static final int DEFAULT_ZOOM = 15;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+
+    private TipDTO currentTip;
 
 
     // temp hardcode
@@ -251,7 +251,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
             Log.v("bool","bool true");
             fragment_messageWrite = new FragMessageWrite();
         }
-        useTransaction (R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
         boolFragMessageWrite = !boolFragMessageWrite;
 
         Log.i("click", "Contribute btn clicked \n");
@@ -336,7 +336,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
 
     }
 
-    private void useTransaction (int containerId, Fragment fragment, boolean openOrClose){
+    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean openOrClose){
         if(firstTransAction){
             transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.midScreenFragmentContainer, fragment_messageWrite);
@@ -506,6 +506,11 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         dtoList.add(tip1);
         dtoList.add(tip2);
 
+    }
+
+
+    public void setCurrentTip(TipDTO tip){
+        currentTip = tip;
     }
 
 }
