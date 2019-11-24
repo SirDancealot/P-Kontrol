@@ -6,6 +6,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.ChangeBounds;
@@ -49,10 +50,20 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-        ExampleDB db = new ExampleDB();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            db.testDB();
-        }
+
+
+
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                ExampleDB db = new ExampleDB();
+                db.testDB();
+                return null;
+            }
+        };
+        task.execute();
+
+
     }
 
     public void splashTransition() {
