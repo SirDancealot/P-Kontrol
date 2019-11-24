@@ -364,27 +364,27 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
 
     }
 
-    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean openOrClose){
+    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
         if(firstTransAction){
             transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.midScreenFragmentContainer, fragment_messageWrite);
+            transaction.add(containerId, fragment);
             transaction.commit();
             firstTransAction = false;
             Log.i("transaction","First TransAction");
         }else {
-            if(!openOrClose){
-                Log.i("transaction","Replacing fragment");
+            if(Open){
+                Log.v("transaction","Replacing fragment");
                 transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.midScreenFragmentContainer, fragment_messageWrite);
+                transaction.replace(containerId, fragment);
                 transaction.commit();
             }else{
                 transaction = fragmentManager.beginTransaction();
-                transaction.remove(fragment_messageWrite);
+                transaction.remove(fragment);
                 transaction.commit();
-                Log.i("transaction","Removing fragment");
+                Log.v("transaction","Removing fragment");
             }
         }
-        openOrClose = !openOrClose;
+        Open = !Open;
 
         Log.i("click", "Contribute btn clicked \n");
 
