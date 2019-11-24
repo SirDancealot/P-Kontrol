@@ -424,17 +424,10 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    // kald den metode du gerne vil have
-                    Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
-
                     adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
                     viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                     viewPager_tipBobles.setCurrentItem(Integer.parseInt(marker.getTitle()) - 1);
                     viewPager_tipBobles.setVisibility(View.VISIBLE);
-
-
-
-
                     return true;
                 }
             });

@@ -27,6 +27,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     final String BOBBLE_TEXT = "bobbleTip_text";
     final String BOBBLE_URL = "bobbleTip_URL";
     final String BOBBLE_DATE = "bobbleTip_DATE";
+    String URL;
 
     // regular Variables
     private View view, container,suroundings;
@@ -57,12 +58,17 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         try{
 
             //name of Profile
-            name.setText(getArguments().getString(BOBBLE_NAME));
-            System.out.println();
+
+            if (getArguments().getString(BOBBLE_NAME) != null){
+                name.setText(getArguments().getString(BOBBLE_NAME));
+            } else {
+                name.setText("Anonym");
+            }
+
+
 
             // tip Shortend Text.
             String tipText = getArguments().getString(BOBBLE_TEXT);
-            System.out.println(tipText);
 
             if (tipText.length() > 65) {
                 tipText = tipText.substring(0, 65) + "...";
@@ -84,20 +90,20 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         view.setOnClickListener(this);
         readMore.setOnClickListener(this);
 
-        System.out.println(getArguments().getString(BOBBLE_URL));
 
-
-        try {
-            System.out.println(getArguments().getString(BOBBLE_URL));
-            String URL = getArguments().getString(BOBBLE_URL);
+        if (getArguments().getString(BOBBLE_URL) != null){
+            System.out.println("vi går ind i den forkerte");
+            System.out.println("--->" + getArguments().getString(BOBBLE_URL) + "<---");
+            URL = getArguments().getString(BOBBLE_URL);
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.dontAnimate();
             //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
             Glide.with(FragTipBobble.this).load(URL).into(profImg);
-        } catch (Exception e){
+        } else {
+            System.out.println("vi går ind i den rigtige");
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.dontAnimate();
-            Glide.with(FragTipBobble.this).load(R.drawable.logo).into(profImg);
+            Glide.with(FragTipBobble.this).load(R.drawable.anonym).into(profImg);
         }
 
 
