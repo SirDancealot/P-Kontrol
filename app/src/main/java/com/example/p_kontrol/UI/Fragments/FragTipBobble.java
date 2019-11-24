@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.R;
 
@@ -23,6 +25,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     // Argument Keys
     final String BOBBLE_NAME = "bobbleTip_name";
     final String BOBBLE_TEXT = "bobbleTip_text";
+    final String BOBBLE_URL = "bobbleTip_URL";
 
     // regular Variables
     private View view, container,suroundings;
@@ -54,11 +57,18 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
             //name of Profile
             name.setText(getArguments().getString(BOBBLE_NAME));
+            System.out.println();
 
             // tip Shortend Text.
             String tipText = getArguments().getString(BOBBLE_TEXT);
-            tipText = tipText.substring(0, Math.min(tipText.length(), TIP_SHORT_MAX_LENGTH));
+            System.out.println(tipText);
+
+            if (tipText.length() > 65) {
+                tipText = tipText.substring(0, 65) + "...";
+            }
             tip.setText(tipText);
+
+
 
         }catch (Exception e){
             // if nothing is recieved.
@@ -71,17 +81,22 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         view.setOnClickListener(this);
         readMore.setOnClickListener(this);
 
+        System.out.println(getArguments().getString(BOBBLE_URL));
 
-        /*RequestOptions requestOptions = new RequestOptions();
-        requestOptions.dontAnimate();
-        Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
-        string = getString(R.string.tip1);
-        if (string.length() > 65)
-        {
-            string = string.substring(0, 65) + "...";
+
+        try {
+            System.out.println(getArguments().getString(BOBBLE_URL));
+            String URL = getArguments().getString(BOBBLE_URL);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.dontAnimate();
+            //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
+            Glide.with(FragTipBobble.this).load(URL).into(profImg);
+        } catch (Exception e){
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.dontAnimate();
+            Glide.with(FragTipBobble.this).load(R.drawable.logo).into(profImg);
         }
-        tip.setText(string);
-        */
+
 
 
         return view;

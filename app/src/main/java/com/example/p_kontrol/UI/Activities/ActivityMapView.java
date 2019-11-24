@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.p_kontrol.DataBase.dao.ITipDAO;
 import com.example.p_kontrol.DataBase.dto.TipDTO;
+import com.example.p_kontrol.DataBase.dto.UserInfoDTO;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
@@ -48,6 +50,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -111,6 +114,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_map_view);
 
         // maps
+        setUpDemoTip();
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -119,7 +123,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
-        setupTipBobblesPagerViewer();
+        //setupTipBobblesPagerViewer();
         firstTransAction = true;
     }
 
@@ -165,6 +169,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
     private void setupTipBobblesPagerViewer(){
 
+
         List<tipDTO> tipsList = new LinkedList();
         tipsList.add(new tipDTO("Mig","lad være at parkere her! det er min plads og kun min!!!! "));
         tipsList.add(new tipDTO("Dig","sur gammel dame kaster egg efter min bil"));
@@ -172,7 +177,7 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         tipsList.add(new tipDTO("gurli"," ulovlig parking mellem 10 - 12. med mindre den er gul, eller det er onsdag"));
         tipsList.add(new tipDTO("Bob"," ny besked "));
 
-        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager,tipsList);
+        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);
 
     }
@@ -236,6 +241,8 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     }
     private void menuBtn_FreePark(View view){
         Log.i("click","FreePark btn clicked \n");
+        //setupTipBobblesPagerViewer();
+        viewPager_tipBobles.setVisibility(View.VISIBLE);
     }
     private void menuBtn_Contribute(View view){
 
@@ -267,6 +274,12 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
                 TipDTO newTip = new TipDTO();
                 newTip.setLocation(currentMarker);
                 newTip.setTipId(getNewID());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    newTip.setDate(LocalDate.now());
+                }
+                if (UserInfoDTO.getUserInfoDTO().getUrl() != null){
+                    newTip.setUrl(UserInfoDTO.getUserInfoDTO().getUrl());
+                }
                 dtoList.add(newTip);
 
             }
@@ -358,15 +371,6 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
         center = findViewById(R.id.centerBut);
         center.setOnClickListener(this);
 
-        tip1 = new TipDTO();
-        tip1.setTipId(getNewID());
-        tip1.setLocation(new LatLng(	55.676098, 	12.568337));
-        tip2 = new TipDTO();
-        tip2.setTipId(getNewID());
-        tip2.setLocation(new LatLng(	55.679098, 	12.569337));
-        dtoList.add(tip1);
-        dtoList.add(tip2);
-
 
         updateMapTips(dtoList);
 
@@ -403,6 +407,15 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
                 public boolean onMarkerClick(Marker marker) {
                     // kald den metode du gerne vil have
                     Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
+
+                    adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
+                    viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+                    viewPager_tipBobles.setCurrentItem(Integer.parseInt(marker.getTitle()) - 1);
+                    viewPager_tipBobles.setVisibility(View.VISIBLE);
+
+
+
+
                     return true;
                 }
             });
@@ -469,6 +482,24 @@ public class ActivityMapView extends AppCompatActivity implements OnMapReadyCall
     private int getNewID(){
         tempID++;
         return tempID;
+    }
+
+    private void setUpDemoTip(){
+        tip1 = new TipDTO();
+        tip1.setTipId(getNewID());
+        tip1.setLocation(new LatLng(	55.676098, 	12.568337));
+        tip1.setUrl("https://graph.facebook.com/" + "1224894504" + "/picture?type=normal");
+        tip1.setAuthor("August");
+        tip1.setMessege(getResources().getString(R.string.tip1));
+        tip2 = new TipDTO();
+        tip2.setTipId(getNewID());
+        tip2.setLocation(new LatLng(	55.679098, 	12.569337));
+        tip2.setUrl("https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal");
+        tip2.setAuthor("Hans the Human");
+        tip2.setMessege(getResources().getString(R.string.tip2));
+        dtoList.add(tip1);
+        dtoList.add(tip2);
+
     }
 
 }

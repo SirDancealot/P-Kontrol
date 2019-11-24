@@ -4,12 +4,16 @@ import android.location.Location;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.time.LocalDate;
+
 public class TipDTO {
 
     private int tipId;
     private String author;
     private String messege;
     private LatLng location;      //Dette er måske ikke den rigtige type lokation
+    private String url;
+    private LocalDate date;
 
     public int getTipId() {
         return tipId;
@@ -50,5 +54,21 @@ public class TipDTO {
                 ", messege='" + messege + '\'' +
                 ", location=" + location +
                 '}';
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }
