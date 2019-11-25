@@ -17,6 +17,4 @@ public interface ITipDTO {
     Date getCreationDate();
 
 
-
-
 }

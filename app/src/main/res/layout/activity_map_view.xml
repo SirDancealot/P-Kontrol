@@ -29,6 +29,17 @@
 
 
         <Button
+            android:id="@+id/contino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/midScreenFragmentContainer"
+            app:layout_constraintVertical_bias="0.76" />
+
+        <Button
             android:id="@+id/centerBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,19 +60,6 @@
             app:layout_constraintTop_toTopOf="parent"
 
             >
-
-            <!-- Write Tip  -->
-
-            <FrameLayout
-                android:id="@+id/midScreenFragmentContainer"
-                android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                app:layout_constraintBottom_toTopOf="@+id/fragContainer_menu"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
 
             <!-- top message box -->
             <FrameLayout
@@ -102,6 +100,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             />
+        <!-- Write Tip  -->
+        <FrameLayout
+            android:id="@+id/midScreenFragmentContainer"
+            android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

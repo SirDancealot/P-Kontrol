@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.R;
 
@@ -23,6 +25,9 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     // Argument Keys
     final String BOBBLE_NAME = "bobbleTip_name";
     final String BOBBLE_TEXT = "bobbleTip_text";
+    final String BOBBLE_URL = "bobbleTip_URL";
+    final String BOBBLE_DATE = "bobbleTip_DATE";
+    String URL;
 
     // regular Variables
     private View view, container,suroundings;
@@ -53,12 +58,26 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         try{
 
             //name of Profile
-            name.setText(getArguments().getString(BOBBLE_NAME));
+
+            if (getArguments().getString(BOBBLE_NAME) != null){
+                name.setText(getArguments().getString(BOBBLE_NAME));
+            } else {
+                name.setText("Anonym");
+            }
+
+
 
             // tip Shortend Text.
             String tipText = getArguments().getString(BOBBLE_TEXT);
-            tipText = tipText.substring(0, Math.min(tipText.length(), TIP_SHORT_MAX_LENGTH));
+
+            if (tipText.length() > 65) {
+                tipText = tipText.substring(0, 65) + "...";
+            } else {
+                readMore.setText(getArguments().getString(BOBBLE_DATE));
+            }
             tip.setText(tipText);
+
+
 
         }catch (Exception e){
             // if nothing is recieved.
@@ -72,16 +91,21 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         readMore.setOnClickListener(this);
 
 
-        /*RequestOptions requestOptions = new RequestOptions();
-        requestOptions.dontAnimate();
-        Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
-        string = getString(R.string.tip1);
-        if (string.length() > 65)
-        {
-            string = string.substring(0, 65) + "...";
+        if (getArguments().getString(BOBBLE_URL) != null){
+            System.out.println("vi går ind i den forkerte");
+            System.out.println("--->" + getArguments().getString(BOBBLE_URL) + "<---");
+            URL = getArguments().getString(BOBBLE_URL);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.dontAnimate();
+            //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
+            Glide.with(FragTipBobble.this).load(URL).into(profImg);
+        } else {
+            System.out.println("vi går ind i den rigtige");
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.dontAnimate();
+            Glide.with(FragTipBobble.this).load(R.drawable.anonym).into(profImg);
         }
-        tip.setText(string);
-        */
+
 
 
         return view;
@@ -99,7 +123,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 Log.i(TAG, "onClick:bobbelTip_container  ");
                 break;
             case (R.id.bobbelTip_readMore):
-                //todo Impl: exspand Tip Box.
+                readMore.setText(getArguments().getString(BOBBLE_DATE));
+                tip.setText(getArguments().getString(BOBBLE_TEXT));
+
+
                 Log.i(TAG, "onClick: ReadBox ");
                 break;
             default:
