@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class TipDTO implements ITipDTO {
 
+    private UserDTO author;
     private String message;
     private GeoPoint location;
     private int rating;
@@ -36,7 +37,7 @@ public class TipDTO implements ITipDTO {
 
     @Override
     public IUserDTO getAuthor() {
-        return null;//TODO implement this
+        return author;
     }
 
     @Override
@@ -60,5 +61,18 @@ public class TipDTO implements ITipDTO {
     @Override
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TipDTO{" +
+                "author='" + author + '\'' +
+                ", messege='" + message + '\'' +
+                ", location=" + location +
+                '}';
+    }
+
+    public void setAuthor(UserDTO author) {
+        this.author = author;
     }
 }

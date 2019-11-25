@@ -6,23 +6,18 @@ import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.example.p_kontrol.UI.Services.IUserDTO;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-import androidx.annotation.NonNull;
-
-public class FireStoreDAO implements IDatabase {
+public class FirestoreDAO implements IDatabase {
     String TAG = "FirestoreDAO";
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
