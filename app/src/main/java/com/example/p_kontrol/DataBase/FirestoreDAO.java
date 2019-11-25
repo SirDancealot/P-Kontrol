@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 
-public class FireStoreDAO implements IDatabase {
+public class FirestoreDAO implements IDatabase {
     String TAG = "FirestoreDAO";
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
