@@ -1,7 +1,5 @@
-package com.example.p_kontrol.DataBase;
+package com.example.p_kontrol.UI.Services;
 
-import com.example.p_kontrol.UI.Services.ITipDTO;
-import com.example.p_kontrol.UI.Services.IUserDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -16,7 +14,12 @@ public class TipDTO implements ITipDTO {
     private Date creationDate;
 
 
-    TipDTO(){}
+    public TipDTO(String message, int rating, UserDTO author, GeoPoint location, Date creationDate){
+        this.author = author;
+        this.rating = rating;
+        this.location = location;
+        this.creationDate = creationDate;
+    }
 
 
     public void setMessage(String message) {
@@ -51,6 +54,11 @@ public class TipDTO implements ITipDTO {
             return new LatLng(location.getLatitude(), location.getLongitude());
         else
             return null;
+    }
+
+    @Override
+    public void setLocation(LatLng location) {
+
     }
 
     @Override

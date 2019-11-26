@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.example.p_kontrol.UI.Services.IUserDTO;
+import com.example.p_kontrol.UI.Services.TipDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -16,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
-
-import androidx.annotation.NonNull;
 
 public class FirestoreDAO implements IDatabase {
     String TAG = "FirestoreDAO";

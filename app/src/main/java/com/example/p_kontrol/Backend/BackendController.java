@@ -19,9 +19,6 @@ public class BackendController implements IBackend {
 
     @Override
     public void createTip(ITipDTO tip) {
-        if(tip.getMessage() == ""){
-
-        }
 
     }
 
@@ -44,4 +41,8 @@ public class BackendController implements IBackend {
     public IUserDTO getUser(int id) {
         return null;
     }
+
+
+
+
 }
