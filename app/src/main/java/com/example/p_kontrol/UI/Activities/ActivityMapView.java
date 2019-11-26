@@ -1,12 +1,10 @@
 package com.example.p_kontrol.UI.Activities;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -23,15 +21,12 @@ import com.example.p_kontrol.UI.Contexts.MapContext;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
-import com.example.p_kontrol.UI.Fragments.IFragWriteMessageListener;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,8 +43,8 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     ConstraintLayout rootContainer;
     View menuBtnContainer,dragHandle;
     Button  menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ,
-            contino;
+            menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
+
     boolean drag_State;
 
     //Booleans for Open Closing Fragments.
@@ -68,25 +63,13 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
     // Maps
     MapContext mapContext;
-
     IMapContextListener mapListener;
     private GoogleMap googleMap;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean mLocationPermissionGranted;
-    private final LatLng mDefaultLocation = new LatLng(55.676098, 	12.56833);
-    private LatLng currentMarker;
-    private Location mLastKnownLocation;
-    private Button center;
-    private static final int DEFAULT_ZOOM = 15;
+   //private final LatLng mDefaultLocation = new LatLng(55.676098, 	12.56833);
+    private Button centerBtn, acceptBtn;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     private TipDTO currentTip;
-
-
-    // temp hardcode
-    List<ITipDTO> dtoList = new ArrayList<>();
-    ITipDTO tip1, tip2;
-
 
     private boolean tempBool = false;
     private int tempID = 0;
@@ -97,14 +80,10 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
 
-        // mapContext
-        setupMap();
-
-        contino = findViewById(R.id.contino);
-
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
+        setupMap();
     }
 
     // setups belonging to onCreate
@@ -129,7 +108,12 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         menuBtn_Community.setOnClickListener(this);
         menuBtn_ParkAlarm.setOnClickListener(this);
         menuBtn_PVagt.setOnClickListener(this);
-        contino.setOnClickListener(this);
+
+        //Map Buttons
+        acceptBtn = findViewById(R.id.contino);
+        centerBtn = findViewById(R.id.centerBut);
+        // map buttons recieve listeners inside of MapContext.
+
 
         // ViewPager
         viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
@@ -181,14 +165,32 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
                 viewPager_tipBobles.setVisibility(View.VISIBLE);*/
             }
         };
+        SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+        if(mapFrag == null){
+            Log.e(TAG, "setupMap ERROR " );
+        }
+        if(centerBtn == null){
+            Log.e(TAG, "setupMap ERROR centerBtn" );
+        }
+        if(acceptBtn == null){
+            Log.e(TAG, "setupMap ERROR acceptBtn" );
+        }
+        if(mapListener == null){
+            Log.e(TAG, "setupMap ERROR  mapListener" );
+        }
+
+
         mapContext = new MapContext(
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map),
+                mapFrag,
                 this,
                 googleMap,
-                center,
+                centerBtn,
+                acceptBtn,
                 mapListener
         );
     }
+
     @Override
     public void onClick(View v){
 
@@ -222,7 +224,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    // Dragging Handle
     private void menu_dragHandle( View view ){
 
         // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
@@ -237,8 +238,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         }
 
     }
-
-    // Menu Buttons on click functions.
     private void menuBtn_profile(View view){
         Log.i("click","Profile btn clicked \n");
         Intent changeActivity = new Intent( this , ActivityProfile.class );
@@ -252,10 +251,10 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     private void menuBtn_Contribute(View view){
         // Closing the Menu down.
         menu_dragHandle(view);
-        mapContext.setStateLocationSelect();
+        //mapContext.setStateLocationSelect();
 
-        contino.setVisibility(View.VISIBLE);
-        contino.setEnabled(false);
+        acceptBtn.setVisibility(View.VISIBLE);
+        acceptBtn.setEnabled(false);
         // todo Giv Map Context en listener at gi til Button OnClick.
 
 
@@ -264,80 +263,13 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     }
     private void menuBtn_Community(View view){
         Log.i("click","Community btn clicked \n");
-/*
 
-        if (tempBool){
-           // zoomCamara(DEFAULT_ZOOM);
-
-            // temp løsning
-            String text;
-            if (currentMarker == null) {
-                text = "Ingen marker sat";
-            } else {
-                // lav sej metode her!
-                text = currentMarker.toString();
-
-                TipDTO newTip = new TipDTO();
-                newTip.setLocation(currentMarker);
-              //  newTip.setTipId(getNewID());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    newTip.setDate(LocalDate.now());
-                }
-                if (UserInfoDTO.getUserInfoDTO().getUrl() != null){
-                    newTip.setUrl(UserInfoDTO.getUserInfoDTO().getUrl());
-                }
-                if (UserInfoDTO.getUserInfoDTO().getName() != null) {
-                    newTip.setAuthor(UserInfoDTO.getUserInfoDTO().getName());
-                }
-                newTip.setMessage("xxx"); // write tip
-                dtoList.add(newTip);
-
-            }
-
-            Toast.makeText(ActivityMapView.this, text, Toast.LENGTH_SHORT).show();
-
-
-            mapContext.clear();
-            mapContext.setOnMapClickListener(null);
-
-            tempBool = false;
-            currentMarker = null;
-
-            updateMapTips(dtoList);
-        } else {
-            zoomCamara(17);
-            mapContext.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                  return true;
-                }
-            });
-            mapContext.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng latLng) {
-                    mapContext.clear();
-                    currentMarker = latLng;
-                    mapContext.addMarker(new MarkerOptions().position(latLng));
-                }
-            });
-            tempBool = true;
-        }
-
-*/
     }
     private void menuBtn_ParkAlarm(View view){
         Log.i("click","Park Alarm btn clicked \n");
     }
     private void menuBtn_PVagt(View view){
         Log.i("click","P-Vagt btn clicked \n");
-
-       // updateDeviceLocation();
-        Toast.makeText(ActivityMapView.this,
-                "Alarm P-vagt ved: " + String.valueOf(mLastKnownLocation.getLatitude())
-                        + " " + String.valueOf(mLastKnownLocation.getLongitude()),
-                Toast.LENGTH_SHORT).show();
-
-
 
     }
 
@@ -368,128 +300,4 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         viewPager_tipBobles.setVisibility(View.GONE);
         Log.i(TAG, "CloseTipBobbleViewPager: Closed");
     }
-
-
-
-   /* private LatLng getDeviceLocation() {
-        try {
-            Task locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener(this, new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        // Set the mapContext's camera position to the current location of the device.
-                        mLastKnownLocation = (Location) task.getResult();
-                        LatLng position = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                        mapContext.moveCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM));
-
-                    } else {
-                        mapContext.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                        mapContext.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                }
-            });
-
-        } catch(SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
-        return new LatLng(mLastKnownLocation.getAltitude(),mLastKnownLocation.getLongitude()) ;
-    }*/
-/*
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mapContext = googleMap;
-        center = findViewById(R.id.centerBut);
-        center.setOnClickListener(this);
-
-
-        updateMapTips(dtoList);
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mapContext.setMyLocationEnabled(true);
-        }
-
-        getDeviceLocation();
-    }*/
-
-/*
-    public void updateMapTips(List<TipDTO> tips){
-        for(TipDTO tip: tips){
-            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
-            mapContext.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(tip.getTipId())));
-            mapContext.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    // kald den metode du gerne vil have
-                    Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
-
-                    adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
-                    viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-                    viewPager_tipBobles.setCurrentItem(Integer.parseInt(marker.getTitle()) - 1);
-                    viewPager_tipBobles.setVisibility(View.VISIBLE);
-
-                    return true;
-                }
-            });
-        }
-
-    }*/
-
-
-/*
-    private void updateDeviceLocation() {
-
-        try {
-            Task locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener(this, new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        // Set the mapContext's camera position to the current location of the device.
-                        mLastKnownLocation = (Location) task.getResult();
-
-                    } else {
-                        mapContext.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                        mapContext.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                }
-            });
-
-        } catch(SecurityException e)  {
-            Log.e("Exception: %s", e.getMessage());
-        }
-
-    }
-
-    private int getNewID(){
-        tempID++;
-        return tempID;
-    }
-    private void setUpDemoTip(){
-        tip1 = new TipDTO();
-       // tip1.setTipId(getNewID());
-        tip1.setLocation(new LatLng(	55.676098, 	12.568337));
-      //  tip1.setUrl("https://graph.facebook.com/" + "1224894504" + "/picture?type=normal");
-        tip1.setAuthor("August");
-        tip1.setMessage(getResources().getString(R.string.tip1));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate tempDate = LocalDate.of(2019, 2, 9);
-            tip1.setDate(tempDate);
-        }
-        tip2 = new TipDTO();
-      //  tip2.setTipId(getNewID());
-        tip2.setLocation(new LatLng(	55.679098, 	12.569337));
-      //  tip2.setUrl("https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal");
-        tip2.setAuthor("Hans the Human");
-        tip2.setMessage(getResources().getString(R.string.tip2));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate tempDate = LocalDate.of(2019, 7, 13);
-            tip2.setDate(tempDate);
-        }
-        dtoList.add(tip1);
-        dtoList.add(tip2);
-
-    }
-*/
 }
