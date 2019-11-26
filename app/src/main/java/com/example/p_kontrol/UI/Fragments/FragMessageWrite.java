@@ -115,6 +115,7 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
 
             if(listener != null){
                 listener.OnMessageDone(dto);
+                listener.OnClose();
             }
 
 

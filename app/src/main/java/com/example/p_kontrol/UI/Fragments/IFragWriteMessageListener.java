@@ -4,7 +4,8 @@ import com.example.p_kontrol.UI.Services.ITipDTO;
 
 public interface IFragWriteMessageListener {
 
-    ITipDTO OnMessageDone( ITipDTO dto );
+    void OnMessageDone( ITipDTO dto );
+    void OnClose();
 
 }
 
