@@ -1,39 +1,24 @@
 package com.example.p_kontrol.UI.Activities;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.Temp.tipDTO;
-import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Contexts.IMapContextListener;
-import com.example.p_kontrol.UI.Contexts.IMapInteractionListener;
-import com.example.p_kontrol.UI.Contexts.IState;
 import com.example.p_kontrol.UI.Contexts.MapContext;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
@@ -41,24 +26,12 @@ import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.UI.Fragments.IFragWriteMessageListener;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -94,7 +67,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     FragTopMessageBar   fragment_topMessage     ;
 
     // Maps
-    MapContext map;
+    MapContext mapContext;
 
     IMapContextListener mapListener;
     private GoogleMap googleMap;
@@ -124,8 +97,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
 
-        // maps
-        setUpDemoTip();
+        // mapContext
         setupMap();
 
         contino = findViewById(R.id.contino);
@@ -195,10 +167,21 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onUpdate(){
-                map.setListOfTipDto(null);
+                // todo get backend List of Tips.
+
+                List<ITipDTO> newListofDTOs = null;
+                mapContext.setListOfTipDto(null);
+/*
+                // kald den metode du gerne vil have
+                Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
+
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, newListofDTOs);
+                viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+                viewPager_tipBobles.setCurrentItem(Integer.parseInt(marker.getTitle()) - 1);
+                viewPager_tipBobles.setVisibility(View.VISIBLE);*/
             }
         };
-        map = new MapContext(
+        mapContext = new MapContext(
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map),
                 this,
                 googleMap,
@@ -208,9 +191,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     }
     @Override
     public void onClick(View v){
-        if (v == center){
-            getDeviceLocation();
-        }
+
         switch(v.getId()){
             case ( R.id.menuBtn_draggingHandle):
                 menu_dragHandle(v);
@@ -269,86 +250,24 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         viewPager_tipBobles.setVisibility(View.VISIBLE);
     }
     private void menuBtn_Contribute(View view){
-        // this is a Large method,
-
         // Closing the Menu down.
         menu_dragHandle(view);
+        mapContext.setStateLocationSelect();
 
-
-  //      mapContext.setState(ChooseLocationState(Button continueBtn));
-        //Set Markers to do nothing onClick.
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                return true;
-            }
-        });
-
-        //set CurrentMarker to current Position.
-        map.addMarker(new MarkerOptions().position(getDeviceLocation()));
-
-        //setMapClickListener to replace the Current Marker.
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                contino.setEnabled(true);
-                map.clear();
-                currentMarker = latLng;
-                map.addMarker(new MarkerOptions().position(latLng));
-            }
-        });
-
-        // Show Accept Location Button .
         contino.setVisibility(View.VISIBLE);
         contino.setEnabled(false);
-        contino.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // todo Giv Map Context en listener at gi til Button OnClick.
 
-//  ------------------------------- INSIDE THE BUTTON CLICK -------------------------------
-
-                map.clear();
-                contino.setVisibility(View.GONE);
-
-                fragment_messageWrite = new FragMessageWrite();
-                FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-                boolFragMessageWrite =!boolFragMessageWrite;
-
-                fragment_messageWrite.setFragWriteMessageListener(new IFragWriteMessageListener() {
-                    @Override
-                    public void OnMessageDone(ITipDTO dto) {
-
-                        dto.setLocation(currentMarker);
-
-                        // todo give a User to the Tip.
-                        dtoList.add(dto);
-                        zoomCamara(DEFAULT_ZOOM);
-                        updateMapTips(dtoList);
-
-                    }
-
-                    @Override
-                    public void OnClose(){
-//  -------------------------------  ANNUL THE TIP WRITING HERE !!!  -------------------------------
-                        map.setOnMapClickListener(null);
-                        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-                        boolFragMessageWrite =!boolFragMessageWrite;
-                    }
-
-                });
-//  -------------------------------  END OF THE ON BUTTON CLICK -------------------------------
-            }
-        });
 
         Log.i("click", "Contribute btn clicked \n");
 
     }
     private void menuBtn_Community(View view){
         Log.i("click","Community btn clicked \n");
-
+/*
 
         if (tempBool){
-            zoomCamara(DEFAULT_ZOOM);
+           // zoomCamara(DEFAULT_ZOOM);
 
             // temp løsning
             String text;
@@ -378,8 +297,8 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(ActivityMapView.this, text, Toast.LENGTH_SHORT).show();
 
 
-            map.clear();
-            map.setOnMapClickListener(null);
+            mapContext.clear();
+            mapContext.setOnMapClickListener(null);
 
             tempBool = false;
             currentMarker = null;
@@ -387,24 +306,24 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             updateMapTips(dtoList);
         } else {
             zoomCamara(17);
-            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            mapContext.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                   return true;
                 }
             });
-            map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            mapContext.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
-                    map.clear();
+                    mapContext.clear();
                     currentMarker = latLng;
-                    map.addMarker(new MarkerOptions().position(latLng));
+                    mapContext.addMarker(new MarkerOptions().position(latLng));
                 }
             });
             tempBool = true;
         }
 
-
+*/
     }
     private void menuBtn_ParkAlarm(View view){
         Log.i("click","Park Alarm btn clicked \n");
@@ -412,7 +331,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     private void menuBtn_PVagt(View view){
         Log.i("click","P-Vagt btn clicked \n");
 
-        updateDeviceLocation();
+       // updateDeviceLocation();
         Toast.makeText(ActivityMapView.this,
                 "Alarm P-vagt ved: " + String.valueOf(mLastKnownLocation.getLatitude())
                         + " " + String.valueOf(mLastKnownLocation.getLongitude()),
@@ -459,14 +378,14 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
+                        // Set the mapContext's camera position to the current location of the device.
                         mLastKnownLocation = (Location) task.getResult();
                         LatLng position = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM));
+                        mapContext.moveCamera(CameraUpdateFactory.newLatLngZoom(position, DEFAULT_ZOOM));
 
                     } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
+                        mapContext.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                        mapContext.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 }
             });
@@ -479,7 +398,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 /*
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
+        mapContext = googleMap;
         center = findViewById(R.id.centerBut);
         center.setOnClickListener(this);
 
@@ -488,7 +407,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(true);
+            mapContext.setMyLocationEnabled(true);
         }
 
         getDeviceLocation();
@@ -498,8 +417,8 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     public void updateMapTips(List<TipDTO> tips){
         for(TipDTO tip: tips){
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
-            map.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(tip.getTipId())));
-            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            mapContext.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(tip.getTipId())));
+            mapContext.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     // kald den metode du gerne vil have
@@ -527,12 +446,12 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
+                        // Set the mapContext's camera position to the current location of the device.
                         mLastKnownLocation = (Location) task.getResult();
 
                     } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
+                        mapContext.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                        mapContext.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 }
             });

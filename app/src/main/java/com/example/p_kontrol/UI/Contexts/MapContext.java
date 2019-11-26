@@ -12,9 +12,9 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
+import com.example.p_kontrol.UI.Fragments.IFragWriteMessageListener;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -50,6 +50,10 @@ public class MapContext implements OnMapReadyCallback {
     private LatLng userlocation;
     private LatLng currentMarkerLoc;
 
+    //States
+    private IState stateStandby     ,stateSelectLocation;
+    private IMapStateListener sateStandbyListener, stateSelectLocListener;
+
     private IMapContextListener listener;
 
     public MapContext(SupportMapFragment mapFragment, Activity context, GoogleMap map, Button centerBtn, IMapContextListener listener) {
@@ -63,11 +67,9 @@ public class MapContext implements OnMapReadyCallback {
         mFusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(context);
 
         mapFragment.getMapAsync(this);
-        setState(state);
-
     }
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap){
 
         map = googleMap;
         centerBtn.setOnClickListener(new View.OnClickListener() {
@@ -83,42 +85,73 @@ public class MapContext implements OnMapReadyCallback {
         centerMapOnLocation();
         listener.onReady();
         updateTips();
+        setStateStandby();
+        setupListeners();
+
+        // States being initialized.
+        stateStandby = new StateStandby(this, sateStandbyListener);
+        stateSelectLocation = new StateSelectLocation(this, stateSelectLocListener); // will be overWritten When doigb
     }
+
+
+
 
     private void updateTips(){
         listener.onUpdate();
         state.updateTips();
     }
+    private void setupListeners(){
+        stateSelectLocListener = new IMapStateListener() {
+            @Override
+            public void onClickMarker() {
+
+            }
+
+            @Override
+            public void onDone() {
+
+            }
+        };
+        sateStandbyListener = new IMapStateListener() {
+            @Override
+            public void onClickMarker() {
+
+            }
+
+            @Override
+            public void onDone() {
+
+            }
+        };
+    }
     public void setStateStandby(){
-        state = standbyState;
+        state = stateStandby;
         state.updateTips();
     }
     public void setStateLocationSelect(){
-        state = new selectionState();
+        state = stateSelectLocation;
     }
-
     private void centerMapOnLocation(){}
-
     private LatLng getDeviceLocation(){
-
+        return null;
     }
-
-
     public void updateMapTips(List<TipDTO> tips){
         for(TipDTO tip: tips){
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
-            mMap.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(tip.getTipId())));
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+           // map.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(tip.getTipId())));
+            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
+
+                    listener.onUpdate();
                     // kald den metode du gerne vil have
-                    Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
+/*                    Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
 
                     adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
                     viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                     viewPager_tipBobles.setCurrentItem(Integer.parseInt(marker.getTitle()) - 1);
                     viewPager_tipBobles.setVisibility(View.VISIBLE);
-
+*/
                     return true;
                 }
             });
@@ -127,11 +160,11 @@ public class MapContext implements OnMapReadyCallback {
     }
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         //https://stackoverflow.com/questions/14851641/change-marker-size-in-google-maps-api-v2
-        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+
+        Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(),context.getResources().getIdentifier(iconName, "drawable", context.getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
-
     public void setListOfTipDto(List<ITipDTO> tips){
         listOfTipDto = tips;
     }

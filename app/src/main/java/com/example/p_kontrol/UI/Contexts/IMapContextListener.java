@@ -10,4 +10,5 @@ public interface IMapContextListener {
     void onChangeState();
     void onSelectedLocation();
     void onUpdate();
+
 }

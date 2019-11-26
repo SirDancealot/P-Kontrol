@@ -7,6 +7,7 @@ public interface IState {
     LatLng getLocation();
     void centerMapOnLocation();
     void setupMap();
-    void setStateInteractionListener(IMapInteractionListener listener);
+    void setStateInteractionListener(IMapStateListener listener);
+    void updateTips();
 
 }
