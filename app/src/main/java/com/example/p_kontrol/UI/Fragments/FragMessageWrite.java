@@ -17,6 +17,7 @@ import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.IWriteTipSta
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage0;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage1;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage2;
+import com.example.p_kontrol.UI.Services.ITipDTO;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
     private View view;
     private ViewPager ContentContainer;
     List<Fragment> fragmentList;
+    IFragWriteMessageListener listener = null ;
 
     Fragment stage0,stage1,stage2;
 
@@ -108,13 +110,18 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
                     // stage where you submit.
                     break;
             }
-            TipDTO dto = new TipDTO();
-            dto.setMessege(tipText);
+            ITipDTO dto = new TipDTO();
+            dto.setMessage(tipText);
 
-            ActivityMapView parentAct = (ActivityMapView) getActivity();
-            parentAct.makeTip(dto);
-            // Call Activity With Method.
+            if(listener != null){
+                listener.OnMessageDone(dto);
+            }
+
+
         }
     }
 
+    public void setFragWriteMessageListener(IFragWriteMessageListener listener){
+        this.listener = listener;
+    }
 }
