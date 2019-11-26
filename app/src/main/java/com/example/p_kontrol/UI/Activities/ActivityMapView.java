@@ -244,7 +244,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         // Closing the Menu down.
         menu_dragHandle(view);
         acceptBtn.setVisibility(View.VISIBLE);
-        acceptBtn.setEnabled(false);
 
         fragment_messageWrite = new FragMessageWrite();
         FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);

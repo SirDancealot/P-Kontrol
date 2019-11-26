@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI.Contexts;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -44,6 +45,7 @@ public class StateSelectLocation implements IState {
             public void onClick(View v){
                 if(listener != null && currentMarker != null ){
                     listener.onAcceptButton(currentMarker);
+                    Log.d("Accept", "onClick() called with: v = [" + v + "]");
                 }
             }
         });

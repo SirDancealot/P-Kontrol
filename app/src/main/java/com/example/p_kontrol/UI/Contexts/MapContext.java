@@ -112,10 +112,7 @@ public class MapContext implements OnMapReadyCallback {
         // Retrieving Information.
         updateTips();
 
-        // States being made to run.
-        stateStandby = new StateStandby(this, sateStandbyListener);
-        stateSelectLocation = new StateSelectLocation(this, stateSelectLocListener); // will be overWritten When doigb
-        state = stateStandby;
+        setStateStandby();
 
         // Listens to States
         setupListeners();
@@ -129,16 +126,16 @@ public class MapContext implements OnMapReadyCallback {
 
     //Public Calls
     public void setStateStandby(){
-        state = stateStandby;
+        state = new StateStandby(this,sateStandbyListener);
     }
     public void setStateLocationSelect(final IMapStateListener onClickerListener){
-        state = stateSelectLocation;
-        stateSelectLocation.setStateInteractionListener(new IMapStateListener() {
+        state = new StateSelectLocation(this,stateSelectLocListener);
+        state.setStateInteractionListener(new IMapStateListener() {
             @Override
             public void onAcceptButton(LatLng location) {
-                onClickerListener.onAcceptButton(location);
                 map.clear();
                 setStateStandby();
+                onClickerListener.onAcceptButton(location);
             }
         });
     }
