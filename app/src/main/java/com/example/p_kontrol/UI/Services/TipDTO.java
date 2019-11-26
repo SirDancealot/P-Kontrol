@@ -54,10 +54,16 @@ public class TipDTO implements ITipDTO {
             return new LatLng(location.getLatitude(), location.getLongitude());
         else
             return null;
+
     }
 
     @Override
     public void setLocation(LatLng location) {
+        GeoPoint loc = new GeoPoint(location.latitude, location.longitude);
+        this.location = loc;
+
+        //set for gb collection
+        loc = null;
 
     }
 
