@@ -274,7 +274,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         // Closing the Menu down.
         menu_dragHandle(view);
 
-        
+
   //      mapContext.setState(ChooseLocationState(Button continueBtn));
         //Set Markers to do nothing onClick.
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -493,7 +493,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
         getDeviceLocation();
     }*/
-   
+
 /*
     public void updateMapTips(List<TipDTO> tips){
         for(TipDTO tip: tips){
@@ -516,8 +516,8 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         }
 
     }*/
-    
-    
+
+
 /*
     private void updateDeviceLocation() {
 

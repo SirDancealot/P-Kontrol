@@ -92,11 +92,11 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
     }
 
     public void finishTip(){
-        for(int i = 0; i < fragmentList.size(); i++){
+        String tipText = null;
+        String tipCate = null;
+        String imageUrl = null;
+        for(int i = 0; i < fragmentList.size(); i++) {
             IWriteTipStage thisItem = (IWriteTipStage) fragmentList.get(i);
-            String tipText = null;
-            String tipCate =null;
-            String imageUrl=null;
             switch (i) {
                 case 0:
                     // stage where you get Description and Category
@@ -110,15 +110,14 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
                     // stage where you submit.
                     break;
             }
-            ITipDTO dto = new TipDTO();
-            dto.setMessage(tipText);
 
-            if(listener != null){
-                listener.OnMessageDone(dto);
-                listener.OnClose();
-            }
+        }
+        ITipDTO dto = new TipDTO();
+        dto.setMessage(tipText);
 
-
+        if(listener != null){
+            listener.OnMessageDone(dto);
+            listener.OnClose();
         }
     }
 
