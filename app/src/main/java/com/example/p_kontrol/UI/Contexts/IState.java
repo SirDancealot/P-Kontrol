@@ -4,10 +4,5 @@ import com.google.android.gms.maps.model.LatLng;
 
 public interface IState {
 
-    LatLng getLocation();
-    void centerMapOnLocation();
-    void setupMap();
     void setStateInteractionListener(IMapStateListener listener);
-    void updateTips();
-
 }

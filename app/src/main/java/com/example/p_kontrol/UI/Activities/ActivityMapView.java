@@ -17,14 +17,17 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Contexts.IMapContextListener;
+import com.example.p_kontrol.UI.Contexts.IMapStateListener;
 import com.example.p_kontrol.UI.Contexts.MapContext;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
+import com.example.p_kontrol.UI.Fragments.IFragWriteMessageListener;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 
 import java.util.List;
@@ -36,7 +39,7 @@ import java.util.List;
 
 public class ActivityMapView extends AppCompatActivity implements View.OnClickListener {
 
-    final String TAG = "tag";
+    final String TAG = "ActivityMapView";
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
@@ -60,6 +63,9 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     FragMessageWrite    fragment_messageWrite   ;
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
+
+    //WriteTip
+    final ITipDTO newTipDTO = new TipDTO();
 
     // Maps
     MapContext mapContext;
@@ -166,21 +172,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             }
         };
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-        if(mapFrag == null){
-            Log.e(TAG, "setupMap ERROR " );
-        }
-        if(centerBtn == null){
-            Log.e(TAG, "setupMap ERROR centerBtn" );
-        }
-        if(acceptBtn == null){
-            Log.e(TAG, "setupMap ERROR acceptBtn" );
-        }
-        if(mapListener == null){
-            Log.e(TAG, "setupMap ERROR  mapListener" );
-        }
-
-
         mapContext = new MapContext(
                 mapFrag,
                 this,
@@ -249,14 +240,44 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         viewPager_tipBobles.setVisibility(View.VISIBLE);
     }
     private void menuBtn_Contribute(View view){
+
         // Closing the Menu down.
         menu_dragHandle(view);
-        //mapContext.setStateLocationSelect();
-
         acceptBtn.setVisibility(View.VISIBLE);
         acceptBtn.setEnabled(false);
-        // todo Giv Map Context en listener at gi til Button OnClick.
 
+        fragment_messageWrite = new FragMessageWrite();
+        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        boolFragMessageWrite =!boolFragMessageWrite;
+        fragment_messageWrite.setFragWriteMessageListener(new IFragWriteMessageListener() {
+            @Override
+            public void OnMessageDone(ITipDTO dto) {
+                newTipDTO.setMessage(dto.getMessage());
+              /*  dto.setLocation(currentMarker);
+                // todo give a User to the Tip.
+                dtoList.add(dto);
+                zoomCamara(DEFAULT_ZOOM);
+                updateMapTips(dtoList);*/
+            }
+            @Override
+            public void OnClose(){
+                FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+                boolFragMessageWrite =!boolFragMessageWrite;
+            }
+        });
+
+        mapContext.setStateLocationSelect(new IMapStateListener(){
+            @Override
+            public void onAcceptButton(LatLng location){
+                newTipDTO.setLocation(location);
+                acceptBtn.setVisibility(View.GONE);
+            }
+        });
+
+        //
+        //todo set Author of newTipDTO;
+        //todo set Tip ontoMap.
+        //todo send Tip to BackEnd
 
         Log.i("click", "Contribute btn clicked \n");
 
@@ -300,4 +321,5 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         viewPager_tipBobles.setVisibility(View.GONE);
         Log.i(TAG, "CloseTipBobbleViewPager: Closed");
     }
+
 }

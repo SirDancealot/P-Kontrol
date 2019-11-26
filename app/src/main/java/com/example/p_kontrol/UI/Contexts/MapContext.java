@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Fragments.IFragWriteMessageListener;
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MapContext implements OnMapReadyCallback {
@@ -52,16 +55,16 @@ public class MapContext implements OnMapReadyCallback {
     private IState state;
 
     // Views
-    private GoogleMap map;
+    private GoogleMap map   ;
     private Button centerBtn;
     private Button acceptBtn;
 
     //UserData
-    private LatLng userlocation;
-    private LatLng currentMarkerLoc;
+    private LatLng userlocation     ;
+    private LatLng currentMarkerLoc ;
 
     //States
-    private IState stateStandby     ,stateSelectLocation;
+    private IState stateStandby ,stateSelectLocation;
     private IMapStateListener sateStandbyListener, stateSelectLocListener;
 
     //Listeners
@@ -87,14 +90,16 @@ public class MapContext implements OnMapReadyCallback {
     }
     @Override
     public void onMapReady(GoogleMap googleMap){
-
-        map = googleMap;
         Log.d(TAG, "onMapReady() called with: googleMap = [" + googleMap + "]");
 
+        // Setting Up the Map
+        map = googleMap;
         if ( ContextCompat.checkSelfPermission( context, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
             map.setMyLocationEnabled(true);
         }
+        centerMapOnLocation();
 
+        //Center the Camera on the Map.
         centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,28 +108,39 @@ public class MapContext implements OnMapReadyCallback {
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
             }
         });
-        centerMapOnLocation();
 
-
-        /*
-        listener.onReady();
+        // Retrieving Information.
         updateTips();
-        setStateStandby();
+
+        // States being made to run.
+        stateStandby = new StateStandby(this, sateStandbyListener);
+        stateSelectLocation = new StateSelectLocation(this, stateSelectLocListener); // will be overWritten When doigb
+        state = stateStandby;
+
+        // Listens to States
         setupListeners();
 
-        // States being initialized.
-        stateStandby = new StateStandby(this, sateStandbyListener);
-        stateSelectLocation = new StateSelectLocation(this, stateSelectLocListener); // will be overWritten When doigb*/
+        // Sends Back a listener call.
+        listener.onReady();
+    }
+    private void setupListeners(){
+
     }
 
     //Public Calls
     public void setStateStandby(){
         state = stateStandby;
-        state.updateTips();
     }
-    public void setStateLocationSelect(View.OnClickListener onClickerListener){
-        acceptBtn.setOnClickListener(onClickerListener);
+    public void setStateLocationSelect(final IMapStateListener onClickerListener){
         state = stateSelectLocation;
+        stateSelectLocation.setStateInteractionListener(new IMapStateListener() {
+            @Override
+            public void onAcceptButton(LatLng location) {
+                onClickerListener.onAcceptButton(location);
+                map.clear();
+                setStateStandby();
+            }
+        });
     }
 
     // private Calls
@@ -151,9 +167,10 @@ public class MapContext implements OnMapReadyCallback {
     }
     private void updateTips(){
         listener.onUpdate();
-        state.updateTips();
     }
 
+
+    // todo implement Screen Listeners
 
 
     /*
@@ -165,7 +182,7 @@ public class MapContext implements OnMapReadyCallback {
             }
 
             @Override
-            public void onDone() {
+            public void onAcceptButton() {
 
             }
         };
@@ -176,7 +193,7 @@ public class MapContext implements OnMapReadyCallback {
             }
 
             @Override
-            public void onDone() {
+            public void onAcceptButton() {
 
             }
         };
@@ -191,9 +208,6 @@ public class MapContext implements OnMapReadyCallback {
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
-    public void setListOfTipDto(List<ITipDTO> tips){
-        listOfTipDto = tips;
-    }
 
    public void zoomCamara(int zoom){
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -202,5 +216,36 @@ public class MapContext implements OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         //mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }*/
+    /* public void makeTip(TipDTO tip){
 
+
+        tip.setLocation(currentMarker);
+        tip.setTipId(getNewID());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            tip.setDate(LocalDate.now());
+        }
+        if (UserInfoDTO.getUserInfoDTO().getUrl() != null){
+            tip.setUrl(UserInfoDTO.getUserInfoDTO().getUrl());
+        }
+        if (UserInfoDTO.getUserInfoDTO().getName() != null) {
+            tip.setAuthor(UserInfoDTO.getUserInfoDTO().getName());
+        }
+        dtoList.add(tip);
+        zoomCamara(DEFAULT_ZOOM);
+        updateMapTips(dtoList);
+        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        boolFragMessageWrite =!boolFragMessageWrite;
+    }
+*/
+    public void setListOfTipDto(List<ITipDTO> tips){
+        listOfTipDto = tips;
+    }
+
+    public GoogleMap getMap() {
+        return map;
+    }
+
+    public Button getAcceptBtn() {
+        return acceptBtn;
+    }
 }
