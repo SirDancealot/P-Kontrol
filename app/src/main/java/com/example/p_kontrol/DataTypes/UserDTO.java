@@ -27,7 +27,7 @@ public class UserDTO implements IUserDTO {
 
     @Override
     public String getFirstName() {
-        return null;
+        return firstName;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserDTO implements IUserDTO {
 
     @Override
     public String getProfileSRC() {
-        return null;
+        return profileSrc;
     }
 
     @Override
