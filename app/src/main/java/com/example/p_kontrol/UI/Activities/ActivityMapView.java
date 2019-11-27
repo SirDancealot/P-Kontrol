@@ -24,7 +24,6 @@ import com.example.p_kontrol.UI.Contexts.MapContext;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
-import com.example.p_kontrol.UI.Fragments.IFragWriteMessageListener;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
@@ -255,22 +254,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         fragment_messageWrite = new FragMessageWrite();
         FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
         boolFragMessageWrite =!boolFragMessageWrite;
-        fragment_messageWrite.setFragWriteMessageListener(new IFragWriteMessageListener() {
-            @Override
-            public void OnMessageDone(ITipDTO dto) {
-                newTipDTO.setMessage(dto.getMessage());
-              /*  dto.setLocation(currentMarker);
-                // todo give a User to the Tip.
-                dtoList.add(dto);
-                zoomCamara(DEFAULT_ZOOM);
-                updateMapTips(dtoList);*/
-            }
-            @Override
-            public void OnClose(){
-                FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-                boolFragMessageWrite =!boolFragMessageWrite;
-            }
-        });
 
 
 
