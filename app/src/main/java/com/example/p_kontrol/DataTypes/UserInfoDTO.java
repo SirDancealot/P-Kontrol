@@ -2,6 +2,8 @@ package com.example.p_kontrol.DataTypes;
 
 public class UserInfoDTO {
 
+    // Dette er en Singleton da det udelukkende er den indloggede bruger.
+
     static UserInfoDTO userInfoDTO;
     private String name;
     private String name2;

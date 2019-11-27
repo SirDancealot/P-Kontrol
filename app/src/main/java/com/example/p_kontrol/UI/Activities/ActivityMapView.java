@@ -68,17 +68,9 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     final ITipDTO newTipDTO = new TipDTO();
 
     // Maps
-    MapContext mapContext;
-    IMapContextListener mapListener;
-    private GoogleMap googleMap;
-   //private final LatLng mDefaultLocation = new LatLng(55.676098, 	12.56833);
-    private Button centerBtn, acceptBtn;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-
-    private TipDTO currentTip;
-
-    private boolean tempBool = false;
-    private int tempID = 0;
+    MapContext mapContext               ;
+    IMapContextListener mapListener     ;
+    private Button centerBtn, acceptBtn ;
 
 
     @Override
@@ -119,7 +111,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         acceptBtn = findViewById(R.id.contino);
         centerBtn = findViewById(R.id.centerBut);
         // map buttons recieve listeners inside of MapContext.
-
 
         // ViewPager
         viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
@@ -175,7 +166,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         mapContext = new MapContext(
                 mapFrag,
                 this,
-                googleMap,
                 centerBtn,
                 acceptBtn,
                 mapListener
@@ -184,7 +174,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v){
-
         switch(v.getId()){
             case ( R.id.menuBtn_draggingHandle):
                 menu_dragHandle(v);
@@ -209,10 +198,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             case (R.id.menuBtn_PVagt):
                 menuBtn_PVagt(v);
                 break;
-
-                // TipBobbleViewPager
         }
-
     }
 
     private void menu_dragHandle( View view ){
@@ -273,12 +259,17 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        //
-        //todo set Author of newTipDTO;
-        //todo set Tip ontoMap.
-        //todo send Tip to BackEnd
 
-        Log.i("click", "Contribute btn clicked \n");
+        /*ITipDTO returnDTO = newTipDTO.copy();
+
+        //todo set Author of newTipDTO;
+
+        //todo set Tip ontoMap.
+        List<>.add(returnDTO);
+        map.updateTips(List);
+        //todo send Tip to BackEnd
+        backend.WriteTip(returnDTO);
+        Log.i("click", "Contribute btn clicked \n");*/
 
     }
     private void menuBtn_Community(View view){

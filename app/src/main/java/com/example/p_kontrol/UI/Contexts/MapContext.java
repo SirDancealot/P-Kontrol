@@ -42,7 +42,7 @@ public class MapContext implements OnMapReadyCallback {
 
     //Defaults
     private int DEFAULT_ZOOM = 17;
-    private final LatLng DEFAULT_LOCATION = new LatLng(55.676098,12.56833);
+    private final LatLng DEFAULT_LOCATION = new LatLng(55.676098, 	12.56833);
     String TAG = "MapContext";
 
     //Map Functionality NECESARY VARIABLES
@@ -60,7 +60,7 @@ public class MapContext implements OnMapReadyCallback {
     private Button acceptBtn;
 
     //UserData
-    private LatLng userlocation     ;
+    private Location userlocation     ;
     private LatLng currentMarkerLoc ;
 
     //States
@@ -73,7 +73,6 @@ public class MapContext implements OnMapReadyCallback {
 
     public MapContext(SupportMapFragment mapFragment,
                       Activity context,
-                      GoogleMap map,
                       Button centerBtn,
                       Button acceptBtn,
                       IMapContextListener listener){
@@ -149,7 +148,7 @@ public class MapContext implements OnMapReadyCallback {
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
-                        Location mLastKnownLocation = (Location) task.getResult();
+                        userlocation = (Location) task.getResult();
 
                     } else {
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
@@ -163,6 +162,10 @@ public class MapContext implements OnMapReadyCallback {
         }
     }
     private void updateTips(){
+
+
+
+        if(listener != null )
         listener.onUpdate();
     }
 
