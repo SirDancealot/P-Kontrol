@@ -324,23 +324,23 @@ public class ActivityMapView extends FragmentActivity implements OnMapReadyCallb
 
 
 
-    private void getDeviceLocation() {
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         */
-        try {
-            Task locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener(this, new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        mLastKnownLocation = (Location) task.getResult();
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(mLastKnownLocation.getLatitude(),
-                                        mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                    } else {
+                        private void getDeviceLocation() {
+                            /*
+                             * Get the best and most recent location of the device, which may be null in rare
+                             * cases when a location is not available.
+                             */
+                            try {
+                                Task locationResult = mFusedLocationProviderClient.getLastLocation();
+                                locationResult.addOnCompleteListener(this, new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(@NonNull Task task) {
+                                        if (task.isSuccessful()) {
+                                            // Set the map's camera position to the current location of the device.
+                                            mLastKnownLocation = (Location) task.getResult();
+                                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                                    new LatLng(mLastKnownLocation.getLatitude(),
+                                                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                                        } else {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                         mMap.getUiSettings().setMyLocationButtonEnabled(false);
                     }

@@ -9,7 +9,7 @@ public interface IBackend {
 
     //Tips
 
-    List<ITipDTO> getTips(LatLng location);
+    List<ITipDTO> getTips(LatLng location, double radius);
 
      void createTip(ITipDTO tip);
 
