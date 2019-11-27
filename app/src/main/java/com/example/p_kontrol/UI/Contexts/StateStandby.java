@@ -19,6 +19,7 @@ public class StateStandby extends State {
     public StateStandby(MapContext context) {
         super(context);
     }
+
     private void setupListeners(){
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override

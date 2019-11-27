@@ -113,7 +113,7 @@ public class MapContext implements OnMapReadyCallback {
     }
     public void setStateSelectLocation(IMapSelectedLocationListener selectListener){
         state = new StateSelectLocation(this);
-        //(StateSelectLocation) state.setSelectLocationListener(selectListener);
+        state.setDoneListner(selectListener);
     }
 
     // private Calls
@@ -148,6 +148,9 @@ public class MapContext implements OnMapReadyCallback {
         listOfTipDto = tips;
 
     }
+
+
+
 
 
     public int getDEFAULT_ZOOM() {

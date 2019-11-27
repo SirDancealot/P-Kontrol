@@ -1,10 +1,6 @@
 package com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.p_kontrol.R;
 
-public class WriteTip_Stage0 extends Fragment implements  IWriteTipStage{
+public class WriteTip_Stage0 extends WriteTipStage {
 
     View view;
     Spinner category;
@@ -48,4 +44,5 @@ public class WriteTip_Stage0 extends Fragment implements  IWriteTipStage{
     public String getOther() {
         return null;
     }
+
 }

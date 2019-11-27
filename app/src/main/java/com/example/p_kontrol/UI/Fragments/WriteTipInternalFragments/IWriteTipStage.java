@@ -4,4 +4,5 @@ public interface IWriteTipStage {
 
     String getText();
     String getOther();
+    void setOnWriteTipStageListener(IWriteTipStageListener listener);
 }

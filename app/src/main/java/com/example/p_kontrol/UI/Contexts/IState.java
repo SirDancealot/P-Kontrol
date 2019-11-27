@@ -7,4 +7,5 @@ public interface IState {
     void centerMapOnLocation(MapContext context);
 
     void updateMap();
+    void setDoneListner(Object obj);
 }

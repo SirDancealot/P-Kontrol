@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Contexts.IMapContextListener;
@@ -26,6 +27,7 @@ import com.example.p_kontrol.UI.Contexts.MapContext;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
+import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,6 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +47,8 @@ import java.util.List;
 
 public class ActivityMapView extends AppCompatActivity implements View.OnClickListener {
 
+
+    private static final int STANDARD_TIP_BEGIN_RATING = 0;
     final String TAG = "ActivityMapView";
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
@@ -69,7 +74,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
 
-    //WriteTip
+    //WriteTip this is a final object, due to listener pattern requiring it as such.
     final ITipDTO newTipDTO = new TipDTO();
 
     // Maps
@@ -257,15 +262,36 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
         boolFragMessageWrite =!boolFragMessageWrite;
 
-    //   fragment_messageWrite.setFragWriteMessageListener(new IFRA);
 
-        mapContext.setStateSelectLocation(new IMapSelectedLocationListener() {
-            @Override
-            public void onSelectedLocation(Location location) {
+        fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
+           @Override
+           public void onMessageDone(ITipDTO dto) {
+               newTipDTO.setMessage(dto.getMessage());
+               Log.i(TAG, "onMessageDone: BEFORE SET STATE SELECT LOCATION ");
+               hideUIWriteTip();
+
+               mapContext.setStateSelectLocation(new IMapSelectedLocationListener() {
+
+                   @Override
+                   public void onSelectedLocation(LatLng location) {
+                       newTipDTO.setLocation(location);
+                       Log.i(TAG, "onSelectedLocation:  Before Creating TIP ");
+                       // todo set this copy self into Interface. such that type casting is unesesary.
+                       //IUserDTO author, String message, LatLng location, int rating, Date creationDate
+                       createtip( new TipDTO( UserInfoDTO.getUserInfoDTO().getUserDTO() ,newTipDTO.getMessage(),location,STANDARD_TIP_BEGIN_RATING, null));
+                       mapContext.setStateStandby();
+                       acceptBtn.setVisibility(View.GONE);
+                   }
+
+               });
+           }
+           @Override
+           public void onCancelTip() {
+
+           }
+       });
 
 
-            }
-        });
 
         /*ITipDTO returnDTO = newTipDTO.copy();
 
@@ -345,6 +371,16 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
     }
 
+
+    public void hideUIWriteTip(){
+        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        boolFragMessageWrite =!boolFragMessageWrite;
+    }
+    public void createtip(ITipDTO dto){
+        Log.i(TAG, "createtip:  Before Creating TIP ");
+        //todo Implement Backend CreateTip here.
+        dtoList.add(dto);
+    }
     public void markerIsClick(int index){
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);

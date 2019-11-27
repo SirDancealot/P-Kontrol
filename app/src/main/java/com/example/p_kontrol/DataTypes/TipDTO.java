@@ -11,11 +11,27 @@ import java.util.Date;
 
 public class TipDTO implements ITipDTO {
 
+
+
     private IUserDTO author;
     private String message;
     private LatLng location;
     private int rating;
     private Date creationDate;
+
+    public TipDTO(){}
+    public TipDTO(IUserDTO author, String message, LatLng location, int rating, Date creationDate) {
+        this.author = author;
+        this.message = message;
+        this.location = location;
+        this.rating = rating;
+        this.creationDate = creationDate;
+    }
+
+    public TipDTO copySelf(){
+        TipDTO tipDTO = new TipDTO(author,message,location,rating,creationDate);
+        return tipDTO;
+    }
 
     @Override
     public IUserDTO getAuthor() {

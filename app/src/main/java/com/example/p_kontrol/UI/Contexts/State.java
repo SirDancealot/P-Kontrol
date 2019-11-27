@@ -20,6 +20,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +29,8 @@ import com.google.android.gms.tasks.Task;
 
 public class State implements IState  {
 
+    final int DEFAULT_MAP_ZOOM = 15;
+    final int DEFAULT_ZOOM_ZOOM = 17;
 
     // Constructer retrieved Vars
     MapContext context;
@@ -42,8 +46,12 @@ public class State implements IState  {
 
         if(listener != null)
             listener.onChangeState();
-
+        System.out.println(context.getListOfTipDto().size() + " SIZE OF LIST ");
         updateMap();
+        setListeners();
+    }
+    private void setListeners(){
+        map.setOnMapClickListener(null);
     }
 
     public void centerMapOnLocation(MapContext context){
@@ -67,10 +75,26 @@ public class State implements IState  {
 
     }
 
+    @Override
+    public void setDoneListner(Object obj) {
+    }
+
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(),context.getResources().getIdentifier(iconName, "drawable", context.getActivity().getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
+    }
+    public void zoomIn(){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(map.getCameraPosition().target)
+                .zoom(DEFAULT_ZOOM_ZOOM).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+    public void zoomOut(){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(map.getCameraPosition().target)
+                .zoom(DEFAULT_MAP_ZOOM).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
 }
