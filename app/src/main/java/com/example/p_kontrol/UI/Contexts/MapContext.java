@@ -125,6 +125,12 @@ public class MapContext implements OnMapReadyCallback {
 
     //Public Calls
     public void setStateStandby(){
+        sateStandbyListener = new IMapStateListener() {
+            @Override
+            public void onAcceptButton(LatLng location) {
+
+            }
+        };
         state = new StateStandby(this,sateStandbyListener);
     }
     public void setStateLocationSelect(final IMapStateListener onClickerListener){
