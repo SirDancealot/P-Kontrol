@@ -65,11 +65,12 @@ public class MapContext implements OnMapReadyCallback {
 
     //States
     private IState stateStandby ,stateSelectLocation;
-    private IMapStateListener sateStandbyListener, stateSelectLocListener;
 
     //Listeners
     private View.OnClickListener mapAcceptButtonListener;
     private IMapContextListener listener;
+
+    private final MapContext thisContext = this;
 
     public MapContext(SupportMapFragment mapFragment,
                       Activity context,
@@ -102,51 +103,32 @@ public class MapContext implements OnMapReadyCallback {
         centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                centerMapOnLocation();
+                state.centerMapOnLocation(thisContext);
 
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
             }
         });
 
         // Retrieving Information.
-        updateTips();
+        state.updateTips();
 
         setStateStandby();
-
-        // Listens to States
-        setupListeners();
 
         // Sends Back a listener call.
         listener.onReady();
     }
-    private void setupListeners(){
-
-    }
 
     //Public Calls
     public void setStateStandby(){
-        sateStandbyListener = new IMapStateListener() {
-            @Override
-            public void onAcceptButton(LatLng location) {
 
-            }
-        };
-        state = new StateStandby(this,sateStandbyListener);
+        state = new StateStandby(this);
     }
-    public void setStateLocationSelect(final IMapStateListener onClickerListener){
-        state = new StateSelectLocation(this,stateSelectLocListener);
-        state.setStateInteractionListener(new IMapStateListener() {
-            @Override
-            public void onAcceptButton(LatLng location) {
-                map.clear();
-                setStateStandby();
-                onClickerListener.onAcceptButton(location);
-            }
-        });
+    public void setStateLocationSelect(IMapStateListener onClickerListener){
+        state = new StateSelectLocation(this);
     }
 
     // private Calls
-    private void centerMapOnLocation(){
+    public void centerMapOnLocation(){
         try {
             Task locationResult = mFusedLocationProviderClient.getLastLocation();
             locationResult.addOnCompleteListener(new OnCompleteListener() {
@@ -167,17 +149,8 @@ public class MapContext implements OnMapReadyCallback {
             Log.e("Exception: %s", e.getMessage());
         }
     }
-    private void updateTips(){
-
-
-
-        if(listener != null )
-        listener.onUpdate();
-    }
-
 
     // todo implement Screen Listeners
-
 
     /*
     private void setupListeners(){
@@ -247,11 +220,72 @@ public class MapContext implements OnMapReadyCallback {
         listOfTipDto = tips;
     }
 
+
+    public int getDEFAULT_ZOOM() {
+        return DEFAULT_ZOOM;
+    }
+
+    public LatLng getDEFAULT_LOCATION() {
+        return DEFAULT_LOCATION;
+    }
+
+    public String getTAG() {
+        return TAG;
+    }
+
+    public SupportMapFragment getMapFragment() {
+        return mapFragment;
+    }
+
+    public FusedLocationProviderClient getmFusedLocationProviderClient() {
+        return mFusedLocationProviderClient;
+    }
+
+    public Activity getContext() {
+        return context;
+    }
+
+    public List<ITipDTO> getListOfTipDto() {
+        return listOfTipDto;
+    }
+
+    public IState getState() {
+        return state;
+    }
+
     public GoogleMap getMap() {
         return map;
     }
 
+    public Button getCenterBtn() {
+        return centerBtn;
+    }
+
     public Button getAcceptBtn() {
         return acceptBtn;
+    }
+
+    public Location getUserlocation() {
+        return userlocation;
+    }
+
+    public LatLng getCurrentMarkerLoc() {
+        return currentMarkerLoc;
+    }
+
+    public IState getStateStandby() {
+        return stateStandby;
+    }
+
+    public IState getStateSelectLocation() {
+        return stateSelectLocation;
+    }
+
+    public View.OnClickListener getMapAcceptButtonListener() {
+        return mapAcceptButtonListener;
+    }
+
+    public IMapContextListener getListener() {
+        return listener;
     }
 }

@@ -7,19 +7,23 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class StateStandby implements IState {
+public class StateStandby extends State {
 
     // Constructer retrieved Vars
     MapContext context;
-    IMapStateListener listener = null;
+    IMapContextListener listener = null;
 
     // Context retrieved Vars
     GoogleMap map;
 
-    public StateStandby(MapContext context, IMapStateListener listener) {
+    public StateStandby(MapContext context) {
         this.context = context;
         this.listener = listener;
         map = context.getMap();
+        listener = context.getListener();
+
+        if(listener != null)
+        listener.onChangeState();
 
         setupListeners();
     }
@@ -36,5 +40,6 @@ public class StateStandby implements IState {
     public void setStateInteractionListener(IMapStateListener listener) {
 
     }
+
 
 }

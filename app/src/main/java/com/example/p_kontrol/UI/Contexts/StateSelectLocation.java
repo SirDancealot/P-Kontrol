@@ -9,7 +9,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class StateSelectLocation implements IState {
+public class StateSelectLocation extends State {
 
     //Constructor Given
     MapContext context;
@@ -20,7 +20,7 @@ public class StateSelectLocation implements IState {
     Button acceptBtn;
     LatLng currentMarker = null;
 
-    public StateSelectLocation(MapContext context, IMapStateListener listener) {
+    public StateSelectLocation(MapContext context) {
         this.context = context;
         this.listener = listener;
         map = context.getMap();
@@ -56,6 +56,5 @@ public class StateSelectLocation implements IState {
     public void setStateInteractionListener(IMapStateListener listener) {
         this.listener = listener;
     }
-
 
 }
