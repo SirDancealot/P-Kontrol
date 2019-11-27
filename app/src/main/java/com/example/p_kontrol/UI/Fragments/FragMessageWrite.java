@@ -28,7 +28,7 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
     private View view;
     private ViewPager ContentContainer;
     List<Fragment> fragmentList;
-    IFragWriteMessageListener listener = null ;
+    ITipWriteListener listener = null ;
 
     Fragment stage0,stage1,stage2;
 
@@ -116,12 +116,11 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
         dto.setMessage(tipText);
 
         if(listener != null){
-            listener.OnMessageDone(dto);
-            listener.OnClose();
+            listener.onMessageDone(dto);
         }
     }
 
-    public void setFragWriteMessageListener(IFragWriteMessageListener listener){
+    public void setFragWriteMessageListener(ITipWriteListener listener){
         this.listener = listener;
     }
 }

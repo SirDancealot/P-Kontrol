@@ -111,6 +111,10 @@ public class MapContext implements OnMapReadyCallback {
 
         state = new StateStandby(this);
     }
+    public void setStateSelectLocation(IMapSelectedLocationListener selectListener){
+        state = new StateSelectLocation(this);
+        //(StateSelectLocation) state.setSelectLocationListener(selectListener);
+    }
 
     // private Calls
     public void centerMapOnLocation(){
@@ -135,72 +139,6 @@ public class MapContext implements OnMapReadyCallback {
         }
     }
 
-    // todo implement Screen Listeners
-
-    /*
-    private void setupListeners(){
-        stateSelectLocListener = new IMapStateListener() {
-            @Override
-            public void onClickMarker() {
-
-            }
-
-            @Override
-            public void onAcceptButton() {
-
-            }
-        };
-        sateStandbyListener = new IMapStateListener() {
-            @Override
-            public void onClickMarker() {
-
-            }
-
-            @Override
-            public void onAcceptButton() {
-
-            }
-        };
-    }
-    private LatLng getDeviceLocation(){
-        return null;
-    }
-    public Bitmap resizeMapIcons(String iconName, int width, int height){
-        //https://stackoverflow.com/questions/14851641/change-marker-size-in-google-maps-api-v2
-
-        Bitmap imageBitmap = BitmapFactory.decodeResource(activity.getResources(),activity.getResources().getIdentifier(iconName, "drawable", activity.getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
-    }
-
-   public void zoomCamara(int zoom){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(mMap.getCameraPosition().target)
-                .zoom(zoom).build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        //mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }*/
-    /* public void makeTip(TipDTO tip){
-
-
-        tip.setLocation(currentMarker);
-        tip.setTipId(getNewID());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            tip.setDate(LocalDate.now());
-        }
-        if (UserInfoDTO.getUserInfoDTO().getUrl() != null){
-            tip.setUrl(UserInfoDTO.getUserInfoDTO().getUrl());
-        }
-        if (UserInfoDTO.getUserInfoDTO().getName() != null) {
-            tip.setAuthor(UserInfoDTO.getUserInfoDTO().getName());
-        }
-        dtoList.add(tip);
-        zoomCamara(DEFAULT_ZOOM);
-        updateMapTips(dtoList);
-        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-        boolFragMessageWrite =!boolFragMessageWrite;
-    }
-*/
     public Resources getResources(){
         return activity.getResources();
     }

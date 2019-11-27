@@ -1,6 +1,7 @@
 package com.example.p_kontrol.UI.Activities;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Contexts.IMapContextListener;
+import com.example.p_kontrol.UI.Contexts.IMapSelectedLocationListener;
 import com.example.p_kontrol.UI.Contexts.MapContext;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
@@ -255,7 +257,15 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
         boolFragMessageWrite =!boolFragMessageWrite;
 
+    //   fragment_messageWrite.setFragWriteMessageListener(new IFRA);
 
+        mapContext.setStateSelectLocation(new IMapSelectedLocationListener() {
+            @Override
+            public void onSelectedLocation(Location location) {
+
+
+            }
+        });
 
         /*ITipDTO returnDTO = newTipDTO.copy();
 
