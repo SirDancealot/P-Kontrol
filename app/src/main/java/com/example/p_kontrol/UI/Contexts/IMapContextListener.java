@@ -13,7 +13,7 @@ public interface IMapContextListener {
     void onSelectedLocation();
     void onUpdate();
     void onAcceptButton(LatLng location);
+    void onTipClick(int index);
 
-    // commands to execute.
     void showTipsAtIndex(int index);
 }

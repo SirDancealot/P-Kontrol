@@ -13,7 +13,6 @@ public class StateSelectLocation extends State {
 
     //Constructor Given
     MapContext context;
-    IMapStateListener listener = null;
 
     //Context Retrieved
     GoogleMap map;
@@ -21,12 +20,7 @@ public class StateSelectLocation extends State {
     LatLng currentMarker = null;
 
     public StateSelectLocation(MapContext context) {
-        this.context = context;
-        this.listener = listener;
-        map = context.getMap();
-        acceptBtn = context.getAcceptBtn();
-
-        setupMapListener();
+        super(context);
     }
 
     private void setupMapListener(){
@@ -52,9 +46,5 @@ public class StateSelectLocation extends State {
 
     }
 
-    @Override
-    public void setStateInteractionListener(IMapStateListener listener) {
-        this.listener = listener;
-    }
 
 }

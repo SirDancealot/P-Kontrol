@@ -18,8 +18,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Contexts.IMapContextListener;
-import com.example.p_kontrol.UI.Contexts.IMapStateListener;
 import com.example.p_kontrol.UI.Contexts.MapContext;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
@@ -164,6 +164,24 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
                 viewPager_tipBobles.setCurrentItem(Integer.parseInt(marker.getTitle()) - 1);
                 viewPager_tipBobles.setVisibility(View.VISIBLE);*/
             }
+
+            @Override
+            public void onAcceptButton(LatLng location) {
+
+            }
+
+            @Override
+            public void onTipClick(int index) {
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
+                viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+                viewPager_tipBobles.setCurrentItem(index);
+                viewPager_tipBobles.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void showTipsAtIndex(int index) {
+
+            }
         };
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapContext = new MapContext(
@@ -254,13 +272,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        mapContext.setStateLocationSelect(new IMapStateListener(){
-            @Override
-            public void onAcceptButton(LatLng location){
-                newTipDTO.setLocation(location);
-                acceptBtn.setVisibility(View.GONE);
-            }
-        });
 
 
         /*ITipDTO returnDTO = newTipDTO.copy();
@@ -339,5 +350,12 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         dtoList.add(tip1);
         dtoList.add(tip2);
 
+    }
+
+    public void markerIsClick(int index){
+        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
+        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+        viewPager_tipBobles.setCurrentItem(index);
+        viewPager_tipBobles.setVisibility(View.VISIBLE);
     }
 }

@@ -3,23 +3,15 @@ package com.example.p_kontrol.UI.Contexts;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.res.Resources;
 import android.location.Location;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
-import com.example.p_kontrol.UI.Activities.ActivityMapView;
-import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
-import com.example.p_kontrol.UI.Fragments.IFragWriteMessageListener;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,28 +19,24 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class MapContext implements OnMapReadyCallback {
 
     //Defaults
     private int DEFAULT_ZOOM = 17;
+    private int DEFAULT = 15;
     private final LatLng DEFAULT_LOCATION = new LatLng(55.676098, 	12.56833);
     String TAG = "MapContext";
 
     //Map Functionality NECESARY VARIABLES
     private SupportMapFragment mapFragment;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Activity context;
+    private Activity activity;
 
     //Regular Variables
     private List<ITipDTO> listOfTipDto;
@@ -79,7 +67,7 @@ public class MapContext implements OnMapReadyCallback {
                       IMapContextListener listener){
 
         this.mapFragment = mapFragment;
-        this.context = context;
+        this.activity = context;
         this.map = map;
         this.centerBtn = centerBtn;
         this.acceptBtn = acceptBtn;
@@ -94,7 +82,7 @@ public class MapContext implements OnMapReadyCallback {
 
         // Setting Up the Map
         map = googleMap;
-        if ( ContextCompat.checkSelfPermission( context, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
+        if ( ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
             map.setMyLocationEnabled(true);
         }
         centerMapOnLocation();
@@ -110,21 +98,18 @@ public class MapContext implements OnMapReadyCallback {
         });
 
         // Retrieving Information.
-        state.updateTips();
-
-        setStateStandby();
 
         // Sends Back a listener call.
         listener.onReady();
+
+        setStateStandby();
+
     }
 
     //Public Calls
     public void setStateStandby(){
 
         state = new StateStandby(this);
-    }
-    public void setStateLocationSelect(IMapStateListener onClickerListener){
-        state = new StateSelectLocation(this);
     }
 
     // private Calls
@@ -139,7 +124,7 @@ public class MapContext implements OnMapReadyCallback {
                         userlocation = (Location) task.getResult();
 
                     } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT));
                         map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 }
@@ -183,7 +168,7 @@ public class MapContext implements OnMapReadyCallback {
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         //https://stackoverflow.com/questions/14851641/change-marker-size-in-google-maps-api-v2
 
-        Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(),context.getResources().getIdentifier(iconName, "drawable", context.getPackageName()));
+        Bitmap imageBitmap = BitmapFactory.decodeResource(activity.getResources(),activity.getResources().getIdentifier(iconName, "drawable", activity.getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
@@ -216,8 +201,14 @@ public class MapContext implements OnMapReadyCallback {
         boolFragMessageWrite =!boolFragMessageWrite;
     }
 */
+    public Resources getResources(){
+        return activity.getResources();
+    }
+
+
     public void setListOfTipDto(List<ITipDTO> tips){
         listOfTipDto = tips;
+
     }
 
 
@@ -241,8 +232,8 @@ public class MapContext implements OnMapReadyCallback {
         return mFusedLocationProviderClient;
     }
 
-    public Activity getContext() {
-        return context;
+    public Activity getActivity() {
+        return activity;
     }
 
     public List<ITipDTO> getListOfTipDto() {

@@ -17,15 +17,7 @@ public class StateStandby extends State {
     GoogleMap map;
 
     public StateStandby(MapContext context) {
-        this.context = context;
-        this.listener = listener;
-        map = context.getMap();
-        listener = context.getListener();
-
-        if(listener != null)
-        listener.onChangeState();
-
-        setupListeners();
+        super(context);
     }
     private void setupListeners(){
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -35,11 +27,4 @@ public class StateStandby extends State {
             }
         });
     }
-
-    @Override
-    public void setStateInteractionListener(IMapStateListener listener) {
-
-    }
-
-
 }
