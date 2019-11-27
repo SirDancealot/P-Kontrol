@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -324,16 +325,21 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         tip1.setLocation(new LatLng(	55.676098, 	12.568337));
         tip1.setAuthor(new UserDTO(1,"August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
         tip1.setMessage(getResources().getString(R.string.tip1));
+        Date date = new Date(1563346249);
+        tip1.setCreationDate(date);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate tempDate = LocalDate.of(2019, 2, 9);
             //tip1.setDate(tempDate);
+
         }
 
         ITipDTO tip2 = new TipDTO();
         tip2.setLocation(new LatLng(	55.679098, 	12.569337));
         tip2.setAuthor(new UserDTO(2,"Hans","the Human","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
         tip2.setMessage(getResources().getString(R.string.tip2));
+        date = new Date(1543346249);
+        tip2.setCreationDate(date);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate tempDate = LocalDate.of(2019, 7, 13);

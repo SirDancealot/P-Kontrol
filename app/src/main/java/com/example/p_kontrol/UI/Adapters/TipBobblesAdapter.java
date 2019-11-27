@@ -41,14 +41,14 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
         FragTipBobble frag = new FragTipBobble();
         Bundle bundle = new Bundle();
         ITipDTO thisElement = tips.get(position);
-        bundle.putString(BOBBLE_NAME, thisElement.getAuthor().toString() );
+        bundle.putString(BOBBLE_NAME, thisElement.getAuthor().getFirstName() );
         bundle.putString(BOBBLE_TEXT, thisElement.getMessage() );
-        //bundle.putString(BOBBLE_DATE, thisElement.getDate().toString().replace("\n", "") );
-       /* try {
-            bundle.putString(BOBBLE_URL, thisElement.getUrl());
+        bundle.putString(BOBBLE_DATE, thisElement.getCreationDate().toString().replace("\n", "") );
+        try {
+            bundle.putString(BOBBLE_URL, thisElement.getAuthor().getProfileSRC());
         } catch (Exception e){
             System.out.println("ingen billede");
-        }*/
+        }
         frag.setArguments(bundle);
         System.out.println(bundle.toString());
         return frag;
