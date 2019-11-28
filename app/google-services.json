@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "180619771384",
+    "firebase_url": "https://p-kontrol.firebaseio.com",
+    "project_id": "p-kontrol",
+    "storage_bucket": "p-kontrol.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180619771384:android:3a3d1bb3b6b7e353ecea0d",
+        "android_client_info": {
+          "package_name": "com.example.p_kontrol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180619771384-1u9k7f6j8uljr6h58epcqtp3u9vcgd73.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.p_kontrol",
+            "certificate_hash": "3527ab50b6dcd8745047a1826806dbeb492ae483"
+          }
+        },
+        {
+          "client_id": "180619771384-c46bcued2imiu4r4guham36c7mujoo54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvbngP8AK0RfNvHNzFXISagJNbbivegr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180619771384-c46bcued2imiu4r4guham36c7mujoo54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
