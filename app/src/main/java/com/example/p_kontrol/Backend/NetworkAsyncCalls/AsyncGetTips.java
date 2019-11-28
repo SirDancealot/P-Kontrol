@@ -3,6 +3,8 @@ package com.example.p_kontrol.Backend.NetworkAsyncCalls;
 
 import android.os.AsyncTask;
 
+import com.example.p_kontrol.Backend.IDatabase;
+import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.UI.Services.*;
 import com.google.android.gms.maps.model.LatLng;
@@ -12,14 +14,18 @@ import java.util.List;
 
 public class AsyncGetTips extends AsyncTask< Void, Void, List<ITipDTO> >{
 
-    FirestoreDAO DAO = new FirestoreDAO();
-    List list = new ArrayList<ITipDTO>();
-    double radius;
-    LatLng location;
+    private IDatabase DAO = new FirestoreDAO();
+    private List list = new ArrayList<ITipDTO>();
+    private double radius;
+    private LatLng location;
 
-   public AsyncGetTips(LatLng location, double radius){
+    private IOnTaskComplete onTaskComplete;
+
+
+    public AsyncGetTips(LatLng location, double radius, IOnTaskComplete onComplete){
         this.location = location;
         this.radius = radius;
+        onTaskComplete = onComplete;
     }
 
     @Override
@@ -36,8 +42,7 @@ public class AsyncGetTips extends AsyncTask< Void, Void, List<ITipDTO> >{
     }
 
     protected void onPostExecute(List<ITipDTO> result) {
-
-       
+        onTaskComplete.OnTaskComplete(result);
 
     }
 

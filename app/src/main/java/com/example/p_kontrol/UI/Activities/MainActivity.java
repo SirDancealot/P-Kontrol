@@ -9,8 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
+import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Services.IBackend;
+import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
     }
 
     public void splashTransition() {

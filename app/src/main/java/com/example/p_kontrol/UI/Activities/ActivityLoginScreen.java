@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataBase.dto.UserInfoDTO;
+import com.example.p_kontrol.UI.Services.IBackend;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -21,6 +24,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +64,9 @@ public class ActivityLoginScreen extends AppCompatActivity{
 
             setupListeners_Screen1();
         }
+
+
+
     }
 
 

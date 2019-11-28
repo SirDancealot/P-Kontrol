@@ -1,6 +1,7 @@
 package com.example.p_kontrol.Backend;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Backend implements IBackend {
-
+    private String TAG = "Backend";
     boolean updating;
     boolean downloading;
 
@@ -23,17 +24,25 @@ public class Backend implements IBackend {
 
     public List<ITipDTO> getTips(LatLng location, double radius) {
 
+        final List<ITipDTO> list = new ArrayList<>();
 
-        //maps ref need to go into async
+        AsyncGetTips async = new AsyncGetTips(location, radius, new IOnTaskComplete(){
 
+            @Override
+            public void OnTaskComplete(List<ITipDTO> result) {
+                if ( list.addAll( result ) )
+                    Log.d(TAG, "OnTaskComplete: successful");
+                else
+                    Log.w(TAG, "OnTaskComplete: failed", null);
+            }
 
-        AsyncGetTips async = new AsyncGetTips(location, radius);
+        });
         async.execute();
 
 
 
 
-        return null;
+        return list;
     }
 
     @Override
