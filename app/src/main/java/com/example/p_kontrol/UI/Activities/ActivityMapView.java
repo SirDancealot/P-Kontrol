@@ -35,7 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 
-import java.sql.Date;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
@@ -162,7 +162,10 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onUpdate(){
                 mapContext.setListOfTipDto(dtoList);
-/*
+
+
+                /*
+
                 // kald den metode du gerne vil have
                 Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
 
@@ -279,7 +282,8 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
                        Log.i(TAG, "onSelectedLocation:  Before Creating TIP ");
                        // todo set this copy self into Interface. such that type casting is unesesary.
                        //IUserDTO author, String message, LatLng location, int rating, Date creationDate
-                       createtip( new TipDTO( UserInfoDTO.getUserInfoDTO().getUserDTO() ,newTipDTO.getMessage(),location,STANDARD_TIP_BEGIN_RATING, null));
+                       Date date = new Date(152323221);
+                       createtip( new TipDTO( UserInfoDTO.getUserInfoDTO().getUserDTO() ,newTipDTO.getMessage(),location,STANDARD_TIP_BEGIN_RATING, date));
                        mapContext.setStateStandby();
                        acceptBtn.setVisibility(View.GONE);
                    }
