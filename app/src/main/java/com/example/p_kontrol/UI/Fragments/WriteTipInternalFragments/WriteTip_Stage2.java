@@ -1,10 +1,6 @@
 package com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +10,11 @@ import android.widget.Button;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 
-public class WriteTip_Stage2 extends Fragment implements IWriteTipStage {
+public class WriteTip_Stage2 extends WriteTipStage {
 
     View view;
     FragMessageWrite parentFrag;
+
     public WriteTip_Stage2(FragMessageWrite parentFrag) {
         this.parentFrag = parentFrag;
     }
@@ -37,10 +34,9 @@ public class WriteTip_Stage2 extends Fragment implements IWriteTipStage {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parentFrag.finishTip();
+                listener.onDone();
             }
         });
-
         return view;
     }
 

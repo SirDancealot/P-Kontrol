@@ -2,12 +2,83 @@ package com.example.p_kontrol.DataTypes;
 
 import android.location.Location;
 
+import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.UI.Services.IUserDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDate;
+import java.util.Date;
 
-public class TipDTO {
+public class TipDTO implements ITipDTO {
 
+
+
+    private IUserDTO author;
+    private String message;
+    private LatLng location;
+    private int rating;
+    private Date creationDate;
+
+    public TipDTO(){}
+    public TipDTO(IUserDTO author, String message, LatLng location, int rating, Date creationDate) {
+        this.author = author;
+        this.message = message;
+        this.location = location;
+        this.rating = rating;
+        this.creationDate = creationDate;
+    }
+
+    public TipDTO copySelf(){
+        TipDTO tipDTO = new TipDTO(author,message,location,rating,creationDate);
+        return tipDTO;
+    }
+
+    @Override
+    public IUserDTO getAuthor() {
+        return author;
+    }
+    @Override
+    public void setAuthor(IUserDTO author) {
+        this.author = author;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+    @Override
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public LatLng getLocation() {
+        return location;
+    }
+    @Override
+    public void setLocation(LatLng location) {
+        this.location = location;
+    }
+
+    @Override
+    public int getRating() {
+        return rating;
+    }
+    @Override
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public Date getCreationDate() {
+        return creationDate;
+    }
+    @Override
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    /*
     private int tipId;
     private String author;
     private String messege;
@@ -48,14 +119,7 @@ public class TipDTO {
         this.location = location;
     }
 
-    @Override
-    public String toString() {
-        return "TipDTO{" +
-                "author='" + author + '\'' +
-                ", messege='" + messege + '\'' +
-                ", location=" + location +
-                '}';
-    }
+
 
     public String getUrl() {
         return url;
@@ -79,5 +143,15 @@ public class TipDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+*/
+
+    @Override
+    public String toString() {
+        return "TipDTO{" +
+                "author='" + author + '\'' +
+                ", messege='" + message + '\'' +
+                ", location=" + location +
+                '}';
     }
 }

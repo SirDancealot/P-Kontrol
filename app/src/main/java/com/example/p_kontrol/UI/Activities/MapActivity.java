@@ -121,7 +121,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
+                        // Set the mapContext's camera position to the current location of the device.
                         mLastKnownLocation = (Location) task.getResult();
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(mLastKnownLocation.getLatitude(),

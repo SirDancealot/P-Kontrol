@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,12 @@ import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.UI.Adapters.WriteTipAdapter;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.IWriteTipStage;
+import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.IWriteTipStageListener;
+import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTipStage;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage0;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage1;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage2;
+import com.example.p_kontrol.UI.Services.ITipDTO;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,8 +31,9 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
     private View view;
     private ViewPager ContentContainer;
     List<Fragment> fragmentList;
+    ITipWriteListener listener = null ;
 
-    Fragment stage0,stage1,stage2;
+    WriteTipStage stage0,stage1,stage2;
 
     public FragMessageWrite() {
         fragmentList = null;
@@ -55,6 +60,14 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
         stage0 = new WriteTip_Stage0();
         stage1 = new WriteTip_Stage1();
         stage2 = new WriteTip_Stage2(this);
+
+        // Stage 2 needs a onDone Listener such that this class knows when it is done
+        stage2.setOnWriteTipStageListener(new IWriteTipStageListener() {
+            @Override
+            public void onDone() {
+                finishTip();
+            }
+        });
 
         fragmentList.add(stage0);
         fragmentList.add(stage1);
@@ -108,13 +121,20 @@ public class FragMessageWrite extends Fragment  implements View.OnClickListener 
                     // stage where you submit.
                     break;
             }
-        }
-        TipDTO dto = new TipDTO();
-        dto.setMessege(tipText);
 
-        ActivityMapView parentAct = (ActivityMapView) getActivity();
-        parentAct.makeTip(dto);
-            // Call Activity With Method.
+        }
+        Log.d("finishing Tip step 1. ", "finishTip() called");
+        ITipDTO dto = new TipDTO();
+        dto.setMessage(tipText);
+
+        if(listener != null){
+            listener.onMessageDone(dto);
+        }else{
+            Log.e("finish Tip Error", "WriteTipListener was Null" );
+        }
     }
 
+    public void setFragWriteMessageListener(ITipWriteListener listener){
+        this.listener = listener;
+    }
 }

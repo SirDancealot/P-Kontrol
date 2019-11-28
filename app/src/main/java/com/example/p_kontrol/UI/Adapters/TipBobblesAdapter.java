@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
+import com.example.p_kontrol.UI.Services.ITipDTO;
 
 import java.util.List;
 
@@ -22,14 +23,14 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     // Argument Keys
     final String BOBBLE_NAME = "bobbleTip_name";
     final String BOBBLE_TEXT = "bobbleTip_text";
-    final String BOBBLE_URL = "bobbleTip_URL";
+    final String BOBBLE_URL  = "bobbleTip_URL";
     final String BOBBLE_DATE = "bobbleTip_DATE";
 
 
     // Variables
-    List<TipDTO> tips;
+    List<ITipDTO> tips;
 
-    public TipBobblesAdapter(FragmentManager fm, List<TipDTO> tips){
+    public TipBobblesAdapter(FragmentManager fm, List<ITipDTO> tips){
         super(fm);
         this.tips = tips;
     }
@@ -39,12 +40,12 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         FragTipBobble frag = new FragTipBobble();
         Bundle bundle = new Bundle();
-        TipDTO thisElement = tips.get(position);
-        bundle.putString(BOBBLE_NAME, thisElement.getAuthor() );
-        bundle.putString(BOBBLE_TEXT, thisElement.getMessege() );
-        bundle.putString(BOBBLE_DATE, thisElement.getDate().toString().replace("\n", "") );
+        ITipDTO thisElement = tips.get(position);
+        bundle.putString(BOBBLE_NAME, thisElement.getAuthor().getFirstName() );
+        bundle.putString(BOBBLE_TEXT, thisElement.getMessage() );
+        bundle.putString(BOBBLE_DATE, thisElement.getCreationDate().toString().replace("\n", "") );
         try {
-            bundle.putString(BOBBLE_URL, thisElement.getUrl());
+            bundle.putString(BOBBLE_URL, thisElement.getAuthor().getProfileSRC());
         } catch (Exception e){
             System.out.println("ingen billede");
         }

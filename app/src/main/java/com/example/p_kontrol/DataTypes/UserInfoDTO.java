@@ -1,6 +1,10 @@
 package com.example.p_kontrol.DataTypes;
 
+import com.example.p_kontrol.UI.Services.IUserDTO;
+
 public class UserInfoDTO {
+
+    // Dette er en Singleton da det udelukkende er den indloggede bruger.
 
     static UserInfoDTO userInfoDTO;
     private String name;
@@ -21,6 +25,12 @@ public class UserInfoDTO {
             userInfoDTO = new UserInfoDTO();
             return userInfoDTO;
         }
+    }
+
+    public IUserDTO getUserDTO(){
+        // todo Replace 1 with an Actual UserID
+        IUserDTO userDTO = new UserDTO(1,name,name2,url);
+        return userDTO;
     }
 
     public static void newUserInfoDTO() {
