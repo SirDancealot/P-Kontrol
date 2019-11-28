@@ -3,9 +3,7 @@ package com.example.p_kontrol.DataBase;
 import android.util.Log;
 
 import com.example.p_kontrol.Backend.IDatabase;
-import com.example.p_kontrol.UI.Services.ITipDTO;
-import com.example.p_kontrol.UI.Services.IUserDTO;
-import com.example.p_kontrol.UI.Services.TipDTO;
+import com.example.p_kontrol.UI.Services.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;

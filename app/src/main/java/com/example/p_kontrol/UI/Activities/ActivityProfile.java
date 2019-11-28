@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
+import com.example.p_kontrol.UI.Services.UserInfoDTO;
 import com.facebook.AccessToken;
 
 import de.hdodenhof.circleimageview.CircleImageView;

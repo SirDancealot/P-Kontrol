@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.UI.Adapters.WriteTipAdapter;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.IWriteTipStage;
@@ -21,6 +19,7 @@ import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Sta
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage1;
 import com.example.p_kontrol.UI.Fragments.WriteTipInternalFragments.WriteTip_Stage2;
 import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.UI.Services.TipDTO;
 
 import java.util.LinkedList;
 import java.util.List;

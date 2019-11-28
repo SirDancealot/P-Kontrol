@@ -2,30 +2,14 @@ package com.example.p_kontrol.UI.Contexts;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import androidx.annotation.NonNull;
-
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.UI.Activities.ActivityMapView;
-import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Services.ITipDTO;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 public class State implements IState  {
 

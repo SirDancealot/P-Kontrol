@@ -63,7 +63,7 @@
     </string-array>
 
     <!-- Write Tip Navigation texts -->
-    <string name="writeTip_Navigation_continue">Tap to continue</string>
+    <string name="writeTip_Navigation_continue">Swip to continue</string>
     <string name="writeTip_Navigation_finish">Tap to finish</string>
 
 

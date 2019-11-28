@@ -1,13 +1,11 @@
 package com.example.p_kontrol.UI.Activities;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,9 +15,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.UserDTO;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
+import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Contexts.IMapContextListener;
@@ -29,13 +26,13 @@ import com.example.p_kontrol.UI.Fragments.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
+import com.example.p_kontrol.UI.Services.IBackend;
 import com.example.p_kontrol.UI.Services.ITipDTO;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.maps.GoogleMap;
+import com.example.p_kontrol.UI.Services.TipDTO;
+import com.example.p_kontrol.UI.Services.UserDTO;
+import com.example.p_kontrol.UI.Services.UserInfoDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
-
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -67,6 +64,10 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     boolean boolFragTipBobble       ;
     boolean boolFragTopMessageBar   ;
 
+
+    //IBackend bk = new Backend();
+    BackendStub bk = new BackendStub();
+
     //ViewPager - Tip bobbles.
     FragmentPagerAdapter adapter_TipBobbles;
     ViewPager viewPager_tipBobles;
@@ -89,6 +90,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_view);
+
 
         setUpDemoTip();
 
@@ -162,6 +164,12 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onUpdate(){
+
+
+
+                // todo get latlng
+
+                System.out.println("------> vi sætter dtolist her");
                 mapContext.setListOfTipDto(dtoList);
 
 
@@ -284,7 +292,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
                        // todo set this copy self into Interface. such that type casting is unesesary.
                        //IUserDTO author, String message, LatLng location, int rating, Date creationDate
                        Date date = new Date(152323221);
-                       createtip( new TipDTO( UserInfoDTO.getUserInfoDTO().getUserDTO() ,newTipDTO.getMessage(),location,STANDARD_TIP_BEGIN_RATING, date));
+                       createtip( new TipDTO(newTipDTO.getMessage(), STANDARD_TIP_BEGIN_RATING, UserInfoDTO.getUserInfoDTO().getUserDTO(),location, new Date(System.currentTimeMillis())));
                        mapContext.setStateStandby();
                        acceptBtn.setVisibility(View.GONE);
                    }
@@ -354,7 +362,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     private void setUpDemoTip(){
         ITipDTO tip1 = new TipDTO();
         tip1.setLocation(new LatLng(	55.676098, 	12.568337));
-        tip1.setAuthor(new UserDTO(1,"August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
+        tip1.setAuthor(new UserDTO("August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
         tip1.setMessage(getResources().getString(R.string.tip1));
         Date date = new Date(1563346249);
         tip1.setCreationDate(date);
@@ -367,7 +375,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
         ITipDTO tip2 = new TipDTO();
         tip2.setLocation(new LatLng(	55.679098, 	12.569337));
-        tip2.setAuthor(new UserDTO(2,"Hans","the Human","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
+        tip2.setAuthor(new UserDTO("Hans","the Human","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
         tip2.setMessage(getResources().getString(R.string.tip2));
         date = new Date(1543346249);
         tip2.setCreationDate(date);
@@ -377,6 +385,9 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             //tip2.setDate(tempDate);
         }
 
+
+        //dtoList = bk.getTips(new LatLng(1,1), 3);
+        dtoList = bk.getDemoTips();
         dtoList.add(tip1);
         dtoList.add(tip2);
 
@@ -390,7 +401,9 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     public void createtip(ITipDTO dto){
         Log.i(TAG, "createtip:  Before Creating TIP ");
         //todo Implement Backend CreateTip here.
+        //bk.createTip(dto);
         dtoList.add(dto);
+
     }
     public void markerIsClick(int index){
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);

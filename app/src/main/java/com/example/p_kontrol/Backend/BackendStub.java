@@ -29,15 +29,14 @@ public class BackendStub {
     Date date = new Date(millis);
 
 
+
     UserDTO user = new UserDTO("valdemar", "h", "niceimg");
 
-    TipDTO tip1 = new TipDTO("test Message", 4, user, dtulocaiton1, date);
-    TipDTO tip2 = new TipDTO("test Message", 4, user, dtulocaiton2, date);
-    TipDTO tip3 = new TipDTO("test Message", 4, user, dtulocaiton3, date);
+    ITipDTO tip1 = new TipDTO("test Message", 4, user, dtulocaiton1, date);
+    ITipDTO tip2 = new TipDTO("test Message", 4, user, dtulocaiton2, date);
+    ITipDTO tip3 = new TipDTO("test Message", 4, user, dtulocaiton3, date);
 
-    List<TipDTO> demoList = new ArrayList<>();
-
-
+    List<ITipDTO> demoList = new ArrayList<>();
 
 
 
@@ -45,7 +44,9 @@ public class BackendStub {
 
 
 
-    public List<TipDTO> getDemoTips() {
+
+
+    public List<ITipDTO> getDemoTips() {
         demoList.add(tip1);
         demoList.add(tip2);
         demoList.add(tip3);

@@ -1,6 +1,6 @@
 package com.example.p_kontrol.UI.Fragments;
 
-import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public interface IMapFragmet {
 
     // Update Map
-    void updateMapTips(List<TipDTO> tips);
+    void updateMapTips(List<ITipDTO> tips);
 
     // Write A tip.
     void setMarker();

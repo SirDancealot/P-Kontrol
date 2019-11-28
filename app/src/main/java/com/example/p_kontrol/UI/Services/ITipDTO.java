@@ -12,6 +12,8 @@ public interface ITipDTO {
 
     IUserDTO getAuthor();
 
+    void setAuthor(IUserDTO author);
+
     String getMessage();
 
     void setMessage(String message);

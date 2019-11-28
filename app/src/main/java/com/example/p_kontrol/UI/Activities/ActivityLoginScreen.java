@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
+
+import com.example.p_kontrol.UI.Services.UserInfoDTO;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
