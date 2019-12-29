@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Activities.MainActivity"
+    tools:context=".UI.Activities.Activity_LoginScreen_01"
     android:orientation="vertical"
     >
 
     <!-- Top Shape Container -->
     <LinearLayout
+        android:id="@+id/LoginScreen_BackgroundBlue"
         android:transitionName="LoginScreen_BackgroundBlue"
 
         android:layout_width="match_parent"
@@ -17,7 +18,7 @@
         android:paddingTop="50dp"
         android:paddingBottom="25dp"
 
-        android:background="@drawable/login_screen_scene1"
+        android:background="@drawable/loginscreen_header_background"
         android:gravity="center"
         android:orientation="vertical"
 
@@ -27,7 +28,7 @@
 
         <!-- Logo Container -->
         <LinearLayout
-            android:id="@+id/LoginScreen_LogoContainer"
+            android:id="@+id/LoginScreen_3_LogoContainer"
             android:transitionName="LoginScreen_LogoContainer"
 
             android:orientation="vertical"
@@ -51,8 +52,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@drawable/logo" />
     -->
-            <TextView
-                android:id="@+id/LoginScreen_LogoText"
+            <LinearLayout
+                android:transitionName="LoginScreen_LogoContainer"
+                android:id="@+id/LoginScreen_LogoContainer"
                 android:layout_width="196dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -60,8 +62,26 @@
                 android:text="Stress-free parking Together"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textSize="22sp"
-                />
+                android:textSize="22sp">
+                <!--<ImageView
+                    android:id="@+id/LoginScreen_LogoImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="103dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/logo" />
+        -->
+                <TextView
+                    android:layout_width="196dp"
+                    android:layout_height="117dp"
+                    android:text="Stress-free parking Together"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22dp" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
@@ -79,7 +99,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <EditText
-            android:id="@+id/editTextemail"
+            android:id="@+id/LoginScreen_3_FormEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -92,7 +112,7 @@
             />
 
         <EditText
-            android:id="@+id/LoginScreen_2_inputPassword"
+            android:id="@+id/LoginScreen_3_FormPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -101,7 +121,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewforgotpass"
+            android:id="@+id/LoginScreen_3_FormForgottenPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Forgot password?"
@@ -111,7 +131,6 @@
 
     <!-- Login Buttons  -->
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -123,7 +142,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/LoginScreen_2_SignIn"
+            android:id="@+id/LoginScreen_3_SignIn"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="40dp"
@@ -134,7 +153,7 @@
             android:textColor="#FFF" />
 
         <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button"
+            android:id="@+id/LoginScreen_3_SignIn_FaceBook"
             android:layout_width="335dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -144,7 +163,7 @@
             android:paddingBottom="20dp" />
 
         <Button
-            android:id="@+id/LoginScreen_2_LogGoogle"
+            android:id="@+id/LoginScreen_3_SignIn_Google"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="40dp"
@@ -158,10 +177,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_button" />
+             />
 
         <TextView
-            android:id="@+id/textdonthaveaccount"
+            android:id="@+id/LoginScreen_3_SignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"

@@ -1,48 +1,112 @@
 package com.example.p_kontrol.UI.Activities;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+public class Activity_LoginScreen_02 extends AppCompatActivity implements View.OnClickListener{
 
-import java.util.Arrays;
-
-public class ActivityLoginScreen extends AppCompatActivity{
-
+    String TAG = "LoginScreen2";
     // Login Screen 1.
-    Button screen1_loginBtn;
-    Button screen1_SignUpBtn;
+    Button screen2_LoginBtn;
+    Button screen2_SignUpBtn;
 
-    // Login Screen 2.
-    Button screen2_loginManual;
-    LoginButton screen2_loginFaceB;
-    Button screen2_loginGoogle;
+    //transition Elements
+    View trans_circle_1, trans_circle_2,trans_logo,trans_background,trans_TopBar;
 
     // facebook
     CallbackManager cbman;
     UserInfoDTO userInfoDTO;
 
+   @Override
+   protected void onCreate (Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        // if already logged in, skip rest
+        ifAlreadyLoggedIn();
+
+        // Setup Functionality
+        setContentView(R.layout.activity_loginscreen_02);
+        screen2_LoginBtn = findViewById(R.id.LoginScreen_2_LoginBtn);
+        screen2_SignUpBtn = findViewById(R.id.LoginScreen_2_SignUpBtn);
+
+        screen2_LoginBtn.setOnClickListener(this);
+        screen2_SignUpBtn.setOnClickListener(this);
+
+        // SetUp Transition elements
+       trans_circle_1 = findViewById(R.id.LoginScreen_Circle1);
+       trans_circle_2 = findViewById(R.id.LoginScreen_Circle2);
+       trans_background = findViewById(R.id.LoginScreen_BackgroundBlue);
+       trans_logo = findViewById(R.id.LoginScreen_LogoContainer);
+   }
+
     @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.LoginScreen_2_LoginBtn:
+                    Login();
+                break;
+            case R.id.LoginScreen_2_SignUpBtn:
+                    SignUp();
+                break;
+        }
+    }
+
+    public void ifAlreadyLoggedIn(){
+       // todo implement this.
+        boolean isAlreadyLoggedin = false;
+        if( isAlreadyLoggedin ){
+            changeActNext();
+        }
+    }
+    public void SignUp(){
+        Log.e(TAG, "SignUp: Not Implemented as of yet" );
+    }
+    public void Login(){
+       //todo login stuff implement here
+        changeActNext();
+    }
+
+    public void changeActNext(){
+
+        Intent changeActivity = new Intent( Activity_LoginScreen_02.this, Activity_LoginScreen_03.class);
+        ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                Activity_LoginScreen_02.this,
+                // All Custom Shared elements
+                new Pair<>(trans_logo, trans_logo.getTransitionName())              ,
+                new Pair<>(trans_background,trans_background.getTransitionName())
+        );
+        startActivity(changeActivity, transitionParameters.toBundle());
+        //startActivity(changeActivity);
+    }
+    public void changeActPrev(){
+        Intent changeActivity = new Intent( Activity_LoginScreen_02.this, Activity_LoginScreen_01.class);
+        ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                Activity_LoginScreen_02.this,
+                // All Custom Shared elements
+                new Pair<>(trans_circle_1, trans_circle_1.getTransitionName())      ,
+                new Pair<>(trans_circle_2, trans_circle_2.getTransitionName())      ,
+                new Pair<>(trans_logo, trans_logo.getTransitionName())              ,
+                new Pair<>(trans_background,trans_background.getTransitionName())   ,
+                // Android standard elements
+                new Pair<>(trans_TopBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+        );
+        startActivity(changeActivity, transitionParameters.toBundle());
+    }
+
+
+/*
+@Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -51,16 +115,22 @@ public class ActivityLoginScreen extends AppCompatActivity{
             getFBContent(AccessToken.getCurrentAccessToken());
         } else {
 
-            setContentView(R.layout.login_screen_scene1);
+            setContentView(R.layout.activity_loginscreen_02);
 
             // Screen 1's elements
-            screen1_loginBtn = findViewById(R.id.LoginScreen_1_LoginBtn);
-            screen1_SignUpBtn = findViewById(R.id.LoginScreen_1_SignUpBtn);
+            screen1_loginBtn = findViewById(R.id.LoginScreen_3_LoginBtn);
+            screen1_SignUpBtn = findViewById(R.id.LoginScreen_3_SignUpBtn);
             cbman = CallbackManager.Factory.create();
 
             setupListeners_Screen1();
         }
     }
+
+
+
+
+
+
 
 
     private void setupListeners_Screen1(){
@@ -97,11 +167,11 @@ public class ActivityLoginScreen extends AppCompatActivity{
     // Btn Methods for Screen 1.
     private void screen1_loginBtn(View v){
         Log.v("screen 1","Login btn clicked \n");
-        setContentView(R.layout.activity_login_screen);
+        setContentView(R.layout.activity_LoginScreen_04);
 
-        screen2_loginManual = findViewById(R.id.LoginScreen_2_SignIn)       ;
+        screen2_loginManual = findViewById(R.id.LoginScreen_3_SignIn)       ;
         screen2_loginFaceB  = findViewById(R.id.login_button)               ;
-        screen2_loginGoogle = findViewById(R.id.LoginScreen_2_LogGoogle)    ;
+        screen2_loginGoogle = findViewById(R.id.LoginScreen_3_LogGoogle)    ;
 
         screen2_loginFaceB.setPermissions(Arrays.asList("email", "public_profile"));
         screen2_loginFaceB.registerCallback(cbman, new FacebookCallback<LoginResult>() {
@@ -119,7 +189,7 @@ public class ActivityLoginScreen extends AppCompatActivity{
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(ActivityLoginScreen.this, "Error: No Wifi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Activity_LoginScreen_02.this, "Error: No Wifi", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -175,7 +245,7 @@ public class ActivityLoginScreen extends AppCompatActivity{
                 userInfoDTO.setEmail("");
                 userInfoDTO.setName("");
                 userInfoDTO.setName2("");
-                Toast.makeText(ActivityLoginScreen.this,"Logget ud",Toast.LENGTH_LONG).show();
+                Toast.makeText(Activity_LoginScreen_02.this,"Logget ud",Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -203,7 +273,7 @@ public class ActivityLoginScreen extends AppCompatActivity{
                     userInfoDTO.setUrl("https://graph.facebook.com/" + userInfoDTO.getId() + "/picture?type=normal");
                     userInfoDTO.setLogin(true);
 
-                    Intent i = new Intent(ActivityLoginScreen.this, ActivityMapView.class);
+                    Intent i = new Intent(Activity_LoginScreen_02.this, ActivityMapView.class);
                     startActivity(i);
 
                 } catch (JSONException e) {
@@ -219,4 +289,7 @@ public class ActivityLoginScreen extends AppCompatActivity{
         request.setParameters(parameters);
         request.executeAsync();
     }
+    */
+
+
 }

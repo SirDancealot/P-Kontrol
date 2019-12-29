@@ -2,15 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <!-- Bottom 2dp Shadow
-    <item android:bottom="895px">
-        <shape  android:shape="rectangle">
-
-            <solid android:color="#d8d8d8" />
-            <corners android:radius="50dip" />
-
-        </shape>
-    </item> -->
 
     <!-- bluee Top color-->
     <item>
@@ -23,6 +14,7 @@
                 android:bottomLeftRadius="50dip"
                 android:bottomRightRadius="50dip"
                 />
+
         </shape>
 
     </item>
