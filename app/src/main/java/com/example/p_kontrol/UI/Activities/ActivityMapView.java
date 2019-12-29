@@ -55,11 +55,11 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
-    ConstraintLayout rootContainer;
+    // Menu Views.
     View menuBtnContainer,dragHandle;
     Button  menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
             menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
-
+    // menu Open or Close State
     boolean drag_State;
 
     //Booleans for Open Closing Fragments.
@@ -101,11 +101,11 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     // setups belonging to onCreate
     private void setupMenu(){
 
-        rootContainer       = findViewById(R.id.ActivityMapView_RootContainer);
         // Menu Buttons.
         menuBtnContainer     = findViewById(R.id.menu_btnContainer)           ;
         dragHandle           = findViewById(R.id.menuBtn_draggingHandle)      ;
 
+        // Menu Category Buttons
         menuBtn_profile      = findViewById(R.id.menuBtn_profile)             ;
         menuBtn_FreePark     = findViewById(R.id.menuBtn_FreePark)            ;
         menuBtn_Contribute   = findViewById(R.id.menuBtn_Contribute)          ;
@@ -113,6 +113,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         menuBtn_ParkAlarm    = findViewById(R.id.menuBtn_ParkAlarm)           ;
         menuBtn_PVagt        = findViewById(R.id.menuBtn_PVagt)               ;
 
+        // Setting Listeners
         dragHandle.setOnClickListener(this);
         menuBtn_profile.setOnClickListener(this);
         menuBtn_FreePark.setOnClickListener(this);
@@ -121,19 +122,14 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         menuBtn_ParkAlarm.setOnClickListener(this);
         menuBtn_PVagt.setOnClickListener(this);
 
-        //Map Buttons
-        acceptBtn = findViewById(R.id.contino);
-        centerBtn = findViewById(R.id.centerBut);
-        // map buttons recieve listeners inside of MapContext.
-
-        // ViewPager
-        viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
-
         // Setup Menu Toggle Position
         drag_State = false;
         menuBtnContainer.setVisibility(View.GONE);
     }
     private void setupFragments(){
+
+        //TipBobbles are all inside this ViewPager Container
+        viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
 
         boolFragMessageWrite    = false;
         boolFragTipBobble       = false;
@@ -144,6 +140,10 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         fragment_topMessage   = new FragTopMessageBar() ;
     }
     private void setupMap(){
+        // todo ryk ind i States.
+        //Map Interaction Buttons
+        acceptBtn = findViewById(R.id.contino);
+        centerBtn = findViewById(R.id.centerBut);
         mapListener = new IMapContextListener() {
             @Override
             public void onReady() {
@@ -163,17 +163,6 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onUpdate(){
                 mapContext.setListOfTipDto(dtoList);
-
-
-                /*
-
-                // kald den metode du gerne vil have
-                Toast.makeText(ActivityMapView.this, "tip med id: " + marker.getTitle(), Toast.LENGTH_SHORT).show();
-
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, newListofDTOs);
-                viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-                viewPager_tipBobles.setCurrentItem(Integer.parseInt(marker.getTitle()) - 1);
-                viewPager_tipBobles.setVisibility(View.VISIBLE);*/
             }
 
             @Override
@@ -346,10 +335,23 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
     // TipBobbles View Pager
     public void CloseTipBobbleViewPager(){
-      //  rootContainer.removeView(viewPager_tipBobles);
         viewPager_tipBobles.setVisibility(View.GONE);
         Log.i(TAG, "CloseTipBobbleViewPager: Closed");
     }
+
+
+
+
+    public void hideUIWriteTip(){
+        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        boolFragMessageWrite =!boolFragMessageWrite;
+    }
+    public void createtip(ITipDTO dto){
+        Log.i(TAG, "createtip:  Before Creating TIP ");
+        //todo Implement Backend CreateTip here.
+        dtoList.add(dto);
+    }
+
 
     private void setUpDemoTip(){
         ITipDTO tip1 = new TipDTO();
@@ -380,22 +382,5 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
         dtoList.add(tip1);
         dtoList.add(tip2);
 
-    }
-
-
-    public void hideUIWriteTip(){
-        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-        boolFragMessageWrite =!boolFragMessageWrite;
-    }
-    public void createtip(ITipDTO dto){
-        Log.i(TAG, "createtip:  Before Creating TIP ");
-        //todo Implement Backend CreateTip here.
-        dtoList.add(dto);
-    }
-    public void markerIsClick(int index){
-        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
-        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-        viewPager_tipBobles.setCurrentItem(index);
-        viewPager_tipBobles.setVisibility(View.VISIBLE);
     }
 }

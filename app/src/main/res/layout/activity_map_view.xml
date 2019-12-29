@@ -13,7 +13,6 @@
 
     <!-- Layers such that elements can lie ontop of others -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ActivityMapView_RootContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
