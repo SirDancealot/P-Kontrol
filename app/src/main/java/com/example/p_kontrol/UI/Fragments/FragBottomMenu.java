@@ -45,7 +45,7 @@ public class FragBottomMenu extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       view = inflater.inflate(R.layout.fragment_frag_bottom_menu, container, false);
+       view = inflater.inflate(R.layout.include_bottom_menu, container, false);
 
        // Menu Buttons.
         menuBtnContainer     = (View)   view.findViewById(R.id.menu_btnContainer)           ;

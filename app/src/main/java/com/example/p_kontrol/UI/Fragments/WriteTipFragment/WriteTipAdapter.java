@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Adapters;
+package com.example.p_kontrol.UI.Fragments.WriteTipFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

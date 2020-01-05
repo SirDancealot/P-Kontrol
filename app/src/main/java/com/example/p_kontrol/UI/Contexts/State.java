@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -29,37 +30,47 @@ import com.google.android.gms.tasks.Task;
 
 public class State implements IState  {
 
+    // Defaults.
     final int DEFAULT_MAP_ZOOM = 15;
     final int DEFAULT_ZOOM_ZOOM = 17;
 
-    // Constructer retrieved Vars
+    // Objects
     MapContext context;
     IMapContextListener listener = null;
-
-    // Context retrieved Vars
     GoogleMap map;
+    Button centerBtn, acceptBtn, cancelBtn;
 
     public State(MapContext context) {
+        //retrieving Objects
         this.context = context;
         map = context.getMap();
         listener = context.getListener();
+        centerBtn = context.getCenterBtn();
+        acceptBtn = context.getAcceptBtn();
+        cancelBtn = context.getCancelBtn();
 
+        // Setting Listeners
+        setListeners();
+        setupButtonListeners();
+
+        // Updating Map look.
+        updateMap();
+
+        // Calling the listener that a new State has been initiated.
         if(listener != null)
             listener.onChangeState();
-        System.out.println(context.getListOfTipDto().size() + " SIZE OF LIST ");
-        updateMap();
-        setListeners();
-    }
-    private void setListeners(){
-        map.setOnMapClickListener(null);
     }
 
+    //Interface
+    @Override
+    public void setDoneListner(Object listenerDone){}
+    @Override
     public void centerMapOnLocation(MapContext context){
         context.centerMapOnLocation();
     }
-
     @Override
     public void updateMap() {
+        // todo her er der sket et "NumberFormatException" s== null . line 80. i StateSelectLocation.
         int i = 0;
         for(ITipDTO tip: context.getListOfTipDto()){
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
@@ -75,10 +86,40 @@ public class State implements IState  {
 
     }
 
-    @Override
-    public void setDoneListner(Object obj) {
+    //Map on clicks
+    public void setListeners(){
+        map.setOnMapClickListener(null);
     }
 
+    //Buttons methods
+    public void setupButtonListeners(){
+        try {
+            centerBtn.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    centerMethod();
+                }
+            });
+        }catch (NullPointerException e){}
+        try {
+        acceptBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                acceptMethod();
+            }
+        });
+        }catch (NullPointerException e){}
+        try {
+        cancelBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                cancelMethod();
+            }
+        });
+        }catch (NullPointerException e){}
+    }
+    public void centerMethod(){}
+    public void acceptMethod(){}
+    public void cancelMethod(){}
+
+    // Regular methods
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(),context.getResources().getIdentifier(iconName, "drawable", context.getActivity().getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
@@ -96,5 +137,4 @@ public class State implements IState  {
                 .zoom(DEFAULT_MAP_ZOOM).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
 }

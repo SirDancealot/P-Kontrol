@@ -78,6 +78,17 @@ public class TipDTO implements ITipDTO {
         this.creationDate = creationDate;
     }
 
+    //todo implement this in the Interface.
+    public TipDTO copy(){
+        TipDTO newDTO = new TipDTO();
+        newDTO.setAuthor(author);
+        newDTO.setCreationDate(creationDate);
+        newDTO.setLocation(location);
+        newDTO.setMessage(message);
+        newDTO.setRating(rating);
+        return newDTO;
+    }
+
     /*
     private int tipId;
     private String author;

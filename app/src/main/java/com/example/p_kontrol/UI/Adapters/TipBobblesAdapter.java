@@ -17,7 +17,7 @@ import java.util.List;
 
 public class TipBobblesAdapter extends FragmentPagerAdapter {
 
-    // Settings
+    // Defaults
     final int TIP_SHORT_MAX_LENGTH = 250;
 
     // Argument Keys
@@ -25,7 +25,6 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     final String BOBBLE_TEXT = "bobbleTip_text";
     final String BOBBLE_URL  = "bobbleTip_URL";
     final String BOBBLE_DATE = "bobbleTip_DATE";
-
 
     // Variables
     List<ITipDTO> tips;

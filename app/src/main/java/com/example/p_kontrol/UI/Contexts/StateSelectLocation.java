@@ -2,51 +2,41 @@ package com.example.p_kontrol.UI.Contexts;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
-import com.facebook.appevents.suggestedevents.ViewOnClickListener;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class StateSelectLocation extends State {
 
-    IMapSelectedLocationListener listener;
-
-    Button acceptBtn;
-    LatLng currentMarker = null;
+    String TAG = "State Select Loaction ";
+    IMapSelectedLocationListener listenerDone;
+    // todo change to current location of User.
+    LatLng currentMarkerLocation = null;
 
     public StateSelectLocation(MapContext context) {
         super(context);
-        acceptBtn = context.getAcceptBtn();
         zoomIn();
         map.clear();
-        setupMapListener();
+        acceptBtn.setVisibility(View.VISIBLE);
+        cancelBtn.setVisibility(View.VISIBLE);
     }
 
-    private void setupMapListener(){
+    // interface Overrides
+    @Override
+    public void updateMap(){}
+
+    // Listeners
+    @Override
+    public void setListeners(){
 
         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 map.clear();
-                currentMarker = latLng;
+                currentMarkerLocation = latLng;
                 map.addMarker(new MarkerOptions().position(latLng));
-            }
-        });
-
-        acceptBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if(listener != null && currentMarker != null ){
-                    map.clear();
-                    zoomOut();
-                    listener.onSelectedLocation(currentMarker);
-                    Log.d("Accept", "onClick() called with: v = [" + v + "]");
-                }
             }
         });
 
@@ -58,10 +48,35 @@ public class StateSelectLocation extends State {
         });
 
     }
-
     @Override
-    public void setDoneListner(Object listener){
-        this.listener = (IMapSelectedLocationListener) listener;
+    public void setDoneListner(Object listenerDone){
+        this.listenerDone = (IMapSelectedLocationListener) listenerDone;
+    }
+
+    // Button Calls
+    @Override
+    public void centerMethod(){
+        centerMapOnLocation(context);
+    }
+    @Override
+    public void acceptMethod(){
+// todo still accepts a null location. must not, but should be implemented with a standard location, and a check here to se if there is a marker. BOTH ARE NECESARY!!
+        Log.i(TAG, "acceptMethod: ");
+        map.clear();
+        zoomOut();
+
+        if(listenerDone != null)
+            listenerDone.onSelectedLocation(currentMarkerLocation);
+    }
+    @Override
+    public void cancelMethod(){
+        Log.i(TAG, "cancelMethod: ");
+
+        map.clear();
+        zoomOut();
+
+        if(listenerDone != null)
+            listenerDone.onCancelSelection();
     }
 
 }

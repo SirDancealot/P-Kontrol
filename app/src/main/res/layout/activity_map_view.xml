@@ -39,23 +39,38 @@
             app:layout_constraintTop_toTopOf="parent"
 
             >
-            <!-- MAP Confirm Tip location Button -->
-            <Button
-                android:id="@+id/contino"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:visibility="gone"
-                android:background="@drawable/ic_button_checkmark"
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/fragContainer_menu"
-                />
-
+                android:layout_marginBottom="10dp"
+                >
+                <!-- MAP Cancel Tip location Button -->
+                <Button
+                    android:id="@+id/map_cancelBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="55dp"
+                    android:visibility="visible"
+                    android:background="@drawable/ic_button_chrossmark"
+                    />
+                <!-- MAP Confirm Tip location Button -->
+                <Button
+                    android:id="@+id/map_acceptBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="visible"
+                    android:background="@drawable/ic_button_checkmark"
+                    />
+            </LinearLayout>
 
             <!-- MAP center on Location Button -->
             <Button
-                android:id="@+id/centerBut"
+                android:id="@+id/Map_centerBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/ic_button_map_center"
@@ -66,15 +81,15 @@
                 android:transitionName="MapCenterButon"
                 />
             <!-- top message box -->
-            <FrameLayout
+          <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <include layout="@layout/fragment_top_message_bar" />
-
+                  <!--<include layout="@layout/fragment_top_message_bar" />
+-->
                 <FrameLayout
                     android:id="@+id/midScreenFragmentContainer"
                     android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
@@ -93,7 +108,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <include layout="@layout/fragment_frag_bottom_menu" />
+                <include layout="@layout/include_bottom_menu" />
 
             </FrameLayout>
 

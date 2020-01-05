@@ -12,6 +12,8 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Activities.ActivityMapView;
 import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -27,93 +30,91 @@ import java.util.List;
 
 public class MapContext implements OnMapReadyCallback {
 
+    String TAG = "MapContext";
+
     //Defaults
     private int DEFAULT_ZOOM = 17;
     private int DEFAULT = 15;
     private final LatLng DEFAULT_LOCATION = new LatLng(55.676098, 	12.56833);
-    String TAG = "MapContext";
 
     //Map Functionality NECESARY VARIABLES
     private SupportMapFragment mapFragment;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Activity activity;
+    private ActivityMapView activity;
+    private MapContext thisContext =this ;
 
-    //Regular Variables
+    //Data
     private List<ITipDTO> listOfTipDto;
-    private IState state;
+    private IState currentState;
+    private Location userlocation   ;
+    private LatLng currentMarkerLoc ;
 
     // Views
     private GoogleMap map   ;
     private Button centerBtn;
+    private Button cancelBtn;
     private Button acceptBtn;
-
-    //UserData
-    private Location userlocation     ;
-    private LatLng currentMarkerLoc ;
 
     //States
     private IState stateStandby ,stateSelectLocation;
 
     //Listeners
-    private View.OnClickListener mapAcceptButtonListener;
     private IMapContextListener listener;
 
-    private final MapContext thisContext = this;
+// -- METHODS --  --  --  --  --  --  --  --  --  --  --  --  --
+    public MapContext(SupportMapFragment mapFragment,ActivityMapView activity,Button centerBtn,Button cancelBtn,Button acceptBtn,IMapContextListener listener){
 
-    public MapContext(SupportMapFragment mapFragment,
-                      Activity context,
-                      Button centerBtn,
-                      Button acceptBtn,
-                      IMapContextListener listener){
+        //Android Stuffs
+        this.mapFragment= mapFragment;
+        this.activity   = activity;
+        this.listener   = listener;
 
-        this.mapFragment = mapFragment;
-        this.activity = context;
-        this.map = map;
+        // interaction Buttons
         this.centerBtn = centerBtn;
+        this.cancelBtn = cancelBtn;
         this.acceptBtn = acceptBtn;
-        this.listener = listener;
 
-        mFusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(context);
+        // Map Fragment Stuffs
+        mFusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(activity);
         mapFragment.getMapAsync(this);
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap){
-        Log.d(TAG, "onMapReady() called with: googleMap = [" + googleMap + "]");
 
         // Setting Up the Map
         map = googleMap;
         if ( ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
             map.setMyLocationEnabled(true);
         }
+        styleMapCall();
         centerMapOnLocation();
 
+
+        // todo move into States.
         //Center the Camera on the Map.
         centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                state.centerMapOnLocation(thisContext);
-
+                currentState.centerMapOnLocation(thisContext);
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
             }
         });
-
-        // Retrieving Information.
-
-        // Sends Back a listener call.
         listener.onReady();
 
+        // Activate Standard State . in this case it is Standby.
         setStateStandby();
-
     }
 
     //Public Calls
     public void setStateStandby(){
-
-        state = new StateStandby(this);
+        currentState = new StateStandby(this);
     }
     public void setStateSelectLocation(IMapSelectedLocationListener selectListener){
-        state = new StateSelectLocation(this);
-        state.setDoneListner(selectListener);
+
+        currentState = new StateSelectLocation(this);
+        currentState.setDoneListner(selectListener);
+
     }
 
     // private Calls
@@ -138,86 +139,96 @@ public class MapContext implements OnMapReadyCallback {
             Log.e("Exception: %s", e.getMessage());
         }
     }
-
     public Resources getResources(){
         return activity.getResources();
     }
+    private void styleMapCall(){
+        // Styling the Map
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = map.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            activity, R.raw.mapstyling_json));
 
-
-    public void setListOfTipDto(List<ITipDTO> tips){
-        listOfTipDto = tips;
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
 
     }
 
 
+    // ---  GET / SET ---  GET / SET ---  GET / SET ---  GET / SET
+    // get UI elements
+    public GoogleMap getMap() {
+        return map;
+    }
+    public Button getCenterBtn() {
+        return centerBtn;
+    }
+    public Button getAcceptBtn() {
+        return acceptBtn;
+    }
+    public Button getCancelBtn() {
+        return cancelBtn;
+    }
 
+    // State Pattern Specifiks
+    public IState getCurrentState() {
+        return currentState;
+    }
+    public IState getStateStandby() {
+        return stateStandby;
+    }
+    public IState getStateSelectLocation() {
+        return stateSelectLocation;
+    }
+    public IMapContextListener getListener() {
+        return listener;
+    }
 
-
+    // Google Map Specifiks and Defaults refering to Google Map
+    public void updateMap(){
+        listOfTipDto = activity.getDTOList();
+        currentState.updateMap();
+    }
     public int getDEFAULT_ZOOM() {
         return DEFAULT_ZOOM;
     }
-
     public LatLng getDEFAULT_LOCATION() {
         return DEFAULT_LOCATION;
     }
-
-    public String getTAG() {
-        return TAG;
+    public Location getUserlocation() {
+        return userlocation;
     }
-
+    public LatLng getCurrentMarkerLoc() {
+        return currentMarkerLoc;
+    }
     public SupportMapFragment getMapFragment() {
         return mapFragment;
     }
-
     public FusedLocationProviderClient getmFusedLocationProviderClient() {
         return mFusedLocationProviderClient;
     }
 
-    public Activity getActivity() {
-        return activity;
-    }
+    // Tips
+    public void setListOfTipDto(List<ITipDTO> tips){
+        listOfTipDto = tips;
 
+    }
     public List<ITipDTO> getListOfTipDto() {
         return listOfTipDto;
     }
 
-    public IState getState() {
-        return state;
+    // android specifiks.
+    public String getTAG() {
+        return TAG;
+    }
+    public Activity getActivity() {
+        return activity;
     }
 
-    public GoogleMap getMap() {
-        return map;
-    }
-
-    public Button getCenterBtn() {
-        return centerBtn;
-    }
-
-    public Button getAcceptBtn() {
-        return acceptBtn;
-    }
-
-    public Location getUserlocation() {
-        return userlocation;
-    }
-
-    public LatLng getCurrentMarkerLoc() {
-        return currentMarkerLoc;
-    }
-
-    public IState getStateStandby() {
-        return stateStandby;
-    }
-
-    public IState getStateSelectLocation() {
-        return stateSelectLocation;
-    }
-
-    public View.OnClickListener getMapAcceptButtonListener() {
-        return mapAcceptButtonListener;
-    }
-
-    public IMapContextListener getListener() {
-        return listener;
-    }
 }
