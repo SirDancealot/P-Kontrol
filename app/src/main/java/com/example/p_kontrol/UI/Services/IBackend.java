@@ -19,4 +19,13 @@ public interface IBackend {
     //User
     IUserDTO getUser(int id);
 
+
+
+/*    // TEMP
+    isLoggedin
+    LoginFacebook
+            loginGoogle
+    loginManual
+                    loginSkip.*/
+
 }

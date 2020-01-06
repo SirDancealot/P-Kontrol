@@ -10,13 +10,10 @@
     android:layout_height="match_parent"
     >
 
-
     <!-- Layers such that elements can lie ontop of others -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
 
         <!-- Map -->
         <fragment
@@ -25,8 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".UI.Activities.MapsActivity" />
-
-
 
         <!-- Upper UI -->
         <androidx.constraintlayout.widget.ConstraintLayout

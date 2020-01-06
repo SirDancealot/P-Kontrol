@@ -318,7 +318,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
                 //todo simplify user Data
                 // fix this with the login.
                 UserDTO currentUser = new UserDTO( 1 , "tempUser", "tempLastName", "");
-
+                newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
                 newTipDTO.setAuthor(currentUser);
                 TipDTO tipDTO = newTipDTO.copy();
                 dtoList.add(tipDTO);
