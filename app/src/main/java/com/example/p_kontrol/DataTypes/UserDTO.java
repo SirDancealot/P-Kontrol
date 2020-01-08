@@ -1,8 +1,5 @@
 package com.example.p_kontrol.DataTypes;
 
-import com.example.p_kontrol.UI.Services.ITipDTO;
-import com.example.p_kontrol.UI.Services.IUserDTO;
-
 import java.util.List;
 
 public class UserDTO implements IUserDTO {

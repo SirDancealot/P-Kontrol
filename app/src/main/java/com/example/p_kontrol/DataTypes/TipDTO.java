@@ -1,12 +1,7 @@
 package com.example.p_kontrol.DataTypes;
 
-import android.location.Location;
-
-import com.example.p_kontrol.UI.Services.ITipDTO;
-import com.example.p_kontrol.UI.Services.IUserDTO;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class TipDTO implements ITipDTO {

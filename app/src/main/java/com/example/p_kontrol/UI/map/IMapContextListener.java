@@ -1,9 +1,6 @@
-package com.example.p_kontrol.UI.Contexts;
+package com.example.p_kontrol.UI.map;
 
-import com.example.p_kontrol.UI.Services.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.List;
 
 public interface IMapContextListener {
 

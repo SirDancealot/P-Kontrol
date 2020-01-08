@@ -1,7 +1,7 @@
 package com.example.p_kontrol.Backend;
 
-import com.example.p_kontrol.UI.Services.ITipDTO;
-import com.example.p_kontrol.UI.Services.IUserDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.IUserDTO;
 
 import java.util.List;
 

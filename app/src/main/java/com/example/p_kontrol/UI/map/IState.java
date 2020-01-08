@@ -1,6 +1,4 @@
-package com.example.p_kontrol.UI.Contexts;
-
-import com.google.android.gms.maps.model.LatLng;
+package com.example.p_kontrol.UI.map;
 
 public interface IState {
     void setDoneListner(Object listenerDone);

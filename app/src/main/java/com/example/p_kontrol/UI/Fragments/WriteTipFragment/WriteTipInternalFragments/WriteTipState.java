@@ -3,7 +3,7 @@ package com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFrag
 import androidx.fragment.app.Fragment;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 
 public class WriteTipState extends Fragment implements IWriteTipState {
 

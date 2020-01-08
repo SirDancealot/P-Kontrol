@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.FragMessageWrite;
-import com.example.p_kontrol.UI.Services.ITipDTO;
 
 public class WriteTip_Stage_Submit extends WriteTipState {
 
