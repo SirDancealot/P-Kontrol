@@ -31,7 +31,7 @@ import com.google.android.gms.tasks.Task;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-public class MapContext extends AppCompatActivity implements OnMapReadyCallback {
+public class MapContext implements OnMapReadyCallback {
 
     String TAG = "MapContext";
 
@@ -44,6 +44,95 @@ public class MapContext extends AppCompatActivity implements OnMapReadyCallback 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private SupportMapFragment mapFragment;
     private Location mLastKnownLocation;
+
+    public void setTAG(String TAG) {
+        this.TAG = TAG;
+    }
+
+    public void setDEFAULT_ZOOM(int DEFAULT_ZOOM) {
+        this.DEFAULT_ZOOM = DEFAULT_ZOOM;
+    }
+
+    public int getDEFAULT() {
+        return DEFAULT;
+    }
+
+    public void setDEFAULT(int DEFAULT) {
+        this.DEFAULT = DEFAULT;
+    }
+
+    public static int getPermissionsRequestAccessFineLocation() {
+        return PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
+    }
+
+    public void setMapFragment(SupportMapFragment mapFragment) {
+        this.mapFragment = mapFragment;
+    }
+
+    public Location getmLastKnownLocation() {
+        return mLastKnownLocation;
+    }
+
+    public void setmLastKnownLocation(Location mLastKnownLocation) {
+        this.mLastKnownLocation = mLastKnownLocation;
+    }
+
+    public void setmFusedLocationProviderClient(FusedLocationProviderClient mFusedLocationProviderClient) {
+        this.mFusedLocationProviderClient = mFusedLocationProviderClient;
+    }
+
+    public void setActivity(MainMenuActivity activity) {
+        this.activity = activity;
+    }
+
+    public MapContext getThisContext() {
+        return thisContext;
+    }
+
+    public void setThisContext(MapContext thisContext) {
+        this.thisContext = thisContext;
+    }
+
+    public void setCurrentState(IState currentState) {
+        this.currentState = currentState;
+    }
+
+    public void setUserlocation(Location userlocation) {
+        this.userlocation = userlocation;
+    }
+
+    public void setCurrentMarkerLoc(LatLng currentMarkerLoc) {
+        this.currentMarkerLoc = currentMarkerLoc;
+    }
+
+    public void setMap(GoogleMap map) {
+        this.map = map;
+    }
+
+    public void setCenterBtn(Button centerBtn) {
+        this.centerBtn = centerBtn;
+    }
+
+    public void setCancelBtn(Button cancelBtn) {
+        this.cancelBtn = cancelBtn;
+    }
+
+    public void setAcceptBtn(Button acceptBtn) {
+        this.acceptBtn = acceptBtn;
+    }
+
+    public void setStateStandby(IState stateStandby) {
+        this.stateStandby = stateStandby;
+    }
+
+    public void setStateSelectLocation(IState stateSelectLocation) {
+        this.stateSelectLocation = stateSelectLocation;
+    }
+
+    public void setListener(IMapContextListener listener) {
+        this.listener = listener;
+    }
+
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private MainMenuActivity activity;
     private MapContext thisContext =this;
@@ -89,11 +178,18 @@ public class MapContext extends AppCompatActivity implements OnMapReadyCallback 
 
         // Setting Up the Map
         map = googleMap;
+
+
         if ( ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
             map.setMyLocationEnabled(true);
+            System.out.println("setter loc true! --------------");
+        } else {
+            System.out.println("der er noget galt --------------");
         }
+
+
         styleMapCall();
-        centerMapOnLocation();
+
 
 
         // todo move into States.
@@ -101,7 +197,7 @@ public class MapContext extends AppCompatActivity implements OnMapReadyCallback 
         centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentState.centerMapOnLocation(thisContext);
+                currentState.centerMapOnLocation();
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
             }
         });
@@ -109,6 +205,7 @@ public class MapContext extends AppCompatActivity implements OnMapReadyCallback 
 
         // Activate Standard State . in this case it is Standby.
         setStateStandby();
+        currentState.centerMapOnLocation();
     }
 
     //Public Calls
@@ -122,71 +219,7 @@ public class MapContext extends AppCompatActivity implements OnMapReadyCallback 
 
     }
 
-    public void moveCamara(LatLng geo){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(geo)
-                .zoom(DEFAULT_ZOOM).build();
-        //map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
 
-    public void zoomCamara(int zoom){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .zoom(zoom).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-
-    public void centerMapOnLocation() {
-        try {
-            Task locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener( this, new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        mLastKnownLocation = (Location) task.getResult();
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(mLastKnownLocation.getLatitude(),
-                                        mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-
-                    } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                }
-            });
-
-        } catch(SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }
-
-    public void getDeviceLocation() {
-        try {
-            Task locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener( this, new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        mLastKnownLocation = (Location) task.getResult();
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(mLastKnownLocation.getLatitude(),
-                                        mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-
-                    } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                }
-            });
-
-        } catch(SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }
 
     public Resources getResources(){
         return activity.getResources();
