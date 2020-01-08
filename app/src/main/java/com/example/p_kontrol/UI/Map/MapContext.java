@@ -184,16 +184,9 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
         map = googleMap;
 
 
-        if ( ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            map.setMyLocationEnabled(true);
-            System.out.println("setter loc true! --------------");
-        } else {
-            System.out.println("der er noget galt --------------");
-        }
-
 
         styleMapCall();
-
+        getPersission();
 
 
         // todo move into States.
@@ -350,7 +343,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
                 }
             }
         }
-        System.out.println("vi her her manner");
+        Log.d(TAG, "onRequestPermissionsResult: OK");
         map.setMyLocationEnabled(true);
     }
 
