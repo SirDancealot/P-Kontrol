@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.p_kontrol.R;
@@ -21,14 +22,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
-public class MapContext implements OnMapReadyCallback {
+public class MapContext extends AppCompatActivity implements OnMapReadyCallback {
 
     String TAG = "MapContext";
 
@@ -38,10 +41,12 @@ public class MapContext implements OnMapReadyCallback {
     private final LatLng DEFAULT_LOCATION = new LatLng(55.676098, 	12.56833);
 
     //Map Functionality NECESARY VARIABLES
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private SupportMapFragment mapFragment;
+    private Location mLastKnownLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private MainMenuActivity activity;
-    private MapContext thisContext =this ;
+    private MapContext thisContext =this;
 
     //Data
     private List<ITipDTO> listOfTipDto;
@@ -117,28 +122,72 @@ public class MapContext implements OnMapReadyCallback {
 
     }
 
-    // private Calls
-    public void centerMapOnLocation(){
+    public void moveCamara(LatLng geo){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(geo)
+                .zoom(DEFAULT_ZOOM).build();
+        //map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    public void zoomCamara(int zoom){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(map.getCameraPosition().target)
+                .zoom(zoom).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    public void centerMapOnLocation() {
         try {
             Task locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener(new OnCompleteListener() {
+            locationResult.addOnCompleteListener( this, new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
-                        userlocation = (Location) task.getResult();
+                        mLastKnownLocation = (Location) task.getResult();
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                new LatLng(mLastKnownLocation.getLatitude(),
+                                        mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
 
                     } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT));
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
                         map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 }
             });
 
-        } catch(SecurityException e)  {
+        } catch(SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
+    public void getDeviceLocation() {
+        try {
+            Task locationResult = mFusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener( this, new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        mLastKnownLocation = (Location) task.getResult();
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                new LatLng(mLastKnownLocation.getLatitude(),
+                                        mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                    } else {
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOOM));
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
+                    }
+                }
+            });
+
+        } catch(SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
     public Resources getResources(){
         return activity.getResources();
     }
@@ -159,6 +208,7 @@ public class MapContext implements OnMapReadyCallback {
         }
 
     }
+
 
 
     // ---  GET / SET ---  GET / SET ---  GET / SET ---  GET / SET
