@@ -16,12 +16,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
-import com.example.p_kontrol.UI.Contexts.IMapContextListener;
-import com.example.p_kontrol.UI.Contexts.IMapSelectedLocationListener;
-import com.example.p_kontrol.UI.Contexts.MapContext;
+import com.example.p_kontrol.UI.map.IMapContextListener;
+import com.example.p_kontrol.UI.map.IMapSelectedLocationListener;
+import com.example.p_kontrol.UI.map.MapContext;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;

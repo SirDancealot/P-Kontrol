@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Contexts;
+package com.example.p_kontrol.UI.map;
 
 import android.Manifest;
 import android.app.Activity;
