@@ -1,31 +1,40 @@
 package com.example.p_kontrol.DataTypes;
 
+import com.example.p_kontrol.Backend.IOnTaskComplete;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
 public interface IBackend {
 
+
     //Tips
-    List<ITipDTO> getTips(LatLng location);
-    void createTip(ITipDTO tip);
-    void rateTip(int star, ITipDTO tip);
 
-    boolean checkPAlert(LatLng location);
-    int getPAlert(int metersAwayPVagtHasBeenSpotted);
+    List<ITipDTO> getTips(LatLng location, double radius);
 
-    boolean isNewTipAvalible();
+     void createTip(ITipDTO tip);
 
-    //User
+     void rateTip(int star, ITipDTO tip);
+
+     boolean checkPAlert(LatLng location);
+
+     boolean isNewTipAvalible();
+
+
+     //User
+
     IUserDTO getUser(int id);
 
 
 
-/*    // TEMP
-    isLoggedin
-    LoginFacebook
-            loginGoogle
-    loginManual
-                    loginSkip.*/
+
+
+
+
+
+
+
+
 
 }

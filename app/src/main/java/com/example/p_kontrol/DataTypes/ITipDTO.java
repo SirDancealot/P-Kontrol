@@ -6,16 +6,30 @@ import java.util.Date;
 
 public interface ITipDTO {
 
+
+
+
+
     IUserDTO getAuthor();
-    String getMessage();
-    LatLng getLocation();
-    int getRating();
-    Date getCreationDate();
 
     void setAuthor(IUserDTO author);
+
+    String getMessage();
+
     void setMessage(String message);
+
+    LatLng getLocation();
+
     void setLocation(LatLng location);
+
+    int getRating();
+
     void setRating(int rating);
-    void setCreationDate(Date creationDate);
+
+    Date getCreationDate();
+
+    void setCreationDate(Date date);
+
+
 
 }

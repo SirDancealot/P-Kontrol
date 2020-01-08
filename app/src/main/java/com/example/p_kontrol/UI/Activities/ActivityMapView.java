@@ -14,6 +14,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+
+import com.example.p_kontrol.DataTypes.IUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
@@ -28,7 +30,7 @@ import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
+import com.google.firebase.firestore.auth.User;
 
 
 import java.time.LocalDate;
@@ -316,7 +318,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
             case 2: // finish Tip and send to back end for saving.
                 //todo simplify user Data
                 // fix this with the login.
-                UserDTO currentUser = new UserDTO( 1 , "tempUser", "tempLastName", "");
+                UserDTO currentUser = new UserDTO( "tempUser", "tempLastName", "");
                 newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
                 newTipDTO.setAuthor(currentUser);
                 TipDTO tipDTO = newTipDTO.copy();
@@ -370,7 +372,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
     private void setUpDemoTip(){
         ITipDTO tip1 = new TipDTO();
         tip1.setLocation(new LatLng(	55.676098, 	12.568337));
-        tip1.setAuthor(new UserDTO(1,"August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
+        tip1.setAuthor(new UserDTO("August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
         tip1.setMessage(getResources().getString(R.string.tip1));
         Date date = new Date(1563346249);
         tip1.setCreationDate(date);
@@ -383,7 +385,7 @@ public class ActivityMapView extends AppCompatActivity implements View.OnClickLi
 
         ITipDTO tip2 = new TipDTO();
         tip2.setLocation(new LatLng(	55.679098, 	12.569337));
-        tip2.setAuthor(new UserDTO(2,"Hans","the Human","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
+        tip2.setAuthor(new UserDTO("","Hans","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
         tip2.setMessage(getResources().getString(R.string.tip2));
         date = new Date(1543346249);
         tip2.setCreationDate(date);

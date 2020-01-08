@@ -3,18 +3,17 @@ package com.example.p_kontrol.DataTypes;
 import java.util.List;
 
 public class UserDTO implements IUserDTO {
+    //TODO implement this class
 
-    int userId;
     String firstName;
     String lastName;
     String profileSrc;
-    List<ITipDTO> tips = null;
 
-    public UserDTO(int userId, String firstName, String lastName, String profileSrc) {
-        this.userId = userId;
+    public UserDTO(String firstName, String lastName, String profileSrc){
         this.firstName = firstName;
-        this.lastName = lastName;
+        this. lastName = lastName;
         this.profileSrc = profileSrc;
+
     }
 
     @Override
@@ -24,7 +23,7 @@ public class UserDTO implements IUserDTO {
 
     @Override
     public String getFirstName() {
-        return firstName;
+        return null;
     }
 
     @Override
@@ -34,7 +33,7 @@ public class UserDTO implements IUserDTO {
 
     @Override
     public String getProfileSRC() {
-        return profileSrc;
+        return null;
     }
 
     @Override

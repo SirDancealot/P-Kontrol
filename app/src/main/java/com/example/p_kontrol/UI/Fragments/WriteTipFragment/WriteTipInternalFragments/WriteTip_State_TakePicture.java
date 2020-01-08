@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.p_kontrol.R;
 
-public class WriteTip_Stage_TakePicture extends WriteTipState {
+public class WriteTip_State_TakePicture extends WriteTipState {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

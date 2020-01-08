@@ -14,8 +14,8 @@ import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.IWriteTipStageListener;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTipState;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_WriteText;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_Stage_TakePicture;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_Stage_Submit;
+import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_TakePicture;
+import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_Submit;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 
 import java.util.LinkedList;
@@ -47,8 +47,8 @@ public class FragMessageWrite extends Fragment {
         // instantiating objects.
         fragmentList = new LinkedList<>();
         state_WriteText     = new WriteTip_State_WriteText();
-        state_TakePicture   = new WriteTip_Stage_TakePicture();
-        state_SubmitTip     = new WriteTip_Stage_Submit();
+        state_TakePicture   = new WriteTip_State_TakePicture();
+        state_SubmitTip     = new WriteTip_State_Submit();
 
         // Adding them to the list in the Order we want them to be shown.
         fragmentList.add(state_WriteText);

@@ -27,7 +27,7 @@ public class UserInfoDTO {
 
     public IUserDTO getUserDTO(){
         // todo Replace 1 with an Actual UserID
-        IUserDTO userDTO = new UserDTO(1,name,name2,url);
+        IUserDTO userDTO = new UserDTO(name,name2,url);
         return userDTO;
     }
 
