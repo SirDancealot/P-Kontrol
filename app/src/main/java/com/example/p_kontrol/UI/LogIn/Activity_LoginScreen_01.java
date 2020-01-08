@@ -58,9 +58,9 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
                 new Pair<>(trans_circle_1, trans_circle_1.getTransitionName())      ,
                 new Pair<>(trans_circle_2, trans_circle_2.getTransitionName())      ,
                 new Pair<>(trans_logo, trans_logo.getTransitionName())              ,
-                new Pair<>(trans_background,trans_background.getTransitionName())   ,
+                new Pair<>(trans_background,trans_background.getTransitionName())
                 // Android standard elements
-                new Pair<>(trans_TopBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
+                //new Pair<>(trans_TopBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
         );
         startActivity(login_intent, transitionParameters.toBundle());
     }

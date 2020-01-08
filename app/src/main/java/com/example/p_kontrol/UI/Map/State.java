@@ -58,7 +58,7 @@ public class State implements IState  {
         // todo her er der sket et "NumberFormatException" s== null . line 80. i StateSelectLocation.
         int i = 0;
         for(ITipDTO tip: context.getListOfTipDto()){
-            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
+            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon",69,100)));
             map.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(i++)));
             map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
