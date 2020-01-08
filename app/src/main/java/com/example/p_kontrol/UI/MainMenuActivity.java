@@ -23,7 +23,7 @@ import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
 import com.example.p_kontrol.UI.Map.IMapSelectedLocationListener;
 import com.example.p_kontrol.UI.Map.MapContext;
-import com.example.p_kontrol.UI.WriteTip.WriteTipFragment.FragMessageWrite;
+import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;

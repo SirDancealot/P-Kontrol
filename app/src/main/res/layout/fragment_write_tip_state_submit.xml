@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.WriteTip.WriteTip_State_WriteText"
+    tools:context=".UI.WriteTip.State_WriteText"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Thanks for Contributing -->

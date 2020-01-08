@@ -22,7 +22,7 @@
             android:id="@+id/menuBtn_draggingHandle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_shape_handle"
+            android:background="@drawable/shape_squarerounded_top"
             >
 
             <ImageView

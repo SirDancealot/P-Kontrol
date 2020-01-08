@@ -27,7 +27,7 @@
                 android:layout_marginLeft="160dp"
 
                 android:layout_marginRight="160dp"
-                android:background="@drawable/menu_shape_handle"
+                android:background="@drawable/shape_squarerounded_top"
                 app:srcCompat="?attr/actionModePasteDrawable" />
         </FrameLayout>
 

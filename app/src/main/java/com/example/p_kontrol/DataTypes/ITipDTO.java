@@ -6,10 +6,6 @@ import java.util.Date;
 
 public interface ITipDTO {
 
-
-
-
-
     IUserDTO getAuthor();
 
     void setAuthor(IUserDTO author);
@@ -29,7 +25,5 @@ public interface ITipDTO {
     Date getCreationDate();
 
     void setCreationDate(Date date);
-
-
 
 }
