@@ -6,17 +6,16 @@ import androidx.core.util.Pair;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
 import com.example.p_kontrol.R;
 
-public class MainActivity extends AppCompatActivity {
+public class Activity_LoginScreen_01 extends AppCompatActivity {
 
-
-
-    // Listing elemenets to change when it has been loaded
+    String TAG = "LoginScreen_01";
     View trans_circle_1;
     View trans_circle_2;
     View trans_logo;
@@ -24,9 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_loginscreen_01);
 
         // Elements to change when ready
         trans_circle_1  = findViewById(R.id.LoginScreen_Circle1)        ;
@@ -34,34 +32,28 @@ public class MainActivity extends AppCompatActivity {
         trans_logo      = findViewById(R.id.LoginScreen_LogoContainer)  ;
         trans_background= findViewById(R.id.LoginScreen_BackgroundBlue) ;
 
-
-        trans_logo.setOnClickListener(new View.OnClickListener() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-                splashTransition();
+            public void run() {
+                changeAct();
             }
-
-        });
-        trans_background.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                splashTransition();
-            }
-
-        });
-
+        }, 1000);
     }
 
-    public void splashTransition() {
-        //Android Standard Shared Elements
+
+    public void changeAct() {
+        Log.w(TAG, " Changing Activities " );
+
+        //Android Standard Shared Elements. must or have a Clipping.
         View trans_TopBar = findViewById(android.R.id.statusBarBackground);
         if(trans_TopBar == null){
             Log.e("Null Error", "Top Bar = null");
         }
 
-        Intent login_intent = new Intent(MainActivity.this, ActivityLoginScreen.class );
+        Intent login_intent = new Intent(Activity_LoginScreen_01.this, Activity_LoginScreen_02.class );
         ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                MainActivity.this,
+                Activity_LoginScreen_01.this,
                 // All Custom Shared elements
                 new Pair<>(trans_circle_1, trans_circle_1.getTransitionName())      ,
                 new Pair<>(trans_circle_2, trans_circle_2.getTransitionName())      ,
@@ -72,4 +64,5 @@ public class MainActivity extends AppCompatActivity {
         );
         startActivity(login_intent, transitionParameters.toBundle());
     }
+
 }

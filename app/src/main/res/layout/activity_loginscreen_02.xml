@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Activities.MainActivity"
+    tools:context=".UI.Activities.Activity_LoginScreen_01"
     tools:layout_editor_absoluteX="1dp"
     tools:layout_editor_absoluteY="-26dp">
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
 
-        android:background="@drawable/login_screen_scene1"
+        android:background="@drawable/loginscreen_header_background"
         android:clipChildren="false"
         android:clipToPadding="false"
 
@@ -77,7 +77,6 @@
             tools:srcCompat="@drawable/logo" />
 -->
         <TextView
-            android:id="@+id/LoginScreen_LogoText"
             android:layout_width="196dp"
             android:layout_height="117dp"
             android:text="Stress-free parking Together"
@@ -88,7 +87,7 @@
 
     <!-- Login Buttons Area -->
     <Button
-        android:id="@+id/LoginScreen_1_LoginBtn"
+        android:id="@+id/LoginScreen_2_LoginBtn"
         android:layout_width="320dp"
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
@@ -102,7 +101,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
     <Button
-         android:id="@+id/LoginScreen_1_SignUpBtn"
+         android:id="@+id/LoginScreen_2_SignUpBtn"
          android:layout_width="320dp"
          android:layout_height="55dp"
          android:layout_centerHorizontal="true"

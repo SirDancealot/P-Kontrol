@@ -4,23 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.Fragments.WriteTipInternalFragments.WriteTip_Stage0"
+
+    tools:context=".UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_WriteText"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Write Tip -->
+    <!-- take Image -->
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="75dp"
-        android:background="@drawable/writetip_navbar_top_shape"
         android:orientation="vertical"
+        android:background="@drawable/writetip_navbar_top_shape"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         >
-
         <!-- Title  -->
         <TextView
             android:layout_width="match_parent"
@@ -29,39 +28,17 @@
 
             android:fontFamily="@font/ubuntu_regular"
             android:gravity="center"
-            android:text="@string/writeTip_title_step2"
+            android:text="@string/writeTip_title_step3"
             android:textColor="@color/color_matBlack"
             android:textSize="24sp"
 
             />
-        <!-- Categories  -->
-        <Spinner
-            android:id="@+id/WriteTip_CategorySpinner"
+        <!-- Image -->
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-
-            />
-        <!-- Write Tip -->
-        <EditText
-            android:id="@+id/WriteTip_TextInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/color_matWhite"
-
-            android:ems="10"
-            android:hint="Leave a comment..."
-            android:inputType="textMultiLine"
-            android:minHeight="75dp" />
-
+            tools:src="@tools:sample/avatars[1]" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
