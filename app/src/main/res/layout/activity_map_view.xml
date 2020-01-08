@@ -43,12 +43,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/fragContainer_menu"
                 android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:background="@drawable/shape_squarerounded_full"
                 >
                 <!-- MAP Cancel Tip location Button -->
                 <Button
                     android:id="@+id/map_cancelBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginEnd="55dp"
                     android:visibility="visible"
                     android:background="@drawable/ic_button_chrossmark"
@@ -56,8 +58,8 @@
                 <!-- MAP Confirm Tip location Button -->
                 <Button
                     android:id="@+id/map_acceptBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:visibility="visible"
                     android:background="@drawable/ic_button_checkmark"
                     />
@@ -85,14 +87,15 @@
 
                   <!--<include layout="@layout/fragment_top_message_bar" />
 -->
-                <FrameLayout
-                    android:id="@+id/midScreenFragmentContainer"
-                    android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
+              <FrameLayout
+                  android:id="@+id/midScreenFragmentContainer"
+                  android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-            </FrameLayout>
+              </FrameLayout>
+
+          </FrameLayout>
 
 
             <!-- Drag Menu Container -->
