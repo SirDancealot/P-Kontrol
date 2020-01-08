@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LoginContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.LogIn.Activity_LoginScreen_01"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="-26dp"
+    android:animateLayoutChanges="true"
+    android:clickable="true"
+    android:focusable="true"
+    >
+
+    <!-- Circles -->
+    <AbsoluteLayout
+        android:id="@+id/LoginScreen_BackgroundBlue"
+        android:transitionName="LoginScreen_BackgroundBlue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#7DCBED"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/LoginScreen_Circle1"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_x="-150dp"
+            android:layout_y="-150dp"
+            android:background="@drawable/shape_circle_lightgreen"
+            android:transitionName="LoginScreen_Circle1"
+            />
+
+        <View
+            android:id="@+id/LoginScreen_Circle2"
+            android:background="@drawable/shape_circle_green"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_x="270dp"
+            android:layout_y="403dp"
+            android:transitionName="LoginScreen_Circle2"
+            />
+
+    </AbsoluteLayout>
+
+    <!-- Content Besides Circles -->
+    <LinearLayout
+        android:id="@+id/LoginScreen_LogoContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="328dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:transitionName="LoginScreen_LogoContainer"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:layout_width="196dp"
+            android:layout_height="117dp"
+            android:text="Stress-free parking Together"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp" />
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

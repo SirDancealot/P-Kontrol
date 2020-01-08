@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomProgressBar">
+        <attr name="ptip_progressValue" format="integer"/>
+        <attr name="ptip_progressNumSteps" format="integer"/>
+
+
+        <attr name="ptip_progressBarHeight" format="integer"/>
+        <attr name="ptip_progressBorderThickness" format="integer"/>
+        <attr name="ptip_progressPointdiagonal" format="integer"/>
+        <attr name="ptip_progressPointMargin" format="integer"/>
+
+
+        <attr name="ptip_progress_ColorNonProgress" format="color"/>
+        <attr name="ptip_progress_ColorProgress" format="color"/>
+        <attr name="ptip_progress_ColorBorder" format="color"/>
+    </declare-styleable>
+
+
+    <!-- Declare custom theme attributes that allow changing which styles are
+         used for button bars depending on the API level.
+         ?android:attr/buttonBarStyle is new as of API 11 so this is
+         necessary to support previous API levels. -->
+    <declare-styleable name="ButtonBarContainerTheme">
+        <attr name="metaButtonBarStyle" format="reference" />
+        <attr name="metaButtonBarButtonStyle" format="reference" />
+    </declare-styleable>
+
+</resources>

@@ -1,15 +1,16 @@
-package com.example.p_kontrol;
+package com.example.p_kontrol.UI.UserPersonalisation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.p_kontrol.R;
+
+public class ActivitySettings extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_settings);
     }
-
 }

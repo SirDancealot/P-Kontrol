@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".UI.WriteTip.WriteTipFragment.FragMessageWrite"
+    android:clickable="true"
+    >
+
+    <!-- Content Container : This is where the Selection of Location, and Writing the text selecting category, happens  -->
+    <LinearLayout
+        android:id="@+id/WriteTip_ContentContainer"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="bottom"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/WriteTip_InternalViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                />
+        <!-- Navigation Container -->
+        <LinearLayout
+            android:id="@+id/WriteTip_NavigationContainer"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/writetip_navbar_shape"
+            android:minHeight="50dp"
+
+            android:orientation="vertical"
+            android:paddingTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/WriteTip_ContentContainer">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="15dp"
+                android:layout_marginLeft="15dp"
+
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/color_darkGray" />
+            <!-- Navigation Title -->
+            <TextView
+                android:id="@+id/WriteTip_NavBarTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/ubuntu_regular"
+                android:gravity="center"
+                android:text="@string/writeTip_Navigation_continue"
+                android:textColor="@color/color_matBlack"
+                android:textSize="24sp" />
+
+            <!-- circles and lines bar -->
+            <com.example.p_kontrol.UI.WriteTip.CustomProgressBar
+                android:id="@+id/WriteTip_NavBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                app:ptip_progressBarHeight="3"
+                app:ptip_progressBorderThickness="3"
+                app:ptip_progressNumSteps="3"
+
+                app:ptip_progressPointMargin="25"
+                app:ptip_progressPointdiagonal="10"
+                app:ptip_progressValue="1"
+
+                app:ptip_progress_ColorBorder="@color/color_lightGray"
+                app:ptip_progress_ColorNonProgress="@color/color_matWhite"
+                app:ptip_progress_ColorProgress="@color/colorAccent"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

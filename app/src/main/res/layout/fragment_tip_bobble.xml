@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fagTip"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.ReadTips.FragTipBobble"
+    android:animateLayoutChanges="true"
+    >
+
+    <FrameLayout
+        android:id="@+id/bobbelTip_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/shape_tip_img"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/bobbelTip_Img"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/color_matWhite"/>
+
+
+            <TextView
+                android:id="@+id/bobbelTip_PersonName"
+                android:fontFamily="@font/ubuntu"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="7dp">
+
+
+            <TextView
+                android:id="@+id/bobbelTip_mainTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu"
+                android:paddingBottom="5dp"
+                android:text="@string/tip2"
+                android:textSize="17dp" />
+
+
+            <TextView
+                android:id="@+id/bobbelTip_readMore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/ubuntu_bold"
+                android:paddingBottom="4dp"
+                android:textSize="17dp"
+                android:gravity="bottom|center_horizontal"
+                android:text="Se Mere" />
+
+        </LinearLayout>
+    </LinearLayout>
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
