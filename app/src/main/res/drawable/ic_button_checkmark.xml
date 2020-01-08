@@ -8,7 +8,7 @@
       android:strokeAlpha="1"
       android:strokeLineJoin="miter"
       android:strokeWidth="3.77952766"
-      android:strokeColor="#565d64"
+      android:strokeColor="@color/color_lightGray"
       android:strokeLineCap="butt"/>
   <!-- left Vertical -->
   <path
@@ -16,7 +16,7 @@
       android:strokeAlpha="1"
       android:strokeLineJoin="miter"
       android:strokeWidth="1.88976383"
-      android:strokeColor="#E4E4E4"
+      android:strokeColor="@color/color_matWhite"
       android:strokeLineCap="butt"/>
   <!-- right Vertical -->
   <path
@@ -24,7 +24,7 @@
       android:strokeAlpha="1"
       android:strokeLineJoin="miter"
       android:strokeWidth="1.88976383"
-      android:strokeColor="#E4E4E4"
+      android:strokeColor="@color/color_matWhite"
       android:strokeLineCap="butt"/>
 
 </vector>

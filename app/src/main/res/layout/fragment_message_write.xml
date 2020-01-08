@@ -7,6 +7,7 @@
     android:visibility="visible"
     tools:context=".UI.WriteTip.FragMessageWrite"
     android:clickable="true"
+    android:padding="25dp"
     >
 
     <!-- Content Container : This is where the Selection of Location, and Writing the text selecting category, happens  -->
@@ -24,47 +25,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/WriteTip_InternalViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                />
-        <!-- Navigation Container -->
+        <!-- Top Navigation Bar  -->
         <LinearLayout
-            android:id="@+id/WriteTip_NavigationContainer"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/writetip_navbar_shape"
-            android:minHeight="50dp"
-
             android:orientation="vertical"
-            android:paddingTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/WriteTip_ContentContainer">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="15dp"
-                android:layout_marginLeft="15dp"
-
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@color/color_darkGray" />
-            <!-- Navigation Title -->
-            <TextView
-                android:id="@+id/WriteTip_NavBarTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:fontFamily="@font/ubuntu_regular"
-                android:gravity="center"
-                android:text="@string/writeTip_Navigation_continue"
-                android:textColor="@color/color_matBlack"
-                android:textSize="24sp" />
-
+            android:background="@drawable/shape_squarerounded_top_02"
+            android:padding="15dp"
+            >
+            <Button
+                android:layout_width="75dp"
+                android:layout_height="25dp"
+                />
             <!-- circles and lines bar -->
             <com.example.p_kontrol.UI.WriteTip.CustomProgressBar
                 android:id="@+id/WriteTip_NavBar"
@@ -72,7 +44,7 @@
                 android:layout_height="50dp"
 
                 app:ptip_progressBarHeight="3"
-                app:ptip_progressBorderThickness="3"
+                app:ptip_progressBorderThickness="2"
                 app:ptip_progressNumSteps="3"
 
                 app:ptip_progressPointMargin="25"
@@ -80,10 +52,61 @@
                 app:ptip_progressValue="1"
 
                 app:ptip_progress_ColorBorder="@color/color_lightGray"
-                app:ptip_progress_ColorNonProgress="@color/color_matWhite"
+                app:ptip_progress_ColorNonProgress="@color/color_pureWhite"
                 app:ptip_progress_ColorProgress="@color/colorAccent"
 
                 />
+        </LinearLayout>
+        <!-- FRAGMENTS  -->
+        <androidx.viewpager.widget.ViewPager
+                android:id="@+id/WriteTip_InternalViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+            ></androidx.viewpager.widget.ViewPager>
+        <!-- Btm Navigation Bar -->
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_squarerounded_btm_02"
+            android:minHeight="50dp"
+
+            android:orientation="vertical"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/WriteTip_ContentContainer">
+
+            <!-- Navigation Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/ubuntu_regular"
+                android:gravity="center"
+                android:text="@string/writeTip_BtmNavigation_continue"
+                android:textColor="@color/color_matBlack"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="clip_horizontal|fill|fill_horizontal"
+                android:orientation="horizontal">
+                <!-- left Button -->
+                <Button
+                    android:layout_width="75dp"
+                    android:layout_height="25dp" />
+                <!-- Right Button -->
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:layout_width="75dp"
+                    android:layout_height="25dp" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

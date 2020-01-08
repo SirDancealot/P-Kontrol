@@ -41,12 +41,10 @@ public class FragMessageWrite extends Fragment {
         // instantiating objects.
         fragmentList = new LinkedList<>();
         state_WriteText     = new State_WriteText();
-        state_TakePicture   = new State_TakePicture();
         state_SubmitTip     = new State_Submit();
 
         // Adding them to the list in the Order we want them to be shown.
         fragmentList.add(state_WriteText);
-        fragmentList.add(state_TakePicture);
         fragmentList.add(state_SubmitTip);
 
         currentSate = state_WriteText; // this is the first added state, so it is the current state.
@@ -85,9 +83,6 @@ public class FragMessageWrite extends Fragment {
                         break;
                     case 1: // means State 0 is done and the message is done, so get it before changing.
                         dto.setMessage(currentSate.getDTO().getMessage());
-                        currentSate = state_TakePicture;
-                        break;
-                    case 2:
                         currentSate = state_SubmitTip;
                         break;
                 }

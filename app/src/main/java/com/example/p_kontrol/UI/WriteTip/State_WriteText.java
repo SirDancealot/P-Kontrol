@@ -25,7 +25,7 @@ public class State_WriteText extends WriteTipState {
 
         // Inflate the layout for this fragment
         view        = inflater.inflate(R.layout.fragment_write_tip_state_writetext, container, false);
-        category    = view.findViewById(R.id.WriteTip_CategorySpinner);
+        //category    = view.findViewById(R.id.WriteTip_CategorySpinner);
         text        = view.findViewById(R.id.WriteTip_TextInput);
 
         text.addTextChangedListener(new TextWatcher() {

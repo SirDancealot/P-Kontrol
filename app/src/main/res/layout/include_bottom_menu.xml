@@ -76,6 +76,7 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
+                android:textColor="@color/color_matWhite"
                 />
             <!-- Contribute btn -->
             <Button
@@ -104,6 +105,7 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
+                android:textColor="@color/color_matWhite"
                 />
             <!-- Park Alarm btn -->
             <Button
@@ -119,7 +121,7 @@
 
                 android:textAllCaps="false"
                 android:textSize="15sp"
-
+                android:textColor="@color/color_matWhite"
                 />
             <!-- P Vagt btn -->
             <Button
@@ -133,6 +135,7 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
+                android:textColor="@color/color_matWhite"
                 />
         </TableRow>
     </TableLayout>
