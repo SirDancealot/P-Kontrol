@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Services;
+package com.example.p_kontrol.DataTypes;
 
 import java.util.List;
 

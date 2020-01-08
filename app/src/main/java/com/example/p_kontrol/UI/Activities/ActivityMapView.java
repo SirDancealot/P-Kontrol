@@ -25,7 +25,7 @@ import com.example.p_kontrol.UI.Fragments.WriteTipFragment.FragMessageWrite;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
 import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
-import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 

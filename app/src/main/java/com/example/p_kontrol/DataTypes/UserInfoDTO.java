@@ -1,7 +1,5 @@
 package com.example.p_kontrol.DataTypes;
 
-import com.example.p_kontrol.UI.Services.IUserDTO;
-
 public class UserInfoDTO {
 
     // Dette er en Singleton da det udelukkende er den indloggede bruger.

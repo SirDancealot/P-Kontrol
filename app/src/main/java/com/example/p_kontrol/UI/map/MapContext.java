@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Activities.ActivityMapView;
-import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

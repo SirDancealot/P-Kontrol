@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;

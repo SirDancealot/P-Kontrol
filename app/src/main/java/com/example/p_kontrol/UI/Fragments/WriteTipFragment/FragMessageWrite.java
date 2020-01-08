@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,12 @@ import android.view.ViewGroup;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.IWriteTipState;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.IWriteTipStageListener;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTipState;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_WriteText;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_Stage_TakePicture;
 import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_Stage_Submit;
-import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 
 import java.util.LinkedList;
 import java.util.List;

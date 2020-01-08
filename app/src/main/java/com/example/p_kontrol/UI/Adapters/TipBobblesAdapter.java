@@ -6,12 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
 
-import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.Fragments.FragTipBobble;
-import com.example.p_kontrol.UI.Services.ITipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 
 import java.util.List;
 
