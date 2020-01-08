@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Fragments.WriteTipFragment;
+package com.example.p_kontrol.UI.WriteTip.WriteTipFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.IWriteTipStageListener;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTipState;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_WriteText;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_TakePicture;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_Submit;
+import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
+import com.example.p_kontrol.UI.WriteTip.IWriteTipStageListener;
+import com.example.p_kontrol.UI.WriteTip.WriteTipState;
+import com.example.p_kontrol.UI.WriteTip.State_WriteText;
+import com.example.p_kontrol.UI.WriteTip.State_TakePicture;
+import com.example.p_kontrol.UI.WriteTip.State_Submit;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 
 import java.util.LinkedList;
@@ -46,9 +46,9 @@ public class FragMessageWrite extends Fragment {
         dto = new TipDTO();
         // instantiating objects.
         fragmentList = new LinkedList<>();
-        state_WriteText     = new WriteTip_State_WriteText();
-        state_TakePicture   = new WriteTip_State_TakePicture();
-        state_SubmitTip     = new WriteTip_State_Submit();
+        state_WriteText     = new State_WriteText();
+        state_TakePicture   = new State_TakePicture();
+        state_SubmitTip     = new State_Submit();
 
         // Adding them to the list in the Order we want them to be shown.
         fragmentList.add(state_WriteText);

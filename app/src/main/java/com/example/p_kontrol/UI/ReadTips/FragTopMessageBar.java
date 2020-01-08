@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Fragments;
+package com.example.p_kontrol.UI.ReadTips;
 
 import android.content.Context;
 import android.net.Uri;

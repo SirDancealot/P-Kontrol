@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Fragments;
+package com.example.p_kontrol.UI.WriteTip;
 
 import com.example.p_kontrol.DataTypes.ITipDTO;
 

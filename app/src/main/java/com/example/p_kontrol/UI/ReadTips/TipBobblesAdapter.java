@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Adapters;
+package com.example.p_kontrol.UI.ReadTips;
 
 import android.os.Bundle;
 
@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 
-import com.example.p_kontrol.UI.Fragments.FragTipBobble;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 
 import java.util.List;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.Fragments.WriteTipFragment.WriteTipInternalFragments.WriteTip_State_WriteText"
+    tools:context=".UI.WriteTip.WriteTip_State_WriteText"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Thanks for Contributing -->
@@ -28,7 +28,7 @@
 
             android:fontFamily="@font/ubuntu_regular"
             android:gravity="center"
-            android:text="submit Contribution"
+            android:text="Submit Contribution"
             android:textColor="@color/color_matBlack"
             android:textSize="24sp"
 

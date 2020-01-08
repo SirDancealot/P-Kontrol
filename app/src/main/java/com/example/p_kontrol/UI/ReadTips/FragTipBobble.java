@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Fragments;
+package com.example.p_kontrol.UI.ReadTips;
 
 import android.os.Bundle;
 
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.p_kontrol.UI.Activities.ActivityMapView;
+import com.example.p_kontrol.UI.MainMenuActivity;
 import com.example.p_kontrol.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -115,7 +115,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case (R.id.fagTip): // clicking on the Suroundings of the TipBobble Closes it
-                ActivityMapView act = (ActivityMapView) getActivity();
+                MainMenuActivity act = (MainMenuActivity) getActivity();
                 act.CloseTipBobbleViewPager();
             break;
             case (R.id.bobbelTip_container):

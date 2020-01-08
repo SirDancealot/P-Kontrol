@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Activities;
+package com.example.p_kontrol.UI.LogIn;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;

@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Activities;
+package com.example.p_kontrol.UI.LogIn;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
@@ -220,7 +220,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         changeto_Activiy_MapView();
     }
     private void changeto_Activiy_MapView(){
-        Intent changeActivity = new Intent(this, ActivityMapView.class);
+        Intent changeActivity = new Intent(this, MainMenuActivity.class);
         startActivity(changeActivity);
     }
 
@@ -273,7 +273,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
                     userInfoDTO.setUrl("https://graph.facebook.com/" + userInfoDTO.getId() + "/picture?type=normal");
                     userInfoDTO.setLogin(true);
 
-                    Intent i = new Intent(Activity_LoginScreen_02.this, ActivityMapView.class);
+                    Intent i = new Intent(Activity_LoginScreen_02.this, MainMenuActivity.class);
                     startActivity(i);
 
                 } catch (JSONException e) {

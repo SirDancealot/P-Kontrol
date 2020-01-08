@@ -1,10 +1,9 @@
-package com.example.p_kontrol.UI.Fragments.WriteTipFragment;
+package com.example.p_kontrol.UI.WriteTip.WriteTipFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 

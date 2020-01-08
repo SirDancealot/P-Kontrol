@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="Ptip_CustomProgressBar">
+    <declare-styleable name="CustomProgressBar">
         <attr name="ptip_progressValue" format="integer"/>
         <attr name="ptip_progressNumSteps" format="integer"/>
 

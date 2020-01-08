@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Fragments.WriteTipFragment.WriteTipInternalFragments;
+package com.example.p_kontrol.UI.WriteTip;
 
 import androidx.fragment.app.Fragment;
 

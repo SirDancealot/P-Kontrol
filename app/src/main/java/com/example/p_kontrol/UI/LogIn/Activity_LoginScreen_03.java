@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Activities;
+package com.example.p_kontrol.UI.LogIn;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 
 import com.example.p_kontrol.R;
-import com.google.android.gms.maps.MapView;
+import com.example.p_kontrol.UI.MainMenuActivity;
 
 public class Activity_LoginScreen_03  extends AppCompatActivity implements View.OnClickListener{
 
@@ -75,7 +75,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
     public void signIn_Methodregular(){
         //todo implement
         Log.e(TAG, "Login Regular Not Implemented" );
-        ChangeActiviyNext();
+        ChangeActivityNext();
     };
     public void signIn_MethodfaceBook(){
         // todo, move ot backend , from previous commits.
@@ -91,8 +91,9 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         Log.e(TAG, "Creating a User Not Implemented" );
     };
 
-    public void ChangeActiviyNext(){
-        Intent changeActivity = new Intent( Activity_LoginScreen_03.this, ActivityMapView.class);
+    public void ChangeActivityNext(){
+        Intent changeActivity = new Intent( this, MainMenuActivity.class);
+        changeActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(changeActivity);
     }
     public void ChangeActivityPrev(){

@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Activities;
+package com.example.p_kontrol.UI;
 
 import android.content.Intent;
 import android.os.Build;
@@ -15,22 +15,21 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 
-import com.example.p_kontrol.DataTypes.IUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Adapters.TipBobblesAdapter;
-import com.example.p_kontrol.UI.map.IMapContextListener;
-import com.example.p_kontrol.UI.map.IMapSelectedLocationListener;
-import com.example.p_kontrol.UI.map.MapContext;
-import com.example.p_kontrol.UI.Fragments.WriteTipFragment.FragMessageWrite;
-import com.example.p_kontrol.UI.Fragments.FragTipBobble;
-import com.example.p_kontrol.UI.Fragments.FragTopMessageBar;
-import com.example.p_kontrol.UI.Fragments.ITipWriteListener;
+import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
+import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
+import com.example.p_kontrol.UI.Map.IMapContextListener;
+import com.example.p_kontrol.UI.Map.IMapSelectedLocationListener;
+import com.example.p_kontrol.UI.Map.MapContext;
+import com.example.p_kontrol.UI.WriteTip.WriteTipFragment.FragMessageWrite;
+import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
+import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
+import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.firestore.auth.User;
 
 
 import java.time.LocalDate;
@@ -43,10 +42,10 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class ActivityMapView extends AppCompatActivity implements View.OnClickListener {
+public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int STANDARD_TIP_BEGIN_RATING = 0;
-    final String TAG = "ActivityMapView";
+    final String TAG = "MainMenuActivity";
 
 // -- * -- MENU -- * --
 

@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.Activities;
+package com.example.p_kontrol.UI.UserPersonalisation;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
