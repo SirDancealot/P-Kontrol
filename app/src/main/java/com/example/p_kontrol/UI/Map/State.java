@@ -147,7 +147,6 @@ public class State extends AppCompatActivity implements IState  {
     public void centerMapOnLocation() {
         try {
             Task locationResult = context.getmFusedLocationProviderClient().getLastLocation();
-            System.out.println("laver listerner --------------");
             locationResult.addOnCompleteListener( this, new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
@@ -157,9 +156,6 @@ public class State extends AppCompatActivity implements IState  {
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(context.getmLastKnownLocation().getLatitude(),
                                         context.getmLastKnownLocation().getLongitude()), DEFAULT_MAP_ZOOM));
-
-                        System.out.println("listner færdig ------------");
-
                     } else {
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(context.getDEFAULT_LOCATION(), DEFAULT_MAP_ZOOM ));
                         map.getUiSettings().setMyLocationButtonEnabled(false);
