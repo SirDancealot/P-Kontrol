@@ -56,7 +56,7 @@ public class StateSelectLocation extends State {
     // Button Calls
     @Override
     public void centerMethod(){
-        centerMapOnLocation(context);
+        centerMapOnLocation();
     }
     @Override
     public void acceptMethod(){
