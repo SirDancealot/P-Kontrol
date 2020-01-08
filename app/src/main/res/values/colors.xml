@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <!-- ColorScheme -->
     <color name="colorPrimary">         #7DCBED</color><!-- darkblue -->
     <color name="colorSecondary">       #ADDCF1</color><!-- lightBlue -->

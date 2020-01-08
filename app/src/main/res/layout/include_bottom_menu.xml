@@ -45,7 +45,7 @@
         android:id="@+id/menu_btnContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/menu_shape_container"
+        android:background="@drawable/shape_squarerounded_full"
         android:paddingTop="5dp"
         android:showDividers="middle"
         android:stretchColumns="*"

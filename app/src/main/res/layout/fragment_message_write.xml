@@ -8,11 +8,13 @@
     tools:context=".UI.WriteTip.FragMessageWrite"
     android:clickable="true"
     android:padding="25dp"
+
     >
 
     <!-- Content Container : This is where the Selection of Location, and Writing the text selecting category, happens  -->
     <LinearLayout
         android:id="@+id/WriteTip_ContentContainer"
+        android:background="@drawable/shadow"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/shape_squarerounded_top_02"
+            android:background="@drawable/shape_squarerounded_top"
             android:padding="15dp"
             >
             <Button
@@ -68,7 +70,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_squarerounded_btm_02"
+            android:background="@drawable/shape_squarerounded_btm"
             android:minHeight="50dp"
 
             android:orientation="vertical"

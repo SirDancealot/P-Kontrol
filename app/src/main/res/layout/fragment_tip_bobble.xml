@@ -2,17 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fagTip"
+    android:id="@+id/bobbelTip_FragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.ReadTips.FragTipBobble"
     android:animateLayoutChanges="true"
+    android:padding="25dp"
     >
 
     <FrameLayout
         android:id="@+id/bobbelTip_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="@drawable/shape_tip_img"
+        android:background="@drawable/shape_squarerounded_full"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:paddingRight="8dp"
@@ -35,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -79,7 +80,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ubuntu_bold"
                 android:paddingBottom="4dp"
-                android:textSize="17dp"
+                android:textSize="16dp"
                 android:gravity="bottom|center_horizontal"
                 android:text="Se Mere" />
 
