@@ -186,7 +186,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
 
         styleMapCall();
-        getPersission();
+        getPermission();
 
 
         // todo move into States.
@@ -313,16 +313,18 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
 
 
-    private void getPersission(){
+    private void getPermission(){
 
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
+            Log.d(TAG, "getPermission: true");
         } else {
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(activity,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            Log.d(TAG, "getPermission: false");
         }
 
 
@@ -330,21 +332,18 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
-        mLocationPermissionGranted = false;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: går til godkendelse");
         switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true;
+            case 1:
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                    map.setMyLocationEnabled(true);
                 }
-            }
+                else {
+                    // close app
+                }
+                break;
         }
-        Log.d(TAG, "onRequestPermissionsResult: OK");
-        map.setMyLocationEnabled(true);
     }
 
 
