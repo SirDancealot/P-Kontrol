@@ -10,7 +10,7 @@
         android:id="@+id/settings_headerContainer"
         android:layout_width="424dp"
         android:layout_height="102dp"
-        android:background="@drawable/shape_top_msg_popdown"
+        android:background="@drawable/shadow"
 
         android:gravity="center"
         android:orientation="vertical"
