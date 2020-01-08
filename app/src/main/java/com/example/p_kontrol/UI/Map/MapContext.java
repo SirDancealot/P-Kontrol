@@ -183,11 +183,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
         // Setting Up the Map
         map = googleMap;
 
-
-
         styleMapCall();
-        getPermission();
-
 
         // todo move into States.
         //Center the Camera on the Map.
@@ -202,7 +198,14 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
         // Activate Standard State . in this case it is Standby.
         setStateStandby();
-        currentState.centerMapOnLocation();
+        getPermission();
+
+        if(map.isMyLocationEnabled()){
+            Log.d(TAG, "onMapReady: location true");
+        } else {
+            Log.d(TAG, "onMapReady: location false");
+        }
+
     }
 
     //Public Calls
@@ -320,6 +323,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
             Log.d(TAG, "getPermission: true");
+            currentState.centerMapOnLocation();
         } else {
             ActivityCompat.requestPermissions(activity,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -338,6 +342,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
             case 1:
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED){
                     map.setMyLocationEnabled(true);
+                    currentState.centerMapOnLocation();
                 }
                 else {
                     // close app
