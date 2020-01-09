@@ -16,7 +16,10 @@ import com.example.p_kontrol.Util.CustomProgressBar;
 
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * @responsibility responsibility to get the Written text for a Tip;
+ *
+ * */
 public class FragMessageWrite extends Fragment implements View.OnClickListener {
     String TAG = "Fragment Message Write";
 
@@ -72,6 +75,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
         // initiating Listeners.
         setPageChangeListener();    // !IMPORTANT! if change is made to the order of the fragment list, change is also needed here! Retrieving information.
         setupStateListeners();      // this is where we tell the state Submit to call finish method when clicked.
+
         state_SubmitTip.setOnWriteTipStageListener(stateListener_SubmitListener);
         navNext.setOnClickListener(this);
         navPrev.setOnClickListener(this);
@@ -105,8 +109,6 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
 
         }
     }
-
-
 
     // private Calls
     private void setPageChangeListener() {

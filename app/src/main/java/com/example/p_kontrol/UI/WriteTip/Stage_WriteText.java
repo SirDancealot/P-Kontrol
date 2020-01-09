@@ -11,7 +11,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.p_kontrol.R;
-
+/**
+ * @responsibilty responsibility to create a room to type in the text for the tip.
+ *
+ * */
 public class Stage_WriteText extends WriteTipState {
 
     String TAG = "WriteTip STATE WriteText ";

@@ -6,7 +6,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.List;
-
+/**
+ * @responsibilty responsibility to change out stages of writing a tip.
+ *
+ * */
 public class WriteTipAdapter extends FragmentPagerAdapter {
 
     List<Fragment> fragmentList;

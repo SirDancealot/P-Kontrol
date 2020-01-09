@@ -11,7 +11,10 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * @responsibility responsibility to Handle and maintain data;
+ *
+ * */
 public class Backend implements IBackend {
 
     // Android internal

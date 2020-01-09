@@ -42,8 +42,13 @@ import java.util.List;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-
+/**
+ * @responsibilty responsibility to Handle UI interaction on this XML layout.
+ *
+ * */
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
+
+
 
     final String TAG = "MainMenuActivity";
 
