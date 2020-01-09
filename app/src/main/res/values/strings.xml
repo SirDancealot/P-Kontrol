@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: fix inconsistency with danish/english text -->
 <resources>
     <string name="app_name">C5 P-Kontrol</string>
     <string name="round_corner">Round Corner</string>
@@ -74,5 +75,9 @@
     <string name="facebook_app_id">1045192295818256</string>
     <string name="fb_login_protocol_scheme">fb1045192295818256</string>
 
+    <!-- close fragment strings -->
+    <string name="close_frag_confirm">Yes</string>
+    <string name="close_frag_deny">No</string>
+    <string name="close_frag_title">Close the app?</string>
 
 </resources>

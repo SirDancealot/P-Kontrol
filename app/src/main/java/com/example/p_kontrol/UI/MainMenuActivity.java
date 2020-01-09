@@ -21,6 +21,7 @@ import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
@@ -64,6 +65,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     FragMessageWrite    fragment_messageWrite   ;
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
+    MainMenuCloseFragment fragment_close        ;
 
     //ViewPager - Tip bobbles.
     FragmentPagerAdapter adapter_TipBobbles;
@@ -146,6 +148,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         fragment_messageWrite = new FragMessageWrite()  ;
         fragment_tipBobble    = new FragTipBobble()     ;
         fragment_topMessage   = new FragTopMessageBar() ;
+        fragment_close        = new MainMenuCloseFragment(this);
     }
     private void setupMap(){
 
@@ -313,6 +316,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                     public void onMessageDone(ITipDTO dto) {
                         newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
                         toogleFragment_WriteTip(false);
+                        getSupportFragmentManager().popBackStack();
                         contributeProcess(2); // calls self to Complete the tip
                     }
 
@@ -358,6 +362,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 Log.v("transaction", "Replacing fragment");
                 transaction.replace(containerId, fragment);
             }
+            transaction.addToBackStack(null);
             transaction.commit();
         }else{
             transaction = fragmentManager.beginTransaction();
@@ -379,9 +384,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
     }
     // specially TipVViewPager
-    public void CloseTipBobbleViewPager(){
+    public void closeTipBobbleViewPager(){
         viewPager_tipBobles.setVisibility(View.GONE);
-        Log.i(TAG, "CloseTipBobbleViewPager: Closed");
+        Log.i(TAG, "closeTipBobbleViewPager: Closed");
     }
 
     //todo remove this.
@@ -422,12 +427,20 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         return dtoList;
     }
 
-    /*
+
     @Override
     public void onBackPressed() {
         if (mapContext.getCurrentState() instanceof StateSelectLocation)
-            mapContext.setStateStandby();
-        else
+            ((StateSelectLocation) mapContext.getCurrentState()).cancelMethod();
+        else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE)
+            closeTipBobbleViewPager();
+        else if (drag_State)
+            menu_dragHandle(findViewById(R.id.menu_btnContainer));
+        else {
+            //TODO: find ud af om vi skal bruge dialog box eller fade out
+            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
             super.onBackPressed();
-    }*/
+            overridePendingTransition(0, android.R.anim.fade_out);
+        }
+    }
 }
