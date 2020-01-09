@@ -435,7 +435,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE)
             closeTipBobbleViewPager();
         else if (drag_State)
-            menu_dragHandle(findViewById(R.id.menu_btnContainer));
+            menu_dragHandle();
         else {
             //TODO: find ud af om vi skal bruge dialog box eller fade out
             //fragment_close.show(getSupportFragmentManager(), "closeFragment");
