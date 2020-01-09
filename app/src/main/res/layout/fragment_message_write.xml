@@ -27,30 +27,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Top Navigation Bar  -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="50dp"
             android:background="@drawable/shape_squarerounded_top"
-            android:padding="15dp"
+            android:orientation="horizontal"
             >
-            <Button
-                android:id="@+id/WriteTip_ButtonCancel"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="right"
-                android:background="@drawable/ic_button_chrossmark"
-                style="?android:attr/borderlessButtonStyle"
-                />
+
             <!-- circles and lines bar -->
             <com.example.p_kontrol.UI.WriteTip.CustomProgressBar
                 android:id="@+id/WriteTip_NavBar"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
 
                 app:ptip_progressBarHeight="3"
                 app:ptip_progressBorderThickness="1"
-                app:ptip_progressNumSteps="3"
+                app:ptip_progressNumSteps="2"
 
                 app:ptip_progressPointMargin="25"
                 app:ptip_progressPointdiagonal="10"
@@ -60,8 +53,27 @@
                 app:ptip_progress_ColorNonProgress="@color/colorSecondary"
                 app:ptip_progress_ColorProgress="@color/colorPrimaryDark"
 
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
                 />
-        </LinearLayout>
+            <Button
+                android:id="@+id/WriteTip_ButtonCancel"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_button_chrossmark_noborder"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <!-- FRAGMENTS  -->
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/WriteTip_InternalViewPager"
