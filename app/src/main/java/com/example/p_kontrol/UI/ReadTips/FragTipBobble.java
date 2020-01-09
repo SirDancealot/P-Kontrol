@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private TextView readMore, tip, name;
     private CircleImageView profImg;
 
+
     public FragTipBobble() {
         // Requiired empty public constructor
     }
@@ -44,6 +46,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_tip_bobble, container, false);
 
