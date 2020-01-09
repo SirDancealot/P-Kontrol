@@ -15,6 +15,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 
+import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.Backend.BackendStub;
+import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
@@ -57,7 +60,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     boolean drag_State;
 
 // -- * -- FRAGMENTS -- * --
-
     //Fragments
     FragMessageWrite    fragment_messageWrite   ;
     FragTipBobble       fragment_tipBobble      ;
@@ -77,12 +79,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     boolean boolFragTopMessageBar   ;
 
 // -- * -- MAP -- * --
-
     //Maps
     MapContext mapContext               ;
     IMapContextListener mapListener     ;
 
 // -- * -- Local DATA objects -- * --
+    static IBackend backend = new Backend();
 
     // in order to create new TipDto's from static contexts a Final Object is required, this object will then often be overwritten
     // todo make I_TIPDTO when Copy() has been added to interface.
@@ -94,13 +96,14 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
-        // todo Fjern og få dem fra BackEnd.
-        setUpDemoTip();
-
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
         setupMap();
+
+        // todo Fjern og få dem fra BackEnd.
+        setUpDemoTip();
+
     }
 
     // setups called by onCreate.
@@ -185,6 +188,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                 viewPager_tipBobles.setCurrentItem(index);
                 viewPager_tipBobles.setVisibility(View.VISIBLE);
+
+                if(drag_State){
+                    menu_dragHandle();
+                }
             }
 
             @Override
@@ -204,31 +211,31 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v){
         switch(v.getId()){
             case ( R.id.menuBtn_draggingHandle):
-                menu_dragHandle(v);
+                menu_dragHandle();
                 break;
                 // Menu Line 1.
             case (R.id.menuBtn_profile):
-                menuBtn_profile(v);
+                menuBtn_profile();
                 break;
             case (R.id.menuBtn_FreePark):
-                menuBtn_FreePark(v);
+                menuBtn_FreePark();
                 break;
             case (R.id.menuBtn_Contribute):
-                menuBtn_Contribute(v);
+                menuBtn_Contribute();
                 break;
                 // Menu Line 2.
             case (R.id.menuBtn_Community):
-                menuBtn_Community(v);
+                menuBtn_Community();
                 break;
             case (R.id.menuBtn_ParkAlarm):
-                menuBtn_ParkAlarm(v);
+                menuBtn_ParkAlarm();
                 break;
             case (R.id.menuBtn_PVagt):
-                menuBtn_PVagt(v);
+                menuBtn_PVagt();
                 break;
         }
     }
-    private void menu_dragHandle( View view ){
+    private void menu_dragHandle( ){
 
         // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
         if(drag_State){
@@ -242,33 +249,32 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
-    private void menuBtn_profile(View view){
+    private void menuBtn_profile(){
         Log.i("click","Profile btn clicked \n");
         Intent changeActivity = new Intent( this , ActivityProfile.class );
         startActivity(changeActivity);
     }
-    private void menuBtn_FreePark(View view){
+    private void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
         //setupTipBobblesPagerViewer();
-        viewPager_tipBobles.setVisibility(View.VISIBLE);
     }
-    private void menuBtn_Contribute(View view){
+    private void menuBtn_Contribute(){
 
         // Closing the Menu down.
-        menu_dragHandle(view);
+        menu_dragHandle();
 
         // starting Contribute process at index 0. meaning the very first step.
         contributeProcess(0);
 
     }
-    private void menuBtn_Community(View view){
+    private void menuBtn_Community(){
         Log.i("click","Community btn clicked \n");
 
     }
-    private void menuBtn_ParkAlarm(View view){
+    private void menuBtn_ParkAlarm(){
         Log.i("click","Park Alarm btn clicked \n");
     }
-    private void menuBtn_PVagt(View view){
+    private void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
 
     }
@@ -333,6 +339,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
+
+
+
+
+
 
     // Open And Close Fragments.
     private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
