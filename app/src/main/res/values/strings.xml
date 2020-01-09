@@ -74,7 +74,10 @@
     <string name="facebook_app_id">1045192295818256</string>
     <string name="fb_login_protocol_scheme">fb1045192295818256</string>
 
+
+    <string name="feedback_choose_category">Choose Category</string>
     <string-array name="feedback_categories_array">
+        <item>@string/feedback_choose_category</item>
         <item>Map</item>
         <item>Profile</item>
         <item>Login</item>
