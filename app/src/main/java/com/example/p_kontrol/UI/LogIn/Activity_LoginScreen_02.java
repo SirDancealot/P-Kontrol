@@ -31,7 +31,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
 
    @Override
    protected void onCreate (Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+       super.onCreate(savedInstanceState);
         // if already logged in, skip rest
         ifAlreadyLoggedIn();
 
@@ -48,6 +48,8 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
        trans_circle_2 = findViewById(R.id.LoginScreen_Circle2);
        trans_background = findViewById(R.id.LoginScreen_BackgroundBlue);
        trans_logo = findViewById(R.id.LoginScreen_LogoContainer);
+
+
    }
 
     @Override

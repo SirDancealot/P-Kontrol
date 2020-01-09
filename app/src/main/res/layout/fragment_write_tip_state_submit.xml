@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.WriteTip.WriteTip_State_WriteText"
+    tools:context=".UI.WriteTip.State_WriteText"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Thanks for Contributing -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="75dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
-        android:background="@drawable/writetip_navbar_top_shape"
+        android:background="@color/colorSecondary"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
         >
 
         <!-- Title  -->
@@ -30,17 +30,26 @@
             android:gravity="center"
             android:text="Submit Contribution"
             android:textColor="@color/color_matBlack"
-            android:textSize="24sp"
+            android:textSize="18sp"
 
             />
         <!-- Submit Button -->
         <Button
             android:id="@+id/WriteTip_SubmitButton"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:background="@color/colorHighlightSecond"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="55dp"
+
+            android:drawableLeft="@drawable/ic_button_partcheckmark"
+            android:background="@drawable/shape_buttonstyle_02"
             android:layout_gravity="center"
-            android:text="submit"/>
+            android:text="submit"
+            android:textColor="@color/color_lightGray"
+            style="?android:attr/buttonStyleToggle"
+            />
+
 
     </LinearLayout>
 

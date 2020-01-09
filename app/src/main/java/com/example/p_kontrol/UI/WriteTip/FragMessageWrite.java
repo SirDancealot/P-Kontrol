@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.WriteTip.WriteTipFragment;
+package com.example.p_kontrol.UI.WriteTip;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -10,12 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
-import com.example.p_kontrol.UI.WriteTip.IWriteTipStageListener;
-import com.example.p_kontrol.UI.WriteTip.WriteTipState;
-import com.example.p_kontrol.UI.WriteTip.State_WriteText;
-import com.example.p_kontrol.UI.WriteTip.State_TakePicture;
-import com.example.p_kontrol.UI.WriteTip.State_Submit;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 
 import java.util.LinkedList;
@@ -47,12 +41,10 @@ public class FragMessageWrite extends Fragment {
         // instantiating objects.
         fragmentList = new LinkedList<>();
         state_WriteText     = new State_WriteText();
-        state_TakePicture   = new State_TakePicture();
         state_SubmitTip     = new State_Submit();
 
         // Adding them to the list in the Order we want them to be shown.
         fragmentList.add(state_WriteText);
-        fragmentList.add(state_TakePicture);
         fragmentList.add(state_SubmitTip);
 
         currentSate = state_WriteText; // this is the first added state, so it is the current state.
@@ -91,9 +83,6 @@ public class FragMessageWrite extends Fragment {
                         break;
                     case 1: // means State 0 is done and the message is done, so get it before changing.
                         dto.setMessage(currentSate.getDTO().getMessage());
-                        currentSate = state_TakePicture;
-                        break;
-                    case 2:
                         currentSate = state_SubmitTip;
                         break;
                 }

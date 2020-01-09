@@ -170,8 +170,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="40dp"
 
-            android:background="@drawable/custom_google_button"
-            android:drawableLeft="@drawable/google_logo"
+            android:background="@drawable/shape_buttonstyle_01"
             android:text="Connect with Google"
 
             app:layout_constraintEnd_toEndOf="parent"

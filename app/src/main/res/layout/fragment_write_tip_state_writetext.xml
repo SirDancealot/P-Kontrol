@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.WriteTip.WriteTip_State_WriteText"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context="UI.WriteTip.FragMessageWrite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <!-- Write Tip -->
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="75dp"
-        android:background="@drawable/writetip_navbar_top_shape"
+        android:layout_height="200dp"
+        android:background="@color/colorSecondary"
         android:orientation="vertical"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,35 +31,27 @@
             android:gravity="center"
             android:text="@string/writeTip_title_step2"
             android:textColor="@color/color_matBlack"
-            android:textSize="24sp"
+            android:textSize="18sp"
 
             />
-        <!-- Categories  -->
-        <Spinner
-            android:id="@+id/WriteTip_CategorySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
 
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-
-            />
         <!-- Write Tip -->
         <EditText
             android:id="@+id/WriteTip_TextInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="140dp"
             android:layout_marginLeft="10dp"
 
             android:layout_marginTop="0dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/color_matWhite"
+            android:background="@color/color_pureWhite"
+            android:padding="5dp"
 
             android:ems="10"
-            android:hint="Leave a comment..."
+            android:hint="Write here.."
             android:inputType="textMultiLine"
+            android:gravity="top|left"
             android:minHeight="75dp" />
 
     </LinearLayout>

@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00923B3B"
-    tools:context=".UI.Fragments.FragBottomMenu"
     android:animateLayoutChanges="true"
     >
 
@@ -22,7 +21,7 @@
             android:id="@+id/menuBtn_draggingHandle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_shape_handle"
+            android:background="@drawable/shape_squarerounded_top"
             >
 
             <ImageView
@@ -45,7 +44,7 @@
         android:id="@+id/menu_btnContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/menu_shape_container"
+        android:background="@drawable/shape_squarerounded_full"
         android:paddingTop="5dp"
         android:showDividers="middle"
         android:stretchColumns="*"
@@ -76,6 +75,7 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
+                android:textColor="@color/color_matWhite"
                 />
             <!-- Contribute btn -->
             <Button
@@ -104,6 +104,7 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
+                android:textColor="@color/color_matWhite"
                 />
             <!-- Park Alarm btn -->
             <Button
@@ -119,7 +120,7 @@
 
                 android:textAllCaps="false"
                 android:textSize="15sp"
-
+                android:textColor="@color/color_matWhite"
                 />
             <!-- P Vagt btn -->
             <Button
@@ -133,6 +134,7 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
+                android:textColor="@color/color_matWhite"
                 />
         </TableRow>
     </TableLayout>

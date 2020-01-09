@@ -10,7 +10,7 @@
         android:id="@+id/topMsgPopDown_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_top_msg_popdown"
+        android:background="@drawable/shape_squarerounded_btm"
 
         android:elevation="150dp"
         android:orientation="horizontal"
@@ -23,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             />
 
         <LinearLayout
@@ -40,7 +39,7 @@
 
                 android:text="2 hours free(8-18)"
                 android:textAlignment="center"
-                android:textColor="@color/colorText1"
+                android:textColor="@color/color_lightGray"
 
                 android:textSize="25dp" />
             <!-- Description  -->

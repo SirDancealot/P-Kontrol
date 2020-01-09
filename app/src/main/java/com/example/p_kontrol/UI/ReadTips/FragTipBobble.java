@@ -52,7 +52,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         profImg     = view.findViewById(R.id.bobbelTip_Img)         ;
         tip         = view.findViewById(R.id.bobbelTip_mainTextView);
         readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
-        suroundings = view.findViewById(R.id.fagTip)                ;
+        suroundings = view.findViewById(R.id.bobbelTip_FragmentContainer)                ;
         container   = view.findViewById(R.id.bobbelTip_container)   ;
         //Get Arguments
         try{
@@ -111,7 +111,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case (R.id.fagTip): // clicking on the Suroundings of the TipBobble Closes it
+            case (R.id.bobbelTip_FragmentContainer): // clicking on the Suroundings of the TipBobble Closes it
                 MainMenuActivity act = (MainMenuActivity) getActivity();
                 act.CloseTipBobbleViewPager();
             break;

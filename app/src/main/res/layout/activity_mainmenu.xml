@@ -17,7 +17,7 @@
 
         <!-- Map -->
         <fragment
-            android:id="@+id/map"
+            android:id="@+id/mainMenu_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,7 +25,6 @@
 
         <!-- Upper UI -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
@@ -36,28 +35,31 @@
             >
 
             <LinearLayout
+                android:id="@+id/mainMenu_acceptCancelContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/fragContainer_menu"
+                app:layout_constraintBottom_toTopOf="@id/mainMenu_fragContainer_menu"
                 android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:background="@drawable/shape_squarerounded_full"
                 >
                 <!-- MAP Cancel Tip location Button -->
                 <Button
-                    android:id="@+id/map_cancelBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:id="@+id/mainMenu_map_cancelBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginEnd="55dp"
                     android:visibility="visible"
                     android:background="@drawable/ic_button_chrossmark"
                     />
                 <!-- MAP Confirm Tip location Button -->
                 <Button
-                    android:id="@+id/map_acceptBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:id="@+id/mainMenu_map_acceptBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:visibility="visible"
                     android:background="@drawable/ic_button_checkmark"
                     />
@@ -65,13 +67,13 @@
 
             <!-- MAP center on Location Button -->
             <Button
-                android:id="@+id/Map_centerBtn"
+                android:id="@+id/mainMenu_Map_centerBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/ic_button_map_center"
 
                 android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toTopOf="@id/fragContainer_menu"
+                app:layout_constraintBottom_toTopOf="@id/mainMenu_fragContainer_menu"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:transitionName="MapCenterButon"
                 />
@@ -85,19 +87,20 @@
 
                   <!--<include layout="@layout/fragment_top_message_bar" />
 -->
-                <FrameLayout
-                    android:id="@+id/midScreenFragmentContainer"
-                    android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
+              <FrameLayout
+                  android:id="@+id/mainMenu_midScreenFragmentContainer"
+                  android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-            </FrameLayout>
+              </FrameLayout>
+
+          </FrameLayout>
 
 
             <!-- Drag Menu Container -->
             <FrameLayout
-                android:id="@+id/fragContainer_menu"
+                android:id="@+id/mainMenu_fragContainer_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +115,7 @@
         <!-- EvenHigher UI -->
         <!-- tip bobble-->
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager_TipBobbles"
+            android:id="@+id/mainMenu_viewPager_TipBobbles"
             android:name="com.example.p_kontrol.Fragments.FragTipBobble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
