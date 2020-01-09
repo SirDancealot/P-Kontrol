@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
@@ -288,6 +289,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                     public void onCancelSelection() {
                         mapContext.setStateStandby();
                     }
+
+
                 });
                 break;
             case 1: // Write Tip
@@ -405,5 +408,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         return dtoList;
     }
 
-
+    /*
+    @Override
+    public void onBackPressed() {
+        if (mapContext.getCurrentState() instanceof StateSelectLocation)
+            mapContext.setStateStandby();
+        else
+            super.onBackPressed();
+    }*/
 }
