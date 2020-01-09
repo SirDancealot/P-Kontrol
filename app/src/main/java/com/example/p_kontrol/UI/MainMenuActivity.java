@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
@@ -252,7 +253,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         viewPager_tipBobles.setVisibility(View.VISIBLE);
     }
     private void menuBtn_Contribute(View view){
-
         // Closing the Menu down.
         menu_dragHandle(view);
 
@@ -262,7 +262,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
     private void menuBtn_Community(View view){
         Log.i("click","Community btn clicked \n");
-
+        Intent changeActivity = new Intent(this, ActivityFeedback.class);
+        startActivity(changeActivity);
     }
     private void menuBtn_ParkAlarm(View view){
         Log.i("click","Park Alarm btn clicked \n");
