@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
@@ -62,6 +63,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     FragMessageWrite    fragment_messageWrite   ;
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
+    MainMenuCloseFragment fragment_close        ;
 
     //ViewPager - Tip bobbles.
     FragmentPagerAdapter adapter_TipBobbles;
@@ -143,6 +145,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         fragment_messageWrite = new FragMessageWrite()  ;
         fragment_tipBobble    = new FragTipBobble()     ;
         fragment_topMessage   = new FragTopMessageBar() ;
+        fragment_close        = new MainMenuCloseFragment(this);
     }
     private void setupMap(){
 
@@ -417,7 +420,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             ((StateSelectLocation) mapContext.getCurrentState()).cancelMethod();
         else if (drag_State)
             menu_dragHandle(findViewById(R.id.menu_btnContainer));
-        else
+        else {
+            //TODO: find ud af om vi skal bruge dialog box eller fade out
+            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
             super.onBackPressed();
+            overridePendingTransition(0, android.R.anim.fade_out);
+        }
     }
 }
