@@ -305,6 +305,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                     public void onMessageDone(ITipDTO dto) {
                         newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
                         toogleFragment_WriteTip(false);
+                        getSupportFragmentManager().popBackStack();
                         contributeProcess(2); // calls self to Complete the tip
                     }
 
@@ -344,6 +345,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 Log.v("transaction", "Replacing fragment");
                 transaction.replace(containerId, fragment);
             }
+            transaction.addToBackStack(null);
             transaction.commit();
         }else{
             transaction = fragmentManager.beginTransaction();
@@ -408,12 +410,14 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         return dtoList;
     }
 
-    /*
+
     @Override
     public void onBackPressed() {
         if (mapContext.getCurrentState() instanceof StateSelectLocation)
-            mapContext.setStateStandby();
+            ((StateSelectLocation) mapContext.getCurrentState()).cancelMethod();
+        else if (drag_State)
+            menu_dragHandle(findViewById(R.id.menu_btnContainer));
         else
             super.onBackPressed();
-    }*/
+    }
 }
