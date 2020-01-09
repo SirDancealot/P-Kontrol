@@ -21,6 +21,8 @@ public interface IBackend {
 
      boolean isNewTipAvalible();
 
+     boolean postFeedback(String category, String message);
+
 
      //User
 

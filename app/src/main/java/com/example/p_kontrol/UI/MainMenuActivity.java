@@ -21,6 +21,7 @@ import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
@@ -275,7 +276,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
     private void menuBtn_Community(){
         Log.i("click","Community btn clicked \n");
-
+        Intent changeActivity = new Intent( this , ActivityFeedback.class);
+        startActivity(changeActivity);
     }
     private void menuBtn_ParkAlarm(){
         Log.i("click","Park Alarm btn clicked \n");

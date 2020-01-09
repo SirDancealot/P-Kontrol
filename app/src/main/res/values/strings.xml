@@ -80,4 +80,14 @@
     <string name="close_frag_deny">No</string>
     <string name="close_frag_title">Close the app?</string>
 
+    <string name="feedback_choose_category">Choose Category</string>
+    <string-array name="feedback_categories_array">
+        <item>@string/feedback_choose_category</item>
+        <item>Map</item>
+        <item>Profile</item>
+        <item>Login</item>
+        <item>Other</item>
+    </string-array>
+
+
 </resources>
