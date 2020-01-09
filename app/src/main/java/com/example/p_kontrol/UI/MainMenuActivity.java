@@ -1,6 +1,9 @@
 package com.example.p_kontrol.UI;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +35,7 @@ import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 
 import java.time.LocalDate;
@@ -104,10 +108,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
-        setupMap();
-
         backend = new Backend();
-        tip_List = backend.getTips(mapContext.getLanLng(),BACK_GETTIPS_RADIUS );
+        setupMap();
 
     }
 
@@ -165,6 +167,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onReady() {
                 mapContext.setListOfTipDto(tip_List);
+                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
             }
 
             @Override
@@ -174,12 +177,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onSelectedLocation() {
-                tip_List = backend.getTips(mapContext.getLanLng(),BACK_GETTIPS_RADIUS );
+                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
             }
 
             @Override
             public void onUpdate(){
-                tip_List = backend.getTips(mapContext.getLanLng(),BACK_GETTIPS_RADIUS );
+                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
                 mapContext.setListOfTipDto(tip_List);
             }
 
@@ -428,4 +431,21 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         else
             super.onBackPressed();
     }*/
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        Log.d(TAG, "onRequestPermissionsResult: ");
+
+        Log.d(TAG, "onRequestPermissionsResult:" + permissions.toString());
+
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mapContext.updatePermissions();
+        } else {
+            // Permission was denied. Display an error message.
+            Log.d(TAG, "onRequestPermissionsResult: false");
+        }
+
+    }
 }
