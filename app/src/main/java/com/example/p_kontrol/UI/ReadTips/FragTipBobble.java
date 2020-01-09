@@ -113,7 +113,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case (R.id.bobbelTip_FragmentContainer): // clicking on the Suroundings of the TipBobble Closes it
                 MainMenuActivity act = (MainMenuActivity) getActivity();
-                act.CloseTipBobbleViewPager();
+                act.closeTipBobbleViewPager();
             break;
             case (R.id.bobbelTip_container):
                 // do nothing.

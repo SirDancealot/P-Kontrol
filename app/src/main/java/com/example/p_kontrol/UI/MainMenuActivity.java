@@ -370,9 +370,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
     }
     // specially TipVViewPager
-    public void CloseTipBobbleViewPager(){
+    public void closeTipBobbleViewPager(){
         viewPager_tipBobles.setVisibility(View.GONE);
-        Log.i(TAG, "CloseTipBobbleViewPager: Closed");
+        Log.i(TAG, "closeTipBobbleViewPager: Closed");
     }
 
     //todo remove this.
@@ -418,6 +418,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     public void onBackPressed() {
         if (mapContext.getCurrentState() instanceof StateSelectLocation)
             ((StateSelectLocation) mapContext.getCurrentState()).cancelMethod();
+        else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE)
+            closeTipBobbleViewPager();
         else if (drag_State)
             menu_dragHandle(findViewById(R.id.menu_btnContainer));
         else {
