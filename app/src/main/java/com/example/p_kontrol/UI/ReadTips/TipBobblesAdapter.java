@@ -1,6 +1,7 @@
 package com.example.p_kontrol.UI.ReadTips;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.p_kontrol.DataTypes.ITipDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TipBobblesAdapter extends FragmentPagerAdapter {
@@ -22,6 +24,9 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     final String BOBBLE_TEXT = "bobbleTip_text";
     final String BOBBLE_URL  = "bobbleTip_URL";
     final String BOBBLE_DATE = "bobbleTip_DATE";
+    final String TAG = "TipAdapter";
+    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+
 
     // Variables
     List<ITipDTO> tips;
@@ -37,13 +42,17 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
         FragTipBobble frag = new FragTipBobble();
         Bundle bundle = new Bundle();
         ITipDTO thisElement = tips.get(position);
+        Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
         bundle.putString(BOBBLE_NAME, thisElement.getAuthor().getFirstName() );
+        Log.d(TAG, "getItem:" + thisElement.getMessage());
         bundle.putString(BOBBLE_TEXT, thisElement.getMessage() );
-        bundle.putString(BOBBLE_DATE, thisElement.getCreationDate().toString().replace("\n", "") );
+        Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
+        bundle.putString(BOBBLE_DATE, DATE_FORMAT.format(thisElement.getCreationDate()) );
+        Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
         try {
             bundle.putString(BOBBLE_URL, thisElement.getAuthor().getProfileSRC());
         } catch (Exception e){
-            System.out.println("ingen billede");
+            Log.d(TAG, "getItem: no picture");
         }
         frag.setArguments(bundle);
         System.out.println(bundle.toString());

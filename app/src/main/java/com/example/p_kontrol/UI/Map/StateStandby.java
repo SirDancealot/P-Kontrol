@@ -12,7 +12,7 @@ public class StateStandby extends State {
 
     @Override
     public void centerMethod(){
-        centerMapOnLocation(context);
+        centerMapOnLocation();
     }
 
 }
