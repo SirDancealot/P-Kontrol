@@ -1,14 +1,12 @@
 package com.example.p_kontrol.Backend;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
-import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
