@@ -31,10 +31,10 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".UI.UserPersonalisation.ActivityProfile" android:noHistory="true" />
-        <activity android:name=".UI.MainMenuActivity" />
         <activity android:name=".UI.LogIn.Activity_LoginScreen_03" android:noHistory="true" />
         <activity android:name=".UI.LogIn.Activity_LoginScreen_02" android:noHistory="true" />
-        <activity android:name=".UI.LogIn.Activity_LoginScreen_01" android:noHistory="true" >
+        <activity android:name=".UI.LogIn.Activity_LoginScreen_01" android:noHistory="true" />
+        <activity android:name=".UI.MainMenuActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

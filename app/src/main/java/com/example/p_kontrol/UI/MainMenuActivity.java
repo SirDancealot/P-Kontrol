@@ -98,6 +98,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
+        //TODO send person til logind 1 hvis de ikke er logget ind
+
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
@@ -140,6 +142,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         //TipBobbles are all inside this ViewPager Container
         viewPager_tipBobles = findViewById(R.id.mainMenu_viewPager_TipBobbles);
+        viewPager_tipBobles.setVisibility(ViewPager.GONE);
 
         boolFragMessageWrite    = false;
         boolFragTipBobble       = false;
@@ -430,13 +433,21 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        if (mapContext.getCurrentState() instanceof StateSelectLocation)
+        Log.d(TAG, "onBackPressed: Something happened");
+        if (mapContext.getCurrentState() instanceof StateSelectLocation) {
+            Log.d(TAG, "onBackPressed: stateSelect");
             ((StateSelectLocation) mapContext.getCurrentState()).cancelMethod();
-        else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE)
+        }
+        else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE) {
+            Log.d(TAG, "onBackPressed: viewPager");
             closeTipBobbleViewPager();
-        else if (drag_State)
+        }
+        else if (drag_State) {
+            Log.d(TAG, "onBackPressed: Bottom menue");
             menu_dragHandle();
+        }
         else {
+            Log.d(TAG, "onBackPressed: back pressed");
             //TODO: find ud af om vi skal bruge dialog box eller fade out
             //fragment_close.show(getSupportFragmentManager(), "closeFragment");
             super.onBackPressed();
