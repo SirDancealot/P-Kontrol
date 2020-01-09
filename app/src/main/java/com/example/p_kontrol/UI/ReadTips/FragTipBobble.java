@@ -91,16 +91,13 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         readMore.setOnClickListener(this);
 
 
-        if (getArguments().getString(BOBBLE_URL) != null){
-            System.out.println("vi går ind i den forkerte");
-            System.out.println("--->" + getArguments().getString(BOBBLE_URL) + "<---");
+        if (getArguments().getString(BOBBLE_URL) != null && getArguments().getString(BOBBLE_URL) != ""){
             URL = getArguments().getString(BOBBLE_URL);
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.dontAnimate();
             //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
             Glide.with(FragTipBobble.this).load(URL).into(profImg);
         } else {
-            System.out.println("vi går ind i den rigtige");
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.dontAnimate();
             Glide.with(FragTipBobble.this).load(R.drawable.anonym).into(profImg);

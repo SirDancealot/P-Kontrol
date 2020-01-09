@@ -5,12 +5,16 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuActivity;
@@ -21,14 +25,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
-public class MapContext implements OnMapReadyCallback {
+public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
     String TAG = "MapContext";
 
@@ -38,10 +44,105 @@ public class MapContext implements OnMapReadyCallback {
     private final LatLng DEFAULT_LOCATION = new LatLng(55.676098, 	12.56833);
 
     //Map Functionality NECESARY VARIABLES
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private SupportMapFragment mapFragment;
+    private Location mLastKnownLocation;
+    private boolean mLocationPermissionGranted;
+
+    public void setTAG(String TAG) {
+        this.TAG = TAG;
+    }
+
+    public void setDEFAULT_ZOOM(int DEFAULT_ZOOM) {
+        this.DEFAULT_ZOOM = DEFAULT_ZOOM;
+    }
+
+    public int getDEFAULT() {
+        return DEFAULT;
+    }
+
+    public void setDEFAULT(int DEFAULT) {
+        this.DEFAULT = DEFAULT;
+    }
+
+    public static int getPermissionsRequestAccessFineLocation() {
+        return PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
+    }
+
+    public void setMapFragment(SupportMapFragment mapFragment) {
+        this.mapFragment = mapFragment;
+    }
+
+    public Location getmLastKnownLocation() {
+        return mLastKnownLocation;
+    }
+    public LatLng getLanLng() {
+        return new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+    }
+
+    public void setmLastKnownLocation(Location mLastKnownLocation) {
+        this.mLastKnownLocation = mLastKnownLocation;
+    }
+
+    public void setmFusedLocationProviderClient(FusedLocationProviderClient mFusedLocationProviderClient) {
+        this.mFusedLocationProviderClient = mFusedLocationProviderClient;
+    }
+
+    public void setActivity(MainMenuActivity activity) {
+        this.activity = activity;
+    }
+
+    public MapContext getThisContext() {
+        return thisContext;
+    }
+
+    public void setThisContext(MapContext thisContext) {
+        this.thisContext = thisContext;
+    }
+
+    public void setCurrentState(IState currentState) {
+        this.currentState = currentState;
+    }
+
+    public void setUserlocation(Location userlocation) {
+        this.userlocation = userlocation;
+    }
+
+    public void setCurrentMarkerLoc(LatLng currentMarkerLoc) {
+        this.currentMarkerLoc = currentMarkerLoc;
+    }
+
+    public void setMap(GoogleMap map) {
+        this.map = map;
+    }
+
+    public void setCenterBtn(Button centerBtn) {
+        this.centerBtn = centerBtn;
+    }
+
+    public void setCancelBtn(Button cancelBtn) {
+        this.cancelBtn = cancelBtn;
+    }
+
+    public void setAcceptBtn(Button acceptBtn) {
+        this.acceptBtn = acceptBtn;
+    }
+
+    public void setStateStandby(IState stateStandby) {
+        this.stateStandby = stateStandby;
+    }
+
+    public void setStateSelectLocation(IState stateSelectLocation) {
+        this.stateSelectLocation = stateSelectLocation;
+    }
+
+    public void setListener(IMapContextListener listener) {
+        this.listener = listener;
+    }
+
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private MainMenuActivity activity;
-    private MapContext thisContext =this ;
+    private MapContext thisContext =this;
 
     //Data
     private List<ITipDTO> listOfTipDto;
@@ -84,19 +185,16 @@ public class MapContext implements OnMapReadyCallback {
 
         // Setting Up the Map
         map = googleMap;
-        if ( ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            map.setMyLocationEnabled(true);
-        }
-        styleMapCall();
-        centerMapOnLocation();
+        map.setPadding(0,1000,100,0);
 
+        styleMapCall();
 
         // todo move into States.
         //Center the Camera on the Map.
         centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentState.centerMapOnLocation(thisContext);
+                currentState.centerMapOnLocation();
                 Log.d(TAG, "onClick() called with: v = [" + v + "]");
             }
         });
@@ -104,6 +202,16 @@ public class MapContext implements OnMapReadyCallback {
 
         // Activate Standard State . in this case it is Standby.
         setStateStandby();
+        getPermission();
+
+        if(map.isMyLocationEnabled()){
+            Log.d(TAG, "onMapReady: location true");
+            currentState.centerMapOnLocation();
+        } else {
+            Log.d(TAG, "onMapReady: location false");
+        }
+
+
     }
 
     //Public Calls
@@ -117,28 +225,8 @@ public class MapContext implements OnMapReadyCallback {
 
     }
 
-    // private Calls
-    public void centerMapOnLocation(){
-        try {
-            Task locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        userlocation = (Location) task.getResult();
 
-                    } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT));
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                }
-            });
 
-        } catch(SecurityException e)  {
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }
     public Resources getResources(){
         return activity.getResources();
     }
@@ -159,6 +247,7 @@ public class MapContext implements OnMapReadyCallback {
         }
 
     }
+
 
 
     // ---  GET / SET ---  GET / SET ---  GET / SET ---  GET / SET
@@ -230,5 +319,42 @@ public class MapContext implements OnMapReadyCallback {
     public Activity getActivity() {
         return activity;
     }
+
+
+
+    private void getPermission(){
+
+        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+            Log.d(TAG, "getPermission: true");
+        } else {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            Log.d(TAG, "getPermission: false");
+        }
+
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: går til godkendelse");
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                    map.setMyLocationEnabled(true);
+                }
+                else {
+                    // close app
+                }
+                break;
+        }
+    }
+
+
 
 }

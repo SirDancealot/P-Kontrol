@@ -17,10 +17,14 @@ public class StateSelectLocation extends State {
 
     public StateSelectLocation(MapContext context) {
         super(context);
+        getDeviceLocation();
         zoomIn();
         map.clear();
         acceptBtn.setVisibility(View.VISIBLE);
         cancelBtn.setVisibility(View.VISIBLE);
+        currentMarkerLocation = context.getLanLng();
+        map.addMarker(new MarkerOptions().position(currentMarkerLocation));
+
     }
 
     // interface Overrides
@@ -56,11 +60,10 @@ public class StateSelectLocation extends State {
     // Button Calls
     @Override
     public void centerMethod(){
-        centerMapOnLocation(context);
+        centerMapOnLocation();
     }
     @Override
     public void acceptMethod(){
-// todo still accepts a null location. must not, but should be implemented with a standard location, and a check here to se if there is a marker. BOTH ARE NECESARY!!
         Log.i(TAG, "acceptMethod: ");
         map.clear();
         zoomOut();
