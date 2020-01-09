@@ -11,14 +11,14 @@
       android:strokeLineJoin="miter"
       android:strokeWidth="3.77952766"
       android:strokeColor="@color/color_lightGray"
-      android:strokeLineCap="butt"/>
+      android:strokeLineCap="round"/>
   <path
       android:pathData="M40.0069,12.4426 L11.7432,40.7063"
       android:strokeAlpha="1"
       android:strokeLineJoin="miter"
       android:strokeWidth="3.77952766"
       android:strokeColor="@color/color_lightGray"
-      android:strokeLineCap="butt"/>
+      android:strokeLineCap="round"/>
   <!-- left Vertical -->
   <path
       android:pathData="M2.9383,3.5051L2.9383,49.6438"
@@ -26,7 +26,7 @@
       android:strokeLineJoin="miter"
       android:strokeWidth="1.88976383"
       android:strokeColor="@color/color_matWhite"
-      android:strokeLineCap="butt"/>
+      android:strokeLineCap="round"/>
   <!-- right Vertical -->
   <path
       android:pathData="M49.2538,3.5051L49.2538,49.6438"
@@ -34,5 +34,5 @@
       android:strokeLineJoin="miter"
       android:strokeWidth="1.88976383"
       android:strokeColor="@color/color_matWhite"
-      android:strokeLineCap="butt"/>
+      android:strokeLineCap="round"/>
 </vector>

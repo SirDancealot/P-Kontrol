@@ -23,21 +23,21 @@ public class UserDTO implements IUserDTO {
 
     @Override
     public String getFirstName() {
-        return null;
+        return firstName;
     }
 
     @Override
     public String getLastName() {
-        return null;
+        return lastName;
     }
 
     @Override
     public String getProfileSRC() {
-        return null;
+        return profileSrc;
     }
 
     @Override
     public List<ITipDTO> getTips() {
         return null;
-    }
-}
+        }
+        }

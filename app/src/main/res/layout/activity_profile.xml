@@ -82,7 +82,7 @@
                 android:layout_gravity="center"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:progressTint="@color/colorScheme4"
+                android:progressTint="@color/colorAccent"
                 android:rating="2"
                 android:stepSize="1"></RatingBar>
 

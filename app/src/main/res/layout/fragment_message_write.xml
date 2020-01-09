@@ -36,8 +36,11 @@
             android:padding="15dp"
             >
             <Button
-                android:layout_width="75dp"
-                android:layout_height="25dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right"
+                android:background="@drawable/ic_button_chrossmark"
+                style="?android:attr/borderlessButtonStyle"
                 />
             <!-- circles and lines bar -->
             <com.example.p_kontrol.UI.WriteTip.CustomProgressBar
@@ -55,7 +58,7 @@
 
                 app:ptip_progress_ColorBorder="@color/color_lightGray"
                 app:ptip_progress_ColorNonProgress="@color/color_pureWhite"
-                app:ptip_progress_ColorProgress="@color/colorAccent"
+                app:ptip_progress_ColorProgress="@color/colorHighlight"
 
                 />
         </LinearLayout>
@@ -80,35 +83,59 @@
             app:layout_constraintTop_toBottomOf="@id/WriteTip_ContentContainer">
 
             <!-- Navigation Title -->
-            <TextView
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:fontFamily="@font/ubuntu_regular"
-                android:gravity="center"
-                android:text="@string/writeTip_BtmNavigation_continue"
-                android:textColor="@color/color_matBlack"
-                android:textSize="24sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="clip_horizontal|fill|fill_horizontal"
                 android:orientation="horizontal">
+                <!--  android:gravity="clip_horizontal|fill|fill_horizontal"
+                 -->
                 <!-- left Button -->
                 <Button
-                    android:layout_width="75dp"
-                    android:layout_height="25dp" />
+                    android:id="@+id/button2"
+                    android:layout_width="32dp"
+                    android:layout_height="52dp"
+                    android:paddingTop="10dp"
+                    android:drawablePadding="20dp"
+
+                    android:drawableTop="@drawable/ic_button_prev"
+                    android:background="@color/color_pureWhite"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                     />
                 <!-- Right Button -->
-                <Space
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:fontFamily="@font/ubuntu_regular"
+                    android:gravity="center"
+                    android:text="@string/writeTip_BtmNavigation_continue"
+                    android:textColor="@color/color_matBlack"
+                    android:textSize="24sp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
                 <Button
-                    android:layout_width="75dp"
-                    android:layout_height="25dp" />
-            </LinearLayout>
+                    android:id="@+id/button3"
+                    android:layout_width="32dp"
+                    android:layout_height="52dp"
+                    android:paddingTop="10dp"
+                    android:drawablePadding="20dp"
+
+                    android:drawableTop="@drawable/ic_button_next"
+                    android:background="@color/color_pureWhite"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                     />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </LinearLayout>
