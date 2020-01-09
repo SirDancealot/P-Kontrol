@@ -77,6 +77,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
         return mLastKnownLocation;
     }
     public LatLng getLanLng() {
+        currentState.getDeviceLocation();
         return new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
     }
 
@@ -212,6 +213,8 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
         } else {
             Log.d(TAG, "onMapReady: location false");
         }
+
+        currentState.getDeviceLocation();
 
 
     }

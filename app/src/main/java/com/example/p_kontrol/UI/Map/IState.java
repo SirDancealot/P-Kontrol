@@ -4,4 +4,5 @@ public interface IState {
     void setDoneListner(Object listenerDone);
     void centerMapOnLocation();
     void updateMap();
+    void getDeviceLocation();
 }
