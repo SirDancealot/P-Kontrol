@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.example.p_kontrol.R;
 
-public class State_Submit extends WriteTipState {
+public class Stage_Submit extends WriteTipState {
 
     View view;
 

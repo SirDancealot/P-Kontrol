@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.p_kontrol.R;
 
-public class State_WriteText extends WriteTipState {
+public class Stage_WriteText extends WriteTipState {
 
     String TAG = "WriteTip STATE WriteText ";
 
