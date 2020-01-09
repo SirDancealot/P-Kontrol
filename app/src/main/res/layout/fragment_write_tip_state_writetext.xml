@@ -13,7 +13,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/color_matWhite"
+        android:background="@color/colorSecondary"
         android:orientation="vertical"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,6 +51,7 @@
             android:ems="10"
             android:hint="Write here.."
             android:inputType="textMultiLine"
+            android:gravity="top|left"
             android:minHeight="75dp" />
 
     </LinearLayout>

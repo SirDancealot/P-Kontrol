@@ -32,12 +32,14 @@ public class State extends AppCompatActivity implements IState  {
     IMapContextListener listener = null;
     GoogleMap map;
     Button centerBtn, acceptBtn, cancelBtn;
+    View btnContainerAcceptCancel;
 
     public State(MapContext context) {
         //retrieving Objects
         this.context = context;
         map = context.getMap();
         listener = context.getListener();
+        btnContainerAcceptCancel = context.getBtnContainerAceptCancel();
         centerBtn = context.getCenterBtn();
         acceptBtn = context.getAcceptBtn();
         cancelBtn = context.getCancelBtn();

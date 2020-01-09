@@ -18,7 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
@@ -93,7 +92,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_view);
+        setContentView(R.layout.activity_mainmenu);
 
         // todo Fjern og få dem fra BackEnd.
         setUpDemoTip();
@@ -135,7 +134,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private void setupFragments(){
 
         //TipBobbles are all inside this ViewPager Container
-        viewPager_tipBobles = findViewById(R.id.viewPager_TipBobbles);
+        viewPager_tipBobles = findViewById(R.id.mainMenu_viewPager_TipBobbles);
 
         boolFragMessageWrite    = false;
         boolFragTipBobble       = false;
@@ -148,9 +147,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private void setupMap(){
 
         //Map Interaction Buttons
-        Button centerBtn = findViewById(R.id.Map_centerBtn);
-        Button acceptBtn = findViewById(R.id.map_acceptBtn);
-        Button cancelBtn = findViewById(R.id.map_cancelBtn);
+        Button centerBtn = findViewById(R.id.mainMenu_Map_centerBtn);
+        Button acceptBtn = findViewById(R.id.mainMenu_map_acceptBtn);
+        Button cancelBtn = findViewById(R.id.mainMenu_map_cancelBtn);
+        View btnContainerAceptCancel = findViewById(R.id.mainMenu_acceptCancelContainer);
 
         // Listener
         mapListener = new IMapContextListener() {
@@ -194,8 +194,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         };
 
         // Actually Making the Map Do things
-        SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapContext = new MapContext( mapFrag,this,centerBtn,cancelBtn,acceptBtn,mapListener);
+        SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mainMenu_map);
+        mapContext = new MapContext( mapFrag,this,centerBtn,cancelBtn,acceptBtn,btnContainerAceptCancel,mapListener);
 
     }
 
@@ -353,12 +353,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
     }
     public void toogleFragment_WriteTip(){
-        FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
         boolFragMessageWrite =!boolFragMessageWrite;
     }
     public void toogleFragment_WriteTip(boolean openValue) {
         try {
-            FragmentToogleTransaction(R.id.midScreenFragmentContainer, fragment_messageWrite, openValue);
+            FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite, openValue);
             boolFragMessageWrite = openValue;
         } catch (Exception e) {
             e.printStackTrace();

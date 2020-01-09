@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        android:background="@color/color_matWhite"
+        android:background="@color/colorSecondary"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:layout_gravity="center"
             android:text="submit"
             android:textColor="@color/color_lightGray"
-            style="?android:attr/borderlessButtonStyle"
+            style="?android:attr/buttonStyleToggle"
             />
 
 

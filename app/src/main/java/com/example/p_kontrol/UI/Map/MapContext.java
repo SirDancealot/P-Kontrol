@@ -155,6 +155,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
     private Button centerBtn;
     private Button cancelBtn;
     private Button acceptBtn;
+    View btnContainerAceptCancel;
 
     //States
     private IState stateStandby ,stateSelectLocation;
@@ -163,12 +164,13 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
     private IMapContextListener listener;
 
 // -- METHODS --  --  --  --  --  --  --  --  --  --  --  --  --
-    public MapContext(SupportMapFragment mapFragment, MainMenuActivity activity, Button centerBtn, Button cancelBtn, Button acceptBtn, IMapContextListener listener){
+    public MapContext(SupportMapFragment mapFragment, MainMenuActivity activity, Button centerBtn, Button cancelBtn, Button acceptBtn,View btnContainerAceptCancel, IMapContextListener listener){
 
         //Android Stuffs
         this.mapFragment= mapFragment;
         this.activity   = activity;
         this.listener   = listener;
+        this.btnContainerAceptCancel = btnContainerAceptCancel;
 
         // interaction Buttons
         this.centerBtn = centerBtn;
@@ -263,6 +265,9 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
     }
     public Button getCancelBtn() {
         return cancelBtn;
+    }
+    public View getBtnContainerAceptCancel(){
+        return btnContainerAceptCancel;
     }
 
     // State Pattern Specifiks

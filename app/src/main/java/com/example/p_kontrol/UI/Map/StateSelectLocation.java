@@ -20,8 +20,7 @@ public class StateSelectLocation extends State {
         getDeviceLocation();
         zoomIn();
         map.clear();
-        acceptBtn.setVisibility(View.VISIBLE);
-        cancelBtn.setVisibility(View.VISIBLE);
+        btnContainerAcceptCancel.setVisibility(View.VISIBLE);
         currentMarkerLocation = context.getLanLng();
         map.addMarker(new MarkerOptions().position(currentMarkerLocation));
 
