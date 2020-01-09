@@ -11,10 +11,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.R;
 
 public class ActivityFeedback extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
+    IBackend backend = new Backend();
     Spinner dropDownCategory;
     EditText feedbackText;
     Button sendFeedbackBtn;
@@ -57,10 +60,7 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
             sendFeedbackBtn.setError("Please choose a category in the drop down menu");
             Toast.makeText(this, sendFeedbackBtn.getError(), Toast.LENGTH_LONG).show();
         } else {
-            //TODO slet efter færdig med at teste
-            Toast.makeText(v.getContext(),categoryText +"\n"+ feedbackText.getText(), Toast.LENGTH_SHORT).show();
-
-            //TODO send til database/send til mail
+            backend.postFeedback(categoryText, feedbackText.getText().toString());
         }
     }
 }
