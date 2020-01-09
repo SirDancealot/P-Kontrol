@@ -1,7 +1,6 @@
 package com.example.p_kontrol.UI;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,8 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.example.p_kontrol.Backend.Backend;
-import com.example.p_kontrol.Backend.BackendStub;
-import com.example.p_kontrol.DataTypes.IBackend;
+import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
@@ -36,7 +34,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,7 +45,6 @@ import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int STANDARD_TIP_BEGIN_RATING = 0;
     final String TAG = "MainMenuActivity";
 
 // -- * -- MENU -- * --
@@ -61,7 +57,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     boolean drag_State;
 
 // -- * -- FRAGMENTS -- * --
-    //Fragments
+
     FragMessageWrite    fragment_messageWrite   ;
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
@@ -81,17 +77,14 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     boolean boolFragTopMessageBar   ;
 
 // -- * -- MAP -- * --
-    //Maps
+
     MapContext mapContext               ;
     IMapContextListener mapListener     ;
 
 // -- * -- Local DATA objects -- * --
-    static IBackend backend = new Backend();
 
-    // in order to create new TipDto's from static contexts a Final Object is required, this object will then often be overwritten
-    // todo make I_TIPDTO when Copy() has been added to interface.
-    final TipDTO newTipDTO = new TipDTO();
-    List<ITipDTO> dtoList = new LinkedList<>();
+    static IBackend backend = new Backend();
+    final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +97,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         setupMenu();
         setupFragments();
         setupMap();
-
-        // todo Fjern og få dem fra BackEnd.
-        setUpDemoTip();
 
     }
 
@@ -165,7 +155,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mapListener = new IMapContextListener() {
             @Override
             public void onReady() {
-                mapContext.setListOfTipDto(dtoList);
+                mapContext.setListOfTipDto(getDTOList());
             }
 
             @Override
@@ -180,7 +170,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onUpdate(){
-                mapContext.setListOfTipDto(dtoList);
+                mapContext.setListOfTipDto(getDTOList());
             }
 
             @Override
@@ -190,7 +180,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onTipClick(int index) {
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, getDTOList());
                 viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                 viewPager_tipBobles.setCurrentItem(index);
                 viewPager_tipBobles.setVisibility(View.VISIBLE);
@@ -286,9 +276,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
     // Methods to implement menuOnClicks()
-    private void contributeProcess(int i){
-        switch (i){
+    private void contributeProcess ( int i){
+        switch (i) {
             case 0: // Chose location
+
                 mapContext.setStateSelectLocation(new IMapSelectedLocationListener() {
                     @Override
                     public void onSelectedLocation(LatLng location) {
@@ -305,14 +296,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
                 });
                 break;
+
             case 1: // Write Tip
 
-
-                Log.i(TAG, "contributeProcess: 1");
                 fragment_messageWrite = new FragMessageWrite();
-                Log.i(TAG, "contributeProcess: 2");
                 toogleFragment_WriteTip(true);
-                Log.i(TAG, "contributeProcess: 3");
                 fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
 
                     @Override
@@ -324,7 +312,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                     }
 
                     @Override
-                    public void onCancelTip(){
+                    public void onCancelTip() {
                         toogleFragment_WriteTip(false);
                         // does not call self to complete.
                     }
@@ -332,28 +320,37 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 });
 
                 break;
+
             case 2: // finish Tip and send to back end for saving.
+
                 //todo simplify user Data
                 // fix this with the login.
-                UserDTO currentUser = new UserDTO( "tempUser", "tempLastName", "");
+                UserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
                 newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
                 newTipDTO.setAuthor(currentUser);
                 TipDTO tipDTO = newTipDTO.copy();
-                dtoList.add(tipDTO);
+                backend.createTip(tipDTO);
                 mapContext.updateMap();
 
-                //todo Implement Backend CreateTip here.
+
                 break;
+
         }
     }
+    public void closeTipBobbleViewPager () {
+        viewPager_tipBobles.setVisibility(View.GONE);
+        Log.i(TAG, "closeTipBobbleViewPager: Closed");
+    }
 
-
-
-
-
-
-
-    // Open And Close Fragments.
+    // Fragments Open Close.
+    private void toogleFragment_WriteTip(boolean openValue) {
+        try {
+            FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite, openValue);
+            boolFragMessageWrite = openValue;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
 
         if(Open){
@@ -374,63 +371,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             Log.v("transaction","Removing fragment");
         }
     }
-    public void toogleFragment_WriteTip(){
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-        boolFragMessageWrite =!boolFragMessageWrite;
-    }
-    public void toogleFragment_WriteTip(boolean openValue) {
-        try {
-            FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite, openValue);
-            boolFragMessageWrite = openValue;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    // specially TipVViewPager
-    public void closeTipBobbleViewPager(){
-        viewPager_tipBobles.setVisibility(View.GONE);
-        Log.i(TAG, "closeTipBobbleViewPager: Closed");
-    }
 
-    //todo remove this.
-    private void setUpDemoTip(){
-        ITipDTO tip1 = new TipDTO();
-        tip1.setLocation(new LatLng(	55.676098, 	12.568337));
-        tip1.setAuthor(new UserDTO("August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
-        tip1.setMessage(getResources().getString(R.string.tip1));
-        Date date = new Date(1563346249);
-        tip1.setCreationDate(date);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate tempDate = LocalDate.of(2019, 2, 9);
-            //tip1.setDate(tempDate);
-
-        }
-
-        ITipDTO tip2 = new TipDTO();
-        tip2.setLocation(new LatLng(	55.679098, 	12.569337));
-        tip2.setAuthor(new UserDTO("","Hans","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
-        tip2.setMessage(getResources().getString(R.string.tip2));
-        date = new Date(1543346249);
-        tip2.setCreationDate(date);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate tempDate = LocalDate.of(2019, 7, 13);
-            //tip2.setDate(tempDate);
-        }
-
-        dtoList.add(tip1);
-        dtoList.add(tip2);
-
-    }
-
-
-    // Get and Sets
-    public List<ITipDTO> getDTOList(){
-        return dtoList;
-    }
-
-
+    // Back Button Navigation Logik.
     @Override
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed: Something happened");
@@ -454,4 +396,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             overridePendingTransition(0, android.R.anim.fade_out);
         }
     }
+
+    // Get and Sets
+    public List<ITipDTO> getDTOList(){
+        List<ITipDTO> list = backend.getTips(mapContext.getLanLng());
+        return list;
+    }
+
 }
