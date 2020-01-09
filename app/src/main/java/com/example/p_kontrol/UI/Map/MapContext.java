@@ -76,6 +76,9 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
     public Location getmLastKnownLocation() {
         return mLastKnownLocation;
     }
+    public LatLng getLanLng() {
+        return new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+    }
 
     public void setmLastKnownLocation(Location mLastKnownLocation) {
         this.mLastKnownLocation = mLastKnownLocation;
@@ -182,6 +185,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
         // Setting Up the Map
         map = googleMap;
+        map.setPadding(0,1000,100,0);
 
         styleMapCall();
 
@@ -202,9 +206,11 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
         if(map.isMyLocationEnabled()){
             Log.d(TAG, "onMapReady: location true");
+            currentState.centerMapOnLocation();
         } else {
             Log.d(TAG, "onMapReady: location false");
         }
+
 
     }
 
@@ -323,7 +329,6 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
             Log.d(TAG, "getPermission: true");
-            currentState.centerMapOnLocation();
         } else {
             ActivityCompat.requestPermissions(activity,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -342,7 +347,6 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
             case 1:
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED){
                     map.setMyLocationEnabled(true);
-                    currentState.centerMapOnLocation();
                 }
                 else {
                     // close app

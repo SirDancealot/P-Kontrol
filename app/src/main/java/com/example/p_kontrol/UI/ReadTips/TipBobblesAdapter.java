@@ -47,7 +47,7 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
         Log.d(TAG, "getItem:" + thisElement.getMessage());
         bundle.putString(BOBBLE_TEXT, thisElement.getMessage() );
         Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
-        bundle.putString(BOBBLE_DATE, DATE_FORMAT.format(thisElement.getCreationDate().toString()) );
+        bundle.putString(BOBBLE_DATE, DATE_FORMAT.format(thisElement.getCreationDate()) );
         Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
         try {
             bundle.putString(BOBBLE_URL, thisElement.getAuthor().getProfileSRC());

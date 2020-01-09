@@ -176,13 +176,9 @@ public class State extends AppCompatActivity implements IState  {
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
-                        context.setmLastKnownLocation((Location) task.getResult());
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(context.getmLastKnownLocation().getLatitude(),
-                                        context.getmLastKnownLocation().getLongitude()), context.getDEFAULT_ZOOM()));
-
+                        Location result = (Location) task.getResult();
+                        context.setmLastKnownLocation(result);
                     } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(context.getDEFAULT_LOCATION(), DEFAULT_MAP_ZOOM ));
                         map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 }
