@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 
+import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
@@ -43,6 +45,9 @@ import java.util.List;
  */
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
+
+    //todo replace this with actual preference;
+    final double BACK_GETTIPS_RADIUS = 100;
 
     private static final int STANDARD_TIP_BEGIN_RATING = 0;
     final String TAG = "MainMenuActivity";
@@ -83,24 +88,27 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     IMapContextListener mapListener     ;
 
 // -- * -- Local DATA objects -- * --
+    IBackend backend;
+
 
     // in order to create new TipDto's from static contexts a Final Object is required, this object will then often be overwritten
     // todo make I_TIPDTO when Copy() has been added to interface.
     final TipDTO newTipDTO = new TipDTO();
-    List<ITipDTO> dtoList = new LinkedList<>();
+    List<ITipDTO> tip_List = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
-        // todo Fjern og få dem fra BackEnd.
-        setUpDemoTip();
-
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
         setupMap();
+
+        backend = new Backend();
+        tip_List = backend.getTips(mapContext.getLanLng(),BACK_GETTIPS_RADIUS );
+
     }
 
     // setups called by onCreate.
@@ -156,7 +164,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mapListener = new IMapContextListener() {
             @Override
             public void onReady() {
-                mapContext.setListOfTipDto(dtoList);
+                mapContext.setListOfTipDto(tip_List);
             }
 
             @Override
@@ -166,12 +174,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onSelectedLocation() {
-
+                tip_List = backend.getTips(mapContext.getLanLng(),BACK_GETTIPS_RADIUS );
             }
 
             @Override
             public void onUpdate(){
-                mapContext.setListOfTipDto(dtoList);
+                tip_List = backend.getTips(mapContext.getLanLng(),BACK_GETTIPS_RADIUS );
+                mapContext.setListOfTipDto(tip_List);
             }
 
             @Override
@@ -181,7 +190,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onTipClick(int index) {
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tip_List);
                 viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                 viewPager_tipBobles.setCurrentItem(index);
                 viewPager_tipBobles.setVisibility(View.VISIBLE);
@@ -326,8 +335,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
                 newTipDTO.setAuthor(currentUser);
                 TipDTO tipDTO = newTipDTO.copy();
-                dtoList.add(tipDTO);
+                tip_List.add(tipDTO);
                 mapContext.updateMap();
+                backend.createTip(tipDTO);
 
                 //todo Implement Backend CreateTip here.
                 break;
@@ -399,15 +409,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             //tip2.setDate(tempDate);
         }
 
-        dtoList.add(tip1);
-        dtoList.add(tip2);
+        tip_List.add(tip1);
+        tip_List.add(tip2);
 
     }
 
 
     // Get and Sets
     public List<ITipDTO> getDTOList(){
-        return dtoList;
+        return tip_List;
     }
 
     /*
