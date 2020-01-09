@@ -294,6 +294,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 });
                 break;
             case 1: // Write Tip
+
+
                 Log.i(TAG, "contributeProcess: 1");
                 fragment_messageWrite = new FragMessageWrite();
                 Log.i(TAG, "contributeProcess: 2");

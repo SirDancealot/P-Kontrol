@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.WriteTip;
+package com.example.p_kontrol.Util;
 
 import com.example.p_kontrol.R;
 import android.content.Context;

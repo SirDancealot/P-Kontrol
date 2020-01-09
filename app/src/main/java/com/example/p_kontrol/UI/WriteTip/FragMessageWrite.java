@@ -7,25 +7,30 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.Util.CustomProgressBar;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class FragMessageWrite extends Fragment {
+public class FragMessageWrite extends Fragment implements View.OnClickListener {
     String TAG = "Fragment Message Write";
 
     // Containers
-    private View view;
-    private ViewPager ContentContainer;
+    private View view, WriteTip_outerBounds;
+    private ViewPager viewPagerContent;
+    private Button navNext, navPrev, navCancel;
+    private CustomProgressBar progressBar;
+
     List<Fragment> fragmentList;
     ITipWriteListener listener = null ;
 
     // States
-    WriteTipState state_WriteText, state_TakePicture, state_SubmitTip;
+    WriteTipState state_WriteText, state_SubmitTip;
     WriteTipState currentSate = null;
 
     // Objects
@@ -55,26 +60,57 @@ public class FragMessageWrite extends Fragment {
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_message_write, container, false);
-        ContentContainer = view.findViewById(R.id.WriteTip_InternalViewPager);
+        viewPagerContent = view.findViewById(R.id.WriteTip_InternalViewPager);
+        navNext     = view.findViewById(R.id.WriteTip_Navigation_next);
+        navPrev     = view.findViewById(R.id.WriteTip_Navigation_prev);
+        navCancel   = view.findViewById(R.id.WriteTip_ButtonCancel);
+        progressBar = view.findViewById(R.id.WriteTip_NavBar);
+        WriteTip_outerBounds = view.findViewById(R.id.WriteTip_outerBounds);
+
 
         // initiating Listeners.
         setPageChangeListener();    // !IMPORTANT! if change is made to the order of the fragment list, change is also needed here! Retrieving information.
         setupStateListeners();      // this is where we tell the state Submit to call finish method when clicked.
         state_SubmitTip.setOnWriteTipStageListener(stateListener_SubmitListener);
-
+        navNext.setOnClickListener(this);
+        navPrev.setOnClickListener(this);
+        navCancel.setOnClickListener(this);
+        WriteTip_outerBounds.setOnClickListener(this);
 
         // Adapter Management.
         WriteTipAdapter adapter = new WriteTipAdapter(getChildFragmentManager(),fragmentList);
-        ContentContainer.setAdapter(adapter);
-        ContentContainer.setOnPageChangeListener(pageChangeListener);
+        viewPagerContent.setAdapter(adapter);
+        viewPagerContent.setOnPageChangeListener(pageChangeListener);
 
         return view;
     }
+    @Override
+    public void onClick(View v) {
+        int t = viewPagerContent.getCurrentItem();
+        switch (v.getId()){
+
+            case R.id.WriteTip_Navigation_next:
+                viewPagerContent.setCurrentItem(viewPagerContent.getCurrentItem() + 1, true);
+                setProgress(t);
+                break;
+            case R.id.WriteTip_Navigation_prev:
+
+                viewPagerContent.setCurrentItem(t - 1, true);
+                setProgress(t);
+                break;
+
+            default:
+                listener.onCancelTip();
+
+        }
+    }
+
+
 
     // private Calls
     private void setPageChangeListener() {
         pageChangeListener = new ViewPager.OnPageChangeListener() {
-            // GATHERING PAGE INFORMATION HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // important! GATHERING PAGE INFORMATION HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
@@ -86,6 +122,7 @@ public class FragMessageWrite extends Fragment {
                         currentSate = state_SubmitTip;
                         break;
                 }
+                setProgress(position);
             }
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -105,10 +142,13 @@ public class FragMessageWrite extends Fragment {
             }
         };
     }
-
+    private void setProgress(int i ){
+        progressBar.setProgressValue(i + 1);
+    }
 
     // public Calls
     public void setFragWriteMessageListener(ITipWriteListener listener){
         this.listener = listener;
     }
+
 }

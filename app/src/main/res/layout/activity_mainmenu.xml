@@ -77,26 +77,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:transitionName="MapCenterButon"
                 />
-            <!-- top message box -->
-          <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                  <!--<include layout="@layout/fragment_top_message_bar" />
--->
-              <FrameLayout
-                  android:id="@+id/mainMenu_midScreenFragmentContainer"
-                  android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
-
-              </FrameLayout>
-
-          </FrameLayout>
-
 
             <!-- Drag Menu Container -->
             <FrameLayout
@@ -125,7 +105,15 @@
             app:layout_constraintStart_toStartOf="parent"
             />
         <!-- Write Tip  -->
+        <!-- top message box -->
+            <FrameLayout
+                android:id="@+id/mainMenu_midScreenFragmentContainer"
+                android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
