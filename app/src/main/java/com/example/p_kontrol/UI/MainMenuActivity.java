@@ -35,6 +35,7 @@ import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 
 
 import java.time.LocalDate;
@@ -293,7 +294,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 mapContext.setStateSelectLocation(new IMapSelectedLocationListener() {
                     @Override
                     public void onSelectedLocation(LatLng location) {
-                        newTipDTO.setLocation(location); // newTipDTO is a static object that can always be called
+                        newTipDTO.setL(new GeoPoint(location.latitude, location.longitude)); // newTipDTO is a static object that can always be called
                         mapContext.setStateStandby();
                         contributeProcess(1);
                     }
