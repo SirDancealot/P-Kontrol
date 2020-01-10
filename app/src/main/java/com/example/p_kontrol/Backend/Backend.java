@@ -56,6 +56,11 @@ public class Backend implements IBackend {
 
     }
     @Override
+    public boolean postFeedback(String category, String message) {
+        return false; //TODO implement this method
+    }
+
+    @Override
     public IUserDTO getUser(int id) {
         return null;
     }

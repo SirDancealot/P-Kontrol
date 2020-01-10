@@ -17,11 +17,10 @@ public class StateSelectLocation extends State {
 
     public StateSelectLocation(MapContext context) {
         super(context);
-        getDeviceLocation();
         zoomIn();
         map.clear();
         btnContainerAcceptCancel.setVisibility(View.VISIBLE);
-        currentMarkerLocation = context.getLanLng();
+        currentMarkerLocation = context.getmLastKnownLocation();
         map.addMarker(new MarkerOptions().position(currentMarkerLocation));
 
     }
