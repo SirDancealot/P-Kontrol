@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuActivity;
 import com.example.p_kontrol.DataTypes.ITipDTO;
@@ -32,8 +33,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 

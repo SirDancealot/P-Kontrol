@@ -66,7 +66,7 @@ public class State extends AppCompatActivity implements IState  {
         int i = 0;
         for(ITipDTO tip: context.getListOfTipDto()){
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon",69,100)));
-            map.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(i++)));
+            map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
             map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {

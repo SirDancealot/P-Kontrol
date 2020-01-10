@@ -35,6 +35,7 @@ import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 
 
 import java.time.LocalDate;
@@ -293,7 +294,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 mapContext.setStateSelectLocation(new IMapSelectedLocationListener() {
                     @Override
                     public void onSelectedLocation(LatLng location) {
-                        newTipDTO.setLocation(location); // newTipDTO is a static object that can always be called
+                        newTipDTO.setL(new GeoPoint(location.latitude, location.longitude)); // newTipDTO is a static object that can always be called
                         mapContext.setStateStandby();
                         contributeProcess(1);
                     }
@@ -396,7 +397,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     //todo remove this.
     private void setUpDemoTip(){
         ITipDTO tip1 = new TipDTO();
-        tip1.setLocation(new LatLng(	55.676098, 	12.568337));
+        tip1.setL(new GeoPoint(	55.676098, 	12.568337));
         tip1.setAuthor(new UserDTO("August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
         tip1.setMessage(getResources().getString(R.string.tip1));
         Date date = new Date(1563346249);
@@ -409,7 +410,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
 
         ITipDTO tip2 = new TipDTO();
-        tip2.setLocation(new LatLng(	55.679098, 	12.569337));
+        tip2.setL(new GeoPoint(	55.679098, 	12.569337));
         tip2.setAuthor(new UserDTO("","Hans","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
         tip2.setMessage(getResources().getString(R.string.tip2));
         date = new Date(1543346249);
