@@ -1,9 +1,6 @@
 package com.example.p_kontrol.UI;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,31 +15,25 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-
-import com.example.p_kontrol.Backend.Backend;
-import com.example.p_kontrol.Backend.BackendStub;
-import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.DataTypes.IBackend;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
-import com.example.p_kontrol.UI.Map.StateSelectLocation;
-import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
-import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
 import com.example.p_kontrol.UI.Map.IMapSelectedLocationListener;
 import com.example.p_kontrol.UI.Map.MapContext;
-import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
+import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
+import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
+import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
+import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
-import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
-
 
 import java.time.LocalDate;
 import java.util.Date;
