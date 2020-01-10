@@ -115,8 +115,8 @@ public class UserInfoDTO {
         this.user = user;
         this.token = user.getIdToken(true);
         if( user.getDisplayName().split(" ").length > 1) {
-            this.name = user.getDisplayName().split(" ")[1];
-            this.name2 = user.getDisplayName().split(" ")[-1];
+            this.name = user.getDisplayName().split(" ")[0];
+            this.name2 = user.getDisplayName().split(" ")[user.getDisplayName().split(" ").length - 1];
         }
         else{
             this.name = user.getDisplayName();
@@ -126,8 +126,9 @@ public class UserInfoDTO {
             this.url = user.getPhotoUrl().toString();
         }
         if(user.getEmail() != null){
-            this.url = user.getEmail();
+            this.email = user.getEmail();
         }
+        this.login = true;
 
     }
 }
