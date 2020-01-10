@@ -59,7 +59,7 @@
 
 
 
-        <com.example.p_kontrol.UI.ReadTips.MaxHeightLinearLayout
+        <com.example.p_kontrol.Util.MaxHeightLinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -100,7 +100,7 @@
 
             <!--            </com.example.p_kontrol.UI.ReadTips.CustomScrollView>-->
 <!--            </LinearLayout>-->
-        </com.example.p_kontrol.UI.ReadTips.MaxHeightLinearLayout>
+        </com.example.p_kontrol.Util.MaxHeightLinearLayout>
 
             <TextView
                 android:id="@+id/bobbelTip_readMore"

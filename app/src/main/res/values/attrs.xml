@@ -26,6 +26,9 @@
         <attr name="metaButtonBarStyle" format="reference" />
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
+
+
+<!--    For custom MaxHeightLinearLayout with a max height attribute-->
     <declare-styleable name="MaxHeightLinearLayout">
         <attr name="maxHeightDp" format="integer" />
     </declare-styleable>
