@@ -5,9 +5,10 @@ import com.google.firebase.firestore.GeoPoint;
 
 import org.imperiumlabs.geofirestore.core.GeoHash;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TipDTO implements ITipDTO {
+public class TipDTO implements ITipDTO, Serializable {
 
 
 
@@ -21,6 +22,7 @@ public class TipDTO implements ITipDTO {
 
     public TipDTO(){}
 
+/*
     public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
         this.author = author;
         this.message = message;
@@ -28,7 +30,7 @@ public class TipDTO implements ITipDTO {
         this.creationDate = creationDate;
         this.g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
         this.l = l;
-    }
+    }*/
 
     @Override
     public IUserDTO getAuthor() {
@@ -84,11 +86,7 @@ public class TipDTO implements ITipDTO {
 
     public void setL(GeoPoint l) {
         this.l = l;
-    }
-
-    public TipDTO copySelf(){
-        TipDTO tipDTO = new TipDTO(author, message, rating, creationDate, l);
-        return tipDTO;
+        g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
     }
 
     //todo implement this in the Interface.

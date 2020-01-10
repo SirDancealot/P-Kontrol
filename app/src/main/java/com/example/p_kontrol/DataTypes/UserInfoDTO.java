@@ -32,11 +32,11 @@ public class UserInfoDTO {
         }
     }
 
-    public IUserDTO getUserDTO(){
+    /*public IUserDTO getUserDTO(){
         // todo Replace 1 with an Actual UserID
         IUserDTO userDTO = new UserDTO(name,name2,url);
         return userDTO;
-    }
+    }*/
 
     public static void newUserInfoDTO() {
         UserInfoDTO.userInfoDTO = new UserInfoDTO();

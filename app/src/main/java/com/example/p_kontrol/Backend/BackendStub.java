@@ -30,12 +30,13 @@ public class BackendStub {
 
 
 
-    UserDTO user = new UserDTO("valdemar", "h", "niceimg");
+    //UserDTO user = new UserDTO("valdemar", "h", "niceimg");
+
 
     //IUserDTO author, String message, LatLng location, int rating, Date creationDate
-    ITipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
-    ITipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
-    ITipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
+    //ITipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
+    //ITipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
+    //ITipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
 
     List<ITipDTO> demoList = new ArrayList<>();
 
@@ -48,9 +49,9 @@ public class BackendStub {
 
 
     public List<ITipDTO> getDemoTips() {
-        demoList.add(tip1);
-        demoList.add(tip2);
-        demoList.add(tip3);
+        //demoList.add(tip1);
+        //demoList.add(tip2);
+        //demoList.add(tip3);
 
         return demoList;
     }

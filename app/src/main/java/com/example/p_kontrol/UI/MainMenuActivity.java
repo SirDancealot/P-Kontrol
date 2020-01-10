@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.auth.User;
 
 
 import java.time.LocalDate;
@@ -360,13 +361,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
                 //todo simplify user Data
                 // fix this with the login.
-                UserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
+                UserDTO currentUser = new UserDTO();
+                currentUser.setFirstName("tempUser");
+                currentUser.setLastName("tempLastName");
+                currentUser.setProfileSrc("");
                 newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
                 newTipDTO.setAuthor(currentUser);
                 TipDTO tipDTO = newTipDTO.copy();
                 backend.createTip(tipDTO);
                 mapContext.updateMap();
-                backend.createTip(tipDTO);
 
 
                 break;
@@ -457,11 +460,17 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     // Get and Sets
     public List<ITipDTO> getDTOList(){
         List<ITipDTO> list = backend.getTips(mapContext.getmLastKnownLocation());
-        list.add(new TipDTO(new UserDTO("TEST","test", ""),
-                "hey \n\n more here\n\n\n\n\n\n olo \n\n \n\n\n   eifd \n\n\n\n\n\n\n\n\n\nie \n",
-                0,
-                new Date(),
-                new GeoPoint(55.7, 12.6)));
+        TipDTO tip = new TipDTO();
+        UserDTO user = new UserDTO();
+        user.setFirstName("TEST");
+        user.setLastName("test");
+        user.setProfileSrc("");
+        tip.setAuthor(user);
+        tip.setMessage("hey \n\n more here\n\n\n\n\n\n olo \n\n \n\n\n   eifd \n\n\n\n\n\n\n\n\n\nie \n");
+        tip.setRating(0);
+        tip.setCreationDate(new Date());
+        tip.setL(new GeoPoint(55.7, 12.6));
+        list.add(tip);
         return list;
     }
 
