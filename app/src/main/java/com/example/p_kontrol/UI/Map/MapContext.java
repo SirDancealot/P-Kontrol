@@ -16,6 +16,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuActivity;
 import com.example.p_kontrol.DataTypes.ITipDTO;
@@ -31,6 +33,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -184,7 +187,6 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap){
-
         // Setting Up the Map
         map = googleMap;
         map.setPadding(0,1000,100,0);
@@ -317,7 +319,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
         return listOfTipDto;
     }
 
-    // android specifiks.
+    // android specifics.
     public String getTAG() {
         return TAG;
     }

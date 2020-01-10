@@ -18,8 +18,12 @@ public interface IDatabase {
 
     boolean checkPAlert(LatLng location);
 
-
-
-
+    /**
+     * Method to query for tips at specific location, all found tips will be added to a list
+     * @param location the location given in a LatLang for where to query
+     * @param radius a {@code double} radius in kilometers for the query
+     * @param targetList the target list in which the tips should end
+     */
+    void queryByLocation(LatLng location, double radius, List<ITipDTO> targetList);
 
 }

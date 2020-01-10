@@ -9,7 +9,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.imperiumlabs.geofirestore.GeoFirestore;
+import org.imperiumlabs.geofirestore.GeoQuery;
+import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +26,7 @@ public class FirestoreDAO implements IDatabase {
     String TAG = "FirestoreDAO";
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
-
+    GeoFirestore geoFirestore = new GeoFirestore(tips);
 
 
     @Override
@@ -45,7 +51,7 @@ public class FirestoreDAO implements IDatabase {
 
     @Override
     public void createTip(ITipDTO tip) {
-        String id = tip.getAuthor() + "-" + System.currentTimeMillis();
+        String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
                 .addOnCompleteListener(task -> {
@@ -60,9 +66,7 @@ public class FirestoreDAO implements IDatabase {
     }
 
     @Override
-    public void updateTip(ITipDTO tip) {
-
-    }
+    public void updateTip(ITipDTO tip) { }
 
     @Override
     public IUserDTO getUser(int id) {
@@ -72,5 +76,49 @@ public class FirestoreDAO implements IDatabase {
     @Override
     public boolean checkPAlert(LatLng location) {
         return false;
+    }
+
+
+
+    @Override
+    public void queryByLocation(LatLng location, double radius, List<ITipDTO> targetList) {
+        String collection = "tips";
+
+        GeoQuery query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
+
+        query.addGeoQueryEventListener(new GeoQueryEventListener() {
+            boolean updateIndividual = false;
+            ArrayList<String> documents = new ArrayList<>();
+            @Override
+            public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
+                Log.d(TAG, "onKeyEntered: Document " + s + " has entered the search area at " + geoPoint.toString());
+                if (updateIndividual) {
+
+                } else {
+                    documents.add(s);
+                }
+            }
+
+            @Override
+            public void onKeyExited(@NotNull String s) {
+                Log.d(TAG, "onKeyExited: Document " + s + " has left the search area");
+            }
+
+            @Override
+            public void onKeyMoved(@NotNull String s, @NotNull GeoPoint geoPoint) {
+                Log.d(TAG, "onKeyMoved: Document " + s + " has moved within the search area to " + geoPoint.toString());
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                Log.d(TAG, "onGeoQueryReady: all initial data has been loaded");
+                updateIndividual = true;
+            }
+
+            @Override
+            public void onGeoQueryError(@NotNull Exception e) {
+                Log.e(TAG, "onGeoQueryError: there was an error with this querry", e);
+            }
+        });
     }
 }
