@@ -432,6 +432,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     // Get and Sets
     public List<ITipDTO> getDTOList(){
         List<ITipDTO> list = backend.getTips(mapContext.getmLastKnownLocation());
+        list.add(new TipDTO(new UserDTO("TEST","test", ""),
+                "hey \n\n more here\n\n\n\n\n\n olo \n\n \n\n\n   eifd \n\n\n\n\n\n\n\n\n\nie \n",
+                new LatLng(55.7, 12.6),
+                0,
+                new Date()));
         return list;
     }
 
