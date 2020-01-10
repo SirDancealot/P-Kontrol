@@ -1,10 +1,18 @@
 package com.example.p_kontrol.UI.LogIn;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.MainMenuActivity;
+import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,40 +23,48 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import android.os.Bundle;
 
-import com.example.p_kontrol.R;
 
+// code from:
+// https://www.youtube.com/watch?v=EO-_vwfVi7c
+// https://github.com/firebase/snippets-android/blob/f6c050fab9aa28112dd3057e1997cd3d11e3c1cf/auth/app/src/main/java/com/google/firebase/quickstart/auth/FirebaseUIActivity.java#L31-L45
 public class Activity_LoginScreen_Demo extends AppCompatActivity {
 
 
-    private static final int RC_SIGN_IN = 123;
-
+    private static final int RC_SIGN_IN = 3452;
+    private List<AuthUI.IdpConfig> providers;
+    private Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__login_screen__demo);
+        btn = findViewById(R.id.btn_login);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
 
+        createSignInIntent();
     }
 
-
-    // https://github.com/firebase/snippets-android/blob/71642c5f40145a91c4199549fdd169175930dccf/auth/app/src/main/java/com/google/firebase/quickstart/auth/FirebaseUIActivity.java#L31-L45
     public void createSignInIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
+        providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.PhoneBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build(),
-                new AuthUI.IdpConfig.TwitterBuilder().build());
+                new AuthUI.IdpConfig.FacebookBuilder().build());
 
         // Create and launch sign-in intent
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setTheme(R.style.login)
+                        .setLogo(R.drawable.logo)
                         .build(),
                 RC_SIGN_IN);
         // [END auth_fui_create_intent]
@@ -65,6 +81,9 @@ public class Activity_LoginScreen_Demo extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                btn.setEnabled(true);
+                Intent changeActivity = new Intent( this , MainMenuActivity.class );
+                startActivity(changeActivity);
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the
@@ -109,8 +128,7 @@ public class Activity_LoginScreen_Demo extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
-                        .setLogo(R.drawable.anonym)      // Set logo drawable
-                        //.setTheme(R.style.MySuperAppTheme)      // Set theme
+                        .setLogo(R.drawable.logo)      // Set logo drawable
                         .build(),
                 RC_SIGN_IN);
         // [END auth_fui_theme_logo]
