@@ -9,6 +9,8 @@ public class UserDTO implements IUserDTO {
     String lastName;
     String profileSrc;
 
+    public UserDTO(){}
+
     public UserDTO(String firstName, String lastName, String profileSrc){
         this.firstName = firstName;
         this. lastName = lastName;
