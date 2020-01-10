@@ -474,20 +474,29 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     public void createSignInIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
-        providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build());
 
-        // Create and launch sign-in intent
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setTheme(R.style.login)
-                        .setLogo(R.drawable.logo)
-                        .build(),
-                RC_SIGN_IN);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            if (user != null) {
+                userInfoDTO.setUser(user);
+            } else {
+                providers = Arrays.asList(
+                        new AuthUI.IdpConfig.EmailBuilder().build(),
+                        new AuthUI.IdpConfig.GoogleBuilder().build(),
+                        new AuthUI.IdpConfig.FacebookBuilder().build(),
+                        new AuthUI.IdpConfig.PhoneBuilder().build());
+
+                // Create and launch sign-in intent
+                startActivityForResult(
+                        AuthUI.getInstance()
+                                .createSignInIntentBuilder()
+                                .setAvailableProviders(providers)
+                                .setTheme(R.style.login)
+                                .setLogo(R.drawable.logo)
+                                .build(),
+                        RC_SIGN_IN);
+            }
+
         // [END auth_fui_create_intent]
     }
 
@@ -503,10 +512,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 userInfoDTO.setUser(user);
-                Log.d(TAG, "onActivityResult: " + user.getDisplayName());
-                Log.d(TAG, "onActivityResult: " + user.getIdToken(true));
-                Log.d(TAG, "onActivityResult: " + user.getMetadata());
-                Log.d(TAG, "onActivityResult: " + user.getPhotoUrl());
 
                 // ...
             } else {
