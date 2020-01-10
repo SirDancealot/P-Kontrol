@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.p_kontrol.R;
-
-public class State_Submit extends WriteTipState {
+/**
+ * @responsibility responsibility to createListner call when user submits.
+ *
+ * */
+public class Stage_Submit extends WriteTipState {
 
     View view;
 

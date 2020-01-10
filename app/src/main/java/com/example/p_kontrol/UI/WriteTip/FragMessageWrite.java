@@ -16,7 +16,10 @@ import com.example.p_kontrol.Util.CustomProgressBar;
 
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * @responsibility responsibility to get the Written text for a Tip;
+ *
+ * */
 public class FragMessageWrite extends Fragment implements View.OnClickListener {
     String TAG = "Fragment Message Write";
 
@@ -45,8 +48,8 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
         dto = new TipDTO();
         // instantiating objects.
         fragmentList = new LinkedList<>();
-        state_WriteText     = new State_WriteText();
-        state_SubmitTip     = new State_Submit();
+        state_WriteText     = new Stage_WriteText();
+        state_SubmitTip     = new Stage_Submit();
 
         // Adding them to the list in the Order we want them to be shown.
         fragmentList.add(state_WriteText);
@@ -60,17 +63,19 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_message_write, container, false);
-        viewPagerContent = view.findViewById(R.id.WriteTip_InternalViewPager);
-        navNext     = view.findViewById(R.id.WriteTip_Navigation_next);
-        navPrev     = view.findViewById(R.id.WriteTip_Navigation_prev);
-        navCancel   = view.findViewById(R.id.WriteTip_ButtonCancel);
-        progressBar = view.findViewById(R.id.WriteTip_NavBar);
-        WriteTip_outerBounds = view.findViewById(R.id.WriteTip_outerBounds);
+
+        viewPagerContent    = view.findViewById(R.id.WriteTip_InternalViewPager);
+        navNext             = view.findViewById(R.id.WriteTip_Navigation_next)  ;
+        navPrev             = view.findViewById(R.id.WriteTip_Navigation_prev)  ;
+        navCancel           = view.findViewById(R.id.WriteTip_ButtonCancel)     ;
+        progressBar         = view.findViewById(R.id.WriteTip_NavBar)           ;
+        WriteTip_outerBounds= view.findViewById(R.id.WriteTip_outerBounds)      ;
 
 
         // initiating Listeners.
         setPageChangeListener();    // !IMPORTANT! if change is made to the order of the fragment list, change is also needed here! Retrieving information.
         setupStateListeners();      // this is where we tell the state Submit to call finish method when clicked.
+
         state_SubmitTip.setOnWriteTipStageListener(stateListener_SubmitListener);
         navNext.setOnClickListener(this);
         navPrev.setOnClickListener(this);
@@ -104,8 +109,6 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
 
         }
     }
-
-
 
     // private Calls
     private void setPageChangeListener() {

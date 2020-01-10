@@ -12,7 +12,6 @@ public class StateSelectLocation extends State {
 
     String TAG = "State Select Loaction ";
     IMapSelectedLocationListener listenerDone;
-    // todo change to current location of User.
     LatLng currentMarkerLocation = null;
 
     public StateSelectLocation(MapContext context) {

@@ -2,27 +2,21 @@ package com.example.p_kontrol.UI.WriteTip;
 
 import android.os.Bundle;
 
-import android.service.notification.StatusBarNotification;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.p_kontrol.R;
-import com.google.common.base.MoreObjects;
+/**
+ * @responsibilty responsibility to create a room to type in the text for the tip.
+ *
+ * */
+public class Stage_WriteText extends WriteTipState {
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class State_WriteText extends WriteTipState {
-
-
-    static int SLETMIG_i = 0;
     String TAG = "WriteTip STATE WriteText ";
 
     View view;
@@ -36,16 +30,6 @@ public class State_WriteText extends WriteTipState {
         view        = inflater.inflate(R.layout.fragment_write_tip_state_writetext, container, false);
         //category    = view.findViewById(R.id.WriteTip_CategorySpinner);
         text        = view.findViewById(R.id.WriteTip_TextInput);
-
-
-        String textTestCheck = new String("testing \n\n\n\n dsdsdede");
-
-
-
-
-
-
-
 
         text.addTextChangedListener(new TextWatcher() {
 
@@ -75,13 +59,8 @@ public class State_WriteText extends WriteTipState {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
-
-
 
 
         return view;
