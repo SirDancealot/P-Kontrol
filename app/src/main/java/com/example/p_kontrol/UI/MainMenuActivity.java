@@ -494,6 +494,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 userInfoDTO.setUser(user);
                 Log.d(TAG, "onActivityResult: " + user.getDisplayName());
+                Log.d(TAG, "onActivityResult: " + user.getIdToken(true));
+                Log.d(TAG, "onActivityResult: " + user.getMetadata());
+                Log.d(TAG, "onActivityResult: " + user.getPhotoUrl());
 
                 // ...
             } else {
