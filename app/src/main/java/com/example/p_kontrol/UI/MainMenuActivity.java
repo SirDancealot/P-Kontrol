@@ -17,7 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.Backend.IBackend;
-import com.example.p_kontrol.DataTypes.IBackend;
+
 import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
@@ -52,12 +52,10 @@ import java.util.List;
  * */
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //todo replace this with actual preference;
-    final double BACK_GETTIPS_RADIUS = 100;
+// Local Data Objects
 
-    private static final int STANDARD_TIP_BEGIN_RATING = 0;
-
-
+    final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
+    static IBackend backend = new Backend();
     final String TAG = "MainMenuActivity";
 
 // -- * -- MENU -- * --
@@ -95,14 +93,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     IMapContextListener mapListener     ;
 
 // -- * -- Local DATA objects -- * --
-
-    static IBackend backend = new Backend();
-    final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
-
-    // in order to create new TipDto's from static contexts a Final Object is required, this object will then often be overwritten
-    // todo make I_TIPDTO when Copy() has been added to interface.
-    final TipDTO newTipDTO = new TipDTO();
-    List<ITipDTO> tip_List = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +164,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mapListener = new IMapContextListener() {
             @Override
             public void onReady() {
-                mapContext.setListOfTipDto(tip_List);
-                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
                 mapContext.setListOfTipDto(getDTOList());
             }
 
@@ -186,13 +174,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onSelectedLocation() {
-                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
+
             }
 
             @Override
             public void onUpdate(){
-                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
-                mapContext.setListOfTipDto(tip_List);
                 mapContext.setListOfTipDto(getDTOList());
             }
 
@@ -203,7 +189,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onTipClick(int index) {
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tip_List);
                 adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, getDTOList());
                 viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                 viewPager_tipBobles.setCurrentItem(index);
@@ -401,58 +386,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
         boolFragMessageWrite =!boolFragMessageWrite;
     }
-    public void toogleFragment_WriteTip(boolean openValue) {
-        try {
-            FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite, openValue);
-            boolFragMessageWrite = openValue;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    // specially TipVViewPager
-    public void closeTipBobbleViewPager(){
-        viewPager_tipBobles.setVisibility(View.GONE);
-        Log.i(TAG, "closeTipBobbleViewPager: Closed");
-    }
 
-    //todo remove this.
-    private void setUpDemoTip(){
-        ITipDTO tip1 = new TipDTO();
-        tip1.setLocation(new LatLng(	55.676098, 	12.568337));
-        tip1.setAuthor(new UserDTO("August","the Non-Human","https://graph.facebook.com/" + "1224894504" + "/picture?type=normal"));
-        tip1.setMessage(getResources().getString(R.string.tip1));
-        Date date = new Date(1563346249);
-        tip1.setCreationDate(date);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate tempDate = LocalDate.of(2019, 2, 9);
-            //tip1.setDate(tempDate);
-
-        }
-
-        ITipDTO tip2 = new TipDTO();
-        tip2.setLocation(new LatLng(	55.679098, 	12.569337));
-        tip2.setAuthor(new UserDTO("","Hans","https://graph.facebook.com/" + "100009221661122" + "/picture?type=normal"));
-        tip2.setMessage(getResources().getString(R.string.tip2));
-        date = new Date(1543346249);
-        tip2.setCreationDate(date);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate tempDate = LocalDate.of(2019, 7, 13);
-            //tip2.setDate(tempDate);
-        }
-
-   //     dtoList.add(tip1);
-     //   dtoList.add(tip2);
-
-    // Back Button Navigation Logik.
-    }
-
-
-    // Get and Sets
-    public List<ITipDTO> getDTOList(){
-        return tip_List;
-    }
 
 
     @Override
@@ -480,12 +414,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+
+    // todo see this again.. where is it called, why is it here.
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        Log.d(TAG, "onRequestPermissionsResult: ");
-
-        Log.d(TAG, "onRequestPermissionsResult:" + permissions.toString());
 
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mapContext.updatePermissions();
@@ -499,7 +431,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     // Get and Sets
     public List<ITipDTO> getDTOList(){
-        List<ITipDTO> list = backend.getTips(mapContext.getLanLng());
+        List<ITipDTO> list = backend.getTips(mapContext.getmLastKnownLocation());
         return list;
     }
 

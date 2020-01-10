@@ -48,10 +48,6 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private SupportMapFragment mapFragment;
     private LatLng mLastKnownLocation = DEFAULT_LOCATION;
-    private boolean mLocationPermissionGranted;
-    private FusedLocationProviderClient fusedLocationClient;
-
-
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private MainMenuActivity activity;
@@ -96,14 +92,6 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
-    public LatLng getmLastKnownLocation() {
-        return mLastKnownLocation;
-    }
-
-    public void setmLastKnownLocation(LatLng mLastKnownLocation) {
-        this.mLastKnownLocation = mLastKnownLocation;
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -139,24 +127,10 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
 
     }
-
-    //Public Calls
-    public void setStateStandby() {
-        currentState = new StateStandby(this);
-    }
-
-    public void setStateSelectLocation(IMapSelectedLocationListener selectListener) {
-
-        currentState = new StateSelectLocation(this);
-        currentState.setDoneListner(selectListener);
-
-    }
-
-
+    // important Map Methods.
     public Resources getResources() {
         return activity.getResources();
     }
-
     private void styleMapCall() {
         // Styling the Map
         try {
@@ -174,178 +148,10 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
         }
 
     }
-
-
-    // ---  GET / SET ---  GET / SET ---  GET / SET ---  GET / SET
-    // get UI elements
-    public GoogleMap getMap() {
-        return map;
-    }
-
-    public Button getCenterBtn() {
-        return centerBtn;
-    }
-
-    public Button getAcceptBtn() {
-        return acceptBtn;
-    }
-
-    public Button getCancelBtn() {
-        return cancelBtn;
-    }
-
-    public View getBtnContainerAceptCancel() {
-        return btnContainerAceptCancel;
-    }
-
-    // State Pattern Specifiks
-    public IState getCurrentState() {
-        return currentState;
-    }
-
-    public IState getStateStandby() {
-        return stateStandby;
-    }
-
-    public IState getStateSelectLocation() {
-        return stateSelectLocation;
-    }
-
-    public IMapContextListener getListener() {
-        return listener;
-    }
-
-    // Google Map Specifiks and Defaults refering to Google Map
     public void updateMap() {
         listOfTipDto = activity.getDTOList();
         currentState.updateMap();
     }
-
-    public int getDEFAULT_ZOOM() {
-        return DEFAULT_ZOOM;
-    }
-
-    public LatLng getDEFAULT_LOCATION() {
-        return DEFAULT_LOCATION;
-    }
-
-    public Location getUserlocation() {
-        return userlocation;
-    }
-
-    public LatLng getCurrentMarkerLoc() {
-        return currentMarkerLoc;
-    }
-
-    public SupportMapFragment getMapFragment() {
-        return mapFragment;
-    }
-
-    public FusedLocationProviderClient getmFusedLocationProviderClient() {
-        return mFusedLocationProviderClient;
-    }
-
-    public void setTAG(String TAG) {
-        this.TAG = TAG;
-    }
-
-    public void setDEFAULT_ZOOM(int DEFAULT_ZOOM) {
-        this.DEFAULT_ZOOM = DEFAULT_ZOOM;
-    }
-
-    public int getDEFAULT() {
-        return DEFAULT;
-    }
-
-    public void setDEFAULT(int DEFAULT) {
-        this.DEFAULT = DEFAULT;
-    }
-
-    public static int getPermissionsRequestAccessFineLocation() {
-        return PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
-    }
-
-    public void setMapFragment(SupportMapFragment mapFragment) {
-        this.mapFragment = mapFragment;
-    }
-
-
-    public void setmFusedLocationProviderClient(FusedLocationProviderClient mFusedLocationProviderClient) {
-        this.mFusedLocationProviderClient = mFusedLocationProviderClient;
-    }
-
-    public void setActivity(MainMenuActivity activity) {
-        this.activity = activity;
-    }
-
-    public MapContext getThisContext() {
-        return thisContext;
-    }
-
-    public void setThisContext(MapContext thisContext) {
-        this.thisContext = thisContext;
-    }
-
-    public void setCurrentState(IState currentState) {
-        this.currentState = currentState;
-    }
-
-    public void setUserlocation(Location userlocation) {
-        this.userlocation = userlocation;
-    }
-
-    public void setCurrentMarkerLoc(LatLng currentMarkerLoc) {
-        this.currentMarkerLoc = currentMarkerLoc;
-    }
-
-    public void setMap(GoogleMap map) {
-        this.map = map;
-    }
-
-    public void setCenterBtn(Button centerBtn) {
-        this.centerBtn = centerBtn;
-    }
-
-    public void setCancelBtn(Button cancelBtn) {
-        this.cancelBtn = cancelBtn;
-    }
-
-    public void setAcceptBtn(Button acceptBtn) {
-        this.acceptBtn = acceptBtn;
-    }
-
-    public void setStateStandby(IState stateStandby) {
-        this.stateStandby = stateStandby;
-    }
-
-    public void setStateSelectLocation(IState stateSelectLocation) {
-        this.stateSelectLocation = stateSelectLocation;
-    }
-
-    public void setListener(IMapContextListener listener) {
-        this.listener = listener;
-    }
-
-    // Tips
-    public void setListOfTipDto(List<ITipDTO> tips) {
-        listOfTipDto = tips;
-
-    }
-
-    public List<ITipDTO> getListOfTipDto() {
-        return listOfTipDto;
-    }
-
-    // android specifiks.
-    public String getTAG() {
-        return TAG;
-    }
-
-    public Activity getActivity() {
-        return activity;
-    }
-
-
     private void getPermission() {
 
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
@@ -374,7 +180,6 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
 
 
     }
-
     public void updatePermissions(){
         map.setMyLocationEnabled(true);
         currentState.centerMapOnLocation();
@@ -393,5 +198,185 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback {
                 });
     }
 
+    //Public Calls
+    public void setStateStandby() {
+        currentState = new StateStandby(this);
+    }
+    public void setStateSelectLocation(IMapSelectedLocationListener selectListener) {
 
+        currentState = new StateSelectLocation(this);
+        currentState.setDoneListner(selectListener);
+
+    }
+
+    // Get and Sets.
+
+
+    public String getTAG() {
+        return TAG;
+    }
+
+    public void setTAG(String TAG) {
+        this.TAG = TAG;
+    }
+
+    public int getDEFAULT_ZOOM() {
+        return DEFAULT_ZOOM;
+    }
+
+    public void setDEFAULT_ZOOM(int DEFAULT_ZOOM) {
+        this.DEFAULT_ZOOM = DEFAULT_ZOOM;
+    }
+
+    public int getDEFAULT() {
+        return DEFAULT;
+    }
+
+    public void setDEFAULT(int DEFAULT) {
+        this.DEFAULT = DEFAULT;
+    }
+
+    public LatLng getDEFAULT_LOCATION() {
+        return DEFAULT_LOCATION;
+    }
+
+    public static int getPermissionsRequestAccessFineLocation() {
+        return PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
+    }
+
+    public SupportMapFragment getMapFragment() {
+        return mapFragment;
+    }
+
+    public void setMapFragment(SupportMapFragment mapFragment) {
+        this.mapFragment = mapFragment;
+    }
+
+    public LatLng getmLastKnownLocation() {
+        return mLastKnownLocation;
+    }
+
+    public void setmLastKnownLocation(LatLng mLastKnownLocation) {
+        this.mLastKnownLocation = mLastKnownLocation;
+    }
+
+    public FusedLocationProviderClient getmFusedLocationProviderClient() {
+        return mFusedLocationProviderClient;
+    }
+
+    public void setmFusedLocationProviderClient(FusedLocationProviderClient mFusedLocationProviderClient) {
+        this.mFusedLocationProviderClient = mFusedLocationProviderClient;
+    }
+
+    public MainMenuActivity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(MainMenuActivity activity) {
+        this.activity = activity;
+    }
+
+    public MapContext getThisContext() {
+        return thisContext;
+    }
+
+    public void setThisContext(MapContext thisContext) {
+        this.thisContext = thisContext;
+    }
+
+    public List<ITipDTO> getListOfTipDto() {
+        return listOfTipDto;
+    }
+
+    public void setListOfTipDto(List<ITipDTO> listOfTipDto) {
+        this.listOfTipDto = listOfTipDto;
+    }
+
+    public IState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(IState currentState) {
+        this.currentState = currentState;
+    }
+
+    public Location getUserlocation() {
+        return userlocation;
+    }
+
+    public void setUserlocation(Location userlocation) {
+        this.userlocation = userlocation;
+    }
+
+    public LatLng getCurrentMarkerLoc() {
+        return currentMarkerLoc;
+    }
+
+    public void setCurrentMarkerLoc(LatLng currentMarkerLoc) {
+        this.currentMarkerLoc = currentMarkerLoc;
+    }
+
+    public GoogleMap getMap() {
+        return map;
+    }
+
+    public void setMap(GoogleMap map) {
+        this.map = map;
+    }
+
+    public Button getCenterBtn() {
+        return centerBtn;
+    }
+
+    public void setCenterBtn(Button centerBtn) {
+        this.centerBtn = centerBtn;
+    }
+
+    public Button getCancelBtn() {
+        return cancelBtn;
+    }
+
+    public void setCancelBtn(Button cancelBtn) {
+        this.cancelBtn = cancelBtn;
+    }
+
+    public Button getAcceptBtn() {
+        return acceptBtn;
+    }
+
+    public void setAcceptBtn(Button acceptBtn) {
+        this.acceptBtn = acceptBtn;
+    }
+
+    public View getBtnContainerAceptCancel() {
+        return btnContainerAceptCancel;
+    }
+
+    public void setBtnContainerAceptCancel(View btnContainerAceptCancel) {
+        this.btnContainerAceptCancel = btnContainerAceptCancel;
+    }
+
+    public IState getStateStandby() {
+        return stateStandby;
+    }
+
+    public void setStateStandby(IState stateStandby) {
+        this.stateStandby = stateStandby;
+    }
+
+    public IState getStateSelectLocation() {
+        return stateSelectLocation;
+    }
+
+    public void setStateSelectLocation(IState stateSelectLocation) {
+        this.stateSelectLocation = stateSelectLocation;
+    }
+
+    public IMapContextListener getListener() {
+        return listener;
+    }
+
+    public void setListener(IMapContextListener listener) {
+        this.listener = listener;
+    }
 }

@@ -17,6 +17,8 @@ public interface IBackend {
     //User
     IUserDTO getUser(int id);
 
+    //feedback
+    boolean postFeedback(String category, String message);
 
 
 

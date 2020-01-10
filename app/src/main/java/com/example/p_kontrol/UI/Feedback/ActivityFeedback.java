@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.p_kontrol.Backend.Backend;
-import com.example.p_kontrol.DataTypes.IBackend;
+import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.R;
 
 public class ActivityFeedback extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
