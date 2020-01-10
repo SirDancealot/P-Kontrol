@@ -1,6 +1,10 @@
 package com.example.p_kontrol.UI;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +21,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.Backend.BackendStub;
+import com.example.p_kontrol.DataTypes.IBackend;
+import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
@@ -35,6 +41,7 @@ import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 
 import java.time.LocalDate;
@@ -48,6 +55,9 @@ import java.util.List;
  */
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
+
+    //todo replace this with actual preference;
+    final double BACK_GETTIPS_RADIUS = 100;
 
     private static final int STANDARD_TIP_BEGIN_RATING = 0;
     final String TAG = "MainMenuActivity";
@@ -92,7 +102,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     // in order to create new TipDto's from static contexts a Final Object is required, this object will then often be overwritten
     // todo make I_TIPDTO when Copy() has been added to interface.
     final TipDTO newTipDTO = new TipDTO();
-    List<ITipDTO> dtoList = new LinkedList<>();
+    List<ITipDTO> tip_List = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +114,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
+        backend = new Backend();
         setupMap();
+
 
         // todo Fjern og få dem fra BackEnd.
         setUpDemoTip();
@@ -166,7 +178,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mapListener = new IMapContextListener() {
             @Override
             public void onReady() {
-                mapContext.setListOfTipDto(dtoList);
+                mapContext.setListOfTipDto(tip_List);
+                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
             }
 
             @Override
@@ -176,12 +189,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onSelectedLocation() {
-
+                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
             }
 
             @Override
             public void onUpdate(){
-                mapContext.setListOfTipDto(dtoList);
+                tip_List = backend.getTips(mapContext.getmLastKnownLocation(),BACK_GETTIPS_RADIUS );
+                mapContext.setListOfTipDto(tip_List);
             }
 
             @Override
@@ -191,7 +205,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onTipClick(int index) {
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, dtoList);
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tip_List);
                 viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                 viewPager_tipBobles.setCurrentItem(index);
                 viewPager_tipBobles.setVisibility(View.VISIBLE);
@@ -341,8 +355,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
                 newTipDTO.setAuthor(currentUser);
                 TipDTO tipDTO = newTipDTO.copy();
-                dtoList.add(tipDTO);
+                tip_List.add(tipDTO);
                 mapContext.updateMap();
+                backend.createTip(tipDTO);
 
                 //todo Implement Backend CreateTip here.
                 break;
@@ -421,15 +436,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             //tip2.setDate(tempDate);
         }
 
-        dtoList.add(tip1);
-        dtoList.add(tip2);
+   //     dtoList.add(tip1);
+     //   dtoList.add(tip2);
 
     }
 
 
     // Get and Sets
     public List<ITipDTO> getDTOList(){
-        return dtoList;
+        return tip_List;
     }
 
 
@@ -456,4 +471,22 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             overridePendingTransition(0, android.R.anim.fade_out);
         }
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        Log.d(TAG, "onRequestPermissionsResult: ");
+
+        Log.d(TAG, "onRequestPermissionsResult:" + permissions.toString());
+
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mapContext.updatePermissions();
+        } else {
+            // Permission was denied. Display an error message.
+            Log.d(TAG, "onRequestPermissionsResult: false");
+        }
+
+    }
+
 }
