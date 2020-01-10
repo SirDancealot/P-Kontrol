@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 public class State extends AppCompatActivity implements IState  {
@@ -26,18 +27,21 @@ public class State extends AppCompatActivity implements IState  {
     // Defaults.
     final int DEFAULT_MAP_ZOOM = 15;
     final int DEFAULT_ZOOM_ZOOM = 17;
+    final String TAG = "state";
 
     // Objects
     MapContext context;
     IMapContextListener listener = null;
     GoogleMap map;
     Button centerBtn, acceptBtn, cancelBtn;
+    View btnContainerAcceptCancel;
 
     public State(MapContext context) {
         //retrieving Objects
         this.context = context;
         map = context.getMap();
         listener = context.getListener();
+        btnContainerAcceptCancel = context.getBtnContainerAceptCancel();
         centerBtn = context.getCenterBtn();
         acceptBtn = context.getAcceptBtn();
         cancelBtn = context.getCancelBtn();
@@ -63,7 +67,7 @@ public class State extends AppCompatActivity implements IState  {
         // todo her er der sket et "NumberFormatException" s== null . line 80. i StateSelectLocation.
         int i = 0;
         for(ITipDTO tip: context.getListOfTipDto()){
-            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tip",100,100)));
+            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon",69,100)));
             map.addMarker(markerOptions.position(tip.getLocation()).title(String.valueOf(i++)));
             map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
@@ -136,6 +140,14 @@ public class State extends AppCompatActivity implements IState  {
         map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
+    public void animeCamara(LatLng geo){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(geo)
+                .zoom(DEFAULT_MAP_ZOOM ).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+    
     public void zoomCamara(int zoom){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(map.getCameraPosition().target)
@@ -145,6 +157,11 @@ public class State extends AppCompatActivity implements IState  {
     }
 
     public void centerMapOnLocation() {
+        if (map.isMyLocationEnabled()) {
+            Log.d(TAG, "centerMapOnLocation: t");
+        } else {
+            Log.d(TAG, "centerMapOnLocation: f");
+        }
         try {
             Task locationResult = context.getmFusedLocationProviderClient().getLastLocation();
             locationResult.addOnCompleteListener( this, new OnCompleteListener() {
@@ -152,13 +169,13 @@ public class State extends AppCompatActivity implements IState  {
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
-                        context.setmLastKnownLocation((Location) task.getResult());
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(context.getmLastKnownLocation().getLatitude(),
-                                        context.getmLastKnownLocation().getLongitude()), DEFAULT_MAP_ZOOM));
+                        Location location = (Location) task.getResult();
+                        LatLng resault = new LatLng(location.getLatitude(),location.getLongitude());
+                        context.setmLastKnownLocation(resault);
+                        animeCamara(context.getmLastKnownLocation());
                     } else {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(context.getDEFAULT_LOCATION(), DEFAULT_MAP_ZOOM ));
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
+                        // ingen lokation fejl
+                        Log.d(TAG, "onComplete: ingen lokation fejl");
                     }
                 }
             });
@@ -168,24 +185,18 @@ public class State extends AppCompatActivity implements IState  {
         }
     }
 
-    public void getDeviceLocation() {
-        try {
-            Task locationResult = context.getmFusedLocationProviderClient().getLastLocation();
-            locationResult.addOnCompleteListener( this, new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        Location result = (Location) task.getResult();
-                        context.setmLastKnownLocation(result);
-                    } else {
-                        map.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                }
-            });
+    public void getCurrentLocation() {
+        context.getmFusedLocationProviderClient().getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
 
-        } catch(SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
+                        if (location != null) {
+                            context.setmLastKnownLocation(new LatLng(location.getLatitude(), location.getLongitude()));
+                            Log.d(TAG, "onSuccess: fandt location");
+                        }
+                    }
+                });
     }
+
 }

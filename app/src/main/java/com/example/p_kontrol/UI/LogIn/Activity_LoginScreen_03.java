@@ -93,7 +93,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
 
     public void ChangeActivityNext(){
         Intent changeActivity = new Intent( this, MainMenuActivity.class);
-        changeActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        changeActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(changeActivity);
     }
     public void ChangeActivityPrev(){

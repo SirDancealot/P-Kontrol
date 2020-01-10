@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
+import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_01;
 import com.facebook.AccessToken;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -84,6 +86,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(ActivityProfile.this,"Logget ud",Toast.LENGTH_LONG).show();
             setContent();
             AccessToken.setCurrentAccessToken(null);
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                Intent i = new Intent(ActivityProfile.this, Activity_LoginScreen_01.class);
+                startActivity(i);
+            }, 500);
         }
     }
 

@@ -12,17 +12,14 @@ public class StateSelectLocation extends State {
 
     String TAG = "State Select Loaction ";
     IMapSelectedLocationListener listenerDone;
-    // todo change to current location of User.
     LatLng currentMarkerLocation = null;
 
     public StateSelectLocation(MapContext context) {
         super(context);
-        getDeviceLocation();
         zoomIn();
         map.clear();
-        acceptBtn.setVisibility(View.VISIBLE);
-        cancelBtn.setVisibility(View.VISIBLE);
-        currentMarkerLocation = context.getLanLng();
+        btnContainerAcceptCancel.setVisibility(View.VISIBLE);
+        currentMarkerLocation = context.getmLastKnownLocation();
         map.addMarker(new MarkerOptions().position(currentMarkerLocation));
 
     }

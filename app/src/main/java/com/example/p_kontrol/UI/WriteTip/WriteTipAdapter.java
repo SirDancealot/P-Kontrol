@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI.WriteTip.WriteTipFragment;
+package com.example.p_kontrol.UI.WriteTip;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -6,7 +6,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.List;
-
+/**
+ * @responsibilty responsibility to change out stages of writing a tip.
+ *
+ * */
 public class WriteTipAdapter extends FragmentPagerAdapter {
 
     List<Fragment> fragmentList;

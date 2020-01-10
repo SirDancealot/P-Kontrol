@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: fix inconsistency with danish/english text -->
 <resources>
     <string name="app_name">C5 P-Kontrol</string>
     <string name="round_corner">Round Corner</string>
@@ -63,7 +64,7 @@
     </string-array>
 
     <!-- Write Tip Navigation texts -->
-    <string name="writeTip_Navigation_continue">Swip to continue</string>
+    <string name="writeTip_BtmNavigation_continue">Swipe to continue</string>
     <string name="writeTip_Navigation_finish">Tap to finish</string>
 
 
@@ -76,6 +77,20 @@
     <string name="facebook_application_id" translatable="false">1045192295818256</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1045192295818256</string>
 
+
+    <!-- close fragment strings -->
+    <string name="close_frag_confirm">Yes</string>
+    <string name="close_frag_deny">No</string>
+    <string name="close_frag_title">Close the app?</string>
+
+    <string name="feedback_choose_category">Choose Category</string>
+    <string-array name="feedback_categories_array">
+        <item>@string/feedback_choose_category</item>
+        <item>Map</item>
+        <item>Profile</item>
+        <item>Login</item>
+        <item>Other</item>
+    </string-array>
 
 
 </resources>

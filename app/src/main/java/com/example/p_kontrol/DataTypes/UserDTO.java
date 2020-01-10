@@ -39,5 +39,5 @@ public class UserDTO implements IUserDTO {
     @Override
     public List<ITipDTO> getTips() {
         return null;
-    }
-}
+        }
+        }

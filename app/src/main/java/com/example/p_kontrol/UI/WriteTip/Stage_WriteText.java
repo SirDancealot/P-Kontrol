@@ -11,8 +11,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.p_kontrol.R;
-
-public class State_WriteText extends WriteTipState {
+/**
+ * @responsibilty responsibility to create a room to type in the text for the tip.
+ *
+ * */
+public class Stage_WriteText extends WriteTipState {
 
     String TAG = "WriteTip STATE WriteText ";
 
@@ -25,7 +28,7 @@ public class State_WriteText extends WriteTipState {
 
         // Inflate the layout for this fragment
         view        = inflater.inflate(R.layout.fragment_write_tip_state_writetext, container, false);
-        category    = view.findViewById(R.id.WriteTip_CategorySpinner);
+        //category    = view.findViewById(R.id.WriteTip_CategorySpinner);
         text        = view.findViewById(R.id.WriteTip_TextInput);
 
         text.addTextChangedListener(new TextWatcher() {

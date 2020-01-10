@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fagTip"
+    android:id="@+id/bobbelTip_FragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.ReadTips.FragTipBobble"
     android:animateLayoutChanges="true"
+    android:padding="25dp"
     >
 
     <FrameLayout
@@ -22,40 +23,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@drawable/shape_tip_img"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingRight="8dp"
-        android:paddingLeft="8dp">
+        android:orientation="vertical"
+        android:background="@drawable/shape_squarerounded_full">
 
-
-
+        <!-- Header -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:minWidth="150dp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
+            android:orientation="horizontal"
+            android:background="@drawable/shape_squarerounded_top_colored"
+            android:padding="10dp"
+            >
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/bobbelTip_Img"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:civ_border_width="2dp"
-                app:civ_border_color="@color/color_matWhite"/>
-
-
+                app:civ_border_color="@color/color_matWhite"
+                android:src="@drawable/anonym"
+                />
             <TextView
+                android:layout_marginStart="10dp"
                 android:id="@+id/bobbelTip_PersonName"
                 android:fontFamily="@font/ubuntu"
                 android:textSize="15dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="Bruger navn"/>
 
         </LinearLayout>
 
-
+        <!-- Message -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -68,6 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu"
+                android:minHeight="50dp"
+                android:nestedScrollingEnabled="true"
                 android:paddingBottom="5dp"
                 android:text="@string/tip2"
                 android:textSize="17dp" />
@@ -79,11 +81,12 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/ubuntu_bold"
                 android:paddingBottom="4dp"
-                android:textSize="17dp"
+                android:textSize="16dp"
                 android:gravity="bottom|center_horizontal"
                 android:text="Se Mere" />
 
         </LinearLayout>
+
     </LinearLayout>
     </FrameLayout>
 
