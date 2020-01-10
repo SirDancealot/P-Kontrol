@@ -33,9 +33,9 @@ public class BackendStub {
     UserDTO user = new UserDTO("valdemar", "h", "niceimg");
 
     //IUserDTO author, String message, LatLng location, int rating, Date creationDate
-    ITipDTO tip1 = new TipDTO(user, "test Message", new LatLng(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()), 4, date);
-    ITipDTO tip2 = new TipDTO(user, "test Message", new LatLng(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()), 4, date);
-    ITipDTO tip3 = new TipDTO(user, "test Message", new LatLng(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()), 4, date);
+    ITipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
+    ITipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
+    ITipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
 
     List<ITipDTO> demoList = new ArrayList<>();
 
