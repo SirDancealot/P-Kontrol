@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuActivity;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
@@ -34,6 +35,7 @@ public class Activity_LoginScreen_Demo extends AppCompatActivity {
     private static final int RC_SIGN_IN = 3452;
     private List<AuthUI.IdpConfig> providers;
     private Button btn;
+    private UserInfoDTO userInfoDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

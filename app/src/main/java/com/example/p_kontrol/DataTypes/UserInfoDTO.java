@@ -1,5 +1,7 @@
 package com.example.p_kontrol.DataTypes;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class UserInfoDTO {
 
     // Dette er en Singleton da det udelukkende er den indloggede bruger.
@@ -9,9 +11,13 @@ public class UserInfoDTO {
     private String name2;
     private String email;
     private String id;
+
+
+
     private String url;
     private boolean login;
     private boolean taskInBack;
+    private FirebaseUser user;
 
     private UserInfoDTO(){this.login = false;}
 
@@ -90,5 +96,13 @@ public class UserInfoDTO {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public FirebaseUser getUser() {
+        return user;
+    }
+
+    public void setUser(FirebaseUser user) {
+        this.user = user;
     }
 }

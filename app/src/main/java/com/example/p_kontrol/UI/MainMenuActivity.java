@@ -21,6 +21,7 @@ import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_Demo;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
@@ -37,11 +38,16 @@ import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -61,6 +67,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
     static IBackend backend = new Backend();
     final String TAG = "MainMenuActivity";
+
+
+// login
+    private static final int RC_SIGN_IN = 3452;
+    private List<AuthUI.IdpConfig> providers;
+    private UserInfoDTO userInfoDTO;
+
 
 // -- * -- MENU -- * --
 
@@ -110,6 +123,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         setupFragments();
         backend = new Backend();
         setupMap();
+
+        // login firebase
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        createSignInIntent();
 
     }
 
@@ -287,7 +304,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         startActivity(changeActivity);
     }
 
-    private void menuBtn_PVagt(View view){
+    private void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
 
     }
@@ -440,6 +457,52 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     public List<ITipDTO> getDTOList(){
         List<ITipDTO> list = backend.getTips(mapContext.getmLastKnownLocation());
         return list;
+    }
+
+
+
+    public void createSignInIntent() {
+        // [START auth_fui_create_intent]
+        // Choose authentication providers
+        providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                new AuthUI.IdpConfig.FacebookBuilder().build());
+
+        // Create and launch sign-in intent
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .setTheme(R.style.login)
+                        .setLogo(R.drawable.logo)
+                        .build(),
+                RC_SIGN_IN);
+        // [END auth_fui_create_intent]
+    }
+
+    // [START auth_fui_result]
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                userInfoDTO.setUser(user);
+                Log.d(TAG, "onActivityResult: " + user.getDisplayName());
+
+                // ...
+            } else {
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+            }
+        }
     }
 
 }
