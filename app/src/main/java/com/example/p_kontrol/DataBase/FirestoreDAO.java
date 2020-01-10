@@ -28,6 +28,10 @@ public class FirestoreDAO implements IDatabase {
     CollectionReference tips = fireDB.collection("tips");
     GeoFirestore geoFirestore = new GeoFirestore(tips);
 
+    @Override
+    public List<QuerySnapshot> getDocumentList (CollectionReference collection, List<String> ids){
+        return null;
+    }
 
     @Override
     public List<ITipDTO> getTipList(LatLng location, double radius) {
@@ -45,7 +49,8 @@ public class FirestoreDAO implements IDatabase {
 
         return new ArrayList<>(
                 Objects.requireNonNull( //Makes sure that a null pointer exception is avoided (recommended by IntelliJ)
-                    query.getResult() ).toObjects(TipDTO.class)
+                    query.getResult()).toObjects(TipDTO.class)
+
         );
     }
 
