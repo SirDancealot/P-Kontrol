@@ -16,9 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.Backend.Backend;
-import com.example.p_kontrol.Backend.BackendStub;
-import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.IBackend;
 import com.example.p_kontrol.Backend.IBackend;
 
 import com.example.p_kontrol.DataTypes.ITipDTO;
