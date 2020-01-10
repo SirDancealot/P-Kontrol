@@ -49,11 +49,16 @@ public class Backend implements IBackend {
     @Override
     public void createTip(ITipDTO tip) {
 
+        UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        if(userInfoDTO.getToken() != null){
+
+        }
+
         // todo do this.
         dtoList.add(tip);
         Log.i(TAG, "createTip: ");
-      //  AsyncCreateTip asyncC = new AsyncCreateTip();
-      //  asyncC.execute(tip);
+        AsyncCreateTip asyncC = new AsyncCreateTip();
+        asyncC.execute(tip);
     }
     @Override
     public void rateTip(int star, ITipDTO tip) {
