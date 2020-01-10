@@ -1,6 +1,6 @@
 package com.example.p_kontrol.DataTypes;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
 
@@ -14,9 +14,9 @@ public interface ITipDTO {
 
     void setMessage(String message);
 
-    LatLng getLocation();
+    GeoPoint getL();
 
-    void setLocation(LatLng location);
+    void setL(GeoPoint location);
 
     int getRating();
 
@@ -25,5 +25,11 @@ public interface ITipDTO {
     Date getCreationDate();
 
     void setCreationDate(Date date);
+
+    String getG();
+
+    void setG(String g);
+
+
 
 }
