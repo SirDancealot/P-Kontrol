@@ -21,4 +21,8 @@
 
 
 
+    <style name="login" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>

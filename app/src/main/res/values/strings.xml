@@ -72,8 +72,11 @@
     <string name="tip2">pas på</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="facebook_app_id">1045192295818256</string>
-    <string name="fb_login_protocol_scheme">fb1045192295818256</string>
+
+    <!-- test if we need both -->
+    <string name="facebook_application_id" translatable="false">1045192295818256</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1045192295818256</string>
+
 
     <!-- close fragment strings -->
     <string name="close_frag_confirm">Yes</string>

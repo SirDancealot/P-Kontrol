@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI.UserPersonalisation;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,9 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_01;
 import com.facebook.AccessToken;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -85,7 +89,15 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             userInfoDTO.setName2("");
             Toast.makeText(ActivityProfile.this,"Logget ud",Toast.LENGTH_LONG).show();
             setContent();
-            AccessToken.setCurrentAccessToken(null);
+            // [START auth_fui_signout]
+            AuthUI.getInstance()
+                    .signOut(this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            // ...
+                        }
+                    });
+            // [END auth_fui_signout]
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 Intent i = new Intent(ActivityProfile.this, Activity_LoginScreen_01.class);
