@@ -10,7 +10,6 @@ import java.util.Date;
 public class TipDTO implements ITipDTO {
 
 
-
     private IUserDTO author;
     private String message;
     private int rating;

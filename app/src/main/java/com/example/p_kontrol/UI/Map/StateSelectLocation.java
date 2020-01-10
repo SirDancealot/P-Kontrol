@@ -1,12 +1,17 @@
 package com.example.p_kontrol.UI.Map;
 
+import android.location.Location;
 import android.util.Log;
-import android.view.View;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.List;
 
 public class StateSelectLocation extends State {
 
@@ -18,15 +23,11 @@ public class StateSelectLocation extends State {
         super(context);
         zoomIn();
         map.clear();
-        btnContainerAcceptCancel.setVisibility(View.VISIBLE);
-        currentMarkerLocation = context.getmLastKnownLocation();
+        currentMarkerLocation = context.getLocation();
         map.addMarker(new MarkerOptions().position(currentMarkerLocation));
 
     }
 
-    // interface Overrides
-    @Override
-    public void updateMap(){}
 
     // Listeners
     @Override
@@ -49,34 +50,20 @@ public class StateSelectLocation extends State {
         });
 
     }
-    @Override
-    public void setDoneListner(Object listenerDone){
-        this.listenerDone = (IMapSelectedLocationListener) listenerDone;
-    }
 
-    // Button Calls
     @Override
     public void centerMethod(){
-        centerMapOnLocation();
+        this.centerMethod();
+    }
+
+    @Override
+    public void updateMap(List<ITipDTO> list ) {
+
     }
     @Override
-    public void acceptMethod(){
-        Log.i(TAG, "acceptMethod: ");
-        map.clear();
-        zoomOut();
-
-        if(listenerDone != null)
-            listenerDone.onSelectedLocation(currentMarkerLocation);
+    public void updateLocation() {
+        context.setSelectedLocation(currentMarkerLocation);
     }
-    @Override
-    public void cancelMethod(){
-        Log.i(TAG, "cancelMethod: ");
 
-        map.clear();
-        zoomOut();
-
-        if(listenerDone != null)
-            listenerDone.onCancelSelection();
-    }
 
 }

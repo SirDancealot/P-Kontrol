@@ -9,8 +9,5 @@ public interface IMapContextListener {
     void onChangeState();
     void onSelectedLocation();
     void onUpdate();
-    void onAcceptButton(LatLng location);
     void onTipClick(int index);
-
-    void showTipsAtIndex(int index);
 }

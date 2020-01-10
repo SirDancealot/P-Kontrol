@@ -2,7 +2,6 @@ package com.example.p_kontrol.UI;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +27,8 @@ import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
+import com.example.p_kontrol.UI.Map.IMapContext;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
-import com.example.p_kontrol.UI.Map.IMapSelectedLocationListener;
 import com.example.p_kontrol.UI.Map.MapContext;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
@@ -42,6 +41,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.GeoPoint;
@@ -50,16 +50,14 @@ import com.google.firebase.firestore.GeoPoint;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
+
 /**
  * @responsibilty responsibility to Handle UI interaction on this XML layout.
  *
+ * An example full-screen activity that shows and hides the system UI (i.e.
+ * status bar and navigation/system bar) with user interaction.
  * */
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -107,8 +105,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
 // -- * -- MAP -- * --
 
-    MapContext mapContext               ;
+    IMapContext mapContext               ;
     IMapContextListener mapListener     ;
+
+    Button mapView_centerBtn;
+    Button mapView_acceptBtn;
+    Button mapView_cancelBtn;
+    View mapView_btnContainerAceptCancel;
 
 // -- * -- Local DATA objects -- * --
 
@@ -123,7 +126,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         setupMenu();
         setupFragments();
         backend = new Backend();
-        setupMap();
+        map_setupMap();
 
         // login firebase
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
@@ -174,19 +177,20 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         fragment_topMessage   = new FragTopMessageBar() ;
         fragment_close        = new MainMenuCloseFragment(this);
     }
-    private void setupMap(){
-
-        //Map Interaction Buttons
-        Button centerBtn = findViewById(R.id.mainMenu_Map_centerBtn);
-        Button acceptBtn = findViewById(R.id.mainMenu_map_acceptBtn);
-        Button cancelBtn = findViewById(R.id.mainMenu_map_cancelBtn);
-        View btnContainerAceptCancel = findViewById(R.id.mainMenu_acceptCancelContainer);
-
+    // MAP --- MAP --- MAP -- MAP --- MAP
+    private void map_setupMap(){
         // Listener
+
+        mapView_centerBtn = findViewById(R.id.mainMenu_Map_centerBtn);
+        mapView_acceptBtn = findViewById(R.id.mainMenu_map_acceptBtn);
+        mapView_cancelBtn = findViewById(R.id.mainMenu_map_cancelBtn);
+        mapView_btnContainerAceptCancel = findViewById(R.id.mainMenu_acceptCancelContainer);
+        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
+
         mapListener = new IMapContextListener() {
             @Override
             public void onReady() {
-                mapContext.setListOfTipDto(getDTOList());
+                mapContext.setListOfTipDto(getDTOlist());
             }
 
             @Override
@@ -201,17 +205,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onUpdate(){
-                mapContext.setListOfTipDto(getDTOList());
-            }
-
-            @Override
-            public void onAcceptButton(LatLng location) {
-
+                mapContext.setListOfTipDto(getDTOlist());
             }
 
             @Override
             public void onTipClick(int index) {
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, getDTOList());
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, getDTOlist());
                 viewPager_tipBobles.setAdapter(adapter_TipBobbles);
                 viewPager_tipBobles.setCurrentItem(index);
                 viewPager_tipBobles.setVisibility(View.VISIBLE);
@@ -221,16 +220,19 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
 
-            @Override
-            public void showTipsAtIndex(int index) {
-
-            }
         };
-
-        // Actually Making the Map Do things
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mainMenu_map);
-        mapContext = new MapContext( mapFrag,this,centerBtn,cancelBtn,acceptBtn,btnContainerAceptCancel,mapListener);
+        mapContext = new MapContext( mapFrag,this, mapListener);
+        map_setupCenterButton();
 
+    }
+    private void map_setupCenterButton(){
+        mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapContext.centerMap();
+            }
+        });
     }
 
     // onClick Methods.
@@ -291,7 +293,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         menu_dragHandle();
 
         // starting Contribute process at index 0. meaning the very first step.
-        contributeProcess(0);
+        CreateTip();
 
     }
     private void menuBtn_Community(){
@@ -301,8 +303,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
     private void menuBtn_ParkAlarm(){
         Log.i("click","Park Alarm btn clicked \n");
-        Intent changeActivity = new Intent( this , Activity_LoginScreen_Demo.class );
-        startActivity(changeActivity);
     }
 
     private void menuBtn_PVagt(){
@@ -310,69 +310,78 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    // Methods to implement menuOnClicks()
-    private void contributeProcess ( int i){
+    // CREATE A TIP STEP BY STEP HERE ...
+    private void CreateTip(){
+        CreateTip_Process(0);
+    }
+    private void CreateTip_Process ( int i){
         switch (i) {
             case 0: // Chose location
-
-                mapContext.setStateSelectLocation(new IMapSelectedLocationListener() {
-                    @Override
-                    public void onSelectedLocation(LatLng location) {
-                        newTipDTO.setL(new GeoPoint(location.latitude, location.longitude)); // newTipDTO is a static object that can always be called
-                        mapContext.setStateStandby();
-                        contributeProcess(1);
-                    }
-
-                    @Override
-                    public void onCancelSelection() {
-                        mapContext.setStateStandby();
-                    }
-
-
-                });
+                fillInTip_Map();
                 break;
-
             case 1: // Write Tip
-
-                fragment_messageWrite = new FragMessageWrite();
-                toogleFragment_WriteTip(true);
-                fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
-
-                    @Override
-                    public void onMessageDone(ITipDTO dto) {
-                        newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
-                        toogleFragment_WriteTip(false);
-                        getSupportFragmentManager().popBackStack();
-                        contributeProcess(2); // calls self to Complete the tip
-                    }
-
-                    @Override
-                    public void onCancelTip() {
-                        toogleFragment_WriteTip(false);
-                        // does not call self to complete.
-                    }
-
-                });
-
+                fillInTip_WriteTip();
                 break;
-
             case 2: // finish Tip and send to back end for saving.
-
-                //todo simplify user Data
-                // fix this with the login.
-                UserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
-                newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
-                newTipDTO.setAuthor(currentUser);
-                TipDTO tipDTO = newTipDTO.copy();
-                backend.createTip(tipDTO);
-                mapContext.updateMap();
-                backend.createTip(tipDTO);
-
-
+                CreateTip_finish();
                 break;
-
         }
     }
+    private void fillInTip_Map(){
+
+        mapContext.setStateSelectLocation();
+        mapView_btnContainerAceptCancel.setVisibility(View.VISIBLE);
+        mapView_acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map_setupCenterButton();
+                newTipDTO.setLocation(mapContext.getLocation()); // newTipDTO is a static object that can always be called
+                mapContext.setStateStandby();
+                mapView_btnContainerAceptCancel.setVisibility(View.GONE);
+                CreateTip_Process(1);
+            }
+        });
+
+        mapView_cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map_setupCenterButton();
+                mapContext.setStateStandby();
+            }
+        });
+    }
+    private void fillInTip_WriteTip(){
+        fragment_messageWrite = new FragMessageWrite();
+        toogleFragment_WriteTip(true);
+        fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
+
+            @Override
+            public void onMessageDone(ITipDTO dto) {
+                newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
+                toogleFragment_WriteTip(false);
+                getSupportFragmentManager().popBackStack();
+                CreateTip_Process(2); // calls self to Complete the tip
+            }
+
+            @Override
+            public void onCancelTip() {
+                toogleFragment_WriteTip(false);
+                // does not call self to complete.
+            }
+
+        });
+    }
+    private void CreateTip_finish(){
+        //todo simplify user Data
+        // fix this with the login.
+        UserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
+        newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
+        newTipDTO.setAuthor(currentUser);
+        TipDTO tipDTO = newTipDTO.copy();
+        backend.createTip(tipDTO);
+        mapContext.setListOfTipDto(getDTOlist());
+    }
+
     public void closeTipBobbleViewPager () {
         viewPager_tipBobles.setVisibility(View.GONE);
         Log.i(TAG, "closeTipBobbleViewPager: Closed");
@@ -412,14 +421,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         boolFragMessageWrite =!boolFragMessageWrite;
     }
 
-
-
+    // Android Specifiks
     @Override
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed: Something happened");
         if (mapContext.getCurrentState() instanceof StateSelectLocation) {
             Log.d(TAG, "onBackPressed: stateSelect");
-            ((StateSelectLocation) mapContext.getCurrentState()).cancelMethod();
+            mapContext.setStateStandby();
         }
         else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE) {
             Log.d(TAG, "onBackPressed: viewPager");
@@ -437,10 +445,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             overridePendingTransition(0, android.R.anim.fade_out);
         }
     }
-
-
-
-    // todo see this again.. where is it called, why is it here.
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -454,9 +458,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    // Get and Sets
-    public List<ITipDTO> getDTOList(){
-        List<ITipDTO> list = backend.getTips(mapContext.getmLastKnownLocation());
+    public List<ITipDTO> getDTOlist(){
+        List<ITipDTO> list = backend.getTips(mapContext.getLocation());
         list.add(new TipDTO(new UserDTO("TEST","test", ""),
                 "hey \n\n more here\n\n\n\n\n\n olo \n\n \n\n\n   eifd \n\n\n\n\n\n\n\n\n\nie \n",
                 0,
@@ -464,6 +467,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 new GeoPoint(55.7, 12.6)));
         return list;
     }
+
 
 
 
