@@ -335,7 +335,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 map_setupCenterButton();
-                newTipDTO.setLocation(mapContext.getLocation()); // newTipDTO is a static object that can always be called
+                newTipDTO.setL(new GeoPoint(mapContext.getLocation().latitude, mapContext.getLocation().longitude)); // newTipDTO is a static object that can always be called
                 mapContext.setStateStandby();
                 mapView_btnContainerAceptCancel.setVisibility(View.GONE);
                 CreateTip_Process(1);
