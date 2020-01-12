@@ -16,6 +16,7 @@ import java.util.List;
  *
  * */
 public class Backend implements IBackend {
+    //TODO make backend handle preferences
 
     // Android internal
     private String TAG = "Backend";
@@ -60,10 +61,12 @@ public class Backend implements IBackend {
         AsyncCreateTip asyncC = new AsyncCreateTip();
         asyncC.execute(tip);
     }
+
     @Override
     public void rateTip(int star, ITipDTO tip) {
 
     }
+
     @Override
     public boolean postFeedback(String category, String message) {
         return false; //TODO implement this method
