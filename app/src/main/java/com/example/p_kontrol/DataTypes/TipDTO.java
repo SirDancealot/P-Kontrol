@@ -20,11 +20,12 @@ public class TipDTO implements ITipDTO, Serializable {
 
 
     public TipDTO(){}
-    public TipDTO(IUserDTO author, String message, int rating, Date creationDate) {
+    public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
         this.author = author;
         this.message = message;
         this.rating = rating;
         this.creationDate = creationDate;
+        this.l = l;
     }
     /*
     public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {

@@ -8,11 +8,12 @@ public interface IUserDTO {
     String getFirstName();
     String getLastName();
     String getProfileSRC();
-    List<ITipDTO> getTips();
+    List<ITipDTO> getTips(); // todo WHY ??
 
     // Sets
+    void setUserId();
     void setFirstName(String firstName);
     void setLastName(String lastName);
-    void setProfileSrc(String profileSrc);
+    void setProfileImageSRC(String profileSrc);
 
 }

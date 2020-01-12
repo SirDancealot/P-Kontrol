@@ -27,18 +27,6 @@ public class UserDTO implements IUserDTO, Serializable {
 
     }*/
 
-    @Override
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    @Override
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    @Override
-    public void setProfileSrc(String profileSrc) {
-        this.profileSrc = profileSrc;
-    }
 
 
     @Override
@@ -46,19 +34,45 @@ public class UserDTO implements IUserDTO, Serializable {
         return 0;
     }
     @Override
+    public void setUserId(){
+
+    }
+
+    @Override
     public String getFirstName() {
         return firstName;
     }
+    @Override
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     @Override
     public String getLastName() {
         return lastName;
     }
     @Override
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Override
     public String getProfileSRC() {
         return profileSrc;
     }
     @Override
+    public void setProfileImageSRC(String profileSrc) {
+        this.profileSrc = profileSrc;
+    }
+
+    @Override
     public List<ITipDTO> getTips() {
         return null;
         }
-        }
+
+
+
+
+
+
+}

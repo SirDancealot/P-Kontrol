@@ -13,48 +13,48 @@ public class UserDTO implements IUserDTO {
     String profileImageSRC;
     List<ITipDTO> tips;
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setProfileImageSRC(String profileImageSRC) {
-        this.profileImageSRC = profileImageSRC;
-    }
-
-    public void setTips(List<ITipDTO> tips) {
-        this.tips = tips;
-    }
 
     @Override
     public int getUserId() {
         return 0;
     }
+    @Override
+    public void setUserId() {
+        this.userId = userId;
+    }
+
 
     @Override
     public String getFirstName() {
         return null;
+    }
+    @Override
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     @Override
     public String getLastName() {
         return null;
     }
+    @Override
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     @Override
     public String getProfileSRC() {
         return null;
+    }
+    @Override
+    public void setProfileImageSRC(String profileImageSRC) {
+        this.profileImageSRC = profileImageSRC;
     }
 
     @Override
     public List<ITipDTO> getTips() {
         return null;
     }
+
 }
