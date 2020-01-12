@@ -115,7 +115,7 @@ abstract public class State extends AppCompatActivity implements IState  {
     public Bitmap resizeMapIcons(String iconName, int width, int height){
 
         Resources res = context.getResources();
-        int tipResource = res.getIdentifier(iconName, "drawable", this.getPackageName() );
+        int tipResource = res.getIdentifier("map_tip_pin_icon", "drawable", context.getPackageName() );
 
         Bitmap imageBitmap = BitmapFactory.decodeResource(res,tipResource);
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);

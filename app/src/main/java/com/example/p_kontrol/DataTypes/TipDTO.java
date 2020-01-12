@@ -29,15 +29,7 @@ public class TipDTO extends ATipDTO {
         this.creationDate = creationDate;
         this.l = l;
     }
-    /*
-    public TipDTO(AUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
-        this.author = author;
-        this.message = message;
-        this.rating = rating;
-        this.creationDate = creationDate;
-        this.g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
-        this.l = l;
-    }*/
+
 
     @Override
     public AUserDTO getAuthor() {

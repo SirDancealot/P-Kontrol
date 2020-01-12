@@ -27,4 +27,5 @@ public interface IMapContext {
     void setLocaton(LatLng locaton);
     GoogleMap getMap();
     IMapContextListener getContextListener();
+    public String getPackageName();
 }

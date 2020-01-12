@@ -47,11 +47,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.auth.User;
+import com.google.rpc.Help;
 
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -115,6 +117,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
 
+    // todo remove all temp_ when backend gets and gives Tips
+    List<ATipDTO> temp_listofDTO = new LinkedList<>();
+
 // -- * -- Local DATA objects -- * --
 
     @Override
@@ -123,7 +128,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_mainmenu);
 
         //TODO send person til logind 1 hvis de ikke er logget ind
-
+        temp_setUpDemoTips(temp_listofDTO);
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
@@ -212,10 +217,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onTipClick(int index) {
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, getDTOlist());
-                viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-                viewPager_tipBobles.setCurrentItem(index);
+                List<ATipDTO> list = getDTOlist();
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list );
                 viewPager_tipBobles.setVisibility(View.VISIBLE);
+                viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+                adapter_TipBobbles.notifyDataSetChanged();
+                viewPager_tipBobles.setCurrentItem(index);
 
                 if(drag_State){
                     menu_dragHandle();
@@ -337,7 +344,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 map_setupCenterButton();
-                newTipDTO.setL(new GeoPoint(mapContext.getLocation().latitude, mapContext.getLocation().longitude)); // newTipDTO is a static object that can always be called
+                GeoPoint location = new GeoPoint(mapContext.getSelectedLocation().latitude, mapContext.getSelectedLocation().longitude);
+                newTipDTO.setL(location); // newTipDTO is a static object that can always be called
                 mapContext.setStateStandby();
                 mapView_btnContainerAceptCancel.setVisibility(View.GONE);
                 CreateTip_Process(1);
@@ -374,18 +382,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         });
     }
     private void CreateTip_finish(){
-        //todo simplify user Data
-        // fix this with the login.
-        // Getting Data
         AUserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
         Date dateNow = new Date(System.currentTimeMillis());
 
-        //
         newTipDTO.setAuthor(currentUser);
         newTipDTO.setCreationDate(dateNow);
         TipDTO tipDTO = newTipDTO.copy();
 
         backend.createTip(tipDTO);
+        temp_listofDTO.add(tipDTO);
         mapContext.setListOfTipDto(getDTOlist());
     }
 
@@ -428,48 +433,34 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         boolFragMessageWrite =!boolFragMessageWrite;
     }
 
-    // Android Specifiks
-    @Override
-    public void onBackPressed() {
-        Log.d(TAG, "onBackPressed: Something happened");
-        if (mapContext.getCurrentState() instanceof StateSelectLocation) {
-            Log.d(TAG, "onBackPressed: stateSelect");
-            mapContext.setStateStandby();
-        }
-        else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE) {
-            Log.d(TAG, "onBackPressed: viewPager");
-            closeTipBobbleViewPager();
-        }
-        else if (drag_State) {
-            Log.d(TAG, "onBackPressed: Bottom menue");
-            menu_dragHandle();
-        }
-        else {
-            Log.d(TAG, "onBackPressed: back pressed");
-            //TODO: find ud af om vi skal bruge dialog box eller fade out
-            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
-            super.onBackPressed();
-            overridePendingTransition(0, android.R.anim.fade_out);
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mapContext.updatePermissions();
-        } else {
-            // Permission was denied. Display an error message.
-            Log.d(TAG, "onRequestPermissionsResult: false");
-        }
-
-    }
-
-
     public List<ATipDTO> getDTOlist(){
         List<ATipDTO> list = backend.getTips(mapContext.getLocation());
+        return temp_addTipsToList(list);
+    }
+    private List<ATipDTO> temp_addTipsToList(List<ATipDTO> list){
+           for(int i = 0; i < temp_listofDTO.size(); i++){
+              list.add(temp_listofDTO.get(i));
+           }
+           return list;
+    };
+    private List<ATipDTO> temp_setUpDemoTips(List<ATipDTO> list){
+
+
+        AUserDTO user = new UserDTO("hans","byager","");
+        GeoPoint gp = new GeoPoint(37.4219983,-122.084);
+        String text = "hej";
+        ATipDTO tip = new TipDTO();
+        Date date = new Date();
+        tip.setMessage(text);
+        tip.setL(gp);
+        tip.setAuthor(user);
+        tip.setCreationDate(date);
+
+
+        list.add(tip);
+
         return list;
     }
-
 
 
 
@@ -502,6 +493,41 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         // [END auth_fui_create_intent]
     }
 
+    // Android Specifiks
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "onBackPressed: Something happened");
+        if (mapContext.getCurrentState() instanceof StateSelectLocation) {
+            Log.d(TAG, "onBackPressed: stateSelect");
+            mapContext.setStateStandby();
+        }
+        else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE) {
+            Log.d(TAG, "onBackPressed: viewPager");
+            closeTipBobbleViewPager();
+        }
+        else if (drag_State) {
+            Log.d(TAG, "onBackPressed: Bottom menue");
+            menu_dragHandle();
+        }
+        else {
+            Log.d(TAG, "onBackPressed: back pressed");
+            //TODO: find ud af om vi skal bruge dialog box eller fade out
+            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
+            super.onBackPressed();
+            overridePendingTransition(0, android.R.anim.fade_out);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            mapContext.updatePermissions();
+        } else {
+            // Permission was denied. Display an error message.
+            Log.d(TAG, "onRequestPermissionsResult: false");
+        }
+
+    }
     // [START auth_fui_result]
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -524,5 +550,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             }
         }
     }
+
 
 }

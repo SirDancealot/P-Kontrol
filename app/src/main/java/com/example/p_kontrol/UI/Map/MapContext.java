@@ -227,4 +227,8 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
     public LatLng getDEFAULTlocation() {
         return DEFAULT_LOCATION;
     }
+    @Override
+    public String getPackageName(){
+        return activity.getPackageName();
+    }
 }

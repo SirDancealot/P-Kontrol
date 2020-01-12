@@ -39,9 +39,11 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
+
         FragTipBobble frag = new FragTipBobble();
         Bundle bundle = new Bundle();
         ATipDTO thisElement = tips.get(position);
+
         Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
         bundle.putString(BOBBLE_NAME, thisElement.getAuthor().getFirstName() );
         Log.d(TAG, "getItem:" + thisElement.getMessage());
@@ -49,11 +51,13 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
         Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
         bundle.putString(BOBBLE_DATE, DATE_FORMAT.format(thisElement.getCreationDate()) );
         Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
+
         try {
             bundle.putString(BOBBLE_URL, thisElement.getAuthor().getProfileSRC());
         } catch (Exception e){
             Log.d(TAG, "getItem: no picture");
         }
+
         frag.setArguments(bundle);
         System.out.println(bundle.toString());
         return frag;

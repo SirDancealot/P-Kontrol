@@ -6,7 +6,7 @@ import org.imperiumlabs.geofirestore.core.GeoHash;
 
 import java.util.Date;
 
-abstract public class ATipDTO implements ITipDTO{
+public class ATipDTO implements ITipDTO{
 
     private AUserDTO author;
     private String message;
