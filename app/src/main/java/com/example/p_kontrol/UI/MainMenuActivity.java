@@ -376,7 +376,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private void CreateTip_finish(){
         //todo simplify user Data
         // fix this with the login.
-        UserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
+        UserDTO currentUser = new UserDTO();
+        currentUser.setFirstName("tempUser");
+        currentUser.setLastName("tempLastName");
 
         newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
         newTipDTO.setAuthor(currentUser);
@@ -465,7 +467,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         List<ITipDTO> list = backend.getTips(mapContext.getLocation());
 
         // todo ! why this ?????? 
-        IUserDTO user = new UserDTO("TEST","test", "");
+        IUserDTO user = new UserDTO();
+        user.setFirstName("TEST");
+        user.setLastName("test");
+
         String message = "hey \n\n more here\n\n\n\n\n\n olo \n\n \n\n\n   eifd \n\n\n\n\n\n\n\n\n\nie \n";
         int rating = 0;
         Date date= new Date();
