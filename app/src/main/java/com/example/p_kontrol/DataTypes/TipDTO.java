@@ -11,7 +11,7 @@ import java.util.Date;
 public class TipDTO extends ATipDTO {
 
 
-    private IUserDTO author;
+    private AUserDTO author;
     private String message;
     private int rating;
     private Date creationDate;
@@ -20,7 +20,7 @@ public class TipDTO extends ATipDTO {
 
 
     public TipDTO(){}
-    public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
+    public TipDTO(AUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
         this.author = author;
         this.message = message;
         this.rating = rating;
@@ -28,7 +28,7 @@ public class TipDTO extends ATipDTO {
         this.l = l;
     }
     /*
-    public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
+    public TipDTO(AUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
         this.author = author;
         this.message = message;
         this.rating = rating;
@@ -38,11 +38,11 @@ public class TipDTO extends ATipDTO {
     }*/
 
     @Override
-    public IUserDTO getAuthor() {
+    public AUserDTO getAuthor() {
         return author;
     }
     @Override
-    public void setAuthor(IUserDTO author) {
+    public void setAuthor(AUserDTO author) {
         this.author = author;
     }
 

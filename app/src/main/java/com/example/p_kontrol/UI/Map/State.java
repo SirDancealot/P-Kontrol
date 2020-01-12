@@ -25,7 +25,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
-public class State extends AppCompatActivity implements IState  {
+abstract public class State extends AppCompatActivity implements IState  {
 
 
 

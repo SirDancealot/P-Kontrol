@@ -3,7 +3,7 @@ package com.example.p_kontrol.DataTypes;
 import java.io.Serializable;
 import java.util.List;
 
-abstract public class AUserDTO implements IUserDTO , Serializable {
+abstract public class AUserDTO implements AUserDTO , Serializable {
 
     String firstName;
     String lastName;

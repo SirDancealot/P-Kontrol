@@ -34,7 +34,7 @@ public class FirestoreDAO implements IDatabase {
     }
 
     @Override
-    public List<ITipDTO> getTipList(LatLng location, double radius) {
+    public List<ATipDTO> getTipList(LatLng location, double radius) {
         Task<QuerySnapshot> query = tips.get();
 
         try {
@@ -55,7 +55,7 @@ public class FirestoreDAO implements IDatabase {
     }
 
     @Override
-    public void createTip(ITipDTO tip) {
+    public void createTip(ATipDTO tip) {
         String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
@@ -71,10 +71,10 @@ public class FirestoreDAO implements IDatabase {
     }
 
     @Override
-    public void updateTip(ITipDTO tip) { }
+    public void updateTip(ATipDTO tip) { }
 
     @Override
-    public IUserDTO getUser(int id) {
+    public AUserDTO getUser(int id) {
         return null;
     }
 
@@ -86,7 +86,7 @@ public class FirestoreDAO implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, List<ITipDTO> targetList) {
+    public void queryByLocation(LatLng location, double radius, List<ATipDTO> targetList) {
         String collection = "tips";
 
         GeoQuery query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);

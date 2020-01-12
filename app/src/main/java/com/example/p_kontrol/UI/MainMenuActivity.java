@@ -18,7 +18,7 @@ import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.Backend.IBackend;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.example.p_kontrol.DataTypes.IUserDTO;
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
@@ -377,7 +377,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         //todo simplify user Data
         // fix this with the login.
         // Getting Data
-        IUserDTO currentUser = IUserDTO.getUserDTO(new UserDTO(), 0 , "tempUser", "tempLastName", "");
+        AUserDTO currentUser = AUserDTO.getUserDTO(new UserDTO(), 0 , "tempUser", "tempLastName", "");
         Date dateNow = new Date(System.currentTimeMillis());
 
         //

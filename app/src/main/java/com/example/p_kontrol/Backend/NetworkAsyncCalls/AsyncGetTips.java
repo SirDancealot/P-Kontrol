@@ -7,16 +7,16 @@ import android.util.Log;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AsyncGetTips extends AsyncTask< Void, Void, List<ITipDTO> >{
+public class AsyncGetTips extends AsyncTask< Void, Void, List<ATipDTO> >{
     private static final String TAG = "AsyncGetTips";
     private IDatabase DAO = new FirestoreDAO();
-    private List list = new ArrayList<ITipDTO>();
+    private List list = new ArrayList<ATipDTO>();
     private double radius;
     private LatLng location;
 
@@ -30,7 +30,7 @@ public class AsyncGetTips extends AsyncTask< Void, Void, List<ITipDTO> >{
     }
 
     @Override
-    protected List<ITipDTO> doInBackground(Void... params) {
+    protected List<ATipDTO> doInBackground(Void... params) {
         try {
             list = DAO.getTipList(location, radius);
 
@@ -42,7 +42,7 @@ public class AsyncGetTips extends AsyncTask< Void, Void, List<ITipDTO> >{
 
     }
 
-    protected void onPostExecute(List<ITipDTO> result) {
+    protected void onPostExecute(List<ATipDTO> result) {
         onTaskComplete.OnTaskComplete(result);
 
     }
