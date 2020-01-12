@@ -1,15 +1,12 @@
 package com.example.p_kontrol.DataTypes;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 
 import org.imperiumlabs.geofirestore.core.GeoHash;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class TipDTO extends ATipDTO {
-
+abstract public class ATipDTO implements ITipDTO{
 
     private IUserDTO author;
     private String message;
@@ -18,24 +15,7 @@ public class TipDTO extends ATipDTO {
     private String g; //location geohash
     private GeoPoint l; //location
 
-
-    public TipDTO(){}
-    public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
-        this.author = author;
-        this.message = message;
-        this.rating = rating;
-        this.creationDate = creationDate;
-        this.l = l;
-    }
-    /*
-    public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
-        this.author = author;
-        this.message = message;
-        this.rating = rating;
-        this.creationDate = creationDate;
-        this.g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
-        this.l = l;
-    }*/
+    public ATipDTO(){}
 
     @Override
     public IUserDTO getAuthor() {
@@ -92,7 +72,6 @@ public class TipDTO extends ATipDTO {
         this.l = l;
         g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
     }
-
 
 
     @Override

@@ -4,14 +4,21 @@ import java.util.List;
 
 public interface IUserDTO {
 
+    static IUserDTO getUserDTO(IUserDTO EmptyUser ,int userId, String firstName , String lastName, String profileImg){
+        EmptyUser.setUserId(userId);
+        EmptyUser.setFirstName(firstName);
+        EmptyUser.setLastName(lastName);
+        EmptyUser.setProfileImageSRC(profileImg);
+        return EmptyUser;
+    };
+
     int getUserId();
     String getFirstName();
     String getLastName();
     String getProfileSRC();
-    List<ITipDTO> getTips(); // todo WHY ??
 
     // Sets
-    void setUserId();
+    void setUserId(int userId);
     void setFirstName(String firstName);
     void setLastName(String lastName);
     void setProfileImageSRC(String profileSrc);
