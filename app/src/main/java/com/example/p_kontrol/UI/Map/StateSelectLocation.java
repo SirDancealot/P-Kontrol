@@ -3,7 +3,7 @@ package com.example.p_kontrol.UI.Map;
 import android.location.Location;
 import android.util.Log;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -57,7 +57,7 @@ public class StateSelectLocation extends State {
     }
 
     @Override
-    public void updateMap(List<ITipDTO> list ) {
+    public void updateMap(List<ATipDTO> list ) {
 
     }
     @Override

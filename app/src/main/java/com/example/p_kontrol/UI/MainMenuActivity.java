@@ -17,7 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.Backend.IBackend;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.IUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
@@ -358,7 +358,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
 
             @Override
-            public void onMessageDone(ITipDTO dto) {
+            public void onMessageDone(ATipDTO dto) {
                 newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
                 toogleFragment_WriteTip(false);
                 getSupportFragmentManager().popBackStack();
@@ -376,11 +376,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private void CreateTip_finish(){
         //todo simplify user Data
         // fix this with the login.
-        UserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
+        // Getting Data
+        IUserDTO currentUser = IUserDTO.getUserDTO(new UserDTO(), 0 , "tempUser", "tempLastName", "");
+        Date dateNow = new Date(System.currentTimeMillis());
 
-        newTipDTO.setCreationDate(new Date(System.currentTimeMillis()));
+        //
         newTipDTO.setAuthor(currentUser);
+        newTipDTO.setCreationDate(dateNow);
         TipDTO tipDTO = newTipDTO.copy();
+
         backend.createTip(tipDTO);
         mapContext.setListOfTipDto(getDTOlist());
     }
@@ -461,17 +465,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    public List<ITipDTO> getDTOlist(){
-        List<ITipDTO> list = backend.getTips(mapContext.getLocation());
-
-        // todo ! why this ?????? 
-        IUserDTO user = new UserDTO("TEST","test", "");
-        String message = "hey \n\n more here\n\n\n\n\n\n olo \n\n \n\n\n   eifd \n\n\n\n\n\n\n\n\n\nie \n";
-        int rating = 0;
-        Date date= new Date();
-        GeoPoint geoPoint = new GeoPoint(55.7, 12.6);
-
-        list.add(new TipDTO(user,message,rating,date,geoPoint));
+    public List<ATipDTO> getDTOlist(){
+        List<ATipDTO> list = backend.getTips(mapContext.getLocation());
         return list;
     }
 

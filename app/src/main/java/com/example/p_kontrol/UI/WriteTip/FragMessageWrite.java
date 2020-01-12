@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.Util.CustomProgressBar;
 
 import java.util.LinkedList;
@@ -37,7 +37,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
     WriteTipState currentSate = null;
 
     // Objects
-    ITipDTO dto;
+    ATipDTO dto;
 
     // Listeners
     ViewPager.OnPageChangeListener pageChangeListener = null;
@@ -137,7 +137,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
         stateListener_SubmitListener = new IWriteTipStageListener() {
             @Override
             public void onDone() {
-                ITipDTO newDTO = new TipDTO();
+                ATipDTO newDTO = new TipDTO();
                 newDTO.setMessage(dto.getMessage());
 
                 if(listener != null)

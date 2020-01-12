@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,9 +29,9 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
 
 
     // Variables
-    List<ITipDTO> tips;
+    List<ATipDTO> tips;
 
-    public TipBobblesAdapter(FragmentManager fm, List<ITipDTO> tips){
+    public TipBobblesAdapter(FragmentManager fm, List<ATipDTO> tips){
         super(fm);
         this.tips = tips;
     }
@@ -41,7 +41,7 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         FragTipBobble frag = new FragTipBobble();
         Bundle bundle = new Bundle();
-        ITipDTO thisElement = tips.get(position);
+        ATipDTO thisElement = tips.get(position);
         Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
         bundle.putString(BOBBLE_NAME, thisElement.getAuthor().getFirstName() );
         Log.d(TAG, "getItem:" + thisElement.getMessage());
