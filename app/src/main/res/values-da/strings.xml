@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">C5 P-Kontrol</string>
+    <string name="round_corner">Round Corner</string>
+
+
+    <string name="title_activity__map_view">Activity_MapView</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Menu -->
+    <!-- Menu Texts -->
+    <string name="menu_txt_profile">Profil</string>
+    <string name="menu_txt_freePark">Gratis parkering</string>
+    <string name="menu_txt_contribute">Contribute</string>  <!-- TODO should probably be changed to "Write tip" or smth-->
+    <string name="menu_txt_feedback">Feedback</string>
+    <string name="menu_txt_parkAlarm">Parkeringsadvarsel</string>
+    <string name="menu_txt_pVagt">P-Vagt</string>
+
+    <!-- Profile -->
+    <!-- Profile Texts -->
+    <string name="profile_template_name">[navn her]</string>
+    <string name="profile_template_numTips">antal tips</string>
+    <string name="profile_template_numLikes">antal likes</string>
+    <string name="profile_tip_changeProfileImage">skift profilbillede</string>
+
+    <!-- Profile Rating Texts -->
+    <string name="profile_Rating_0"> ikke deltaget endnu </string>
+    <string name="profile_Rating_1"> nice du er igang! </string>
+    <string name="profile_Rating_2"> på vej til at blive god </string>
+    <string name="profile_Rating_3"> sejt! </string>
+    <string name="profile_Rating_4"> Woa du er god </string>
+    <string name="profile_Rating_5"> Master rated </string>
+
+    <!-- profile Rating Table  -->
+    <string name="profile_template_tableColumn_1">deltagen</string>
+    <string name="profile_template_tableColumn_2">antal</string>
+    <string name="profile_template_tableColumn_3">resultat</string>
+
+<!--    TODO translate the rest and make corrections in the default english string.xml and around in the program where it is needed -->
+
+</resources>
