@@ -20,8 +20,13 @@ public class TipDTO implements ITipDTO, Serializable {
 
 
     public TipDTO(){}
-
-/*
+    public TipDTO(IUserDTO author, String message, int rating, Date creationDate) {
+        this.author = author;
+        this.message = message;
+        this.rating = rating;
+        this.creationDate = creationDate;
+    }
+    /*
     public TipDTO(IUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
         this.author = author;
         this.message = message;
@@ -35,7 +40,6 @@ public class TipDTO implements ITipDTO, Serializable {
     public IUserDTO getAuthor() {
         return author;
     }
-
     @Override
     public void setAuthor(IUserDTO author) {
         this.author = author;
@@ -45,7 +49,6 @@ public class TipDTO implements ITipDTO, Serializable {
     public String getMessage() {
         return message;
     }
-
     @Override
     public void setMessage(String message) {
         this.message = message;
@@ -55,7 +58,6 @@ public class TipDTO implements ITipDTO, Serializable {
     public int getRating() {
         return rating;
     }
-
     @Override
     public void setRating(int rating) {
         this.rating = rating;
@@ -65,30 +67,33 @@ public class TipDTO implements ITipDTO, Serializable {
     public Date getCreationDate() {
         return creationDate;
     }
-
     @Override
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
+    @Override
     public String getG() {
         return g;
     }
-
+    @Override
     public void setG(String g) {
         this.g = g;
     }
 
+    @Override
     public GeoPoint getL() {
         return l;
     }
-
+    @Override
     public void setL(GeoPoint l) {
         this.l = l;
         g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
     }
 
-    //todo implement this in the Interface.
+
+
+    @Override
     public TipDTO copy(){
         TipDTO newDTO = new TipDTO();
         newDTO.setAuthor(author);
@@ -99,8 +104,6 @@ public class TipDTO implements ITipDTO, Serializable {
         newDTO.setRating(rating);
         return newDTO;
     }
-
-
 
     @Override
     public String toString() {
