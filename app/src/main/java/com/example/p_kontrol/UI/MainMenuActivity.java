@@ -377,7 +377,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         //todo simplify user Data
         // fix this with the login.
         // Getting Data
-        AUserDTO currentUser = AUserDTO.getUserDTO(new UserDTO(), 0 , "tempUser", "tempLastName", "");
+        AUserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
         Date dateNow = new Date(System.currentTimeMillis());
 
         //
