@@ -12,5 +12,10 @@ public class UserDTO extends AUserDTO {
     String profileSrc;
 
     public UserDTO(){}
-
+    public UserDTO(String firstName, String lastName, String profileSrc) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profileSrc = profileSrc;
+        this.setUserId( 0 ); // todo lav en kommentar der forkalre hvorfor 0.
+    }
 }
