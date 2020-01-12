@@ -19,8 +19,10 @@ public class TipDTO extends ATipDTO {
     private GeoPoint l; //location
 
 
-    public TipDTO(){}
+    public TipDTO(){super();}
+
     public TipDTO(AUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
+        super();
         this.author = author;
         this.message = message;
         this.rating = rating;

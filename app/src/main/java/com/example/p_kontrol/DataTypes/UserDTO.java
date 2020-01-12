@@ -11,8 +11,9 @@ public class UserDTO extends AUserDTO {
     String lastName;
     String profileSrc;
 
-    public UserDTO(){}
+    public UserDTO(){super();}
     public UserDTO(String firstName, String lastName, String profileSrc) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.profileSrc = profileSrc;
