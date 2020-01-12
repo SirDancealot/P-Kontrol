@@ -104,11 +104,10 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:drawableTop="@drawable/ic_icon_chat"
-                android:text="@string/menu_txt_community"
+                android:text="@string/menu_txt_feedback"
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
-                android:textColor="@color/color_matWhite"
                 />
             <!-- Park Alarm btn -->
             <Button

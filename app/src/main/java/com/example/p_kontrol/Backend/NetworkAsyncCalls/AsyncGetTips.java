@@ -2,6 +2,7 @@ package com.example.p_kontrol.Backend.NetworkAsyncCalls;
 
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.Backend.IOnTaskComplete;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AsyncGetTips extends AsyncTask< Void, Void, List<ITipDTO> >{
-
+    private static final String TAG = "AsyncGetTips";
     private IDatabase DAO = new FirestoreDAO();
     private List list = new ArrayList<ITipDTO>();
     private double radius;
@@ -35,7 +36,7 @@ public class AsyncGetTips extends AsyncTask< Void, Void, List<ITipDTO> >{
 
 
         }catch(Exception e){
-            e.printStackTrace();
+            Log.e(TAG, "doInBackground: ", e);
         }
         return list;
 

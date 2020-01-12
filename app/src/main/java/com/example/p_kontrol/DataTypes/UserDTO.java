@@ -1,22 +1,36 @@
 package com.example.p_kontrol.DataTypes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class UserDTO implements IUserDTO {
+public class UserDTO implements IUserDTO, Serializable {
     //TODO implement this class
 
     String firstName;
     String lastName;
     String profileSrc;
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setProfileSrc(String profileSrc) {
+        this.profileSrc = profileSrc;
+    }
+
     public UserDTO(){}
 
+/*
     public UserDTO(String firstName, String lastName, String profileSrc){
         this.firstName = firstName;
         this. lastName = lastName;
         this.profileSrc = profileSrc;
 
-    }
+    }*/
 
     @Override
     public int getUserId() {

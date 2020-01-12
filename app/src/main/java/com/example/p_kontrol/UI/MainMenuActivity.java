@@ -45,6 +45,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.auth.User;
 
 
 import java.time.LocalDate;
