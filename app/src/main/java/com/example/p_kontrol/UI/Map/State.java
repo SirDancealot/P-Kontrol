@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI.Map;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -10,7 +11,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -24,7 +25,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
-public class State extends AppCompatActivity implements IState  {
+abstract public class State extends AppCompatActivity implements IState  {
 
 
 
@@ -54,7 +55,7 @@ public class State extends AppCompatActivity implements IState  {
     }
 
     @Override
-    public void updateMap(List<ITipDTO> list ) {
+    public void updateMap(List<ATipDTO> list ) {
     }
     @Override
     public void setDoneListner(IMapContextListener listener) {
@@ -112,7 +113,11 @@ public class State extends AppCompatActivity implements IState  {
 //context.getActivity().getPackageName()
     // Regular methods
     public Bitmap resizeMapIcons(String iconName, int width, int height){
-        Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(),context.getResources().getIdentifier(iconName, "drawable", this.getPackageName() ));
+
+        Resources res = context.getResources();
+        int tipResource = res.getIdentifier(iconName, "drawable", this.getPackageName() );
+
+        Bitmap imageBitmap = BitmapFactory.decodeResource(res,tipResource);
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }

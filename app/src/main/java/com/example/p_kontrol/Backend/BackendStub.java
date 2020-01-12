@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,14 +33,12 @@ public class BackendStub {
     //UserDTO user = new UserDTO("valdemar", "h", "niceimg");
 
 
-    //IUserDTO author, String message, LatLng location, int rating, Date creationDate
-    //ITipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
-    //ITipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
-    //ITipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
+    //AUserDTO author, String message, LatLng location, int rating, Date creationDate
+    //ATipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
+    //ATipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
+    //ATipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
 
-    List<ITipDTO> demoList = new ArrayList<>();
-
-
+    List<ATipDTO> demoList = new ArrayList<>();
 
 
 
@@ -48,7 +46,9 @@ public class BackendStub {
 
 
 
-    public List<ITipDTO> getDemoTips() {
+
+
+    public List<ATipDTO> getDemoTips() {
         //demoList.add(tip1);
         //demoList.add(tip2);
         //demoList.add(tip3);

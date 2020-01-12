@@ -8,7 +8,7 @@ import java.util.Date;
 
 abstract public class ATipDTO implements ITipDTO{
 
-    private IUserDTO author;
+    private AUserDTO author;
     private String message;
     private int rating;
     private Date creationDate;
@@ -18,11 +18,11 @@ abstract public class ATipDTO implements ITipDTO{
     public ATipDTO(){}
 
     @Override
-    public IUserDTO getAuthor() {
+    public AUserDTO getAuthor() {
         return author;
     }
     @Override
-    public void setAuthor(IUserDTO author) {
+    public void setAuthor(AUserDTO author) {
         this.author = author;
     }
 

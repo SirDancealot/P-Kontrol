@@ -15,7 +15,7 @@ import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -160,7 +160,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
 
     // INTERFACE MAP CONTEXT
     @Override
-    public void setListOfTipDto(List<ITipDTO> list) {
+    public void setListOfTipDto(List<ATipDTO> list) {
         currentState.updateMap(list);
     }
     @Override

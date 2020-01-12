@@ -3,7 +3,7 @@ package com.example.p_kontrol.UI.Map;
 import android.util.Log;
 import android.view.View;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,10 +20,10 @@ public class StateStandby extends State {
     }
 
     @Override
-    public void updateMap(List<ITipDTO> list ) {
+    public void updateMap(List<ATipDTO> list ) {
 
         int i = 0;
-        for(ITipDTO tip: list){
+        for(ATipDTO tip: list){
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon",69,100)));
             map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
             map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {

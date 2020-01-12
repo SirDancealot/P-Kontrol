@@ -25,16 +25,16 @@ public class Backend implements IBackend {
     final int TIP_SEARCH_RADIUS = 120;
 
     // private data
-    private List<ITipDTO> dtoList = new LinkedList<>();
+    private List<ATipDTO> dtoList = new LinkedList<>();
 
     @Override // when needing tips from new location
-    public List<ITipDTO> getTips(LatLng location) {
+    public List<ATipDTO> getTips(LatLng location) {
 
         dtoList = new LinkedList<>();
         AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, new IOnTaskComplete(){
 
             @Override
-            public void OnTaskComplete(List<ITipDTO> result) {
+            public void OnTaskComplete(List<ATipDTO> result) {
                 if ( dtoList.addAll( result ) )
                     Log.d(TAG, "OnTaskComplete: successful");
                 else
@@ -48,7 +48,7 @@ public class Backend implements IBackend {
     }
 
     @Override
-    public void createTip(ITipDTO tip) {
+    public void createTip(ATipDTO tip) {
 
         UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
         if(userInfoDTO.getToken() != null){
@@ -63,7 +63,7 @@ public class Backend implements IBackend {
     }
 
     @Override
-    public void rateTip(int star, ITipDTO tip) {
+    public void rateTip(int star, ATipDTO tip) {
 
     }
 
@@ -73,7 +73,7 @@ public class Backend implements IBackend {
     }
 
     @Override
-    public IUserDTO getUser(int id) {
+    public AUserDTO getUser(int id) {
         return null;
     }
 

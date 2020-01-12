@@ -3,7 +3,7 @@ package com.example.p_kontrol.UI.WriteTip;
 import androidx.fragment.app.Fragment;
 
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 
 /**
  * @custom.responsibilty responsibility to provide a base for all stages of writing a tip.
@@ -11,7 +11,7 @@ import com.example.p_kontrol.DataTypes.ITipDTO;
  * */
 public class WriteTipState extends Fragment implements IWriteTipStage {
 
-    ITipDTO dto = new TipDTO();
+    ATipDTO dto = new TipDTO();
     IWriteTipStageListener listener;
 
     @Override
@@ -20,7 +20,7 @@ public class WriteTipState extends Fragment implements IWriteTipStage {
     }
 
     @Override
-    public ITipDTO getDTO(){
+    public ATipDTO getDTO(){
         return dto;
     }
 }

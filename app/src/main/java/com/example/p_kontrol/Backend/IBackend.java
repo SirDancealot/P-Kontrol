@@ -1,8 +1,8 @@
 package com.example.p_kontrol.Backend;
 
 import com.example.p_kontrol.Backend.IOnTaskComplete;
-import com.example.p_kontrol.DataTypes.ITipDTO;
-import com.example.p_kontrol.DataTypes.IUserDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -10,12 +10,12 @@ import java.util.List;
 public interface IBackend {
 
     //Tips
-    List<ITipDTO> getTips(LatLng location);
-    void createTip(ITipDTO tip);
-    void rateTip(int star, ITipDTO tip);
+    List<ATipDTO> getTips(LatLng location);
+    void createTip(ATipDTO tip);
+    void rateTip(int star, ATipDTO tip);
 
     //User
-    IUserDTO getUser(int id);
+    AUserDTO getUser(int id);
 
     //feedback
     boolean postFeedback(String category, String message);

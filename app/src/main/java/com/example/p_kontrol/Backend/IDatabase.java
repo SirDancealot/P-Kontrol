@@ -1,7 +1,7 @@
 package com.example.p_kontrol.Backend;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
-import com.example.p_kontrol.DataTypes.IUserDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -10,15 +10,15 @@ import java.util.List;
 
 public interface IDatabase {
 
-    List<ITipDTO> getTipList(LatLng location, double radius);
+    List<ATipDTO> getTipList(LatLng location, double radius);
 
     public List<QuerySnapshot> getDocumentList (CollectionReference collection, List<String> ids);
 
-    void createTip(ITipDTO tip);
+    void createTip(ATipDTO tip);
 
-    void updateTip(ITipDTO tip);
+    void updateTip(ATipDTO tip);
 
-    IUserDTO getUser(int id);
+    AUserDTO getUser(int id);
 
     boolean checkPAlert(LatLng location);
 
@@ -28,6 +28,6 @@ public interface IDatabase {
      * @param radius a {@code double} radius in kilometers for the query
      * @param targetList the target list in which the tips should end
      */
-    void queryByLocation(LatLng location, double radius, List<ITipDTO> targetList);
+    void queryByLocation(LatLng location, double radius, List<ATipDTO> targetList);
 
 }
