@@ -14,6 +14,8 @@ import java.util.List;
 
 public class StateStandby extends State {
 
+    //TODO implement liveData here
+
     public StateStandby(MapContext context) {
         super(context);
         map.clear();

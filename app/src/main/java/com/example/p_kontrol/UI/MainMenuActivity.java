@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.Backend.Backend;
@@ -36,6 +37,7 @@ import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.firebase.ui.auth.AuthUI;
@@ -127,6 +129,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
 
+
+
         //TODO send person til logind 1 hvis de ikke er logget ind
         temp_setUpDemoTips(temp_listofDTO);
         fragmentManager = this.getSupportFragmentManager();
@@ -138,6 +142,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         // login firebase
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         createSignInIntent();
+
+        LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        model.getTipList().observe(this, users -> {
+            adapter_TipBobbles.notifyDataSetChanged();
+        });
+
 
     }
 

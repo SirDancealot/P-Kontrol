@@ -5,17 +5,22 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,7 +42,7 @@ import java.util.List;
  *
  *
  * */
-public class MapContext extends FragmentActivity implements OnMapReadyCallback, IMapContext, IMapStateInformationExpert {
+public abstract class MapContext extends FragmentActivity implements OnMapReadyCallback, IMapContext, IMapStateInformationExpert {
 
     String TAG = "MapContext";
     private Activity activity;
@@ -62,6 +67,16 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
 
     //Listeners
     private IMapContextListener listener;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+
+        LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        model.getTipList().observe(this, tips -> {
+            currentState.updateMap(tips);
+        });
+    }
 
     // -- METHODS --  --  --  --  --  --  --  --  --  --  --  --  --
     public MapContext(SupportMapFragment mapFragment, Activity activity, IMapContextListener listener) {
@@ -158,11 +173,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
                 });
     }
 
-    // INTERFACE MAP CONTEXT
-    @Override
-    public void setListOfTipDto(List<ATipDTO> list) {
-        currentState.updateMap(list);
-    }
+
     @Override
     public LatLng getLocation(){
         currentState.updateLocation();
