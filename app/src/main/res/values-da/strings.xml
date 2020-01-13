@@ -15,7 +15,7 @@
     <!-- Menu Texts -->
     <string name="menu_txt_profile">Profil</string>
     <string name="menu_txt_freePark">Gratis parkering</string>
-    <string name="menu_txt_contribute">Contribute</string>  <!-- TODO should probably be changed to "Write tip" or smth-->
+    <string name="menu_txt_createTip">Lav tip</string>
     <string name="menu_txt_feedback">Feedback</string>
     <string name="menu_txt_parkAlarm">Parkeringsadvarsel</string>
     <string name="menu_txt_pVagt">P-Vagt</string>
@@ -41,5 +41,61 @@
     <string name="profile_template_tableColumn_3">resultat</string>
 
 <!--    TODO translate the rest and make corrections in the default english string.xml and around in the program where it is needed -->
+
+    <!-- Fragment Write a Tip  -->
+    <!-- Write Tip Headers -->
+    <string name="writeTip_title_step1">Vælg et sted til dit tip</string>
+    <string name="writeTip_title_step2">Fortæl om stedet</string>
+    <string name="WriteTip_TextInput">Skriv her..</string>
+    <string name="writeTip_title_step3">Tag billede</string>
+    <string name="writeTip_title_step4">Tak for din informationsdeling</string>
+    <string name="writeTip_submit_contribution">Færdiggør deling</string>
+    <string name="writeTip_submit">Del</string>
+
+    <!-- Write Tip Internal View Hints  -->
+    <string name="writeTip_View_ChooseCategory">Vælg kategori</string>
+    <string name="writeTip_View_writeComment">Kommenter</string>
+    <string name="writeTip_View_optional">(Valgfri)</string>
+    <string name="writeTip_ThanksForContribution">Tak for din informationsdeling</string>
+
+    <!-- Categories for Tips Creation -->
+    <string-array name="WriteTip_View_ChooseCategories_categoriesArr">
+        <item>category 1 </item>
+        <item>category 2 </item>
+        <item>category 3 </item>
+        <item>category 4 </item>
+        <item>category 5 </item>
+    </string-array>
+
+    <!-- Write Tip Navigation texts -->
+    <string name="writeTip_BtmNavigation_continue">Træk til siden for at fortsætte</string>
+    <string name="writeTip_Navigation_finish">Tryk for at afslutte</string>
+
+
+    <string name="tip1">earlier versions of Access, we used the Memo data type to store large amounts of text, and the Text data type to store shorter strings (up to 255 characters). In Access 2013 and Access 2016, these two data types have been renamed “Long Text” and “Short Text” respectively, and they have different properties and size limits depending on whether you’re using a desktop database or an Access web app. Here are the details:</string>
+    <string name="tip2">pas på</string>
+    <string name="title_activity_maps">Map</string>
+
+
+    <!-- test if we need both -->
+    <string name="facebook_application_id" translatable="false">1045192295818256</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1045192295818256</string>
+
+
+    <string name="feedback_choose_category">Vælg kategori</string>
+    <string name="feedback_title">Tak fordi du giver os feedback!</string>
+    <string name="feedback_category_text">Kategori</string>
+    <string name="feedback_message_text">Feedback besked</string>
+    <string name="feedback_hint_text">Skriv din feedback her</string>
+    <string name="feedback_send_text">Send feedback</string>
+
+
+    <string-array name="feedback_categories_array">
+        <item>@string/feedback_choose_category</item>
+        <item>Map</item>
+        <item>Profil</item>
+        <item>Login</item>
+        <item>Other</item>
+    </string-array>
 
 </resources>
