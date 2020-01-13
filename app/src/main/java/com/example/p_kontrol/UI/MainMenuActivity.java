@@ -136,8 +136,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         map_setupMap();
 
         // login firebase
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        createSignInIntent();
 
     }
 
@@ -469,35 +467,21 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
-    public void createSignInIntent() {
-        // [START auth_fui_create_intent]
-        // Choose authentication providers
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        //FirebaseUser user = mAuth.getCurrentUser();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            if (user != null) {
-                userInfoDTO.setUser(user);
-            } else {
-                providers = Arrays.asList(
-                        new AuthUI.IdpConfig.EmailBuilder().build(),
-                        new AuthUI.IdpConfig.GoogleBuilder().build(),
-                        new AuthUI.IdpConfig.FacebookBuilder().build(),
-                        new AuthUI.IdpConfig.PhoneBuilder().build());
-
-                // Create and launch sign-in intent
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .setTheme(R.style.login)
-                                .setLogo(R.drawable.logo)
-                                .build(),
-                        RC_SIGN_IN);
-            }
-
-        // [END auth_fui_create_intent]
+        if(user != null){
+            userInfoDTO.setUser(user);
+            Intent changeActivity = new Intent( this , MainMenuActivity.class );
+            startActivity(changeActivity);
+        }
     }
+
 
     // Android Specifiks
     @Override
@@ -534,28 +518,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
-    // [START auth_fui_result]
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                userInfoDTO.setUser(user);
-
-                // ...
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
-    }
 
 
 }

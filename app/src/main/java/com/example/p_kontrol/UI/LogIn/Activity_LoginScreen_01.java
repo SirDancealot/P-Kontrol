@@ -11,7 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.MainMenuActivity;
+import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Activity_LoginScreen_01 extends AppCompatActivity {
 
@@ -20,6 +25,24 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
     View trans_circle_2;
     View trans_logo;
     View trans_background;
+
+    private FirebaseAuth mAuth;
+    UserInfoDTO userInfoDTO;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        //FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null){
+            userInfoDTO.setUser(user);
+            Intent changeActivity = new Intent( this , Activity_LoginScreen_01.class );
+            startActivity(changeActivity);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +74,7 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
             Log.e("Null Error", "Top Bar = null");
         }
 
-        Intent login_intent = new Intent(Activity_LoginScreen_01.this, Activity_LoginScreen_02.class );
+        Intent login_intent = new Intent(Activity_LoginScreen_01.this, Activity_LoginScreen_03.class );
         ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 Activity_LoginScreen_01.this,
                 // All Custom Shared elements
