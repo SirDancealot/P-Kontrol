@@ -26,28 +26,15 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
     View trans_logo;
     View trans_background;
 
-    private FirebaseAuth mAuth;
-    UserInfoDTO userInfoDTO;
+    private UserInfoDTO userInfoDTO;
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        //FirebaseUser user = mAuth.getCurrentUser();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(user != null){
-            userInfoDTO.setUser(user);
-            Intent changeActivity = new Intent( this , Activity_LoginScreen_01.class );
-            startActivity(changeActivity);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkLoginSession();
         setContentView(R.layout.activity_loginscreen_01);
+
 
         // Elements to change when ready
         trans_circle_1  = findViewById(R.id.LoginScreen_Circle1)        ;
@@ -55,13 +42,6 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         trans_logo      = findViewById(R.id.LoginScreen_LogoContainer)  ;
         trans_background= findViewById(R.id.LoginScreen_BackgroundBlue) ;
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                changeAct();
-            }
-        }, 1000);
     }
 
 
@@ -86,6 +66,31 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
                 new Pair<>(trans_TopBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
         );
         startActivity(login_intent, transitionParameters.toBundle());
+    }
+
+    public void checkLoginSession(){
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        System.out.println("--------kkkkk");
+        System.out.println(user);
+        System.out.println("--------kkkkk");
+
+        if(user != null){
+            System.out.println("--------inde!!");
+            userInfoDTO.setUser(user);
+            Intent changeActivity = new Intent( this , MainMenuActivity.class);
+            startActivity(changeActivity);
+            System.out.println("--------ude!!");
+        } else {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    changeAct();
+                }
+            }, 1000);
+        }
     }
 
 }

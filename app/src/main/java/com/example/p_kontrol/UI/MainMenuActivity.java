@@ -23,6 +23,7 @@ import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_01;
 import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_Demo;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
@@ -125,6 +126,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // check if login is needed
         setContentView(R.layout.activity_mainmenu);
 
         //TODO send person til logind 1 hvis de ikke er logget ind
@@ -467,20 +469,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        //FirebaseUser user = mAuth.getCurrentUser();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(user != null){
-            userInfoDTO.setUser(user);
-            Intent changeActivity = new Intent( this , MainMenuActivity.class );
-            startActivity(changeActivity);
-        }
-    }
 
 
     // Android Specifiks

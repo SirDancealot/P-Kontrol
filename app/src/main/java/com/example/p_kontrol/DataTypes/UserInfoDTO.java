@@ -110,12 +110,17 @@ public class UserInfoDTO {
     public void setUser(FirebaseUser user) {
         this.user = user;
         this.token = user.getIdToken(true);
-        if( user.getDisplayName().split(" ").length > 1) {
-            this.name = user.getDisplayName().split(" ")[0];
-            this.name2 = user.getDisplayName().split(" ")[user.getDisplayName().split(" ").length - 1];
-        }
-        else{
-            this.name = user.getDisplayName();
+        if(user.getDisplayName() != null){
+            if( user.getDisplayName().split(" ").length > 1) {
+                this.name = user.getDisplayName().split(" ")[0];
+                this.name2 = user.getDisplayName().split(" ")[user.getDisplayName().split(" ").length - 1];
+            }
+            else {
+                this.name = user.getDisplayName();
+                this.name2 = "";
+            }
+        } else {
+            this.name = user.getEmail().split("@")[0];
             this.name2 = "";
         }
         if(user.getPhotoUrl() != null){

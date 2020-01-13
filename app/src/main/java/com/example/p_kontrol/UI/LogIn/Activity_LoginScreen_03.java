@@ -2,6 +2,7 @@ package com.example.p_kontrol.UI.LogIn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,12 @@ import androidx.core.util.Pair;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuActivity;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -27,16 +34,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Arrays;
 
-public class Activity_LoginScreen_03  extends AppCompatActivity implements View.OnClickListener{
+public class Activity_LoginScreen_03  extends AppCompatActivity implements View.OnClickListener, OnCompleteListener<AuthResult> {
 
     String TAG = "Login Screen 3";
     private static final int RC_SIGN_IN_GOOGLE = 9001;
+    private static final int RC_SIGN_IN_FACEBOOK = 64206;
 
 
 
@@ -44,12 +53,13 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
     private FirebaseAuth mAuth;
 
     private GoogleSignInClient mGoogleSignInClient;
+    private CallbackManager mCallbackManager;
     UserInfoDTO userInfoDTO;
 
     // Login Formulae Inputs
     EditText formEmail;
     EditText formPassword;
-    TextView formForgotPass;
+    View loding;
 
     // Main Interaction Buttons
     Button signIn_regular, signIn_faceBook;
@@ -61,23 +71,22 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginscreen_03);
 
+        mAuth = FirebaseAuth.getInstance();
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         findViewById(R.id.LoginScreen_3_SignIn_Google).setOnClickListener(this);
-        mAuth = FirebaseAuth.getInstance();
+
 
         // Login Formulae Inputs
         formEmail       = findViewById(R.id.LoginScreen_3_FormEmail);
         formPassword    = findViewById(R.id.LoginScreen_3_FormPassword);
-        formForgotPass  = findViewById(R.id.LoginScreen_3_FormForgottenPass);
+        loding          = findViewById(R.id.progress_bar);
 
         // Main Interaction Buttons
         signIn_regular = findViewById(R.id.LoginScreen_3_SignIn);
-        signIn_faceBook = findViewById( R.id.LoginScreen_3_SignIn_FaceBook);
         signUp = findViewById(R.id.LoginScreen_3_SignUp);
 
         // setting listeners to it self. see onClick method.
         signIn_regular.setOnClickListener(this);
-        signIn_faceBook.setOnClickListener(this);
         signUp.setOnClickListener(this);
 
 
@@ -92,6 +101,31 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = findViewById(R.id.LoginScreen_3_SignIn_FaceBook);
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                System.out.println("---------kkkkk");
+                handleFacebookAccessToken(loginResult.getAccessToken());
+
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+
+            }
+        });
+
     }
 
     @Override
@@ -100,9 +134,6 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         switch(v.getId()){
             case R.id.LoginScreen_3_SignIn:
                 signIn_Methodregular();
-                break;
-            case R.id.LoginScreen_3_SignIn_FaceBook:
-                signIn_MethodfaceBook();
                 break;
             case R.id.LoginScreen_3_SignIn_Google:
                 signIn_MethodGoogle();
@@ -114,55 +145,41 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
     }
 
     public void signIn_Methodregular(){
-        //todo implement
-        Log.e(TAG, "Login Regular Not Implemented" );
-        ChangeActivityNext();
-    };
-    public void signIn_MethodfaceBook(){
-        // todo, move ot backend , from previous commits.
-        Log.e(TAG, "Login Facebook not implemented on this level. must be called from backend." );
-    };
+        signIn(formEmail.getText().toString(), formPassword.getText().toString());
+    }
     public void signIn_MethodGoogle(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
 
-    };
+    }
     public void signUp_Method(){
-        //todo implement
-        Log.e(TAG, "Creating a User Not Implemented" );
-    };
+        Intent changeActivity = new Intent( this, Activity_SigeUp.class);
+        startActivity(changeActivity);
+    }
 
     public void ChangeActivityNext(){
         Intent changeActivity = new Intent( this, MainMenuActivity.class);
         changeActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(changeActivity);
     }
-    public void ChangeActivityPrev(){
 
-        View trans_logo         = findViewById(R.id.LoginScreen_LogoContainer),
-        trans_background        = findViewById(R.id.LoginScreen_BackgroundBlue);
 
-        Intent changeActivity = new Intent( Activity_LoginScreen_03.this, Activity_LoginScreen_02.class);
-        ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                Activity_LoginScreen_03.this,
-                // All Custom Shared elements
-                new Pair<>(trans_logo, trans_logo.getTransitionName())              ,
-                new Pair<>(trans_background,trans_background.getTransitionName())
-        );
-        startActivity(changeActivity, transitionParameters.toBundle());
+
+
+    @Override
+    public void onComplete(@NonNull Task<AuthResult> task) {
+        if (task.isSuccessful()) {
+            // Sign in success, update UI with the signed-in user's information
+            Log.d(TAG, "signInWithCredential:success");
+            System.out.println("---------kkkkk facebook inde");
+            FirebaseUser user = mAuth.getCurrentUser();
+            userInfoDTO.setUser(user);
+            ChangeActivityNext();
+        } else {
+            // If sign in fails, display a message to the user.
+            Log.w(TAG, "signInWithCredential:failure", task.getException());
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // google
@@ -170,6 +187,12 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult: " + requestCode);
+        System.out.println("---------kkkkk" + requestCode);
+
+        loding.setVisibility(View.VISIBLE);
+
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN_GOOGLE) {
@@ -183,6 +206,8 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
             }
+    } else if(requestCode == RC_SIGN_IN_FACEBOOK) {
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -191,28 +216,56 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this);
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+        System.out.println("---------kkkkk facebook");
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            userInfoDTO.setUser(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-
-                        }
-
-                    }
-                });
+                .addOnCompleteListener(this);
     }
 
 
 
 
 
+
+
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String email = formEmail.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            formEmail.setError("Required.");
+            valid = false;
+        } else {
+            formEmail.setError(null);
+        }
+
+        String password = formPassword.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            formPassword.setError("Required.");
+            valid = false;
+        } else {
+            formPassword.setError(null);
+        }
+
+        return valid;
+    }
+
+
+    private void signIn(String email, String password) {
+        Log.d(TAG, "signIn:" + email);
+        if (!validateForm()) {
+            return;
+        }
+        loding.setVisibility(View.VISIBLE);
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this);
+    }
 
 }
