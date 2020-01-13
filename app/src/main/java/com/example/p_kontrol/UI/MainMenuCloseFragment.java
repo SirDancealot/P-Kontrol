@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,9 +14,9 @@ import androidx.fragment.app.DialogFragment;
 import com.example.p_kontrol.R;
 
 public class MainMenuCloseFragment extends DialogFragment {
-    MainMenuActivity caller;
+    Activity caller;
 
-    public MainMenuCloseFragment(MainMenuActivity caller) {
+    public MainMenuCloseFragment(Activity caller) {
         this.caller = caller;
     }
 
