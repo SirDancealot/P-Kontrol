@@ -18,6 +18,8 @@ import java.util.List;
 public class Backend implements IBackend {
     //TODO make backend handle preferences
 
+    List<ATipDTO> aTipDTOS;
+
     // Android internal
     private String TAG = "Backend";
 
@@ -29,24 +31,27 @@ public class Backend implements IBackend {
 
     @Override // when needing tips from new location
     public List<ATipDTO> getTips(LatLng location) {
-
+        // todo rethink getTips and updateTipsFromDB
+        updateTipsFromDB( location);
+         return  aTipDTOS;
+    }
+    private void updateTipsFromDB(LatLng location) {
         dtoList = new LinkedList<>();
-        AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, new IOnTaskComplete(){
+        AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, new IOnTaskComplete() {
 
             @Override
             public void OnTaskComplete(List<ATipDTO> result) {
-                if ( dtoList.addAll( result ) )
+                if (dtoList.addAll(result)) {
+                    aTipDTOS = dtoList;
                     Log.d(TAG, "OnTaskComplete: successful");
-                else
+                }else {
                     Log.w(TAG, "OnTaskComplete: failed", null);
+                }
             }
 
         });
         async.execute();
-
-        return dtoList;
     }
-
     @Override
     public void createTip(ATipDTO tip) {
 
