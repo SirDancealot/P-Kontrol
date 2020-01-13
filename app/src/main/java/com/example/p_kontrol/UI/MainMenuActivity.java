@@ -218,10 +218,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onTipClick(int index) {
                 List<ATipDTO> list = getDTOlist();
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list );
+
+                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
+
+
                 viewPager_tipBobles.setVisibility(View.VISIBLE);
                 viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-                adapter_TipBobbles.notifyDataSetChanged();
                 viewPager_tipBobles.setCurrentItem(index);
 
                 if(drag_State){
@@ -435,9 +437,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     public List<ATipDTO> getDTOlist(){
         List<ATipDTO> list = backend.getTips(mapContext.getLocation());
+
         return temp_addTipsToList(list);
     }
     private List<ATipDTO> temp_addTipsToList(List<ATipDTO> list){
+        if(list == null){
+            list = new LinkedList<>();
+        }
            for(int i = 0; i < temp_listofDTO.size(); i++){
               list.add(temp_listofDTO.get(i));
            }
