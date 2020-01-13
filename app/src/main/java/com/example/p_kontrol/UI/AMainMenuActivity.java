@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -63,7 +65,7 @@ import java.util.List;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  * */
-public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
+public class AMainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
 // Local Data Objects
 
@@ -73,10 +75,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
 
 // login
-    private static final int RC_SIGN_IN = 3452;
-    private List<AuthUI.IdpConfig> providers;
-    private UserInfoDTO userInfoDTO;
 
+    static final int RC_SIGN_IN = 3452;
+    List<AuthUI.IdpConfig> providers;
+    UserInfoDTO userInfoDTO;
 
 // -- * -- MENU -- * --
 
@@ -197,7 +199,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mapListener = new IMapContextListener() {
             @Override
             public void onReady() {
-                mapContext.setListOfTipDto(getDTOlist());
+                mapUpdateTips();
             }
 
             @Override
@@ -212,23 +214,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onUpdate(){
-                mapContext.setListOfTipDto(getDTOlist());
+                mapUpdateTips();
             }
 
             @Override
             public void onTipClick(int index) {
-                List<ATipDTO> list = getDTOlist();
-
-                adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
-
-
-                viewPager_tipBobles.setVisibility(View.VISIBLE);
-                viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-                viewPager_tipBobles.setCurrentItem(index);
-
-                if(drag_State){
-                    menu_dragHandle();
-                }
+                showTipBooble(index);
             }
 
         };
@@ -315,86 +306,42 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private void menuBtn_ParkAlarm(){
         Log.i("click","Park Alarm btn clicked \n");
     }
-
     private void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
 
     }
 
     // CREATE A TIP STEP BY STEP HERE ...
-    private void CreateTip(){
-        CreateTip_Process(0);
-    }
-    private void CreateTip_Process ( int i){
-        switch (i) {
-            case 0: // Chose location
-                fillInTip_Map();
-                break;
-            case 1: // Write Tip
-                fillInTip_WriteTip();
-                break;
-            case 2: // finish Tip and send to back end for saving.
-                CreateTip_finish();
-                break;
-        }
-    }
-    private void fillInTip_Map(){
-
-        mapContext.setStateSelectLocation();
-        mapView_btnContainerAceptCancel.setVisibility(View.VISIBLE);
-        mapView_acceptBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map_setupCenterButton();
-                GeoPoint location = new GeoPoint(mapContext.getSelectedLocation().latitude, mapContext.getSelectedLocation().longitude);
-                newTipDTO.setL(location); // newTipDTO is a static object that can always be called
-                mapContext.setStateStandby();
-                mapView_btnContainerAceptCancel.setVisibility(View.GONE);
-                CreateTip_Process(1);
-            }
-        });
-
-        mapView_cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map_setupCenterButton();
-                mapContext.setStateStandby();
-            }
-        });
-    }
-    private void fillInTip_WriteTip(){
-        fragment_messageWrite = new FragMessageWrite();
-        toogleFragment_WriteTip(true);
-        fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
-
-            @Override
-            public void onMessageDone(ATipDTO dto) {
-                newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
-                toogleFragment_WriteTip(false);
-                getSupportFragmentManager().popBackStack();
-                CreateTip_Process(2); // calls self to Complete the tip
-            }
-
-            @Override
-            public void onCancelTip() {
-                toogleFragment_WriteTip(false);
-                // does not call self to complete.
-            }
-
-        });
-    }
-    private void CreateTip_finish(){
-        AUserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
-        Date dateNow = new Date(System.currentTimeMillis());
-
-        newTipDTO.setAuthor(currentUser);
-        newTipDTO.setCreationDate(dateNow);
-        TipDTO tipDTO = newTipDTO.copy();
-
-        backend.createTip(tipDTO);
-        temp_listofDTO.add(tipDTO);
+    @NonNull
+    public void mapUpdateTips(){
         mapContext.setListOfTipDto(getDTOlist());
     }
+    @NonNull
+    public void CreateTip(){
+        // see extending Class
+    }
+    @NonNull
+    public void showTipBooble(int index){
+        List<ATipDTO> list = getDTOlist();
+
+        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
+
+
+        viewPager_tipBobles.setVisibility(View.VISIBLE);
+        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+        viewPager_tipBobles.setCurrentItem(index);
+
+        if(drag_State){
+            menu_dragHandle();
+        }
+    }
+    @NonNull
+    public void showTopMessageBar(){
+
+    }
+
+
+
 
     public void closeTipBobbleViewPager () {
         viewPager_tipBobles.setVisibility(View.GONE);
@@ -557,5 +504,156 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+}
+public class MainMenuActivity extends AMainMenuActivity {
+
+
+    // CREATE A TIP STEP BY STEP HERE ...
+    private void CreateTip(){
+        CreateTip_Process(0);
+    }
+    private void CreateTip_Process ( int i){
+        switch (i) {
+            case 0: // Chose location
+                fillInTip_Map();
+                break;
+            case 1: // Write Tip
+                fillInTip_WriteTip();
+                break;
+            case 2: // finish Tip and send to back end for saving.
+                CreateTip_finish();
+                break;
+        }
+    }
+    private void fillInTip_Map(){
+
+        mapContext.setStateSelectLocation();
+        mapView_btnContainerAceptCancel.setVisibility(View.VISIBLE);
+        mapView_acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map_setupCenterButton();
+                GeoPoint location = new GeoPoint(mapContext.getSelectedLocation().latitude, mapContext.getSelectedLocation().longitude);
+                newTipDTO.setL(location); // newTipDTO is a static object that can always be called
+                mapContext.setStateStandby();
+                mapView_btnContainerAceptCancel.setVisibility(View.GONE);
+                CreateTip_Process(1);
+            }
+        });
+
+        mapView_cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map_setupCenterButton();
+                mapContext.setStateStandby();
+            }
+        });
+    }
+    private void fillInTip_WriteTip(){
+        fragment_messageWrite = new FragMessageWrite();
+        toogleFragment_WriteTip(true);
+        fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
+
+            @Override
+            public void onMessageDone(ATipDTO dto) {
+                newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
+                toogleFragment_WriteTip(false);
+                getSupportFragmentManager().popBackStack();
+                CreateTip_Process(2); // calls self to Complete the tip
+            }
+
+            @Override
+            public void onCancelTip() {
+                toogleFragment_WriteTip(false);
+                // does not call self to complete.
+            }
+
+        });
+    }
+    private void CreateTip_finish(){
+        AUserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
+        Date dateNow = new Date(System.currentTimeMillis());
+
+        newTipDTO.setAuthor(currentUser);
+        newTipDTO.setCreationDate(dateNow);
+        TipDTO tipDTO = newTipDTO.copy();
+
+        backend.createTip(tipDTO);
+        temp_listofDTO.add(tipDTO);
+        mapContext.setListOfTipDto(getDTOlist());
+    }
+
+    public void closeTipBobbleViewPager () {
+        viewPager_tipBobles.setVisibility(View.GONE);
+        Log.i(TAG, "closeTipBobbleViewPager: Closed");
+    }
+
+    // Fragments Open Close.
+    private void toogleFragment_WriteTip(boolean openValue) {
+        try {
+            FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite, openValue);
+            boolFragMessageWrite = openValue;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
+
+        if(Open){
+            transaction = fragmentManager.beginTransaction();
+            try {
+                Log.v("transaction", "Adding fragment");
+                transaction.add(containerId, fragment);
+            }catch (IllegalStateException e){
+                Log.v("transaction", "Replacing fragment");
+                transaction.replace(containerId, fragment);
+            }
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else{
+            transaction = fragmentManager.beginTransaction();
+            transaction.remove(fragment);
+            transaction.commit();
+            Log.v("transaction","Removing fragment");
+        }
+    }
+    public void toogleFragment_WriteTip(){
+        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        boolFragMessageWrite =!boolFragMessageWrite;
+    }
+
+    public List<ATipDTO> getDTOlist(){
+        List<ATipDTO> list = backend.getTips(mapContext.getLocation());
+
+        return temp_addTipsToList(list);
+    }
+    private List<ATipDTO> temp_addTipsToList(List<ATipDTO> list){
+        if(list == null){
+            list = new LinkedList<>();
+        }
+        for(int i = 0; i < temp_listofDTO.size(); i++){
+            list.add(temp_listofDTO.get(i));
+        }
+        return list;
+    };
+    private List<ATipDTO> temp_setUpDemoTips(List<ATipDTO> list){
+
+
+        AUserDTO user = new UserDTO("hans","byager","");
+        GeoPoint gp = new GeoPoint(37.4219983,-122.084);
+        String text = "hej";
+        ATipDTO tip = new TipDTO();
+        Date date = new Date();
+        tip.setMessage(text);
+        tip.setL(gp);
+        tip.setAuthor(user);
+        tip.setCreationDate(date);
+
+
+        list.add(tip);
+
+        return list;
+    }
 
 }
