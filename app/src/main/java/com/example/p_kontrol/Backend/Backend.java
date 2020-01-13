@@ -16,6 +16,14 @@ import java.util.List;
  *
  * */
 public class Backend implements IBackend {
+
+    //singleton init
+
+    private static Backend b = null;
+
+
+
+
     //TODO make backend handle preferences
 
     List<ATipDTO> aTipDTOS;
