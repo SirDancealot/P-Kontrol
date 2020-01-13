@@ -40,8 +40,6 @@
     <string name="profile_template_tableColumn_2">antal</string>
     <string name="profile_template_tableColumn_3">resultat</string>
 
-<!--    TODO translate the rest and make corrections in the default english string.xml and around in the program where it is needed -->
-
     <!-- Fragment Write a Tip  -->
     <!-- Write Tip Headers -->
     <string name="writeTip_title_step1">Vælg et sted til dit tip</string>
