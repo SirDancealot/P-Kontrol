@@ -117,8 +117,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
 
-    // todo remove all temp_ when backend gets and gives Tips
-    List<ATipDTO> temp_listofDTO = new LinkedList<>();
 
 // -- * -- Local DATA objects -- * --
 
@@ -128,7 +126,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_mainmenu);
 
         //TODO send person til logind 1 hvis de ikke er logget ind
-        temp_setUpDemoTips(temp_listofDTO);
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
@@ -392,7 +389,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         TipDTO tipDTO = newTipDTO.copy();
 
         backend.createTip(tipDTO);
-        temp_listofDTO.add(tipDTO);
         mapContext.setListOfTipDto(getDTOlist());
     }
 
@@ -438,37 +434,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     public List<ATipDTO> getDTOlist(){
         List<ATipDTO> list = backend.getTips(mapContext.getLocation());
 
-        return temp_addTipsToList(list);
-    }
-    private List<ATipDTO> temp_addTipsToList(List<ATipDTO> list){
-        if(list == null){
-            list = new LinkedList<>();
-        }
-           for(int i = 0; i < temp_listofDTO.size(); i++){
-              list.add(temp_listofDTO.get(i));
-           }
-           return list;
-    };
-    private List<ATipDTO> temp_setUpDemoTips(List<ATipDTO> list){
-
-
-        AUserDTO user = new UserDTO("hans","byager","");
-        GeoPoint gp = new GeoPoint(37.4219983,-122.084);
-        String text = "hej";
-        ATipDTO tip = new TipDTO();
-        Date date = new Date();
-        tip.setMessage(text);
-        tip.setL(gp);
-        tip.setAuthor(user);
-        tip.setCreationDate(date);
-
-
-        list.add(tip);
-
         return list;
     }
-
-
 
     public void createSignInIntent() {
         // [START auth_fui_create_intent]
