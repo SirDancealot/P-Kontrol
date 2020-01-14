@@ -2,6 +2,8 @@ package com.example.p_kontrol.DataBase;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
@@ -86,7 +88,7 @@ public class FirestoreDAO implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, List<ATipDTO> targetList) {
+    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList) {
         String collection = "tips";
 
         GeoQuery query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
