@@ -32,26 +32,18 @@ import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.Map.IMapContext;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
 import com.example.p_kontrol.UI.Map.MapContext;
-import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
-import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
-import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.auth.User;
-import com.google.rpc.Help;
 
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -118,19 +110,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
 
-    // todo remove all temp_ when backend gets and gives Tips
-    List<ATipDTO> temp_listofDTO = new LinkedList<>();
 
 // -- * -- Local DATA objects -- * --
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // check if login is needed
         setContentView(R.layout.activity_mainmenu);
 
         //TODO send person til logind 1 hvis de ikke er logget ind
-        temp_setUpDemoTips(temp_listofDTO);
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
@@ -151,7 +139,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         // Menu Category Buttons
         menuBtn_profile      = findViewById(R.id.menuBtn_profile)             ;
         menuBtn_FreePark     = findViewById(R.id.menuBtn_FreePark)            ;
-        menuBtn_Contribute   = findViewById(R.id.menuBtn_Contribute)          ;
+        menuBtn_Contribute   = findViewById(R.id.menuBtn_CreateTip)          ;
         menuBtn_Community    = findViewById(R.id.menuBtn_Community)           ;
         menuBtn_ParkAlarm    = findViewById(R.id.menuBtn_ParkAlarm)           ;
         menuBtn_PVagt        = findViewById(R.id.menuBtn_PVagt)               ;
@@ -260,7 +248,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             case (R.id.menuBtn_FreePark):
                 menuBtn_FreePark();
                 break;
-            case (R.id.menuBtn_Contribute):
+            case (R.id.menuBtn_CreateTip):
                 menuBtn_Contribute();
                 break;
                 // Menu Line 2.
@@ -362,6 +350,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             }
         });
     }
+
     private void fillInTip_WriteTip(){
         fragment_messageWrite = new FragMessageWrite();
         toogleFragment_WriteTip(true);
@@ -392,7 +381,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         TipDTO tipDTO = newTipDTO.copy();
 
         backend.createTip(tipDTO);
-        temp_listofDTO.add(tipDTO);
         mapContext.setListOfTipDto(getDTOlist());
     }
 
@@ -437,33 +425,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     public List<ATipDTO> getDTOlist(){
         List<ATipDTO> list = backend.getTips(mapContext.getLocation());
-
-        return temp_addTipsToList(list);
-    }
-    private List<ATipDTO> temp_addTipsToList(List<ATipDTO> list){
-        if(list == null){
-            list = new LinkedList<>();
-        }
-           for(int i = 0; i < temp_listofDTO.size(); i++){
-              list.add(temp_listofDTO.get(i));
-           }
-           return list;
-    };
-    private List<ATipDTO> temp_setUpDemoTips(List<ATipDTO> list){
-
-
-        AUserDTO user = new UserDTO("hans","byager","");
-        GeoPoint gp = new GeoPoint(37.4219983,-122.084);
-        String text = "hej";
-        ATipDTO tip = new TipDTO();
-        Date date = new Date();
-        tip.setMessage(text);
-        tip.setL(gp);
-        tip.setAuthor(user);
-        tip.setCreationDate(date);
-
-
-        list.add(tip);
 
         return list;
     }
