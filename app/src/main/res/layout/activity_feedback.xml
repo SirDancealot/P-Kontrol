@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="117dp"
             android:gravity="center"
-            android:text="Please provide us with feedback!"
+            android:text="@string/feedback_title"
             android:textColor="#FFFFFF"
             android:textSize="22dp" />
 
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
-            android:text="Kategori"
+            android:text="@string/feedback_category_text"
             android:textColor="#696969"
             android:textSize="18sp"
             tools:textStyle="bold" />
@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
-            android:text="Feedback besked"
+            android:text="@string/feedback_message_text"
             android:textColor="#696969"
             android:textSize="18sp"
             tools:textStyle="bold" />
@@ -80,7 +80,7 @@
             android:layout_height="66dp"
             android:background="@drawable/border"
             android:ems="10"
-            android:hint="Please write your feedback here"
+            android:hint="@string/feedback_hint_text"
             android:inputType="textMultiLine"
             android:singleLine="false"
             android:textColor="#696969"
@@ -91,7 +91,7 @@
             android:id="@+id/feedbackButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send feedback"
+            android:text="@string/feedback_send_text"
             android:textColor="#535353"
             android:textSize="18sp"
 />

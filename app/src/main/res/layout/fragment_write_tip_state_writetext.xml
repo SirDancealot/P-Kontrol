@@ -49,7 +49,7 @@
             android:padding="5dp"
 
             android:ems="10"
-            android:hint="Write here.."
+            android:hint="@string/WriteTip_TextInput"
             android:inputType="textMultiLine"
             android:gravity="top|left"
             android:minHeight="75dp" />

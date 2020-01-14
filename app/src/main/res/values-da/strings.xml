@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- TODO: fix inconsistency with danish/english text -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">C5 P-Kontrol</string>
     <string name="round_corner">Round Corner</string>
@@ -13,19 +13,19 @@
 
     <!-- Menu -->
     <!-- Menu Texts -->
-    <string name="menu_txt_profile">Profile</string>
-    <string name="menu_txt_freePark">Free Park</string>
-    <string name="menu_txt_createTip">Create Tip</string>
+    <string name="menu_txt_profile">Profil</string>
+    <string name="menu_txt_freePark">Gratis parkering</string>
+    <string name="menu_txt_createTip">Lav tip</string>
     <string name="menu_txt_feedback">Feedback</string>
-    <string name="menu_txt_parkAlarm">Park Alarm</string>
+    <string name="menu_txt_parkAlarm">Parkeringsadvarsel</string>
     <string name="menu_txt_pVagt">P-Vagt</string>
 
     <!-- Profile -->
     <!-- Profile Texts -->
-    <string name="profile_template_name">[name here]</string>
-    <string name="profile_template_numTips">number of tips </string>
-    <string name="profile_template_numLikes">number of likes </string>
-    <string name="profile_tip_changeProfileImage">change profile image</string>
+    <string name="profile_template_name">[navn her]</string>
+    <string name="profile_template_numTips">antal tips</string>
+    <string name="profile_template_numLikes">antal likes</string>
+    <string name="profile_tip_changeProfileImage">skift profilbillede</string>
 
     <!-- Profile Rating Texts -->
     <string name="profile_Rating_0"> ikke deltaget endnu </string>
@@ -42,19 +42,19 @@
 
     <!-- Fragment Write a Tip  -->
     <!-- Write Tip Headers -->
-    <string name="writeTip_title_step1">Choose location of your tip</string>
-    <string name="writeTip_title_step2">Tell us about the area</string>
-    <string name="WriteTip_TextInput">Write here..</string>
-    <string name="writeTip_title_step3">Take Picture</string>
-    <string name="writeTip_title_step4">Thank you for your contribution</string>
-    <string name="writeTip_submit_contribution">Submit Contribution</string>
-    <string name="writeTip_submit">submit</string>
+    <string name="writeTip_title_step1">Vælg et sted til dit tip</string>
+    <string name="writeTip_title_step2">Fortæl om stedet</string>
+    <string name="WriteTip_TextInput">Skriv her..</string>
+    <string name="writeTip_title_step3">Tag billede</string>
+    <string name="writeTip_title_step4">Tak for din informationsdeling</string>
+    <string name="writeTip_submit_contribution">Færdiggør deling</string>
+    <string name="writeTip_submit">Del</string>
 
     <!-- Write Tip Internal View Hints  -->
-    <string name="writeTip_View_ChooseCategory">Choose Category </string>
-    <string name="writeTip_View_writeComment">Leave Comment</string>
-    <string name="writeTip_View_optional">(Optional)</string>
-    <string name="writeTip_ThanksForContribution">Thanks for the Contribution!</string>
+    <string name="writeTip_View_ChooseCategory">Vælg kategori</string>
+    <string name="writeTip_View_writeComment">Kommenter</string>
+    <string name="writeTip_View_optional">(Valgfri)</string>
+    <string name="writeTip_ThanksForContribution">Tak for din informationsdeling</string>
 
     <!-- Categories for Tips Creation -->
     <string-array name="WriteTip_View_ChooseCategories_categoriesArr">
@@ -66,8 +66,8 @@
     </string-array>
 
     <!-- Write Tip Navigation texts -->
-    <string name="writeTip_BtmNavigation_continue">Swipe to continue</string>
-    <string name="writeTip_Navigation_finish">Tap to finish</string>
+    <string name="writeTip_BtmNavigation_continue">Træk til siden for at fortsætte</string>
+    <string name="writeTip_Navigation_finish">Tryk for at afslutte</string>
 
 
     <string name="tip1">earlier versions of Access, we used the Memo data type to store large amounts of text, and the Text data type to store shorter strings (up to 255 characters). In Access 2013 and Access 2016, these two data types have been renamed “Long Text” and “Short Text” respectively, and they have different properties and size limits depending on whether you’re using a desktop database or an Access web app. Here are the details:</string>
@@ -80,26 +80,20 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb1045192295818256</string>
 
 
-    <!-- close fragment strings -->
-    <string name="close_frag_confirm" translatable="false">Yes</string>
-    <string name="close_frag_deny" translatable="false">No</string>
-    <string name="close_frag_title" translatable="false">Close the app?</string>
-
-    <string name="feedback_choose_category">Choose Category</string>
-    <string name="feedback_title">Please provide us with feedback!</string>
-    <string name="feedback_category_text">Category</string>
-    <string name="feedback_message_text">Feedback message</string>
-    <string name="feedback_hint_text">Please write your feedback here</string>
+    <string name="feedback_choose_category">Vælg kategori</string>
+    <string name="feedback_title">Tak fordi du giver os feedback!</string>
+    <string name="feedback_category_text">Kategori</string>
+    <string name="feedback_message_text">Feedback besked</string>
+    <string name="feedback_hint_text">Skriv din feedback her</string>
     <string name="feedback_send_text">Send feedback</string>
 
 
     <string-array name="feedback_categories_array">
         <item>@string/feedback_choose_category</item>
         <item>Map</item>
-        <item>Profile</item>
+        <item>Profil</item>
         <item>Login</item>
         <item>Other</item>
     </string-array>
-
 
 </resources>
