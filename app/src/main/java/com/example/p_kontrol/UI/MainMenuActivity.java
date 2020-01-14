@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -69,8 +70,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
 // Local Data Objects
 
-    final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
-    static IBackend backend = new Backend();
+    final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver TODO redo this with viewModel implementation
     final String TAG = "MainMenuActivity";
 
 
@@ -123,6 +123,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     List<ATipDTO> temp_listofDTO = new LinkedList<>();
 
 // -- * -- Local DATA objects -- * --
+    LiveDataViewModel model; //se her
+    MutableLiveData<ATipDTO> tipCreateObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,18 +138,15 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         fragmentManager = this.getSupportFragmentManager();
         setupMenu();
         setupFragments();
-        backend = new Backend();
         map_setupMap();
 
         // login firebase
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         createSignInIntent();
 
-        LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
-        model.getTipList().observe(this, users -> {
-            adapter_TipBobbles.notifyDataSetChanged();
-        });
-
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class); //se her
+        model.getTipList().observe(this, list -> adapter_TipBobbles.notifyDataSetChanged() );
+        tipCreateObject = model.getMutableTipCreateObject();
 
     }
 
@@ -206,9 +205,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         mapListener = new IMapContextListener() {
             @Override
-            public void onReady() {
-                mapContext.setListOfTipDto(getDTOlist());
-            }
+            public void onReady() { } //mapContext.setListOfTipDto(getDTOlist()); //se her
+
 
             @Override
             public void onChangeState() {
@@ -221,9 +219,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             }
 
             @Override
-            public void onUpdate(){
-                mapContext.setListOfTipDto(getDTOlist());
+            public void onUpdate() {
+
             }
+
 
             @Override
             public void onTipClick(int index) {
@@ -399,11 +398,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         newTipDTO.setAuthor(currentUser);
         newTipDTO.setCreationDate(dateNow);
-        TipDTO tipDTO = newTipDTO.copy();
+        tipCreateObject.setValue( newTipDTO.copy() ); //se her
 
-        backend.createTip(tipDTO);
-        temp_listofDTO.add(tipDTO);
-        mapContext.setListOfTipDto(getDTOlist());
+        model.createTip(); //backend.createTip(tipDTO); //se her
+        //temp_listofDTO.add(tipDTO);
+        // mapContext.setListOfTipDto(getDTOlist()); //se her skal slettes. er håndteret af live data
     }
 
     public void closeTipBobbleViewPager () {
@@ -446,7 +445,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public List<ATipDTO> getDTOlist(){
-        List<ATipDTO> list = backend.getTips(mapContext.getLocation());
+        List<ATipDTO> list = model.getTipList().getValue(); //backend.getTips(mapContext.getLocation()); se her er ikke sikker på at den er nødvendg længere men for en sikkerheds skyld er det rettet
 
         return temp_addTipsToList(list);
     }

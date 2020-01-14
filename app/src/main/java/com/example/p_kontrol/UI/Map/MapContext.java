@@ -42,7 +42,7 @@ import java.util.List;
  *
  *
  * */
-public abstract class MapContext extends FragmentActivity implements OnMapReadyCallback, IMapContext, IMapStateInformationExpert {
+public class MapContext extends FragmentActivity implements OnMapReadyCallback, IMapContext, IMapStateInformationExpert {
 
     String TAG = "MapContext";
     private Activity activity;

@@ -12,15 +12,25 @@ import java.util.List;
 
 public class LiveDataViewModel extends ViewModel {
 
-    private MutableLiveData<List<ATipDTO>> tipList;
-
     private Backend bk = Backend.getBackend();
+
+    private MutableLiveData<List<ATipDTO>> tipList;
+    private MutableLiveData<ATipDTO> tipCreateObject;
+
 
     public void updateTips(LatLng location){
         bk.getTips(location, tipList);
     }
+    public void createTip() { bk.createTip(tipCreateObject.getValue()); }
+
+
+    //######    Getters     ######
 
     public LiveData<List<ATipDTO>> getTipList() {
         return tipList;
+    }
+
+    public MutableLiveData<ATipDTO> getMutableTipCreateObject() {
+        return tipCreateObject;
     }
 }

@@ -31,7 +31,7 @@ public class StateStandby extends State {
         super.onCreate(savedInstanceState, persistentState);
 
         LiveDataViewModel viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
-        viewModel.getTipList().observe(this, this::updateMap);
+        viewModel.getTipList().observe(this, list -> updateMap(list));
     }
 
     @Override
