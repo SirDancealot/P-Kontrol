@@ -26,18 +26,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+
         <!-- Logo Container -->
         <LinearLayout
+            android:id="@+id/LoginScreen_3_LogoContainer"
             android:transitionName="LoginScreen_LogoContainer"
-            android:id="@+id/LoginScreen_LogoContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
 
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
+            android:gravity="center"
             >
             <ImageView
                 android:layout_width="wrap_content"
@@ -60,6 +64,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
     <!-- Text inputs    -->
     <LinearLayout
@@ -104,8 +109,11 @@
             />
     </LinearLayout>
 
+
+
     <!-- Login Buttons  -->
     <LinearLayout
+        android:id="@+id/buttons_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -127,17 +135,38 @@
             android:text="@string/common_signin_button_text"
             android:textColor="#FFF" />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/LoginScreen_3_SignIn_FaceBook"
-            android:layout_width="335dp"
+        <TextView
+            android:id="@+id/LoginScreen_3_SignUp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp" />
+            android:layout_marginTop="11dp"
+            android:text="Don't have an account? Sign up"
+            android:layout_marginBottom="35dp"/>
 
-        <Button
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/LoginScreen_3_SignIn_FaceBook"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginBottom="30dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp" />
+        </LinearLayout>
+
+
+
+        <com.google.android.gms.common.SignInButton
             android:id="@+id/LoginScreen_3_SignIn_Google"
             android:layout_width="match_parent"
             android:layout_height="55dp"
@@ -151,14 +180,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            />
+             />
 
-        <TextView
-            android:id="@+id/LoginScreen_3_SignUp"
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:text="Don't have an account? Sign up" />
-    </LinearLayout>
+            android:indeterminate="true"
+            android:visibility="gone"/>
 
-</LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
