@@ -93,7 +93,7 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
 
     public void navToFacebookPage(String id) {
         try {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://groups/" + id));
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://group/" + id));
             startActivity(i);
         } catch (ActivityNotFoundException e) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/" + id));
