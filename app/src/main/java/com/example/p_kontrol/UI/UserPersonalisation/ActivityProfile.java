@@ -129,6 +129,9 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
 
     public void setContent(){
+
+
+
         if (userInfoDTO.getLogin()) {
             fname.setText(userInfoDTO.getName() + " " + userInfoDTO.getName2());
             RequestOptions requestOptions = new RequestOptions();
