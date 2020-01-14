@@ -28,7 +28,7 @@
 
             android:fontFamily="@font/ubuntu_regular"
             android:gravity="center"
-            android:text="Submit Contribution"
+            android:text="@string/writeTip_submit_contribution"
             android:textColor="@color/color_matBlack"
             android:textSize="18sp"
 
@@ -45,7 +45,7 @@
             android:drawableLeft="@drawable/ic_button_partcheckmark"
             android:background="@drawable/shape_buttonstyle_02"
             android:layout_gravity="center"
-            android:text="submit"
+            android:text="@string/writeTip_submit"
             android:textColor="@color/color_lightGray"
             style="?android:attr/buttonStyleToggle"
             />

@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:drawableTop="@drawable/ic_icon_pin"
-                android:text="@string/menu_txt_contribute"
+                android:text="@string/menu_txt_createTip"
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
