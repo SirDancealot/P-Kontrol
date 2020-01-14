@@ -1,8 +1,6 @@
 package com.example.p_kontrol.UI;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,16 +14,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.p_kontrol.Backend.Backend;
-import com.example.p_kontrol.Backend.IBackend;
-
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
@@ -36,24 +29,18 @@ import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 
 //InterFaces Map
 interface IMapOperator{
     void visibilityOfInteractBtns(int visibility);
-    void onAcceptClick(View v,View.OnClickListener onclick);
-    void onCancelClick(View v,View.OnClickListener onclick);
+    void onAcceptClick(View.OnClickListener onclick);
+    void onCancelClick(View.OnClickListener onclick);
 
     void setStateSelection();
     void setStateStandby();
@@ -84,8 +71,9 @@ interface IMenuOperationsController{
 
 // interfaces fragments
 interface IFragmentOperator{
-    void toggleWriteTip();
-    void toggleWriteTip(boolean open);
+
+    void openWriteTip(ITipWriteListener writeListener);
+    void closeWriteTip();
 
     void showTipBobbles(int index);
     void closeTipBobbles();
@@ -113,7 +101,6 @@ public class MainMenuActivity extends AppCompatActivity implements IMenuOperatio
     IMapOperator        mapOperator;
     View container;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +115,7 @@ public class MainMenuActivity extends AppCompatActivity implements IMenuOperatio
         fragmentOperator = new CompositionFragmentOperator(this,container);
 
     }
+
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
     // Menu Controll.
     @Override
@@ -169,32 +157,13 @@ public class MainMenuActivity extends AppCompatActivity implements IMenuOperatio
 
     // Map
     @Override
-    public void onTipClick(int index){}
+    public void onTipClick(int index){
+        fragmentOperator.showTipBobbles(index);
+        menuOperator.closeMenu();
+    }
     @Override
-    public void onCenterClick(View v){}
-
-    // Fragments
-    @NonNull
-    public void showTipBooble(int index){
-        List<ATipDTO> list = getDTOlist();
-
-        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
-
-        viewPager_tipBobles.setVisibility(View.VISIBLE);
-        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-        viewPager_tipBobles.setCurrentItem(index);
-
-        if(drag_State){
-            menu_dragHandle();
-        }
-    }
-    @NonNull
-    public void showTopMessageBar(){
-
-    }
-    @NonNull
-    public void showWriteTip(){
-
+    public void onCenterClick(View v){
+        mapOperator.centerOnUserLocation();
     }
 
     //User InterActionMethods
@@ -207,41 +176,43 @@ public class MainMenuActivity extends AppCompatActivity implements IMenuOperatio
         switch (i) {
             case 0: // Chose location
                 mapOperator.setStateSelection();
-                mapOperator.
-                fillInTip_Map();
+                mapOperator.visibilityOfInteractBtns(View.VISIBLE);
+                mapOperator.onAcceptClick( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mapOperator.setStateStandby();
+                        CreateTip_Process(1);
+                    }
+                });
+                mapOperator.onCancelClick(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mapOperator.setStateStandby();
+                    }
+                });
                 break;
             case 1: // Write Tip
-                fillInTip_WriteTip();
+                fragmentOperator.openWriteTip(new ITipWriteListener() {
+                    @Override
+                    public void onMessageDone(ATipDTO dto) {
+                        fragmentOperator.closeWriteTip();
+                        CreateTip_Process(2);
+                    }
+                    @Override
+                    public void onCancelTip() {
+                        fragmentOperator.closeWriteTip();
+                    }
+                });
+
                 break;
             case 2: // finish Tip and send to back end for saving.
-                CreateTip_finish();
+                Date dateNow = new Date(System.currentTimeMillis());
+
+                // todo finish tip With WM Thingy
                 break;
         }
     }
-    private void fillInTip_Map(){
-
-        mapContext.setStateSelectLocation();
-        mapView_btnContainerAceptCancel.setVisibility(View.VISIBLE);
-        mapView_acceptBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map_setupCenterButton();
-                GeoPoint location = new GeoPoint(mapContext.getSelectedLocation().latitude, mapContext.getSelectedLocation().longitude);
-                newTipDTO.setL(location); // newTipDTO is a static object that can always be called
-                mapContext.setStateStandby();
-                mapView_btnContainerAceptCancel.setVisibility(View.GONE);
-                CreateTip_Process(1);
-            }
-        });
-
-        mapView_cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map_setupCenterButton();
-                mapContext.setStateStandby();
-            }
-        });
-    }
+/*
     private void fillInTip_WriteTip(){
         fragment_messageWrite = new FragMessageWrite();
         toogleFragment_WriteTip(true);
@@ -265,7 +236,6 @@ public class MainMenuActivity extends AppCompatActivity implements IMenuOperatio
     }
     private void CreateTip_finish(){
         AUserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
-        Date dateNow = new Date(System.currentTimeMillis());
 
         newTipDTO.setAuthor(currentUser);
         newTipDTO.setCreationDate(dateNow);
@@ -274,9 +244,8 @@ public class MainMenuActivity extends AppCompatActivity implements IMenuOperatio
         backend.createTip(tipDTO);
         temp_listofDTO.add(tipDTO);
         mapContext.setListOfTipDto(getDTOlist());
-    }
+    }*/
 
-    // next Interaction.
 }
 
 class CompositionFragmentOperator   implements IFragmentOperator {
@@ -360,14 +329,15 @@ class CompositionFragmentOperator   implements IFragmentOperator {
 
     // Toogles
     @Override
-    public void toggleWriteTip() {
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-        boolFragMessageWrite =!boolFragMessageWrite;
+    public void openWriteTip(ITipWriteListener writeListener) {
+        fragment_messageWrite.setFragWriteMessageListener(writeListener);
+        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
+        boolFragMessageWrite = true;
     }
     @Override
-    public void toggleWriteTip(boolean open) {
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , open);
-        boolFragMessageWrite =open;
+    public void closeWriteTip(){
+        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
+        boolFragMessageWrite = false;
     }
 
     @Override
@@ -483,12 +453,12 @@ class CompositionMapOperator        implements IMapOperator   {
     }
 
     @Override
-    public void onAcceptClick(View v, View.OnClickListener onclick){
-        v.setOnClickListener(onclick);
+    public void onAcceptClick(View.OnClickListener onclick){
+        mapView_acceptBtn.setOnClickListener(onclick);
     }
     @Override
-    public void onCancelClick(View v,View.OnClickListener onclick){
-        v.setOnClickListener(onclick);
+    public void onCancelClick(View.OnClickListener onclick){
+        mapView_cancelBtn.setOnClickListener(onclick);
     }
     @Override
     public void visibilityOfInteractBtns(int visibility){
