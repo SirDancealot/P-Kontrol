@@ -73,20 +73,23 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
 //    }
 
 
+    Button navToFacebookBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
 
-
+        navToFacebookBtn = findViewById(R.id.feedbackFbBtn);
+        navToFacebookBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+
+        //TODO This links to "DTU - brugte bøger", change this to the id in the addressbar of the desired group.
         navToFacebookPage("1014970751849130");
     }
-
 
     public void navToFacebookPage(String id) {
         try {
