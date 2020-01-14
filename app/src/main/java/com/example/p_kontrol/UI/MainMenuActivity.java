@@ -23,7 +23,6 @@ import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_Demo;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
@@ -31,26 +30,18 @@ import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.Map.IMapContext;
 import com.example.p_kontrol.UI.Map.IMapContextListener;
 import com.example.p_kontrol.UI.Map.MapContext;
-import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
-import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
-import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.auth.User;
-import com.google.rpc.Help;
 
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -148,7 +139,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         // Menu Category Buttons
         menuBtn_profile      = findViewById(R.id.menuBtn_profile)             ;
         menuBtn_FreePark     = findViewById(R.id.menuBtn_FreePark)            ;
-        menuBtn_Contribute   = findViewById(R.id.menuBtn_Contribute)          ;
+        menuBtn_Contribute   = findViewById(R.id.menuBtn_CreateTip)          ;
         menuBtn_Community    = findViewById(R.id.menuBtn_Community)           ;
         menuBtn_ParkAlarm    = findViewById(R.id.menuBtn_ParkAlarm)           ;
         menuBtn_PVagt        = findViewById(R.id.menuBtn_PVagt)               ;
@@ -257,7 +248,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             case (R.id.menuBtn_FreePark):
                 menuBtn_FreePark();
                 break;
-            case (R.id.menuBtn_Contribute):
+            case (R.id.menuBtn_CreateTip):
                 menuBtn_Contribute();
                 break;
                 // Menu Line 2.
@@ -359,6 +350,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             }
         });
     }
+
     private void fillInTip_WriteTip(){
         fragment_messageWrite = new FragMessageWrite();
         toogleFragment_WriteTip(true);
