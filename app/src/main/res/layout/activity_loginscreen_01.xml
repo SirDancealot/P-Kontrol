@@ -52,21 +52,23 @@
         android:id="@+id/LoginScreen_LogoContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="328dp"
         android:gravity="center"
         android:orientation="vertical"
         android:transitionName="LoginScreen_LogoContainer"
         android:clickable="true"
         android:focusable="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/ic_app_logo" />
 
         <TextView
             android:layout_width="196dp"

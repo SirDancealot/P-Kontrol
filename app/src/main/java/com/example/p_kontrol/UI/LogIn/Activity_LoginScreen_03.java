@@ -191,7 +191,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         Log.d(TAG, "onActivityResult: " + requestCode);
         System.out.println("---------kkkkk" + requestCode);
 
-        loding.setVisibility(View.VISIBLE);
+//        loding.setVisibility(View.VISIBLE);
 
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -262,7 +262,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         if (!validateForm()) {
             return;
         }
-        loding.setVisibility(View.VISIBLE);
+//        loding.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this);
     }
