@@ -18,8 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.Feedback.ActivityFeedback"></activity>
-        <activity android:name=".UI.LogIn.Activity_LoginScreen_Demo"></activity>
+        <activity android:name=".UI.LogIn.Activity_SigeUp">
+
+        </activity>
+        <activity android:name=".UI.LogIn.Activity_LoginScreen_Demo2" />
+        <activity android:name=".UI.Feedback.ActivityFeedback" />
+        <activity android:name=".UI.LogIn.Activity_LoginScreen_Demo" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -32,16 +36,24 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".UI.UserPersonalisation.ActivityProfile" android:noHistory="true" />
-        <activity android:name=".UI.LogIn.Activity_LoginScreen_03" android:noHistory="true" />
-        <activity android:name=".UI.LogIn.Activity_LoginScreen_02" android:noHistory="true" />
-        <activity android:name=".UI.LogIn.Activity_LoginScreen_01" android:noHistory="true" />
-        <activity android:name=".UI.MainMenuActivity" >
+        <activity
+            android:name=".UI.UserPersonalisation.ActivityProfile"
+            android:noHistory="true" />
+        <activity android:name=".UI.LogIn.Activity_LoginScreen_03"/>
+        <activity
+            android:name=".UI.LogIn.Activity_LoginScreen_02"
+            android:noHistory="true" />
+        <activity
+            android:name=".UI.LogIn.Activity_LoginScreen_01"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".UI.MainMenuActivity">
+
         </activity>
     </application>
 

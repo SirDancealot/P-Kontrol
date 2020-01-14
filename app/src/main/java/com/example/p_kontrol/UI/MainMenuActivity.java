@@ -23,6 +23,8 @@ import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_01;
+import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_Demo;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
@@ -124,8 +126,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         map_setupMap();
 
         // login firebase
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        createSignInIntent();
 
     }
 
@@ -429,34 +429,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         return list;
     }
 
-    public void createSignInIntent() {
-        // [START auth_fui_create_intent]
-        // Choose authentication providers
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            if (user != null) {
-                userInfoDTO.setUser(user);
-            } else {
-                providers = Arrays.asList(
-                        new AuthUI.IdpConfig.EmailBuilder().build(),
-                        new AuthUI.IdpConfig.GoogleBuilder().build(),
-                        new AuthUI.IdpConfig.FacebookBuilder().build(),
-                        new AuthUI.IdpConfig.PhoneBuilder().build());
-
-                // Create and launch sign-in intent
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .setTheme(R.style.login)
-                                .setLogo(R.drawable.logo)
-                                .build(),
-                        RC_SIGN_IN);
-            }
-
-        // [END auth_fui_create_intent]
-    }
 
     // Android Specifiks
     @Override
@@ -477,9 +451,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         else {
             Log.d(TAG, "onBackPressed: back pressed");
             //TODO: find ud af om vi skal bruge dialog box eller fade out
-            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
-            super.onBackPressed();
-            overridePendingTransition(0, android.R.anim.fade_out);
+            fragment_close.show(getSupportFragmentManager(), "closeFragment");
+            //super.onBackPressed();
+            //overridePendingTransition(0, android.R.anim.fade_out);
         }
     }
     @Override
@@ -493,28 +467,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
-    // [START auth_fui_result]
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                userInfoDTO.setUser(user);
-
-                // ...
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
-    }
 
 
 }
