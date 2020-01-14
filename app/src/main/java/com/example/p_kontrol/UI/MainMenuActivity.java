@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -20,8 +21,6 @@ import com.example.p_kontrol.Backend.IBackend;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
-import com.example.p_kontrol.DataTypes.IUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
@@ -50,73 +49,165 @@ import java.util.LinkedList;
 import java.util.List;
 
 
+//InterFaces Map
+interface IMapOperator{
+    void visibilityOfInteractBtns(int visibility);
+    void onAcceptClick(View v,View.OnClickListener onclick);
+    void onCancelClick(View v,View.OnClickListener onclick);
+
+    void setStateSelection();
+    void setStateStandby();
+    void setStateParking();
+    void centerOnUserLocation();
+}
+interface IMapOperatorController{
+    void onTipClick(int index);
+    void onCenterClick(View v);
+}
+
+// interfaces Menu
+interface IMenuOperator{
+    void toggleMenu();
+    void closeMenu();
+    void openMenu();
+
+    boolean isMenuOpen();
+}
+interface IMenuOperationsController{
+    void menuBtn_profile();
+    void menuBtn_FreePark();
+    void menuBtn_Contribute();
+    void menuBtn_Community();
+    void menuBtn_ParkAlarm();
+    void menuBtn_PVagt();
+}
+
+// interfaces fragments
+interface IFragmentOperator{
+    void toggleWriteTip();
+    void toggleWriteTip(boolean open);
+
+    void showTipBobbles(int index);
+    void closeTipBobbles();
+
+
+    boolean isWriteTipOpen();
+    boolean isTipBobbleOpen();
+    boolean isTopBarOpen();
+}
+
+
 /**
  * @responsibilty responsibility to Handle UI interaction on this XML layout.
  *
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  * */
-public class MainMenuActivity extends MainMenuActivity_androidMethods {
+public class MainMenuActivity extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
+
+    // THIS IS THE CONTROLLER CLASS
 
     final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
+    IMenuOperator       menuOperator;
+    IFragmentOperator   fragmentOperator;
+    IMapOperator        mapOperator;
+    View container;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mainmenu);
+        container = findViewById(R.id.mainMenu_layout);
+
+        // setting compositions
+        // delegates responsibility for Creating Views out to keep code simple, however, each referes back here
+        // for controll.
+        menuOperator     = new CompositionMenuOperator(this, container );
+        mapOperator      = new CompositionMapOperator(this,container, this);
+        fragmentOperator = new CompositionFragmentOperator(this,container);
+
     }
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
-
-    @NonNull
+    // Menu Controll.
     @Override
     public void menuBtn_profile(){
         Log.i("click","Profile btn clicked \n");
         Intent changeActivity = new Intent( this , ActivityProfile.class );
         startActivity(changeActivity);
     }
-    @NonNull
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
         //setupTipBobblesPagerViewer();
     }
-    @NonNull
     @Override
     public void menuBtn_Contribute(){
 
         // Closing the Menu down.
-        menu_dragHandle();
+        menuOperator.toggleMenu();
 
         // starting Contribute process at index 0. meaning the very first step.
         CreateTip();
 
     }
-    @NonNull
     @Override
     public void menuBtn_Community(){
         Log.i("click","Community btn clicked \n");
         Intent changeActivity = new Intent( this , ActivityFeedback.class);
         startActivity(changeActivity);
     }
-    @NonNull
     @Override
     public void menuBtn_ParkAlarm(){
         Log.i("click","Park Alarm btn clicked \n");
     }
-    @NonNull
     @Override
     public void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
 
     }
 
-    @NonNull
+    // Map
     @Override
-    public void CreateTip(){
+    public void onTipClick(int index){}
+    @Override
+    public void onCenterClick(View v){}
+
+    // Fragments
+    @NonNull
+    public void showTipBooble(int index){
+        List<ATipDTO> list = getDTOlist();
+
+        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
+
+        viewPager_tipBobles.setVisibility(View.VISIBLE);
+        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+        viewPager_tipBobles.setCurrentItem(index);
+
+        if(drag_State){
+            menu_dragHandle();
+        }
+    }
+    @NonNull
+    public void showTopMessageBar(){
+
+    }
+    @NonNull
+    public void showWriteTip(){
+
+    }
+
+    //User InterActionMethods
+    // Create Tip
+    @NonNull
+    private void CreateTip(){
         CreateTip_Process(0);
     }
     private void CreateTip_Process ( int i){
         switch (i) {
             case 0: // Chose location
+                mapOperator.setStateSelection();
+                mapOperator.
                 fillInTip_Map();
                 break;
             case 1: // Write Tip
@@ -185,30 +276,327 @@ public class MainMenuActivity extends MainMenuActivity_androidMethods {
         mapContext.setListOfTipDto(getDTOlist());
     }
 
-    @NonNull
+    // next Interaction.
+}
+
+class CompositionFragmentOperator   implements IFragmentOperator {
+
+    AppCompatActivity context;
+    View view;
+    private String TAG = this.getClass().getName();
+
+
+    FragMessageWrite    fragment_messageWrite   ;
+    FragTipBobble       fragment_tipBobble      ;
+    FragTopMessageBar   fragment_topMessage     ;
+
+
+    //ViewPager - Tip bobbles.
+    FragmentPagerAdapter adapter_TipBobbles;
+    ViewPager viewPager_tipBobles;
+
+    //Specials
+    FragmentManager fragmentManager;
+    FragmentTransaction transaction;
+
+    //Booleans for Open Closing Fragments.
+    boolean boolFragMessageWrite    ;
+    boolean boolFragTipBobble       ;
+    boolean boolFragTopMessageBar   ;
+
+    public CompositionFragmentOperator(AppCompatActivity context, View view){
+
+        this.context = context;
+        this.view = view;
+
+        fragmentManager = context.getSupportFragmentManager();
+        //TipBobbles are all inside this ViewPager Container
+        viewPager_tipBobles = this.view.findViewById(R.id.mainMenu_viewPager_TipBobbles);
+        viewPager_tipBobles.setVisibility(ViewPager.GONE);
+
+        boolFragMessageWrite    = false;
+        boolFragTipBobble       = false;
+        boolFragTopMessageBar   = false;
+
+        fragment_messageWrite = new FragMessageWrite()  ;
+        fragment_tipBobble    = new FragTipBobble()     ;
+        fragment_topMessage   = new FragTopMessageBar() ;
+    }
+
+
+
+    // Open Close Fragments and or Views.
+    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
+
+        if(Open){
+            transaction = fragmentManager.beginTransaction();
+            try {
+                Log.v("transaction", "Adding fragment");
+                transaction.add(containerId, fragment);
+            }catch (IllegalStateException e){
+                Log.v("transaction", "Replacing fragment");
+                transaction.replace(containerId, fragment);
+            }
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else{
+            transaction = fragmentManager.beginTransaction();
+            transaction.remove(fragment);
+            transaction.commit();
+            Log.v("transaction","Removing fragment");
+        }
+    }
+   /*public void toogleFragment_WriteTip(boolean open){
+        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , open);
+        boolFragMessageWrite = open;
+    }
+    public void toogleFragment_WriteTip(){
+
+    }
+    public void closeTipBobbleViewPager() {
+        viewPager_tipBobles.setVisibility(View.GONE);
+        Log.i(TAG, "closeTipBobbleViewPager: Closed");
+    }*/
+
+    // Toogles
     @Override
-    public void showTipBooble(int index){
+    public void toggleWriteTip() {
+        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
+        boolFragMessageWrite =!boolFragMessageWrite;
+    }
+    @Override
+    public void toggleWriteTip(boolean open) {
+        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , open);
+        boolFragMessageWrite =open;
+    }
+
+    @Override
+    public void showTipBobbles(int index) {
         List<ATipDTO> list = getDTOlist();
 
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
 
-
         viewPager_tipBobles.setVisibility(View.VISIBLE);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);
         viewPager_tipBobles.setCurrentItem(index);
-
-        if(drag_State){
-            menu_dragHandle();
-        }
     }
-    @NonNull
     @Override
-    public void showTopMessageBar(){
+    public void closeTipBobbles(){
+        viewPager_tipBobles.setVisibility(View.GONE);
+    }
 
+
+
+
+    // Booleans
+    @Override
+    public boolean isWriteTipOpen(){
+        return boolFragMessageWrite;
+    }
+    @Override
+    public boolean isTipBobbleOpen(){
+        return boolFragTipBobble;
+    }
+    @Override
+    public boolean isTopBarOpen(){
+        return boolFragTopMessageBar;
+    }
+}
+class CompositionMapOperator        implements IMapOperator   {
+
+    AppCompatActivity context;
+    IMapOperatorController mapController;
+    View view;
+    private String TAG = this.getClass().getName();
+
+    IMapContext mapContext              ;
+    IMapContextListener mapListener     ;
+
+    Button mapView_centerBtn;
+    Button mapView_acceptBtn;
+    Button mapView_cancelBtn;
+    View mapView_btnContainerAceptCancel;
+
+    public CompositionMapOperator(AppCompatActivity context,View view, IMapOperatorController mapController ){
+        this.context = context;
+        this.view = view;
+        this.mapController = mapController;
+
+        mapView_centerBtn = view.findViewById(R.id.mainMenu_Map_centerBtn);
+        mapView_acceptBtn = view.findViewById(R.id.mainMenu_map_acceptBtn);
+        mapView_cancelBtn = view.findViewById(R.id.mainMenu_map_cancelBtn);
+        mapView_btnContainerAceptCancel = view.findViewById(R.id.mainMenu_acceptCancelContainer);
+        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
+
+        mapListener = new IMapContextListener() {
+            @Override
+            public void onReady() {}
+
+            @Override
+            public void onChangeState() {
+
+            }
+
+            @Override
+            public void onSelectedLocation() {
+
+            }
+
+            @Override
+            public void onUpdate(){
+
+            }
+
+            @Override
+            public void onTipClick(int index) {
+                mapController.onTipClick(index);
+            }
+
+        };
+        SupportMapFragment mapFrag = (SupportMapFragment) this.context.getSupportFragmentManager().findFragmentById(R.id.mainMenu_map);
+        mapContext = new MapContext( mapFrag,context, mapListener);
+
+        mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               mapController.onCenterClick(v);
+               //mapContext.centerMap();
+            }
+        });
+    }
+
+    @Override
+    public void centerOnUserLocation(){
+        mapContext.centerMap();
+    }
+    @Override
+    public void setStateSelection() {
+
+    }
+    @Override
+    public void setStateStandby() {
+
+    }
+    @Override
+    public void setStateParking() {
+
+    }
+
+    @Override
+    public void onAcceptClick(View v, View.OnClickListener onclick){
+        v.setOnClickListener(onclick);
+    }
+    @Override
+    public void onCancelClick(View v,View.OnClickListener onclick){
+        v.setOnClickListener(onclick);
+    }
+    @Override
+    public void visibilityOfInteractBtns(int visibility){
+        mapView_btnContainerAceptCancel.setVisibility(visibility);
     }
 
 }
-abstract class MainMenuActivity_androidMethods      extends MainMenuActivity_FragmentController {
+class CompositionMenuOperator       implements View.OnClickListener, IMenuOperator{
+
+    IMenuOperationsController context;
+    private String TAG = this.getClass().getName();
+
+    // Menu Views.
+    View menuBtnContainer,dragHandle;
+    Button  menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
+            menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
+    // menu Open or Close State
+    boolean drag_State;
+
+    public CompositionMenuOperator(IMenuOperationsController context, View view){
+        // Menu Buttons.
+        menuBtnContainer     = view.findViewById(R.id.menu_btnContainer)           ;
+        dragHandle           = view.findViewById(R.id.menuBtn_draggingHandle)      ;
+
+        // Menu Category Buttons
+        menuBtn_profile      = view.findViewById(R.id.menuBtn_profile)             ;
+        menuBtn_FreePark     = view.findViewById(R.id.menuBtn_FreePark)            ;
+        menuBtn_Contribute   = view.findViewById(R.id.menuBtn_Contribute)          ;
+        menuBtn_Community    = view.findViewById(R.id.menuBtn_Community)           ;
+        menuBtn_ParkAlarm    = view.findViewById(R.id.menuBtn_ParkAlarm)           ;
+        menuBtn_PVagt        = view.findViewById(R.id.menuBtn_PVagt)               ;
+
+        // Setting Listeners
+        dragHandle.setOnClickListener(this);
+        menuBtn_profile.setOnClickListener(this);
+        menuBtn_FreePark.setOnClickListener(this);
+        menuBtn_Contribute.setOnClickListener(this);
+        menuBtn_Community.setOnClickListener(this);
+        menuBtn_ParkAlarm.setOnClickListener(this);
+        menuBtn_PVagt.setOnClickListener(this);
+
+        // Setup Menu Toggle Position
+        drag_State = false;
+        menuBtnContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case ( R.id.menuBtn_draggingHandle):
+                toggleMenu();
+                break;
+            // Menu Line 1.
+            case (R.id.menuBtn_profile):
+                context.menuBtn_profile();
+                break;
+            case (R.id.menuBtn_FreePark):
+                context.menuBtn_FreePark();
+                break;
+            case (R.id.menuBtn_Contribute):
+                context.menuBtn_Contribute();
+                break;
+            // Menu Line 2.
+            case (R.id.menuBtn_Community):
+                context.menuBtn_Community();
+                break;
+            case (R.id.menuBtn_ParkAlarm):
+                context.menuBtn_ParkAlarm();
+                break;
+            case (R.id.menuBtn_PVagt):
+                context.menuBtn_ParkAlarm();
+                break;
+        }
+    }
+
+    // Interface
+    @Override
+    public void toggleMenu( ){
+        // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
+        if(drag_State){
+            Log.v("click","Menu Container Closed\n");
+            menuBtnContainer.setVisibility(View.GONE);
+            drag_State = false;
+        }else{
+            Log.v("click","Menu Container Open\n");
+            menuBtnContainer.setVisibility(View.VISIBLE);
+            drag_State = true;
+        }
+    }
+    @Override
+    public void closeMenu() {
+        menuBtnContainer.setVisibility(View.GONE);
+        drag_State = false;
+    }
+    @Override
+    public void openMenu() {
+        menuBtnContainer.setVisibility(View.VISIBLE);
+        drag_State = true;
+    }
+    @Override
+    public boolean isMenuOpen() {
+        return drag_State;
+    }
+}
+
+
+/*
+abstract class MainMenuActivity_androidMethods extends CompositionFragmentOperator {
 
     MainMenuCloseFragment fragment_close        ;
     private String TAG = "MainMenuActivity_androidMethods";
@@ -280,162 +668,7 @@ abstract class MainMenuActivity_androidMethods      extends MainMenuActivity_Fra
         }
     }
 }
-abstract class MainMenuActivity_FragmentController  extends MainMenuActivity_MapSetup{
-
-    private String TAG = "MainMenuActivity_FragmentController";
-
-    FragMessageWrite    fragment_messageWrite   ;
-    FragTipBobble       fragment_tipBobble      ;
-    FragTopMessageBar   fragment_topMessage     ;
-
-
-    //ViewPager - Tip bobbles.
-    FragmentPagerAdapter adapter_TipBobbles;
-    ViewPager viewPager_tipBobles;
-
-    //Specials
-    FragmentManager fragmentManager;
-    FragmentTransaction transaction;
-
-    //Booleans for Open Closing Fragments.
-    boolean boolFragMessageWrite    ;
-    boolean boolFragTipBobble       ;
-    boolean boolFragTopMessageBar   ;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        fragmentManager = this.getSupportFragmentManager();
-        //TipBobbles are all inside this ViewPager Container
-        viewPager_tipBobles = findViewById(R.id.mainMenu_viewPager_TipBobbles);
-        viewPager_tipBobles.setVisibility(ViewPager.GONE);
-
-        boolFragMessageWrite    = false;
-        boolFragTipBobble       = false;
-        boolFragTopMessageBar   = false;
-
-        fragment_messageWrite = new FragMessageWrite()  ;
-        fragment_tipBobble    = new FragTipBobble()     ;
-        fragment_topMessage   = new FragTopMessageBar() ;
-    }
-
-
-    // Open Close Fragments and or Views.
-    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
-
-        if(Open){
-            transaction = fragmentManager.beginTransaction();
-            try {
-                Log.v("transaction", "Adding fragment");
-                transaction.add(containerId, fragment);
-            }catch (IllegalStateException e){
-                Log.v("transaction", "Replacing fragment");
-                transaction.replace(containerId, fragment);
-            }
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }else{
-            transaction = fragmentManager.beginTransaction();
-            transaction.remove(fragment);
-            transaction.commit();
-            Log.v("transaction","Removing fragment");
-        }
-    }
-    public void toogleFragment_WriteTip(boolean open){
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , open);
-        boolFragMessageWrite = open;
-    }
-    public void toogleFragment_WriteTip(){
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , boolFragMessageWrite);
-        boolFragMessageWrite =!boolFragMessageWrite;
-    }
-    public void closeTipBobbleViewPager() {
-        viewPager_tipBobles.setVisibility(View.GONE);
-        Log.i(TAG, "closeTipBobbleViewPager: Closed");
-    }
-
-}
-abstract class MainMenuActivity_MapSetup            extends MainMenuActivity_BackEnd{
-    private String TAG = "MainMenuActivity_MapSetup";
-
-    IMapContext mapContext              ;
-    IMapContextListener mapListener     ;
-
-    Button mapView_centerBtn;
-    Button mapView_acceptBtn;
-    Button mapView_cancelBtn;
-    View mapView_btnContainerAceptCancel;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mapView_centerBtn = findViewById(R.id.mainMenu_Map_centerBtn);
-        mapView_acceptBtn = findViewById(R.id.mainMenu_map_acceptBtn);
-        mapView_cancelBtn = findViewById(R.id.mainMenu_map_cancelBtn);
-        mapView_btnContainerAceptCancel = findViewById(R.id.mainMenu_acceptCancelContainer);
-        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
-
-        mapListener = new IMapContextListener() {
-            @Override
-            public void onReady() {
-                map_UpdateTips();
-            }
-
-            @Override
-            public void onChangeState() {
-
-            }
-
-            @Override
-            public void onSelectedLocation() {
-
-            }
-
-            @Override
-            public void onUpdate(){
-                map_UpdateTips();
-            }
-
-            @Override
-            public void onTipClick(int index) {
-                showTipBooble(index);
-            }
-
-        };
-        SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mainMenu_map);
-        mapContext = new MapContext( mapFrag,this, mapListener);
-
-        mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapContext.centerMap();
-            }
-        });
-    }
-
-    @NonNull
-    @Override
-    public void map_UpdateTips(){
-        mapContext.setListOfTipDto(getDTOlist());
-    }
-
-    @NonNull
-    @Override
-    public LatLng map_getCurrentViewLocation(){
-        return mapContext.getLocation();
-    }
-
-    public void map_setupCenterButton(){
-        mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapContext.centerMap();
-            }
-        });
-    }
-}
-abstract class MainMenuActivity_BackEnd             extends MainMenuActivity_MenuSetup{
+abstract class MainMenuActivity_BackEnd             {
 
     private String TAG = "MainMenuActivity_BackEnd";
     IBackend backend = new Backend();
@@ -491,114 +724,7 @@ abstract class MainMenuActivity_BackEnd             extends MainMenuActivity_Men
     public abstract LatLng map_getCurrentViewLocation();
 
 }
-abstract class MainMenuActivity_MenuSetup           extends AppCompatActivity implements View.OnClickListener{
-
-    private String TAG = "MainMenuActivity_MenuSetup";
-    // -- * -- MENU -- * --
-
-    // Menu Views.
-    View menuBtnContainer,dragHandle;
-    Button  menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
-    // menu Open or Close State
-    boolean drag_State;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mainmenu);
-
-        // Menu Buttons.
-        menuBtnContainer     = findViewById(R.id.menu_btnContainer)           ;
-        dragHandle           = findViewById(R.id.menuBtn_draggingHandle)      ;
-
-        // Menu Category Buttons
-        menuBtn_profile      = findViewById(R.id.menuBtn_profile)             ;
-        menuBtn_FreePark     = findViewById(R.id.menuBtn_FreePark)            ;
-        menuBtn_Contribute   = findViewById(R.id.menuBtn_Contribute)          ;
-        menuBtn_Community    = findViewById(R.id.menuBtn_Community)           ;
-        menuBtn_ParkAlarm    = findViewById(R.id.menuBtn_ParkAlarm)           ;
-        menuBtn_PVagt        = findViewById(R.id.menuBtn_PVagt)               ;
-
-        // Setting Listeners
-        dragHandle.setOnClickListener(this);
-        menuBtn_profile.setOnClickListener(this);
-        menuBtn_FreePark.setOnClickListener(this);
-        menuBtn_Contribute.setOnClickListener(this);
-        menuBtn_Community.setOnClickListener(this);
-        menuBtn_ParkAlarm.setOnClickListener(this);
-        menuBtn_PVagt.setOnClickListener(this);
-
-        // Setup Menu Toggle Position
-        drag_State = false;
-        menuBtnContainer.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void onClick(View v){
-        switch(v.getId()){
-            case ( R.id.menuBtn_draggingHandle):
-                menu_dragHandle();
-                break;
-            // Menu Line 1.
-            case (R.id.menuBtn_profile):
-                menuBtn_profile();
-                break;
-            case (R.id.menuBtn_FreePark):
-                menuBtn_FreePark();
-                break;
-            case (R.id.menuBtn_Contribute):
-                menuBtn_Contribute();
-                break;
-            // Menu Line 2.
-            case (R.id.menuBtn_Community):
-                menuBtn_Community();
-                break;
-            case (R.id.menuBtn_ParkAlarm):
-                menuBtn_ParkAlarm();
-                break;
-            case (R.id.menuBtn_PVagt):
-                menuBtn_PVagt();
-                break;
-        }
-    }
-    public void menu_dragHandle( ){
-
-        // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
-        if(drag_State){
-            Log.v("click","Menu Container Closed\n");
-            menuBtnContainer.setVisibility(View.GONE);
-            drag_State = false;
-        }else{
-            Log.v("click","Menu Container Open\n");
-            menuBtnContainer.setVisibility(View.VISIBLE);
-            drag_State = true;
-        }
-
-    }
-    public abstract void  menuBtn_profile();
-    @NonNull
-    public abstract void  menuBtn_FreePark();
-    @NonNull
-    public abstract void  menuBtn_Contribute();
-    @NonNull
-    public abstract void  menuBtn_Community();
-    @NonNull
-    public abstract void menuBtn_ParkAlarm();
-    @NonNull
-    public abstract void menuBtn_PVagt();
-
-    // implement this to onClick Start and Close fragments, in the Propper Acitivity
-    @NonNull
-    public abstract void CreateTip();
-    @NonNull
-    public abstract void showTipBooble(int index);
-    @NonNull
-    public abstract void showTopMessageBar();
-
-}
-
+*/
 //todo backend skal være nederst.
 // Activity Controller
 // androidBackStackManager
