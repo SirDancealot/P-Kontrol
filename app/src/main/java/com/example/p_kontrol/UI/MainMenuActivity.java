@@ -1,6 +1,7 @@
 package com.example.p_kontrol.UI;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,9 @@ import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Map.IState;
+import com.example.p_kontrol.UI.Map.State;
+import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
@@ -29,69 +33,101 @@ import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
+import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.Date;
 import java.util.List;
 
-
-//InterFaces Map
-interface IMapOperator{
-    void visibilityOfInteractBtns(int visibility);
-    void onAcceptClick(View.OnClickListener onclick);
-    void onCancelClick(View.OnClickListener onclick);
-
-    void setStateSelection();
-    void setStateStandby();
-    void setStateParking();
-    void centerOnUserLocation();
-}
-interface IMapOperatorController{
-    void onTipClick(int index);
-    void onCenterClick(View v);
-}
-
-// interfaces Menu
-interface IMenuOperator{
-    void toggleMenu();
-    void closeMenu();
-    void openMenu();
-
-    boolean isMenuOpen();
-}
-interface IMenuOperationsController{
-    void menuBtn_profile();
-    void menuBtn_FreePark();
-    void menuBtn_Contribute();
-    void menuBtn_Community();
-    void menuBtn_ParkAlarm();
-    void menuBtn_PVagt();
-}
-
-// interfaces fragments
-interface IFragmentOperator{
-
-    void openWriteTip(ITipWriteListener writeListener);
-    void closeWriteTip();
-
-    void showTipBobbles(int index);
-    void closeTipBobbles();
-
-
-    boolean isWriteTipOpen();
-    boolean isTipBobbleOpen();
-    boolean isTopBarOpen();
-}
-
-
 /**
  * @responsibilty responsibility to Handle UI interaction on this XML layout.
+ *
+ * implemented using Composition(with a touch of delegation) Pattern and inheritance;
  *
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  * */
-public class MainMenuActivity extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
+public class MainMenuActivity extends MainMenuActivityController{
+
+    // this Handels the backStack, to see controlls look at MainMenuAcitivityController.
+
+    MainMenuCloseFragment fragment_close        ;
+    private String TAG = "MainMenuActivity_androidMethods";
+    static final int RC_SIGN_IN = 3452;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fragment_close= new MainMenuCloseFragment(this);
+    }
+
+    // Android Specifiks
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "onBackPressed: Something happened");
+        if (mapOperator.getCurrentState() instanceof StateSelectLocation) {
+            Log.d(TAG, "onBackPressed: stateSelect");
+            mapOperator.setStateStandby();
+        }
+
+
+        else if ( fragmentOperator.isTipBobbleOpen()) {
+            Log.d(TAG, "onBackPressed: viewPager");
+            fragmentOperator.closeTipBobbles();
+        }
+        else if (menuOperator.isMenuOpen()) {
+            Log.d(TAG, "onBackPressed: Bottom menue");
+            menuOperator.closeMenu();
+        }
+        else {
+            Log.d(TAG, "onBackPressed: back pressed");
+            //TODO: find ud af om vi skal bruge dialog box eller fade out
+            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
+            super.onBackPressed();
+            overridePendingTransition(0, android.R.anim.fade_out);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            mapOperator.updatePermissions();
+        } else {
+            // Permission was denied. Display an error message.
+            Log.d(TAG, "onRequestPermissionsResult: false");
+        }
+
+    }
+    // [START auth_fui_result]
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //todo replace with WM
+                //userInfoDTO.setUser(user);
+
+                // ...
+            } else {
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+            }
+        }
+    }
+}
+class MainMenuActivityController extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
 
     // THIS IS THE CONTROLLER CLASS
 
@@ -247,7 +283,6 @@ public class MainMenuActivity extends AppCompatActivity implements IMenuOperatio
     }*/
 
 }
-
 class CompositionFragmentOperator   implements IFragmentOperator {
 
     AppCompatActivity context;
@@ -339,7 +374,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
         boolFragMessageWrite = false;
     }
-
     @Override
     public void showTipBobbles(int index) {
         List<ATipDTO> list = getDTOlist();
@@ -354,7 +388,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     public void closeTipBobbles(){
         viewPager_tipBobles.setVisibility(View.GONE);
     }
-
 
 
 
@@ -460,6 +493,17 @@ class CompositionMapOperator        implements IMapOperator   {
     public void onCancelClick(View.OnClickListener onclick){
         mapView_cancelBtn.setOnClickListener(onclick);
     }
+
+
+    @Override
+    public IState getCurrentState() {
+        return mapContext.getCurrentState();
+    }
+    @Override
+    public void updatePermissions(){
+        mapContext.updatePermissions();
+    }
+
     @Override
     public void visibilityOfInteractBtns(int visibility){
         mapView_btnContainerAceptCancel.setVisibility(visibility);
@@ -564,141 +608,55 @@ class CompositionMenuOperator       implements View.OnClickListener, IMenuOperat
     }
 }
 
+//InterFaces Map
+interface IMapOperator{
 
-/*
-abstract class MainMenuActivity_androidMethods extends CompositionFragmentOperator {
+    void updatePermissions();
+    IState getCurrentState();
 
-    MainMenuCloseFragment fragment_close        ;
-    private String TAG = "MainMenuActivity_androidMethods";
-    static final int RC_SIGN_IN = 3452;
+    void visibilityOfInteractBtns(int visibility);
+    void onAcceptClick(View.OnClickListener onclick);
+    void onCancelClick(View.OnClickListener onclick);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        fragment_close= new MainMenuCloseFragment(this);
-    }
-
-    // Android Specifiks
-    @Override
-    public void onBackPressed() {
-        Log.d(TAG, "onBackPressed: Something happened");
-        if (mapContext.getCurrentState() instanceof StateSelectLocation) {
-            Log.d(TAG, "onBackPressed: stateSelect");
-            mapContext.setStateStandby();
-        }
-        else if (viewPager_tipBobles.getVisibility() == ViewPager.VISIBLE) {
-            Log.d(TAG, "onBackPressed: viewPager");
-            closeTipBobbleViewPager();
-        }
-        else if (drag_State) {
-            Log.d(TAG, "onBackPressed: Bottom menue");
-            menu_dragHandle();
-        }
-        else {
-            Log.d(TAG, "onBackPressed: back pressed");
-            //TODO: find ud af om vi skal bruge dialog box eller fade out
-            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
-            super.onBackPressed();
-            overridePendingTransition(0, android.R.anim.fade_out);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            mapContext.updatePermissions();
-        } else {
-            // Permission was denied. Display an error message.
-            Log.d(TAG, "onRequestPermissionsResult: false");
-        }
-
-    }
-    // [START auth_fui_result]
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                userInfoDTO.setUser(user);
-
-                // ...
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
-    }
+    void setStateSelection();
+    void setStateStandby();
+    void setStateParking();
+    void centerOnUserLocation();
 }
-abstract class MainMenuActivity_BackEnd             {
-
-    private String TAG = "MainMenuActivity_BackEnd";
-    IBackend backend = new Backend();
-    List<ATipDTO> temp_listofDTO = new LinkedList<>();
-    UserInfoDTO userInfoDTO;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        backend = new Backend();
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
-
-    }
-
-    public List<ATipDTO> getDTOlist(){
-        List<ATipDTO> list = backend.getTips(map_getCurrentViewLocation());
-
-        return temp_addTipsToList(list);
-    }
-    private List<ATipDTO> temp_addTipsToList(List<ATipDTO> list){
-        if(list == null){
-            list = new LinkedList<>();
-        }
-        for(int i = 0; i < temp_listofDTO.size(); i++){
-            list.add(temp_listofDTO.get(i));
-        }
-        return list;
-    };
-    private List<ATipDTO> temp_setUpDemoTips(List<ATipDTO> list){
-
-
-        AUserDTO user = new UserDTO("hans","byager","");
-        GeoPoint gp = new GeoPoint(37.4219983,-122.084);
-        String text = "hej";
-        ATipDTO tip = new TipDTO();
-        Date date = new Date();
-        tip.setMessage(text);
-        tip.setL(gp);
-        tip.setAuthor(user);
-        tip.setCreationDate(date);
-
-
-        list.add(tip);
-
-        return list;
-    }
-
-
-    @NonNull
-    public abstract void map_UpdateTips();
-
-    @NonNull
-    public abstract LatLng map_getCurrentViewLocation();
-
+interface IMapOperatorController{
+    void onTipClick(int index);
+    void onCenterClick(View v);
 }
-*/
-//todo backend skal være nederst.
-// Activity Controller
-// androidBackStackManager
-// fragmentOpenCloser
-// menuSetup
-// mapSetup
-// backend
+
+// interfaces Menu
+interface IMenuOperator{
+    void toggleMenu();
+    void closeMenu();
+    void openMenu();
+
+    boolean isMenuOpen();
+}
+interface IMenuOperationsController{
+    void menuBtn_profile();
+    void menuBtn_FreePark();
+    void menuBtn_Contribute();
+    void menuBtn_Community();
+    void menuBtn_ParkAlarm();
+    void menuBtn_PVagt();
+}
+
+// interfaces fragments
+interface IFragmentOperator{
+
+    void openWriteTip(ITipWriteListener writeListener);
+    void closeWriteTip();
+
+    void showTipBobbles(int index);
+    void closeTipBobbles();
+
+
+    boolean isWriteTipOpen();
+    boolean isTipBobbleOpen();
+    boolean isTopBarOpen();
+}
+
