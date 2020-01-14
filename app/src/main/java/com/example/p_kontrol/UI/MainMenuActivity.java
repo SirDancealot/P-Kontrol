@@ -208,7 +208,7 @@ public class MainMenuActivity extends MainMenuActivity_androidMethods {
     }
 
 }
-abstract class MainMenuActivity_androidMethods extends MainMenuActivity_FragmentController {
+abstract class MainMenuActivity_androidMethods      extends MainMenuActivity_FragmentController {
 
     MainMenuCloseFragment fragment_close        ;
     private String TAG = "MainMenuActivity_androidMethods";
@@ -280,7 +280,7 @@ abstract class MainMenuActivity_androidMethods extends MainMenuActivity_Fragment
         }
     }
 }
-abstract class MainMenuActivity_FragmentController extends MainMenuActivity_MapSetup{
+abstract class MainMenuActivity_FragmentController  extends MainMenuActivity_MapSetup{
 
     private String TAG = "MainMenuActivity_FragmentController";
 
@@ -355,7 +355,7 @@ abstract class MainMenuActivity_FragmentController extends MainMenuActivity_MapS
     }
 
 }
-abstract class MainMenuActivity_MapSetup extends MainMenuActivity_BackEnd{
+abstract class MainMenuActivity_MapSetup            extends MainMenuActivity_BackEnd{
     private String TAG = "MainMenuActivity_MapSetup";
 
     IMapContext mapContext              ;
@@ -435,7 +435,7 @@ abstract class MainMenuActivity_MapSetup extends MainMenuActivity_BackEnd{
         });
     }
 }
-abstract class MainMenuActivity_BackEnd extends MainMenuActivity_MenuSetup{
+abstract class MainMenuActivity_BackEnd             extends MainMenuActivity_MenuSetup{
 
     private String TAG = "MainMenuActivity_BackEnd";
     IBackend backend = new Backend();
@@ -491,7 +491,7 @@ abstract class MainMenuActivity_BackEnd extends MainMenuActivity_MenuSetup{
     public abstract LatLng map_getCurrentViewLocation();
 
 }
-abstract class MainMenuActivity_MenuSetup extends AppCompatActivity implements View.OnClickListener{
+abstract class MainMenuActivity_MenuSetup           extends AppCompatActivity implements View.OnClickListener{
 
     private String TAG = "MainMenuActivity_MenuSetup";
     // -- * -- MENU -- * --
@@ -599,3 +599,10 @@ abstract class MainMenuActivity_MenuSetup extends AppCompatActivity implements V
 
 }
 
+//todo backend skal være nederst.
+// Activity Controller
+// androidBackStackManager
+// fragmentOpenCloser
+// menuSetup
+// mapSetup
+// backend
