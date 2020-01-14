@@ -130,6 +130,6 @@ public class UserInfoDTO {
             this.email = user.getEmail();
         }
         this.login = true;
-
+        System.out.println(this.name);
     }
 }
