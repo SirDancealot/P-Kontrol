@@ -163,7 +163,7 @@
         </LinearLayout>
 
 
-
+<!--            TODO ser lidt grimt ud med den background, skal den slettes??-->
         <com.google.android.gms.common.SignInButton
             android:id="@+id/LoginScreen_3_SignIn_Google"
             android:layout_width="match_parent"
