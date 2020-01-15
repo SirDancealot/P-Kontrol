@@ -289,11 +289,9 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     View view;
     private String TAG = this.getClass().getName();
 
-
     FragMessageWrite    fragment_messageWrite   ;
     FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
-
 
     //ViewPager - Tip bobbles.
     FragmentPagerAdapter adapter_TipBobbles;
@@ -326,8 +324,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         fragment_tipBobble    = new FragTipBobble()     ;
         fragment_topMessage   = new FragTopMessageBar() ;
     }
-
-
 
     // Open Close Fragments and or Views.
     private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
@@ -376,13 +372,14 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     }
     @Override
     public void showTipBobbles(int index) {
-        List<ATipDTO> list = getDTOlist();
 
+        List<ATipDTO> list = null;
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
 
         viewPager_tipBobles.setVisibility(View.VISIBLE);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);
         viewPager_tipBobles.setCurrentItem(index);
+
     }
     @Override
     public void closeTipBobbles(){
