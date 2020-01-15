@@ -20,12 +20,9 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     final int TIP_SHORT_MAX_LENGTH = 250;
 
     // Argument Keys
-    final String BOBBLE_NAME = "bobbleTip_name";
-    final String BOBBLE_TEXT = "bobbleTip_text";
-    final String BOBBLE_URL  = "bobbleTip_URL";
-    final String BOBBLE_DATE = "bobbleTip_DATE";
+    final String BOBBLE_INDEX = "bobbleTip_index";
     final String TAG = "TipAdapter";
-    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+
 
 
     // Variables
@@ -42,24 +39,10 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
 
         FragTipBobble frag = new FragTipBobble();
         Bundle bundle = new Bundle();
-        ATipDTO thisElement = tips.get(position);
 
-        Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
-        bundle.putString(BOBBLE_NAME, thisElement.getAuthor().getFirstName() );
-        Log.d(TAG, "getItem:" + thisElement.getMessage());
-        bundle.putString(BOBBLE_TEXT, thisElement.getMessage() );
-        Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
-        bundle.putString(BOBBLE_DATE, DATE_FORMAT.format(thisElement.getCreationDate()) );
-        Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
-
-        try {
-            bundle.putString(BOBBLE_URL, thisElement.getAuthor().getProfileSRC());
-        } catch (Exception e){
-            Log.d(TAG, "getItem: no picture");
-        }
-
+        bundle.putString(BOBBLE_INDEX, Integer.toString(position) );
         frag.setArguments(bundle);
-        System.out.println(bundle.toString());
+
         return frag;
     }
 

@@ -21,10 +21,26 @@ public class StateStandby extends State {
 
     @Override
     public void updateMap(List<ATipDTO> list ) {
+        String iconName = null;
+
         if(list != null) {
             int i = 0;
             for (ATipDTO tip : list) {
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon", 69, 100)));
+                // todo ret navne
+                if(tip.getType() != null){
+                    if(tip.getType() == "normal"){
+                        iconName = "map_tip_pin_icon";
+                    } else if(tip.getType() == "free"){
+                        iconName = "map_tip_pin_icon";
+                    } else if(tip.getType() == "alert") {
+                        iconName = "map_tip_pin_icon";
+                    }
+                } else {
+                    iconName = "map_tip_pin_icon";
+                }
+
+
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconName, 69, 100)));
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override

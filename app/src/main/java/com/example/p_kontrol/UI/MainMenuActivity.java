@@ -207,6 +207,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             public void onTipClick(int index) {
                 List<ATipDTO> list = getDTOlist();
 
+                // todo this is not the rigth way to do it
+                userInfoDTO.setTips(list);
                 adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
 
 
