@@ -61,6 +61,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
 
     //Data
     private IState currentState;
+    LiveDataViewModel model;
 
     // Views
     private GoogleMap map;
@@ -71,11 +72,17 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        Log.d(TAG, "onCreate: ");
 
-        LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
         model.getTipList().observe(this, tips -> {
             currentState.updateMap(tips);
         });
+        model.setCurrentLocation(mLastKnownLocation);
+
+
+        currentState.updateMap(model.getTipList().getValue());
+
     }
 
     // -- METHODS --  --  --  --  --  --  --  --  --  --  --  --  --

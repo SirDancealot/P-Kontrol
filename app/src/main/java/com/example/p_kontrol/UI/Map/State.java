@@ -4,14 +4,20 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -25,19 +31,21 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
-abstract public class State extends AppCompatActivity implements IState  {
+abstract public class State extends FragmentActivity implements IState  { //TODO this should not extend activity, make it a regular object instead
 
 
 
     // Defaults.
     final int DEFAULT_MAP_ZOOM = 15;
     final int DEFAULT_ZOOM_ZOOM = 17;
-    final String TAG = "state";
+    String TAG = "state";
 
     IMapContext context;
     IMapStateInformationExpert defaultINFO;
     IMapContextListener listener = null;
     GoogleMap map;
+
+    LiveDataViewModel model;
 
     public State(MapContext context) {
         //retrieving Objects
@@ -55,8 +63,16 @@ abstract public class State extends AppCompatActivity implements IState  {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+    }
+
+    @Override
     public void updateMap(List<ATipDTO> list ) {
     }
+
     @Override
     public void setDoneListner(IMapContextListener listener) {
         this.listener = listener;

@@ -145,7 +145,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         createSignInIntent();
 
         model = ViewModelProviders.of(this).get(LiveDataViewModel.class); //se her
-        model.getTipList().observe(this, list -> adapter_TipBobbles.notifyDataSetChanged() );
+        model.getTipList().observe(this,
+                list -> {
+                    Log.d(TAG, "onCreate: list:" + list.size());
+            if (mapContext.getCurrentState() != null)
+                mapContext.getCurrentState().updateMap(list);
+        });
         tipCreateObject = model.getMutableTipCreateObject();
 
     }
