@@ -26,7 +26,7 @@ import java.util.List;
 
 public class StateParking extends State {
 
-    LatLng currentMarkerLocation = null;
+    LatLng currentLocation;
 
     MutableLiveData pVagtList;
 
@@ -42,7 +42,7 @@ public class StateParking extends State {
         super(context);
         zoomIn();
         map.clear();
-        currentMarkerLocation = context.getLocation();
+        currentLocation = context.getLocation();
 
 
     }
@@ -51,7 +51,10 @@ public class StateParking extends State {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        currentLocation = context.getLocation();
+
         LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        model.updatePVagter(currentLocation);
         model.getPvagtList().observe(this, pVagtList -> updatePVagter(pVagtList));
     }
 
