@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -230,16 +232,15 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
 
 
 
-
-
-
-
     private boolean validateForm() {
         boolean valid = true;
 
         String email = formEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
             formEmail.setError("Required.");
+            valid = false;
+        } else if (!email.contains("@")) {
+            formEmail.setError("Please write your email");
             valid = false;
         } else {
             formEmail.setError(null);
@@ -263,8 +264,12 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
             return;
         }
         loding.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this);
+
+
+        System.out.println(mAuth.getUid());
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this);
+
     }
 
 }

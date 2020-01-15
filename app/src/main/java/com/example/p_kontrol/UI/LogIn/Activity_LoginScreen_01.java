@@ -87,7 +87,11 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    changeAct();
+//                    changeAct();
+//TODO use changeAct() when it works
+                    Intent login_intent = new Intent(Activity_LoginScreen_01.this, Activity_LoginScreen_03.class );
+                    startActivity(login_intent);
+
                 }
             }, 1000);
         }
