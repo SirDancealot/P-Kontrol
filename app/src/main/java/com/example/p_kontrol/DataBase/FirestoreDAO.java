@@ -2,6 +2,8 @@ package com.example.p_kontrol.DataBase;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
@@ -10,6 +12,7 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.imperiumlabs.geofirestore.GeoFirestore;
@@ -27,6 +30,7 @@ public class FirestoreDAO implements IDatabase {
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
     GeoFirestore geoFirestore = new GeoFirestore(tips);
+    GeoQuery query;
 
     @Override
     public List<QuerySnapshot> getDocumentList (CollectionReference collection, List<String> ids){
@@ -86,44 +90,78 @@ public class FirestoreDAO implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, List<ATipDTO> targetList) {
-        String collection = "tips";
+    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList) {
 
-        GeoQuery query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
+        if (query != null)
+            query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
+        else
+            query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
 
-        query.addGeoQueryEventListener(new GeoQueryEventListener() {
-            boolean updateIndividual = false;
-            ArrayList<String> documents = new ArrayList<>();
-            @Override
-            public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
-                Log.d(TAG, "onKeyEntered: Document " + s + " has entered the search area at " + geoPoint.toString());
-                if (updateIndividual) {
+        query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
 
-                } else {
-                    documents.add(s);
-                }
+    }
+
+    /**
+     * Inner class for at kunne udvide den eksisterende GeoQueryLocation primært med en constructor
+     */
+    private class CustomGeoQueryLocation implements GeoQueryEventListener {
+        IDatabase dao;
+        MutableLiveData<List<ATipDTO>> tipList;
+        CollectionReference collection;
+
+        boolean updateIndividual = false;
+        ArrayList<String> documents = new ArrayList<>();
+
+        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ATipDTO>> tipList, CollectionReference collection) {
+            this.dao = dao;
+            this.tipList = tipList;
+            this.collection = collection;
+        }
+
+        @Override
+        public void onGeoQueryError(@NotNull Exception e) {
+            Log.e(TAG, "onGeoQueryError: An error has occured in querying", e);
+        }
+
+        /**
+         * Bliver kaldt når alle de allerede eksisterende tips er blevet fundet til at man kan initialisere mange på en gang
+         */
+        @Override
+        public void onGeoQueryReady() {
+            updateIndividual = true;
+            List<ATipDTO> tips = tipList.getValue();
+            List<QuerySnapshot> snapshots = dao.getDocumentList(collection, documents);
+            for (QuerySnapshot snapshot : snapshots) {
+                tips.addAll(snapshot.toObjects(ATipDTO.class));
             }
+            tipList.postValue(tips);
+        }
 
-            @Override
-            public void onKeyExited(@NotNull String s) {
-                Log.d(TAG, "onKeyExited: Document " + s + " has left the search area");
-            }
+        @Override
+        public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
+            if (updateIndividual) {
+                //Kode til at opdatere tips løbende skal være her
 
-            @Override
-            public void onKeyMoved(@NotNull String s, @NotNull GeoPoint geoPoint) {
-                Log.d(TAG, "onKeyMoved: Document " + s + " has moved within the search area to " + geoPoint.toString());
+            } else {
+                documents.add(s);
             }
+        }
 
-            @Override
-            public void onGeoQueryReady() {
-                Log.d(TAG, "onGeoQueryReady: all initial data has been loaded");
-                updateIndividual = true;
-            }
+        @Override
+        public void onKeyExited(@NotNull String s) {
+            List<ATipDTO> tips = tipList.getValue();
+            ArrayList<String> documents = new ArrayList<String>();
+            documents.add(s);
+            List<QuerySnapshot> snapshots = dao.getDocumentList(collection, documents);
+            QuerySnapshot snapshot = snapshots.get(0);
+            snapshot.toObjects(ATipDTO.class); //find tippet der matcher denne i tips og slet den fra listen og sæt tips på ny i MutableLiveData
 
-            @Override
-            public void onGeoQueryError(@NotNull Exception e) {
-                Log.e(TAG, "onGeoQueryError: there was an error with this querry", e);
-            }
-        });
+
+        }
+
+        @Override
+        public void onKeyMoved(@NotNull String s, @NotNull GeoPoint geoPoint) {
+            //Dette er kun nødvendigt at implementere hvis tips positioner kommer til at kunne fløtte sig
+        }
     }
 }

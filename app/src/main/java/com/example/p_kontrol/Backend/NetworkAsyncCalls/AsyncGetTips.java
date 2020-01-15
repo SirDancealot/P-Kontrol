@@ -4,6 +4,8 @@ package com.example.p_kontrol.Backend.NetworkAsyncCalls;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
@@ -13,37 +15,37 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AsyncGetTips extends AsyncTask< Void, Void, List<ATipDTO> >{
+public class AsyncGetTips extends AsyncTask< Void, Void, Void >{
     private static final String TAG = "AsyncGetTips";
     private IDatabase DAO = new FirestoreDAO();
-    private List list = new ArrayList<ATipDTO>();
     private double radius;
     private LatLng location;
+    private MutableLiveData<List<ATipDTO>> tipList;
 
     private IOnTaskComplete onTaskComplete;
 
 
-    public AsyncGetTips(LatLng location, double radius, IOnTaskComplete onComplete){
+    public AsyncGetTips(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList){
         this.location = location;
         this.radius = radius;
-        onTaskComplete = onComplete;
+        this.tipList = tipList;
     }
 
     @Override
-    protected List<ATipDTO> doInBackground(Void... params) {
+    protected Void doInBackground(Void... params) {
         try {
-            list = DAO.getTipList(location, radius);
+
+            DAO.queryByLocation(location, radius, tipList);
 
 
         }catch(Exception e){
             Log.e(TAG, "doInBackground: ", e);
         }
-        return list;
 
+        return null;
     }
 
     protected void onPostExecute(List<ATipDTO> result) {
-        onTaskComplete.OnTaskComplete(result);
 
     }
 
