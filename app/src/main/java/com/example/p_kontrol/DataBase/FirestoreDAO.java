@@ -2,6 +2,7 @@ package com.example.p_kontrol.DataBase;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.p_kontrol.Backend.IDatabase;
@@ -10,9 +11,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.imperiumlabs.geofirestore.GeoFirestore;
@@ -21,6 +22,7 @@ import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -32,9 +34,61 @@ public class FirestoreDAO implements IDatabase {
     GeoFirestore geoFirestore = new GeoFirestore(tips);
     GeoQuery query;
 
+    /**
+     * Retrieves a list of documents by id in from the provided location.
+     *
+     * @param collection the collection to be searched
+     * @param ids a list of the specific documents to be retrieved from the collection
+     * @return Returns a list of DocumentSnapshot's for the requested documents
+     */
     @Override
-    public List<QuerySnapshot> getDocumentList (CollectionReference collection, List<String> ids){
-        return null;
+    public List<DocumentSnapshot> getDocumentList (CollectionReference collection, @NonNull @NotNull List<String> ids){
+        @NotNull @NonNull List<DocumentSnapshot> list = new LinkedList<>();
+        LinkedList<Boolean> counter = new LinkedList(); //list used to count number of processed elements and store data about their success. true means successful.
+
+        Object countLock = new Object();
+
+        //For all documents, retrieve them and add them to a list
+        for (String id : ids) {
+            collection.document(id).get()
+                    .addOnCompleteListener(
+                        task -> {
+                            if (task.isSuccessful()) {
+                                synchronized (list) {
+                                    list.add(task.getResult());
+                                    counter.add(true); //add to count
+                                }
+                            } else {
+                                synchronized (countLock) {
+                                    counter.add(false); //add to count
+                                }
+                                Log.e(TAG, "getDocumentList: document: " + id, task.getException());
+                            }
+
+
+                        }
+                    )
+                    .addOnCanceledListener(
+                            () -> {
+                                synchronized (countLock) {
+                                    counter.add(false); //add to count
+                                }
+                            }
+                    )
+            ;
+        }
+
+        //wait for all data to either fail or be retrieved
+        while (counter.size() < ids.size()){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //wait for it
+        }
+
+        return list;
     }
 
     @Override
