@@ -17,7 +17,7 @@ import com.example.p_kontrol.R;
 
 public class ActivityFeedback extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    IBackend backend = new Backend();
+    //IBackend backend = new Backend();
     Spinner dropDownCategory;
     EditText feedbackText;
     Button sendFeedbackBtn;
@@ -60,7 +60,7 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
             sendFeedbackBtn.setError("Please choose a category in the drop down menu");
             Toast.makeText(this, sendFeedbackBtn.getError(), Toast.LENGTH_LONG).show();
         } else {
-            backend.postFeedback(categoryText, feedbackText.getText().toString());
+            //backend.postFeedback(categoryText, feedbackText.getText().toString());
         }
     }
 }

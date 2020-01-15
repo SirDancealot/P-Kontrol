@@ -12,7 +12,6 @@ import java.util.List;
 public interface IMapContext {
 
 
-    void setListOfTipDto(List<ATipDTO> list );
     void centerMap();
     void setStateStandby();
     void setStateSelectLocation();

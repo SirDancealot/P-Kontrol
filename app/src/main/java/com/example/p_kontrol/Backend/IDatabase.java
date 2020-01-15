@@ -6,7 +6,7 @@ import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface IDatabase {
 
     List<ATipDTO> getTipList(LatLng location, double radius);
 
-    public List<QuerySnapshot> getDocumentList (CollectionReference collection, List<String> ids);
+    public List<DocumentSnapshot> getDocumentList (CollectionReference collection, List<String> ids);
 
     void createTip(ATipDTO tip);
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
+import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetPVagter;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
@@ -43,6 +44,7 @@ public class Backend implements IBackend {
 
     // Final data.
     final int TIP_SEARCH_RADIUS = 120;
+    final int PVAGT_SEARCH_RADIUS = 120;
 
     // private data
     private List<ATipDTO> dtoList = new LinkedList<>();
@@ -58,6 +60,14 @@ public class Backend implements IBackend {
         AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, tipList);
         async.execute();
     }
+
+    //Get P vagter from parking location
+    public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> pVagtList){
+
+        AsyncGetPVagter asyncPVagt = new AsyncGetPVagter(location, PVAGT_SEARCH_RADIUS, pVagtList);
+        asyncPVagt.execute();
+    }
+
 
     @Override
     public void createTip(ATipDTO tip) {
