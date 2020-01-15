@@ -53,6 +53,11 @@
   <path
       android:pathData="M81.793,36.885A5,4.5 0,0 1,76.793 41.385,5 4.5,0 0,1 71.793,36.885 5,4.5 0,0 1,76.793 32.385,5 4.5,0 0,1 81.793,36.885Z"
       android:fillColor="@color/colorHighlight"/>
+  <!-- Green Dot Border-->
+  <path
+      android:pathData="M81.793,36.885A5,4.5 0,0 1,76.793 41.385,5 4.5,0 0,1 71.793,36.885 5,4.5 0,0 1,76.793 32.385,5 4.5,0 0,1 81.793,36.885Z"
+      android:strokeWidth="1"
+      android:strokeColor="@color/colorHighlightShadow"/>
   <!-- upper white dot -->
   <path
       android:pathData="M95.793,16.385A4.5,5 0,0 1,91.293 21.385,4.5 5,0 0,1 86.793,16.385 4.5,5 0,0 1,91.293 11.385,4.5 5,0 0,1 95.793,16.385Z"
