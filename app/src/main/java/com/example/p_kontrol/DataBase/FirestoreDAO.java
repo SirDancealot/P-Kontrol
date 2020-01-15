@@ -206,9 +206,9 @@ public class FirestoreDAO implements IDatabase {
             List<ATipDTO> tips = tipList.getValue();
             ArrayList<String> documents = new ArrayList<String>();
             documents.add(s);
-            List<QuerySnapshot> snapshots = dao.getDocumentList(collection, documents);
-            QuerySnapshot snapshot = snapshots.get(0);
-            snapshot.toObjects(ATipDTO.class); //find tippet der matcher denne i tips og slet den fra listen og sæt tips på ny i MutableLiveData
+            List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
+            DocumentSnapshot snapshot = snapshots.get(0);
+            snapshot.toObject(ATipDTO.class); //find tippet der matcher denne i tips og slet den fra listen og sæt tips på ny i MutableLiveData
 
 
         }
