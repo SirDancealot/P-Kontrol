@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -19,14 +20,28 @@ public class StateStandby extends State {
         super(parent);
         map.clear();
         centerMethod();
+
+        LiveData<List<ATipDTO>> tipList = viewModel.getTipList();
+        tipList.observe(parent.getViewLifecycleOwner(), list -> {
+            try {
+                updateMap(list);
+            }catch (NullPointerException e){
+                Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
+            }
+        } );
+        try {
+            updateMap(viewModel.getTipList().getValue());
+        }catch (NullPointerException e){
+            Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
+        }
     }
 
     @Override
-    public void updateMap(List<ATipDTO> list ) {
+    public void updateMap(List<ATipDTO> list) {
 
         int i = 0;
-        for(ATipDTO tip: list){
-            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon",69,100)));
+        for (ATipDTO tip : list) {
+            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon", 69, 100)));
             map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
             map.setOnMarkerClickListener(marker -> {
                 listener.onTipClick(Integer.parseInt(marker.getTitle()));
@@ -34,6 +49,7 @@ public class StateStandby extends State {
                 return true;
 
             });
+
         }
     }
 

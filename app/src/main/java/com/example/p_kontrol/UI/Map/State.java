@@ -41,11 +41,12 @@ abstract public class State implements IState  {
         viewModel   = parent.getViewModel();
 
         // Setting Listeners
+        centerMethod();
         setListeners();
     }
 
     @Override
-    public void updateMap(List<ATipDTO> list ) {}
+    public void updateMap(List<ATipDTO> list) {}
     @Override
     public void setDoneListner(IMapFragmentListener listener) {
         this.listener = listener;

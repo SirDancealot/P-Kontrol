@@ -42,7 +42,7 @@ public class MapFragment2 extends Fragment implements OnMapReadyCallback , IMapF
     // Defaults
     final int   DEFAULT_ZOOM_CLOSEUP = 17;
     final int   DEFAULT_ZOOM = 15;
-    final LatLng DEFAULT_LOCATION = new LatLng(55.676098, 12.56833);
+    final LatLng DEFAULT_LOCATION = new LatLng(55.731318, 12.396567);
 
     // Android
     String TAG = this.getClass().getName();
@@ -89,7 +89,7 @@ public class MapFragment2 extends Fragment implements OnMapReadyCallback , IMapF
     public void onMapReady(GoogleMap googleMap){
         map = googleMap;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
-
+        setStateStandby();
     }
 
 

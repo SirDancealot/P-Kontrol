@@ -97,7 +97,7 @@ public class MapFragment extends FragmentActivity implements OnMapReadyCallback,
         }
 
         viewModel.getTipList().observe(this, tips -> {
-            currentState.updateMap(tips);
+            //currentState.updateMap(tips);
         });
 
        // listener.onReady();

@@ -46,6 +46,7 @@ public class Stage_WriteText extends WriteTipState {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 dto.setMessage(s.toString());
+                // todo make sure this no Null pointer casts
                 ATipDTO dto = viewModel.getMutableTipCreateObject().getValue();
                 dto.setMessage(s.toString());
                 viewModel.getMutableTipCreateObject().setValue(dto);

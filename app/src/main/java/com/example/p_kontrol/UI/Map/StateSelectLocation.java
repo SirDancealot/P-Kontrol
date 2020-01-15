@@ -22,17 +22,12 @@ public class StateSelectLocation extends State {
 
     String TAG = "State Select Loaction ";
     IMapSelectedLocationListener listenerDone;
-    LatLng currentMarkerLocation = null;
+
 
     public StateSelectLocation(MapFragment2 parent) {
         super(parent);
         zoomIn();
         map.clear();
-
-        currentMarkerLocation = viewModel.getCurrentLocation().getValue();
-
-        map.addMarker(new MarkerOptions().position(viewModel.getCurrentLocation().getValue()));
-
     }
 
     // Listeners
@@ -48,7 +43,6 @@ public class StateSelectLocation extends State {
                 dto.setL(new GeoPoint(latLng.latitude, latLng.longitude));
                 viewModel.getMutableTipCreateObject().setValue(dto);
 
-                currentMarkerLocation = latLng;
                 map.addMarker(new MarkerOptions().position(latLng));
             }
         });
@@ -62,8 +56,35 @@ public class StateSelectLocation extends State {
 
     }
     @Override
-    public void updateMap(List<ATipDTO> list ) {
+    public void updateMap(List<ATipDTO> list) {
 
+    }
+    @Override
+    public void centerMethod(){
+        try {
+            Task locationResult = parent.getFusedLocationProviderClient().getLastLocation();
+            locationResult.addOnCompleteListener( parent.getContext() , new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if ( task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        Location location = (Location) task.getResult();
+                        LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
+                        viewModel.getCurrentLocation().setValue(result);
+                        map.addMarker(new MarkerOptions().position(viewModel.getCurrentLocation().getValue()));
+                        animeCamara(result);
+
+                    } else {
+                        // if location cannot be found.
+                        viewModel.getCurrentLocation().setValue( parent.DEFAULT_LOCATION );
+                        animeCamara( parent.DEFAULT_LOCATION );
+                    }
+                }
+            });
+
+        } catch(SecurityException e) {
+            Log.e("Exception: %s", e.getMessage());
+        }
     }
 
 }
