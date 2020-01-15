@@ -17,6 +17,11 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<List<PVagtDTO>> pVagtList;
     private MutableLiveData<ATipDTO> tipCreateObject;
 
+    // Map Data.
+    private MutableLiveData<LatLng> map_WindowLocation;
+    private MutableLiveData<LatLng> map_WindowZoom;
+    private MutableLiveData<LatLng> map_currentLocation;
+
     private Backend bk = Backend.getBackend();
 
 
@@ -25,7 +30,13 @@ public class LiveDataViewModel extends ViewModel {
         bk.getTips(location, tipList);
     }
 
-    public void createTip() { bk.createTip(tipCreateObject.getValue()); }
+    public void createTip() {
+        try {
+            bk.createTip(tipCreateObject.getValue());
+        }catch (Exception e){
+
+        }
+    }
 
     public void updatePVagter(LatLng location){
         bk.getPVagter(location, pVagtList);
@@ -56,4 +67,27 @@ public class LiveDataViewModel extends ViewModel {
 
         return tipCreateObject;
     }
+
+    // Map Data
+    public MutableLiveData<LatLng> getCurrentWindowLocation(){
+        if(map_WindowLocation == null){
+            map_WindowLocation = new MutableLiveData<>();
+        }
+        return  map_WindowLocation;
+    }
+    public MutableLiveData<LatLng> getCurrentWindowZoom(){
+        if(map_WindowZoom == null){
+            map_WindowZoom = new MutableLiveData<>();
+        }
+        return  map_WindowZoom;
+    }
+    public MutableLiveData<LatLng> getCurrentLocation(){ // The User location or Car Location
+        if(map_currentLocation == null){
+            map_currentLocation = new MutableLiveData<>();
+        }
+        return  map_currentLocation;
+    }
+
+
+
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.p_kontrol.UI.IFragmentOperator;
 import com.example.p_kontrol.UI.MainMenuActivity;
 import com.example.p_kontrol.R;
 
@@ -34,8 +35,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private TextView readMore, tip, name;
     private CircleImageView profImg;
 
+    private IFragmentOperator fragmentOperator;
 
-    public FragTipBobble() {
+    public FragTipBobble(IFragmentOperator fragmentOperator){
+    this.fragmentOperator = fragmentOperator;
         // Requiired empty public constructor
     }
 
@@ -114,8 +117,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case (R.id.bobbelTip_FragmentContainer): // clicking on the Suroundings of the TipBobble Closes it
-                MainMenuActivity act = (MainMenuActivity) getActivity();
-                act.closeTipBobbleViewPager();
+                fragmentOperator.closeTipBobbles();
             break;
             case (R.id.bobbelTip_container):
                 // do nothing.

@@ -1,15 +1,13 @@
 package com.example.p_kontrol.UI.Map;
 
-import android.location.Location;
-import android.util.Log;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.List;
 
@@ -19,15 +17,17 @@ public class StateSelectLocation extends State {
     IMapSelectedLocationListener listenerDone;
     LatLng currentMarkerLocation = null;
 
-    public StateSelectLocation(MapContext context) {
-        super(context);
+    public StateSelectLocation(MapFragment parent, FragmentActivity lifeOwner) {
+        super(parent, lifeOwner);
         zoomIn();
         map.clear();
-        currentMarkerLocation = context.getLocation();
+
+        currentMarkerLocation = viewModel.getCurrentLocation().getValue();
+        //currentMarkerLocation = parent.getLocation();
+
         map.addMarker(new MarkerOptions().position(currentMarkerLocation));
 
     }
-
 
     // Listeners
     @Override
@@ -37,6 +37,11 @@ public class StateSelectLocation extends State {
             @Override
             public void onMapClick(LatLng latLng) {
                 map.clear();
+
+                ATipDTO dto = viewModel.getMutableTipCreateObject().getValue();
+                dto.setL(new GeoPoint(latLng.latitude, latLng.longitude));
+                viewModel.getMutableTipCreateObject().setValue(dto);
+
                 currentMarkerLocation = latLng;
                 map.addMarker(new MarkerOptions().position(latLng));
             }
@@ -50,20 +55,13 @@ public class StateSelectLocation extends State {
         });
 
     }
-
     @Override
     public void centerMethod(){
         this.centerMethod();
     }
-
     @Override
     public void updateMap(List<ATipDTO> list ) {
 
     }
-    @Override
-    public void updateLocation() {
-        context.setSelectedLocation(currentMarkerLocation);
-    }
-
 
 }

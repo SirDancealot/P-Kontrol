@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.util.Log;
 
@@ -15,11 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -29,28 +26,22 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.GeoPoint;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
- * @responsibilty be the context for the Map States.
+ * @responsibilty be the parent for the Map States.
  *
  *
  *
  * */
-public class MapContext extends FragmentActivity implements OnMapReadyCallback, IMapContext, IMapStateInformationExpert {
+public class MapFragment implements OnMapReadyCallback, IMapFragment {
 
-    String TAG = "MapContext";
-    private Activity activity;
+    String TAG = "MapFragment";
+    Activity context;
 
     //Defaults
-    private int DEFAULT_ZOOM_CLOSEUP = 17;
-    private int DEFAULT_ZOOM = 15;
-    private LatLng DEFAULT_LOCATION = new LatLng(55.676098, 12.56833);
+    final int DEFAULT_ZOOM_CLOSEUP = 17;
+    final int DEFAULT_ZOOM = 15;
+    final LatLng DEFAULT_LOCATION = new LatLng(55.676098, 12.56833);
 
     //Map Functionality NECESARY VARIABLES
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -59,6 +50,8 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LatLng selectedLocation = null;
 
+    LiveDataViewModel viewModel;
+
     //Data
     private IState currentState;
 
@@ -66,24 +59,57 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
     private GoogleMap map;
 
     //Listeners
-    private IMapContextListener listener;
+    private IMapFragmentListener listener;
+
+    boolean mapReady = false, created=false;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        created = true;
+        onCreatedAndReadr();
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        mapReady = true;
+       onCreatedAndReadr();
+    }
+    private void onCreatedAndReadr(){
+        if(mapReady==true && created==true){
 
-        LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
-        model.getTipList().observe(this, tips -> {
-            currentState.updateMap(tips);
-        });
+            // Setting Up the Map
+            getPermission();
+            styleMapCall();
+            map.getUiSettings().setMyLocationButtonEnabled(false);
+
+            viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+
+            // Activate Standard State . in this case it is Standby.
+            if (map.isMyLocationEnabled()) {
+                Log.d(TAG, "onMapReady: location true");
+                setStateStandby();
+                currentState.centerMethod();
+            } else {
+                Log.d(TAG, "onMapReady: location false");
+            }
+
+            viewModel.getTipList().observe(this, tips -> {
+                currentState.updateMap(tips);
+            });
+
+            listener.onReady();
+        }
     }
 
     // -- METHODS --  --  --  --  --  --  --  --  --  --  --  --  --
-    public MapContext(SupportMapFragment mapFragment, Activity activity, IMapContextListener listener) {
+    public MapFragment(SupportMapFragment mapFragment, Activity activity, IMapFragmentListener listener) {
 
         //Android Stuffs
         this.mapFragment = mapFragment;
-        this.activity = activity;
+        this.context = activity;
         this.listener = listener;
 
         // Map Fragment Stuffs
@@ -91,37 +117,13 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
         mapFragment.getMapAsync(this);
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        // Setting Up the Map
-        map = googleMap;
-        getPermission();
-        styleMapCall();
-        map.getUiSettings().setMyLocationButtonEnabled(false);
-
-
-        // Activate Standard State . in this case it is Standby.
-        setStateStandby();
-        if (map.isMyLocationEnabled()) {
-            Log.d(TAG, "onMapReady: location true");
-            currentState.centerMethod();
-        } else {
-            Log.d(TAG, "onMapReady: location false");
-        }
-
-
-        Log.d(TAG, "getLanLng: returner");
-
-        listener.onReady();
-    }
     private void styleMapCall() {
         // Styling the Map
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
             boolean success = map.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle( (Context) activity , R.raw.mapstyling_json ));
+                    MapStyleOptions.loadRawResourceStyle( (Context) context, R.raw.mapstyling_json ));
             if (!success) {
                 Log.e(TAG, "Style parsing failed.");
             }
@@ -131,7 +133,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
 
     }
     private void getPermission() {
-        if (ContextCompat.checkSelfPermission( ( activity).getApplicationContext(),
+        if (ContextCompat.checkSelfPermission( (context).getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
@@ -149,7 +151,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
                         }
                     });
         } else {
-            ActivityCompat.requestPermissions((activity),
+            ActivityCompat.requestPermissions((context),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             Log.d(TAG, "getPermission: false");
@@ -160,7 +162,7 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
         currentState.centerMethod();
         Log.d(TAG, "onRequestPermissionsResult: true");
         mFusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener( activity, new OnSuccessListener<Location>() {
+                .addOnSuccessListener(context, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
 
@@ -173,6 +175,66 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
                 });
     }
 
+    @Override
+    public Resources getResources(){
+        return context.getResources();
+    }
+    @Override
+    public GoogleMap getMap() {
+        return map;
+    }
+    @Override
+    public void centerMap(){
+        currentState.centerMethod();
+    }
+    @Override
+    public void setStateStandby() {currentState = new StateStandby(this,this);
+    }
+    @Override
+    public void setStateSelectLocation() {
+        currentState = new StateSelectLocation(this,this);
+    }
+    @Override
+    public IState getCurrentState(){
+        return currentState;
+    }
+    @Override
+    public IMapFragmentListener getFragmentListener() {
+        return listener;
+    }
+    @Override
+    public Activity getContext() {
+        return context;
+    }
+    @Override
+    public FusedLocationProviderClient getFusedLocationProviderClient() {return mFusedLocationProviderClient;
+    }
+    @Override
+    public LiveDataViewModel getViewModel() {
+        return viewModel;
+    }
+
+
+    /*
+
+
+    @Override
+    public String getPackageName(){
+        return parent.getPackageName();
+    }
+
+    @Override
+    public int getDEFUALTmapZoom() {
+        return DEFAULT_ZOOM;
+    }
+    @Override
+    public int getDEFAULTmapZoom_closeUp() {
+        return DEFAULT_ZOOM_CLOSEUP;
+    }
+    @Override
+    public LatLng getDEFAULTlocation() {
+        return DEFAULT_LOCATION;
+    }
 
     @Override
     public LatLng getLocation(){
@@ -193,53 +255,9 @@ public class MapContext extends FragmentActivity implements OnMapReadyCallback, 
 
     }
     @Override
-    public GoogleMap getMap() {
-        return map;
-    }
-    @Override
-    public IMapContextListener getContextListener() {
-        return listener;
-    }
-    @Override
-    public void centerMap(){
-        currentState.centerMethod();
-    }
-    @Override
-    public void setStateStandby() {
-        currentState = new StateStandby(this);
-    }
-    @Override
-    public void setStateSelectLocation() {
-        currentState = new StateSelectLocation(this);
-    }
-    @Override
-    public IState getCurrentState(){
-        return currentState;
-    }
-    @Override
     public FusedLocationProviderClient getFusedLocationProviderClient() {
-       return mFusedLocationProviderClient;
-    }
-    @Override
-    public Resources getResources(){
-        return activity.getResources();
+        return mFusedLocationProviderClient;
     }
 
-    // INTERFACE INFORMATION EXPERT
-    @Override
-    public int getDEFUALTmapZoom() {
-        return DEFAULT_ZOOM;
-    }
-    @Override
-    public int getDEFAULTmapZoom_closeUp() {
-        return DEFAULT_ZOOM_CLOSEUP;
-    }
-    @Override
-    public LatLng getDEFAULTlocation() {
-        return DEFAULT_LOCATION;
-    }
-    @Override
-    public String getPackageName(){
-        return activity.getPackageName();
-    }
+    */
 }

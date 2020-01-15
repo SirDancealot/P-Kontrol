@@ -2,7 +2,7 @@ package com.example.p_kontrol.UI.Map;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public interface IMapContextListener {
+public interface IMapFragmentListener {
 
     // on something call backs
     void onReady();

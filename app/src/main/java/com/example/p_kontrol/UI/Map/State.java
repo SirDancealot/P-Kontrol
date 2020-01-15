@@ -5,46 +5,49 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
-abstract public class State extends AppCompatActivity implements IState  {
+abstract public class State implements IState  {
 
 
 
     // Defaults.
-    final int DEFAULT_MAP_ZOOM = 15;
+    final int DEFAULT_MAP_ZOOM = 15 ;
     final int DEFAULT_ZOOM_ZOOM = 17;
-    final String TAG = "state";
+    final String TAG = "state"      ;
 
-    IMapContext context;
-    IMapStateInformationExpert defaultINFO;
-    IMapContextListener listener = null;
-    GoogleMap map;
+    FragmentActivity lifeOwner      ;
+    MapFragment parent              ;
+    IMapFragmentListener listener   ;
+    GoogleMap map                   ;
 
-    public State(MapContext context) {
+    LiveDataViewModel viewModel;
+
+    public State(MapFragment parent, FragmentActivity lifeOwner) {
         //retrieving Objects
-        this.context = context;
-        map = context.getMap();
-        listener = context.getContextListener();
-        defaultINFO = context;
+        this.parent = parent;
+        this.lifeOwner = lifeOwner;
+
+        map         = parent.getMap();
+        listener    = parent.getFragmentListener();
+        viewModel   = parent.getViewModel();
+
 
         // Setting Listeners
         setListeners();
@@ -55,32 +58,29 @@ abstract public class State extends AppCompatActivity implements IState  {
     }
 
     @Override
-    public void updateMap(List<ATipDTO> list ) {
-    }
+    public void updateMap(List<ATipDTO> list ) {}
     @Override
-    public void setDoneListner(IMapContextListener listener) {
+    public void setDoneListner(IMapFragmentListener listener) {
         this.listener = listener;
     }
     @Override
     public void centerMethod(){
-        if (map.isMyLocationEnabled()) {
-            Log.d(TAG, "centerMethod: t");
-        } else {
-            Log.d(TAG, "centerMethod: f");
-        }
         try {
-            Task locationResult = context.getFusedLocationProviderClient().getLastLocation();
-            locationResult.addOnCompleteListener( this, new OnCompleteListener() {
+            Task locationResult = parent.getFusedLocationProviderClient().getLastLocation();
+            locationResult.addOnCompleteListener( new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
                         Location location = (Location) task.getResult();
-                        LatLng resault = new LatLng(location.getLatitude(),location.getLongitude());
-                        context.setLocaton(resault);
-                        animeCamara(context.getLocation());
+                        LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
+                        setNewLocationAs(result);
+                        animeCamara(result);
+
                     } else {
                         // ingen lokation fejl
+                        setNewLocationAs(parent.DEFAULT_LOCATION);
+                        animeCamara(parent.DEFAULT_LOCATION);
                         Log.d(TAG, "onComplete: ingen lokation fejl");
                     }
                 }
@@ -90,38 +90,26 @@ abstract public class State extends AppCompatActivity implements IState  {
             Log.e("Exception: %s", e.getMessage());
         }
     }
-    @Override
-    public void updateLocation() {
-            context.getFusedLocationProviderClient().getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                context.setLocaton(new LatLng(location.getLatitude(), location.getLongitude()));
-                                Log.d(TAG, "onSuccess: fandt location");
-                            }
-                        }
-                    });
+
+    public void setNewLocationAs(Location location){
+        setNewLocationAs(new LatLng(location.getLatitude(), location.getLongitude()));
     }
-
-
+    public void setNewLocationAs(LatLng location){
+        viewModel.getCurrentLocation().setValue(location);
+    }
 
     public void setListeners(){
         map.setOnMapClickListener(null);
     }
-
-//context.getActivity().getPackageName()
-    // Regular methods
     public Bitmap resizeMapIcons(String iconName, int width, int height){
 
-        Resources res = context.getResources();
-        int tipResource = res.getIdentifier("map_tip_pin_icon", "drawable", context.getPackageName() );
+        Resources res = parent.getContext().getResources();
+        int tipResource = res.getIdentifier("map_tip_pin_icon", "drawable", parent.getContext().getPackageName() );
 
         Bitmap imageBitmap = BitmapFactory.decodeResource(res,tipResource);
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
-
     public void zoomIn(){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(map.getCameraPosition().target)
@@ -155,6 +143,4 @@ abstract public class State extends AppCompatActivity implements IState  {
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
-
 }

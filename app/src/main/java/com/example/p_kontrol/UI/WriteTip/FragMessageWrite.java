@@ -1,6 +1,7 @@
 package com.example.p_kontrol.UI.WriteTip;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.Util.CustomProgressBar;
 
 import java.util.LinkedList;
@@ -43,6 +45,10 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
     ViewPager.OnPageChangeListener pageChangeListener = null;
     IWriteTipStageListener stateListener_SubmitListener = null;
 
+    // ViewModel
+    //LiveDataViewModel viewModel;
+
+
     /* -- FRAGMENT IMPLEMENTATION -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
     public FragMessageWrite(){
         dto = new TipDTO();
@@ -60,6 +66,8 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_message_write, container, false);
@@ -121,7 +129,6 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener {
                         currentSate = state_WriteText;
                         break;
                     case 1: // means State 0 is done and the message is done, so get it before changing.
-                        dto.setMessage(currentSate.getDTO().getMessage());
                         currentSate = state_SubmitTip;
                         break;
                 }

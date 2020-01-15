@@ -3,35 +3,24 @@ package com.example.p_kontrol.UI.Map;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.security.Provider;
 import java.util.List;
 
 public class StateStandby extends State {
 
-    public StateStandby(MapContext context) {
-        super(context);
+
+    public StateStandby(MapFragment parent, FragmentActivity lifeOwner) {
+        super(parent, lifeOwner);
         map.clear();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-
-        LiveDataViewModel viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
-        viewModel.getTipList().observe(this, list -> updateMap(list));
+        centerMethod();
     }
 
     @Override

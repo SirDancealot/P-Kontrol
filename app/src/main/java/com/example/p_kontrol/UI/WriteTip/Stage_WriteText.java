@@ -10,7 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
+
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
+
 /**
  * @responsibilty responsibility to create a room to type in the text for the tip.
  *
@@ -20,8 +25,8 @@ public class Stage_WriteText extends WriteTipState {
     String TAG = "WriteTip STATE WriteText ";
 
     View view;
-    Spinner category;
     TextView text;
+    LiveDataViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +36,8 @@ public class Stage_WriteText extends WriteTipState {
         //category    = view.findViewById(R.id.WriteTip_CategorySpinner);
         text        = view.findViewById(R.id.WriteTip_TextInput);
 
+
+        viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
         text.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -39,8 +46,11 @@ public class Stage_WriteText extends WriteTipState {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 dto.setMessage(s.toString());
+                ATipDTO dto = viewModel.getMutableTipCreateObject().getValue();
+                dto.setMessage(s.toString());
+                viewModel.getMutableTipCreateObject().setValue(dto);
 
-//                TODO add this to backend when writing tips
+                //                TODO add this to backend when writing tips
 //                boolean tooManyNewlineChars = Pattern.matches(".*\\n{3,}?.*",text.toString());
 
 //                String str = text.getText().toString();

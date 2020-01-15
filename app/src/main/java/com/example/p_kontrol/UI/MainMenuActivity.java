@@ -7,30 +7,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IState;
-import com.example.p_kontrol.UI.Map.State;
+import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
-import com.example.p_kontrol.UI.Map.IMapContext;
-import com.example.p_kontrol.UI.Map.IMapContextListener;
-import com.example.p_kontrol.UI.Map.MapContext;
-import com.example.p_kontrol.UI.ReadTips.FragTipBobble;
+import com.example.p_kontrol.UI.Map.IMapFragment;
+import com.example.p_kontrol.UI.Map.IMapFragmentListener;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.firebase.ui.auth.IdpResponse;
@@ -39,7 +37,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -130,12 +127,15 @@ public class MainMenuActivity extends MainMenuActivityController{
 class MainMenuActivityController extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
 
     // THIS IS THE CONTROLLER CLASS
-
     final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
     IMenuOperator       menuOperator;
     IFragmentOperator   fragmentOperator;
     IMapOperator        mapOperator;
     View container;
+
+    // -- ** -- View Model stuff  -- ** -- **  -- ** -- **  -- ** -- **
+
+    LiveDataViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +150,7 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
         mapOperator      = new CompositionMapOperator(this,container, this);
         fragmentOperator = new CompositionFragmentOperator(this,container);
 
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
     }
 
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
@@ -204,15 +205,18 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
 
     //User InterActionMethods
     // Create Tip
-    @NonNull
     private void CreateTip(){
         CreateTip_Process(0);
     }
     private void CreateTip_Process ( int i){
         switch (i) {
             case 0: // Chose location
+
+                model.getMutableTipCreateObject();
+
                 mapOperator.setStateSelection();
                 mapOperator.visibilityOfInteractBtns(View.VISIBLE);
+
                 mapOperator.onAcceptClick( new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -239,12 +243,10 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
                         fragmentOperator.closeWriteTip();
                     }
                 });
-
                 break;
             case 2: // finish Tip and send to back end for saving.
-                Date dateNow = new Date(System.currentTimeMillis());
-
-                // todo finish tip With WM Thingy
+                ATipDTO dto = model.getMutableTipCreateObject().getValue();
+                model.createTip();
                 break;
         }
     }
@@ -279,7 +281,7 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
 
         backend.createTip(tipDTO);
         temp_listofDTO.add(tipDTO);
-        mapContext.setListOfTipDto(getDTOlist());
+        mapFragment.setListOfTipDto(getDTOlist());
     }*/
 
 }
@@ -290,7 +292,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     private String TAG = this.getClass().getName();
 
     FragMessageWrite    fragment_messageWrite   ;
-    FragTipBobble       fragment_tipBobble      ;
     FragTopMessageBar   fragment_topMessage     ;
 
     //ViewPager - Tip bobbles.
@@ -305,6 +306,12 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     boolean boolFragMessageWrite    ;
     boolean boolFragTipBobble       ;
     boolean boolFragTopMessageBar   ;
+
+
+    // DAta Acces
+    LiveDataViewModel model;
+    LiveData<List<ATipDTO>> tipList;
+
 
     public CompositionFragmentOperator(AppCompatActivity context, View view){
 
@@ -321,8 +328,21 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         boolFragTopMessageBar   = false;
 
         fragment_messageWrite = new FragMessageWrite()  ;
-        fragment_tipBobble    = new FragTipBobble()     ;
         fragment_topMessage   = new FragTopMessageBar() ;
+
+        // Live Data list , that calls adapter to notify of changes when changes are made.
+
+        model = ViewModelProviders.of(context).get(LiveDataViewModel.class);
+        tipList = model.getTipList();
+        tipList.observe(context, list -> {
+            try {
+                adapter_TipBobbles.notifyDataSetChanged();
+            }catch (NullPointerException e){
+                Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
+            }
+        } );
+        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tipList,this);
+
     }
 
     // Open Close Fragments and or Views.
@@ -374,7 +394,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     public void showTipBobbles(int index) {
 
         List<ATipDTO> list = null;
-        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, list);
 
         viewPager_tipBobles.setVisibility(View.VISIBLE);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);
@@ -385,7 +404,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     public void closeTipBobbles(){
         viewPager_tipBobles.setVisibility(View.GONE);
     }
-
 
 
     // Booleans
@@ -401,6 +419,9 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     public boolean isTopBarOpen(){
         return boolFragTopMessageBar;
     }
+
+
+
 }
 class CompositionMapOperator        implements IMapOperator   {
 
@@ -409,8 +430,8 @@ class CompositionMapOperator        implements IMapOperator   {
     View view;
     private String TAG = this.getClass().getName();
 
-    IMapContext mapContext              ;
-    IMapContextListener mapListener     ;
+    IMapFragment mapFragment;
+    IMapFragmentListener mapListener     ;
 
     Button mapView_centerBtn;
     Button mapView_acceptBtn;
@@ -428,23 +449,20 @@ class CompositionMapOperator        implements IMapOperator   {
         mapView_btnContainerAceptCancel = view.findViewById(R.id.mainMenu_acceptCancelContainer);
         mapView_btnContainerAceptCancel.setVisibility(View.GONE);
 
-        mapListener = new IMapContextListener() {
+        mapListener = new IMapFragmentListener() {
             @Override
             public void onReady() {}
 
             @Override
             public void onChangeState() {
-
             }
 
             @Override
             public void onSelectedLocation() {
-
             }
 
             @Override
             public void onUpdate(){
-
             }
 
             @Override
@@ -454,33 +472,34 @@ class CompositionMapOperator        implements IMapOperator   {
 
         };
         SupportMapFragment mapFrag = (SupportMapFragment) this.context.getSupportFragmentManager().findFragmentById(R.id.mainMenu_map);
-        mapContext = new MapContext( mapFrag,context, mapListener);
+        mapFragment = new MapFragment( mapFrag,context, mapListener);
 
         mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                mapController.onCenterClick(v);
-               //mapContext.centerMap();
+               //mapFragment.centerMap();
             }
         });
     }
 
     @Override
     public void centerOnUserLocation(){
-        mapContext.centerMap();
+        mapFragment.centerMap();
     }
     @Override
     public void setStateSelection() {
-
+        mapFragment.setStateSelectLocation();
     }
     @Override
     public void setStateStandby() {
-
+        mapFragment.setStateStandby();
     }
     @Override
     public void setStateParking() {
 
     }
+
 
     @Override
     public void onAcceptClick(View.OnClickListener onclick){
@@ -491,15 +510,15 @@ class CompositionMapOperator        implements IMapOperator   {
         mapView_cancelBtn.setOnClickListener(onclick);
     }
 
-
     @Override
     public IState getCurrentState() {
-        return mapContext.getCurrentState();
+        return mapFragment.getCurrentState();
     }
     @Override
     public void updatePermissions(){
-        mapContext.updatePermissions();
+        mapFragment.updatePermissions();
     }
+
 
     @Override
     public void visibilityOfInteractBtns(int visibility){
@@ -520,6 +539,8 @@ class CompositionMenuOperator       implements View.OnClickListener, IMenuOperat
     boolean drag_State;
 
     public CompositionMenuOperator(IMenuOperationsController context, View view){
+        this.context = context;
+
         // Menu Buttons.
         menuBtnContainer     = view.findViewById(R.id.menu_btnContainer)           ;
         dragHandle           = view.findViewById(R.id.menuBtn_draggingHandle)      ;
@@ -605,6 +626,7 @@ class CompositionMenuOperator       implements View.OnClickListener, IMenuOperat
     }
 }
 
+
 //InterFaces Map
 interface IMapOperator{
 
@@ -642,18 +664,5 @@ interface IMenuOperationsController{
     void menuBtn_PVagt();
 }
 
-// interfaces fragments
-interface IFragmentOperator{
 
-    void openWriteTip(ITipWriteListener writeListener);
-    void closeWriteTip();
-
-    void showTipBobbles(int index);
-    void closeTipBobbles();
-
-
-    boolean isWriteTipOpen();
-    boolean isTipBobbleOpen();
-    boolean isTopBarOpen();
-}
 
