@@ -184,9 +184,9 @@ public class FirestoreDAO implements IDatabase {
         public void onGeoQueryReady() {
             updateIndividual = true;
             List<ATipDTO> tips = tipList.getValue();
-            List<QuerySnapshot> snapshots = dao.getDocumentList(collection, documents);
-            for (QuerySnapshot snapshot : snapshots) {
-                tips.addAll(snapshot.toObjects(ATipDTO.class));
+            List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
+            for (DocumentSnapshot snapshot : snapshots) {
+                tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
             }
             tipList.postValue(tips);
         }
