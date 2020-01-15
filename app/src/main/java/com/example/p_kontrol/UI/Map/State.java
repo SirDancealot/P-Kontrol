@@ -7,9 +7,8 @@ import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -18,43 +17,31 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
 abstract public class State implements IState  {
 
-
-
     // Defaults.
-    final int DEFAULT_MAP_ZOOM = 15 ;
-    final int DEFAULT_ZOOM_ZOOM = 17;
-    final String TAG = "state"      ;
+    final String TAG = "State"      ;
 
-    FragmentActivity lifeOwner      ;
-    MapFragment parent              ;
+    MapFragment2 parent             ;
     IMapFragmentListener listener   ;
     GoogleMap map                   ;
 
-    LiveDataViewModel viewModel;
+    LiveDataViewModel viewModel     ;
 
-    public State(MapFragment parent, FragmentActivity lifeOwner) {
+    public State( MapFragment2 parent ) {
         //retrieving Objects
-        this.parent = parent;
-        this.lifeOwner = lifeOwner;
+        this.parent     = parent;
 
         map         = parent.getMap();
         listener    = parent.getFragmentListener();
         viewModel   = parent.getViewModel();
 
-
         // Setting Listeners
         setListeners();
-
-        // Calling the listener that a new State has been initiated.
-        if(listener != null)
-            listener.onChangeState();
     }
 
     @Override
@@ -67,21 +54,20 @@ abstract public class State implements IState  {
     public void centerMethod(){
         try {
             Task locationResult = parent.getFusedLocationProviderClient().getLastLocation();
-            locationResult.addOnCompleteListener( new OnCompleteListener() {
+            locationResult.addOnCompleteListener( parent.getContext() , new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()) {
+                    if ( task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
                         Location location = (Location) task.getResult();
                         LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
-                        setNewLocationAs(result);
+                        viewModel.getCurrentLocation().setValue(result);
                         animeCamara(result);
 
                     } else {
-                        // ingen lokation fejl
-                        setNewLocationAs(parent.DEFAULT_LOCATION);
-                        animeCamara(parent.DEFAULT_LOCATION);
-                        Log.d(TAG, "onComplete: ingen lokation fejl");
+                        // if location cannot be found.
+                        viewModel.getCurrentLocation().setValue( parent.DEFAULT_LOCATION );
+                        animeCamara( parent.DEFAULT_LOCATION );
                     }
                 }
             });
@@ -91,13 +77,14 @@ abstract public class State implements IState  {
         }
     }
 
-    public void setNewLocationAs(Location location){
-        setNewLocationAs(new LatLng(location.getLatitude(), location.getLongitude()));
-    }
-    public void setNewLocationAs(LatLng location){
-        viewModel.getCurrentLocation().setValue(location);
-    }
 
+    public void animeCamara(LatLng geo){
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(geo)
+                .zoom(parent.DEFAULT_ZOOM ).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
     public void setListeners(){
         map.setOnMapClickListener(null);
     }
@@ -113,15 +100,24 @@ abstract public class State implements IState  {
     public void zoomIn(){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(map.getCameraPosition().target)
-                .zoom(DEFAULT_ZOOM_ZOOM).build();
+                .zoom(parent.DEFAULT_ZOOM_CLOSEUP).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
     public void zoomOut(){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(map.getCameraPosition().target)
-                .zoom(DEFAULT_MAP_ZOOM).build();
+                .zoom(parent.DEFAULT_ZOOM).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
+
+    /*
+
+
+    public void setListeners(){
+        map.setOnMapClickListener(null);
+    }
+
+
     public void moveCamara(LatLng geo){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(geo)
@@ -142,5 +138,5 @@ abstract public class State implements IState  {
                 .zoom(zoom).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
+    }*/
 }

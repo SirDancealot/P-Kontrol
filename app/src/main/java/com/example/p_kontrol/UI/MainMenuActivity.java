@@ -22,17 +22,16 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IState;
 import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
+import com.example.p_kontrol.UI.Map.MapFragment2;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
-import com.example.p_kontrol.UI.Map.IMapFragment;
 import com.example.p_kontrol.UI.Map.IMapFragmentListener;
 import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -430,7 +429,7 @@ class CompositionMapOperator        implements IMapOperator   {
     View view;
     private String TAG = this.getClass().getName();
 
-    IMapFragment mapFragment;
+    MapFragment2 mapFragment;
     IMapFragmentListener mapListener     ;
 
     Button mapView_centerBtn;
@@ -449,6 +448,7 @@ class CompositionMapOperator        implements IMapOperator   {
         mapView_btnContainerAceptCancel = view.findViewById(R.id.mainMenu_acceptCancelContainer);
         mapView_btnContainerAceptCancel.setVisibility(View.GONE);
 
+        /*
         mapListener = new IMapFragmentListener() {
             @Override
             public void onReady() {}
@@ -473,6 +473,23 @@ class CompositionMapOperator        implements IMapOperator   {
         };
         SupportMapFragment mapFrag = (SupportMapFragment) this.context.getSupportFragmentManager().findFragmentById(R.id.mainMenu_map);
         mapFragment = new MapFragment( mapFrag,context, mapListener);
+
+*/
+        mapListener = new IMapFragmentListener() {
+            @Override
+            public void onTipClick(int index) {
+                mapController.onTipClick(index);
+            }
+        };
+        mapFragment = new MapFragment2(context, mapListener);
+
+        FragmentManager fragmentManager = context.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            transaction.add( R.id.mainMenu_map , mapFragment);
+
+        transaction.addToBackStack(null);
+        transaction.commit();
 
         mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -509,6 +526,7 @@ class CompositionMapOperator        implements IMapOperator   {
     public void onCancelClick(View.OnClickListener onclick){
         mapView_cancelBtn.setOnClickListener(onclick);
     }
+
 
     @Override
     public IState getCurrentState() {

@@ -33,8 +33,8 @@ public class StateParking extends State {
     //MediaPlayer m = new MediaPlayer().create(this, R.raw.alarm);
 
 
-    public StateParking(MapFragment parent, FragmentActivity lifeOwner) {
-        super(parent, lifeOwner);
+    public StateParking(MapFragment2 parent, FragmentActivity lifeOwner) {
+        super(parent);
         zoomIn();
         map.clear();
        // currentLocation = context.getLocation();

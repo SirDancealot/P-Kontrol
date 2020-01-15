@@ -13,6 +13,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -33,7 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
  *
  *
  * */
-public class MapFragment implements OnMapReadyCallback, IMapFragment {
+public class MapFragment extends FragmentActivity implements OnMapReadyCallback, IMapFragment {
 
     String TAG = "MapFragment";
     Activity context;
@@ -61,60 +62,45 @@ public class MapFragment implements OnMapReadyCallback, IMapFragment {
     //Listeners
     private IMapFragmentListener listener;
 
-    boolean mapReady = false, created=false;
+    boolean mapReady = false;
 
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        created = true;
-        onCreatedAndReadr();
-    }
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        mapReady = true;
-       onCreatedAndReadr();
-    }
-    private void onCreatedAndReadr(){
-        if(mapReady==true && created==true){
-
-            // Setting Up the Map
-            getPermission();
-            styleMapCall();
-            map.getUiSettings().setMyLocationButtonEnabled(false);
-
-            viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
-
-            // Activate Standard State . in this case it is Standby.
-            if (map.isMyLocationEnabled()) {
-                Log.d(TAG, "onMapReady: location true");
-                setStateStandby();
-                currentState.centerMethod();
-            } else {
-                Log.d(TAG, "onMapReady: location false");
-            }
-
-            viewModel.getTipList().observe(this, tips -> {
-                currentState.updateMap(tips);
-            });
-
-            listener.onReady();
-        }
-    }
 
     // -- METHODS --  --  --  --  --  --  --  --  --  --  --  --  --
     public MapFragment(SupportMapFragment mapFragment, Activity activity, IMapFragmentListener listener) {
 
         //Android Stuffs
-        this.mapFragment = mapFragment;
-        this.context = activity;
-        this.listener = listener;
+        this.mapFragment    = mapFragment;
+        this.context        = activity  ;
+        this.listener       = listener  ;
 
         // Map Fragment Stuffs
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
         mapFragment.getMapAsync(this);
+
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        getPermission();
+        styleMapCall();
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+
+        viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+
+        // Activate Standard State . in this case it is Standby.
+        if (map.isMyLocationEnabled()) {
+            Log.d(TAG, "onMapReady: location true");
+            setStateStandby();
+            currentState.centerMethod();
+        } else {
+            Log.d(TAG, "onMapReady: location false");
+        }
+
+        viewModel.getTipList().observe(this, tips -> {
+            currentState.updateMap(tips);
+        });
+
+       // listener.onReady();
     }
 
     private void styleMapCall() {
@@ -146,7 +132,7 @@ public class MapFragment implements OnMapReadyCallback, IMapFragment {
                             if (location != null) {
                                 mLastKnownLocation = new LatLng(location.getLatitude(),location.getLongitude());
                                 Log.d(TAG, "onSuccess: fandt location");
-                                listener.onReady();
+                            //    listener.onReady();
                             }
                         }
                     });
@@ -169,7 +155,7 @@ public class MapFragment implements OnMapReadyCallback, IMapFragment {
                         if (location != null) {
                             mLastKnownLocation = new LatLng(location.getLatitude(),location.getLongitude());
                             Log.d(TAG, "onSuccess: fandt location");
-                            listener.onReady();
+                            //listener.onReady();
                         }
                     }
                 });
@@ -179,26 +165,26 @@ public class MapFragment implements OnMapReadyCallback, IMapFragment {
     public Resources getResources(){
         return context.getResources();
     }
-    @Override
+   /* @Override
     public GoogleMap getMap() {
         return map;
-    }
+    }*/
     @Override
     public void centerMap(){
         currentState.centerMethod();
     }
     @Override
-    public void setStateStandby() {currentState = new StateStandby(this,this);
+    public void setStateStandby() {//currentState = new StateStandby(this,this);
     }
     @Override
     public void setStateSelectLocation() {
-        currentState = new StateSelectLocation(this,this);
+        //currentState = new StateSelectLocation(this,this);
     }
     @Override
     public IState getCurrentState(){
         return currentState;
     }
-    @Override
+   /* @Override
     public IMapFragmentListener getFragmentListener() {
         return listener;
     }
@@ -212,7 +198,7 @@ public class MapFragment implements OnMapReadyCallback, IMapFragment {
     @Override
     public LiveDataViewModel getViewModel() {
         return viewModel;
-    }
+    }*/
 
 
     /*

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- TODO: fix inconsistency with danish/english text -->
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: fix inconsistency with danish/english text -->
 <resources>
     <string name="app_name">C5 P-Kontrol</string>
     <string name="round_corner">Round Corner</string>

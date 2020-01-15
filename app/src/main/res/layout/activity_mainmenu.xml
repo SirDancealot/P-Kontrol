@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <!-- Map -->
-        <fragment
+        <FrameLayout
             android:id="@+id/mainMenu_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
