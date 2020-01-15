@@ -27,10 +27,17 @@ public class LiveDataViewModel extends ViewModel {
     //######    Getters     ######
 
     public LiveData<List<ATipDTO>> getTipList() {
+        if (tipList == null) {
+            tipList = new MutableLiveData<>();
+        }
+
         return tipList;
     }
 
     public MutableLiveData<ATipDTO> getMutableTipCreateObject() {
+        if (tipCreateObject == null) {
+            tipCreateObject = new MutableLiveData<>();
+        }
         return tipCreateObject;
     }
 }
