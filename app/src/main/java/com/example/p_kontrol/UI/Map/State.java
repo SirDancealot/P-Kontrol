@@ -59,7 +59,10 @@ abstract public class State implements IState  {
                     if ( task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
                         Location location = (Location) task.getResult();
-                        LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
+                        LatLng result = null;
+                        if (location != null) {
+                            result = new LatLng(location.getLatitude(),location.getLongitude());
+                        }
                         viewModel.getCurrentLocation().setValue(result);
                         animeCamara(result);
 

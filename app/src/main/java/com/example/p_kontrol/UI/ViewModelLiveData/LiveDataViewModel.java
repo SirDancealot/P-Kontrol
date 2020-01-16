@@ -11,6 +11,9 @@ import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Handler;
 
@@ -54,9 +57,16 @@ public class LiveDataViewModel extends ViewModel {
         return tipList;
     }
 
+
+
     public LiveData<List<PVagtDTO>> getPvagtList() {
-        if (pVagtList == null)
+        if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
+        }
+        List<PVagtDTO> l = new LinkedList<>();
+        l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
+
+        pVagtList.setValue(l);
 
         return pVagtList;
     }

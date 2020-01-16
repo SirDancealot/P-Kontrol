@@ -12,6 +12,7 @@ import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
+import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
@@ -84,6 +85,8 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     @Override
     public void menuBtn_ParkAlarm(){
         Log.i("click","Park Alarm btn clicked \n");
+        mapOperator.setStateParking();
+
     }
     @Override
     public void menuBtn_PVagt(){
