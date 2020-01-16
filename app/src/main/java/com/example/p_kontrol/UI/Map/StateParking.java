@@ -2,6 +2,7 @@ package com.example.p_kontrol.UI.Map;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
@@ -86,19 +87,14 @@ public class StateParking extends State {
 
 
             } else {
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("known_danger_icon", 69, 100)));
+
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("danger_icon", 69, 100)));
+
                 map.addMarker(markerOptions.position(vagt.getLocation()));
-                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        listener.onTipClick(Integer.parseInt(marker.getTitle()));
-                        return true;
-
-                    }
-
-
+                map.setOnMarkerClickListener(marker -> {
+                    listener.onTipClick(Integer.parseInt(marker.getTitle()));
+                    return true;
                 });
-
 
             }
         }

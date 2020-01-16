@@ -93,7 +93,7 @@ abstract public class State implements IState  {
     public Bitmap resizeMapIcons(String iconName, int width, int height){
 
         Resources res = parent.getContext().getResources();
-        int tipResource = res.getIdentifier("map_tip_pin_icon", "drawable", parent.getContext().getPackageName() );
+        int tipResource = res.getIdentifier(iconName, "drawable", parent.getContext().getPackageName() );
 
         Bitmap imageBitmap = BitmapFactory.decodeResource(res,tipResource);
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);

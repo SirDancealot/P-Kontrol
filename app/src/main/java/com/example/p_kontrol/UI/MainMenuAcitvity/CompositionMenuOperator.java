@@ -71,7 +71,7 @@ class CompositionMenuOperator       implements View.OnClickListener, IMenuOperat
                 context.menuBtn_ParkAlarm();
                 break;
             case (R.id.menuBtn_PVagt):
-                context.menuBtn_ParkAlarm();
+                context.menuBtn_PVagt();
                 break;
         }
     }

@@ -104,7 +104,7 @@ class CompositionMapOperator        implements IMapOperator   {
     }
     @Override
     public void setStateParking() {
-
+        mapFragment.setStateParking();
     }
 
 
