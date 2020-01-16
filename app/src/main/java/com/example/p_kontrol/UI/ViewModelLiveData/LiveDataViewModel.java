@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.Backend.BackendStub;
+import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
@@ -24,8 +26,12 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<ATipDTO> tipCreateObject;
     private MutableLiveData<LatLng> currentLocation;
 
-    private Backend bk = Backend.getBackend();
+    // Map Data.
+    private MutableLiveData<LatLng> map_WindowLocation;
+    private MutableLiveData<LatLng> map_WindowZoom;
+    private MutableLiveData<LatLng> map_currentLocation;
 
+    private IBackend bk = BackendStub.getBackend();
 
 
     public void updateTips(LatLng location){
@@ -40,7 +46,7 @@ public class LiveDataViewModel extends ViewModel {
     }
 
     public void updatePVagter(LatLng location){
-        bk.getPVagter(location, pVagtList);
+        bk.getPVagter(location, pVagtList.getValue());
     }
 
 
@@ -72,21 +78,26 @@ public class LiveDataViewModel extends ViewModel {
         return tipCreateObject;
     }
 
-    public LiveData<LatLng> getCurrentLocation() {
-        if (currentLocation == null)
-            currentLocation = new MutableLiveData<>();
-
-        return currentLocation;
-    }
 
 
     //######    setters     ######
-
-
-    public void setCurrentLocation(LatLng currentLocation) {
-        if (this.currentLocation == null)
-            this.currentLocation = new MutableLiveData<>();
-
-        this.currentLocation.setValue(currentLocation);
+    // Map Data
+    public MutableLiveData<LatLng> getCurrentWindowLocation(){
+        if(map_WindowLocation == null){
+            map_WindowLocation = new MutableLiveData<>();
+        }
+        return  map_WindowLocation;
+    }
+    public MutableLiveData<LatLng> getCurrentWindowZoom(){
+        if(map_WindowZoom == null){
+            map_WindowZoom = new MutableLiveData<>();
+        }
+        return  map_WindowZoom;
+    }
+    public MutableLiveData<LatLng> getCurrentLocation(){ // The User location or Car Location
+        if(map_currentLocation == null){
+            map_currentLocation = new MutableLiveData<>();
+        }
+        return  map_currentLocation;
     }
 }
