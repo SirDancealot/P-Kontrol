@@ -5,6 +5,7 @@ import com.google.firebase.firestore.GeoPoint;
 import org.imperiumlabs.geofirestore.core.GeoHash;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class ATipDTO implements ITipDTO{
 
@@ -93,5 +94,23 @@ public class ATipDTO implements ITipDTO{
                 ", messege='" + message + '\'' +
                 ", location=" + l +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ATipDTO aTipDTO = (ATipDTO) o;
+        return rating == aTipDTO.rating &&
+                Objects.equals(author, aTipDTO.author) &&
+                Objects.equals(message, aTipDTO.message) &&
+                Objects.equals(creationDate, aTipDTO.creationDate) &&
+                Objects.equals(g, aTipDTO.g) &&
+                Objects.equals(l, aTipDTO.l);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(author, message, rating, creationDate, g, l);
     }
 }

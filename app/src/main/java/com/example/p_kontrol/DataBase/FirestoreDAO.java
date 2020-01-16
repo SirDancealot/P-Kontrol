@@ -236,7 +236,10 @@ public class FirestoreDAO implements IDatabase {
                     );
 
             if (tips != null) {
-                tips.remove(exitedTip);
+                for (ATipDTO tip : tips) {
+                    if (tip.equals(exitedTip[0]))
+                        tips.remove(tip);
+                }
             }
 
             tipList.setValue(tips);
