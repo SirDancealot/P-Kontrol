@@ -1,5 +1,6 @@
 package com.example.p_kontrol.DataBase;
 
+import android.app.Service;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -73,9 +74,10 @@ public class FirestoreDAO implements IDatabase {
         try {
             Tasks.await(
                     Tasks.whenAllComplete(
-                            taskList.toArray(new Task[0]) //hvorfor er vi på main thread her??????
+                            taskList.toArray(new Task[taskList.size()]) //hvorfor er vi på main thread her??????
                     )
             );
+            Log.d(TAG, "getDocumentList: got past await");
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -83,7 +85,7 @@ public class FirestoreDAO implements IDatabase {
         for (Task<DocumentSnapshot> task : taskList) {
             list.add(task.getResult());
         }
-
+        Log.d(TAG, "getDocumentList: return");
         return list;
     }
 
