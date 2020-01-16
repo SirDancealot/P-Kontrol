@@ -19,7 +19,6 @@ import java.util.List;
 public class StateSelectLocation extends State {
 
     String TAG = "State Select Loaction ";
-    IMapSelectedLocationListener listenerDone;
 
 
     public StateSelectLocation(MapFragment parent) {

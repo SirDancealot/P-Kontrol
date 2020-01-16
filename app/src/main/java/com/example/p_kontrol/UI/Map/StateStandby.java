@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -19,7 +20,10 @@ public class StateStandby extends State {
         map.clear();
         centerMethod();
 
+
         LiveData<List<ATipDTO>> tipList = viewModel.getTipList();
+        List<ATipDTO>  temp = tipList.getValue();
+
         tipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
                 updateMap(list);
@@ -27,11 +31,8 @@ public class StateStandby extends State {
                 Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
             }
         } );
-        try {
-            updateMap(viewModel.getTipList().getValue());
-        }catch (NullPointerException e){
-            Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
-        }
+        // todo ViewModel Se Her
+        viewModel.updateTips(null);
     }
 
     @Override

@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.p_kontrol.Backend.Backend;
+import com.example.p_kontrol.Backend.BackendStub;
+import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 public class LiveDataViewModel extends ViewModel {
 
@@ -22,8 +25,7 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<LatLng> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
 
-    private Backend bk = Backend.getBackend();
-
+    private IBackend bk = BackendStub.getBackend();
 
 
     public void updateTips(LatLng location){
@@ -39,12 +41,11 @@ public class LiveDataViewModel extends ViewModel {
     }
 
     public void updatePVagter(LatLng location){
-        bk.getPVagter(location, pVagtList);
+        bk.getPVagter(location, pVagtList.getValue() );
     }
 
 
     //######    Getters     ######
-
     public LiveData<List<ATipDTO>> getTipList() {
         if (tipList == null) {
             tipList = new MutableLiveData<>();
