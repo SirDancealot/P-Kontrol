@@ -1,55 +1,58 @@
 package com.example.p_kontrol.UI.ViewModelLiveData;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.p_kontrol.Backend.Backend;
-import com.example.p_kontrol.Backend.BackendStub;
-import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 public class LiveDataViewModel extends ViewModel {
+
+    private String TAG = "ViewModelMaster";
 
     private MutableLiveData<List<ATipDTO>> tipList;
     private MutableLiveData<List<PVagtDTO>> pVagtList;
     private MutableLiveData<ATipDTO> tipCreateObject;
+    private MutableLiveData<LatLng> currentLocation;
 
-    // Map Data.
-    private MutableLiveData<LatLng> map_WindowLocation;
-    private MutableLiveData<LatLng> map_WindowZoom;
-    private MutableLiveData<LatLng> map_currentLocation;
+    private Backend bk = Backend.getBackend();
 
-    private IBackend bk = BackendStub.getBackend();
 
 
     public void updateTips(LatLng location){
+        Log.d(TAG, "updateTips: ");
         bk.getTips(location, tipList);
     }
 
     public void createTip() {
-        try {
-            bk.createTip(tipCreateObject.getValue());
-        }catch (Exception e){
-
-        }
+        Log.d(TAG, "createTip: ");
+        bk.createTip(tipCreateObject.getValue());
+        updateTips(new LatLng(55.43521, 12.23504));//todo make this not hardcoded
     }
 
     public void updatePVagter(LatLng location){
-        bk.getPVagter(location, pVagtList.getValue() );
+        bk.getPVagter(location, pVagtList);
     }
 
 
     //######    Getters     ######
+
     public LiveData<List<ATipDTO>> getTipList() {
         if (tipList == null) {
             tipList = new MutableLiveData<>();
         }
+
+        if (tipList.getValue() == null)
+            tipList.setValue(new ArrayList<ATipDTO>());
 
         return tipList;
     }
@@ -61,34 +64,29 @@ public class LiveDataViewModel extends ViewModel {
         return pVagtList;
     }
 
-    public MutableLiveData<ATipDTO> getMutableTipCreateObject() {
+    public MutableLiveData<ATipDTO> getMutableTipCreateObject() { //TODO make getter and let this
         if (tipCreateObject == null) {
-            tipCreateObject = new MutableLiveData<>(new ATipDTO());
+            tipCreateObject = new MutableLiveData<>();
         }
 
         return tipCreateObject;
     }
 
-    // Map Data
-    public MutableLiveData<LatLng> getCurrentWindowLocation(){
-        if(map_WindowLocation == null){
-            map_WindowLocation = new MutableLiveData<>();
-        }
-        return  map_WindowLocation;
-    }
-    public MutableLiveData<LatLng> getCurrentWindowZoom(){
-        if(map_WindowZoom == null){
-            map_WindowZoom = new MutableLiveData<>();
-        }
-        return  map_WindowZoom;
-    }
-    public MutableLiveData<LatLng> getCurrentLocation(){ // The User location or Car Location
-        if(map_currentLocation == null){
-            map_currentLocation = new MutableLiveData<>();
-        }
-        return  map_currentLocation;
+    public LiveData<LatLng> getCurrentLocation() {
+        if (currentLocation == null)
+            currentLocation = new MutableLiveData<>();
+
+        return currentLocation;
     }
 
 
+    //######    setters     ######
 
+
+    public void setCurrentLocation(LatLng currentLocation) {
+        if (this.currentLocation == null)
+            this.currentLocation = new MutableLiveData<>();
+
+        this.currentLocation.setValue(currentLocation);
+    }
 }
