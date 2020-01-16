@@ -65,7 +65,7 @@ public class LiveDataViewModel extends ViewModel {
     }
     public MutableLiveData<ATipDTO> getMutableTipCreateObject() { //TODO make getter and let this
         if (tipCreateObject == null) {
-            tipCreateObject = new MutableLiveData<>();
+            tipCreateObject = new MutableLiveData<>(new ATipDTO());
         }
 
         return tipCreateObject;
