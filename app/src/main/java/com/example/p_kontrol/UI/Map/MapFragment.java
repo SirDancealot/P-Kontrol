@@ -96,6 +96,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
     // IMapFragment
     @Override
+    public void setStateParking(){
+        currentState = new StateParking(this );
+    }
+    @Override
     public void setStateStandby(){
         currentState = new StateStandby(this );
     }
@@ -128,6 +132,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     }
 
 
+
+
     // States Need these
     @NonNull
     public GoogleMap getMap() {
@@ -149,6 +155,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     public LiveDataViewModel getViewModel() {
         return viewModel;
     }
+
 
     // Internal methods
     private void styleMapCall() {
