@@ -2,13 +2,16 @@ package com.example.p_kontrol.Backend;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
+import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetPVagter;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
-import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 /**
@@ -16,6 +19,25 @@ import java.util.List;
  *
  * */
 public class Backend implements IBackend {
+
+    //singleton init
+
+    private static Backend b = null;
+    private Backend(){
+    }
+
+    public static Backend getBackend(){
+        if(b==null){
+            b = new Backend();
+            return b;
+        }else{
+            return b;
+        }
+    }
+
+
+
+
     //TODO make backend handle preferences
 
     List<ATipDTO> aTipDTOS;
@@ -25,36 +47,34 @@ public class Backend implements IBackend {
 
     // Final data.
     final int TIP_SEARCH_RADIUS = 120;
+    final int PVAGT_SEARCH_RADIUS = 120;
 
     // private data
     private List<ATipDTO> dtoList = new LinkedList<>();
 
     @Override // when needing tips from new location
-    public List<ATipDTO> getTips(LatLng location) {
+    public List<ATipDTO> getTips(LatLng location, MutableLiveData<List<ATipDTO>> tipList) {
         // todo rethink getTips and updateTipsFromDB
-        updateTipsFromDB( location);
+        updateTipsFromDB( location, tipList);
          return  aTipDTOS;
     }
-    private void updateTipsFromDB(LatLng location) {
+    private void updateTipsFromDB(LatLng location, MutableLiveData<List<ATipDTO>> tipList) {
         dtoList = new LinkedList<>();
-        AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, new IOnTaskComplete() {
-
-            @Override
-            public void OnTaskComplete(List<ATipDTO> result) {
-                if (dtoList.addAll(result)) {
-                    aTipDTOS = dtoList;
-                    Log.d(TAG, "OnTaskComplete: successful");
-                }else {
-                    Log.w(TAG, "OnTaskComplete: failed", null);
-                }
-            }
-
-        });
+        AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, tipList);
         async.execute();
     }
+
+    //Get P vagter from parking location
+    public void getPVagter(LatLng location, List<PVagtDTO> pVagtList){
+
+      //  AsyncGetPVagter asyncPVagt = new AsyncGetPVagter(location, PVAGT_SEARCH_RADIUS, pVagtList);
+      //  asyncPVagt.execute();
+    }
+
+
     @Override
     public void createTip(ATipDTO tip) {
-
+        Log.d(TAG, "createTip: ");
         UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
         if(userInfoDTO.getToken() != null){
 

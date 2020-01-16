@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/topMsgPopDown_text_dsc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:fontFamily="@font/ubuntu_medium"
 
                 android:text="Last Updated: 15min ago"

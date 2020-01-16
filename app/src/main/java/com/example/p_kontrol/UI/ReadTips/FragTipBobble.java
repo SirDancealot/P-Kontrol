@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.MainMenuActivity;
+import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
 
 import java.text.SimpleDateFormat;
@@ -46,8 +47,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private ImageView like, dislike;
     private String likeStatus;
 
+    private IFragmentOperator fragmentOperator;
 
-    public FragTipBobble() {
+    public FragTipBobble(IFragmentOperator fragmentOperator){
+    this.fragmentOperator = fragmentOperator;
         // Requiired empty public constructor
     }
 
@@ -177,8 +180,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case (R.id.bobbelTip_FragmentContainer): // clicking on the Suroundings of the TipBobble Closes it
-                MainMenuActivity act = (MainMenuActivity) getActivity();
-                act.closeTipBobbleViewPager();
+                fragmentOperator.closeTipBobbles();
             break;
             case (R.id.bobbelTip_container):
                 // do nothing.

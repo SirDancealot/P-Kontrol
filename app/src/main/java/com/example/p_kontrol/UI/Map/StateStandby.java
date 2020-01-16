@@ -1,22 +1,38 @@
 package com.example.p_kontrol.UI.Map;
 
 import android.util.Log;
-import android.view.View;
+
+import androidx.lifecycle.LiveData;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.google.android.gms.maps.GoogleMap;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
 public class StateStandby extends State {
 
-    public StateStandby(MapContext context) {
-        super(context);
+
+    public StateStandby(MapFragment parent) {
+        super(parent);
         map.clear();
+        centerMethod();
+
+
+        LiveData<List<ATipDTO>> tipList = viewModel.getTipList();
+        List<ATipDTO>  temp = tipList.getValue();
+
+        tipList.observe(parent.getViewLifecycleOwner(), list -> {
+            try {
+                updateMap(list);
+            }catch (NullPointerException e){
+                Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
+            }
+        } );
+        // todo ViewModel Se Her
+        viewModel.updateTips(null);
     }
 
     @Override
