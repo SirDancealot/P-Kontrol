@@ -105,15 +105,22 @@
             app:layout_constraintStart_toStartOf="parent"
             />
         <!-- Write Tip  -->
+        <FrameLayout
+            android:id="@+id/mainMenu_midScreenFragmentContainer"
+            android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <!-- top message box -->
-            <FrameLayout
-                android:id="@+id/mainMenu_midScreenFragmentContainer"
-                android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/mainMenu_topMsgBarContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

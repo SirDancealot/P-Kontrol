@@ -10,9 +10,13 @@ public interface IFragmentOperator {
     void showTipBobbles(int index);
     void closeTipBobbles();
 
+    void showTopMsgBar(int imageId, String header , String subTitle);
+    void hideTopMsgBar();
+
     boolean isWriteTipOpen();
     boolean isTipBobbleOpen();
     boolean isTopBarOpen();
+
 
 
 }

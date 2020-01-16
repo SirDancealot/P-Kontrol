@@ -22,11 +22,12 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IState;
 import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
+import com.example.p_kontrol.UI.TopMessageBar.FragTopMessageBar;
+import com.example.p_kontrol.UI.TopMessageBar.IFragTopMessageBar;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.Map.IMapFragmentListener;
-import com.example.p_kontrol.UI.ReadTips.FragTopMessageBar;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
@@ -290,7 +291,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     private String TAG = this.getClass().getName();
 
     FragMessageWrite    fragment_messageWrite   ;
-    FragTopMessageBar   fragment_topMessage     ;
+    FragTopMessageBar fragment_topMessage     ;
 
     //ViewPager - Tip bobbles.
     FragmentPagerAdapter adapter_TipBobbles;
@@ -323,13 +324,16 @@ class CompositionFragmentOperator   implements IFragmentOperator {
 
         boolFragMessageWrite    = false;
         boolFragTipBobble       = false;
-        boolFragTopMessageBar   = false;
+
 
         fragment_messageWrite = new FragMessageWrite()  ;
+
+        //Open topMessageBar. is not Opened from anywhere but here, but hidden and Shown.
         fragment_topMessage   = new FragTopMessageBar() ;
+        FragmentToogleTransaction(R.id.mainMenu_topMsgBarContainer,  fragment_topMessage, true);
+        fragment_topMessage.hide();
 
         // Live Data list , that calls adapter to notify of changes when changes are made.
-
         model = ViewModelProviders.of(context).get(LiveDataViewModel.class);
         tipList = model.getTipList();
         tipList.observe(context, list -> {
@@ -340,7 +344,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
             }
         } );
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tipList,this);
-
     }
 
     // Open Close Fragments and or Views.
@@ -377,6 +380,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     }*/
 
     // Toogles
+    // write Tip
     @Override
     public void openWriteTip(ITipWriteListener writeListener) {
         fragment_messageWrite.setFragWriteMessageListener(writeListener);
@@ -388,6 +392,8 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
         boolFragMessageWrite = false;
     }
+
+    // Tip Boobles
     @Override
     public void showTipBobbles(int index) {
 
@@ -403,6 +409,17 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         viewPager_tipBobles.setVisibility(View.GONE);
     }
 
+    //TopMsgBar
+    @Override
+    public void showTopMsgBar(int imageId, String header, String subTitle) {
+        fragment_topMessage.setHeader(header);
+        fragment_topMessage.setSubtitle(subTitle);
+        fragment_topMessage.setImage(imageId);
+    }
+    @Override
+    public void hideTopMsgBar() {
+        fragment_topMessage.hide();
+    }
 
     // Booleans
     @Override
@@ -417,8 +434,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     public boolean isTopBarOpen(){
         return boolFragTopMessageBar;
     }
-
-
 
 }
 class CompositionMapOperator        implements IMapOperator   {
