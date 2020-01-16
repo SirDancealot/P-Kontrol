@@ -28,17 +28,17 @@
     <string name="profile_tip_changeProfileImage">change profile image</string>
 
     <!-- Profile Rating Texts -->
-    <string name="profile_Rating_0"> ikke deltaget endnu </string>
-    <string name="profile_Rating_1"> nice du er igang! </string>
-    <string name="profile_Rating_2"> på vej til at blive god </string>
-    <string name="profile_Rating_3"> sejt! </string>
-    <string name="profile_Rating_4"> Woa du er god </string>
-    <string name="profile_Rating_5"> Master rated </string>
+    <string name="profile_Rating_0"> Not yet participated </string>
+    <string name="profile_Rating_1"> Getting started! </string>
+    <string name="profile_Rating_2"> Getting into it! </string>
+    <string name="profile_Rating_3"> Cool! </string>
+    <string name="profile_Rating_4"> On fire! </string>
+    <string name="profile_Rating_5"> Master rated! </string>
 
     <!-- profile Rating Table  -->
-    <string name="profile_template_tableColumn_1">deltagen</string>
-    <string name="profile_template_tableColumn_2">antal</string>
-    <string name="profile_template_tableColumn_3">resultat</string>
+    <string name="profile_template_tableColumn_1">Participation</string>
+    <string name="profile_template_tableColumn_2">Numbers</string>
+    <string name="profile_template_tableColumn_3">Result</string>
 
     <!-- Fragment Write a Tip  -->
     <!-- Write Tip Headers -->
@@ -92,6 +92,16 @@
     <string name="feedback_message_text">Feedback message</string>
     <string name="feedback_hint_text">Please write your feedback here</string>
     <string name="feedback_send_text">Send feedback</string>
+    <string name="feedback_fb_title">Please leave some feedback and feel free to discuss our app in this facebook group!</string>
+    <string name="feedback_fb_link_btn">Our Facebook Group</string>
+
+    <string name="profile_forgot_password">Forgot password?</string>
+    <string name="common_signin_button_text">Log ind</string>
+    <string name="profile_create_account">Don\'t have an account? Sign up</string>
+    <string name="profile_facebook">Continue with Facebook</string>
+    <string name="profile_google">Login</string>
+    <string name="profile_login">Login</string>
+    <string name="profile_sign_up">Sign up</string>
 
 
     <string-array name="feedback_categories_array">

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class Activity_SigeUp extends AppCompatActivity implements View.OnClickLi
 
     EditText formEmail;
     EditText formPassword;
-    TextView create;
+    Button create;
 
     private FirebaseAuth mAuth;
     UserInfoDTO userInfoDTO;
@@ -55,9 +56,10 @@ public class Activity_SigeUp extends AppCompatActivity implements View.OnClickLi
 
     public void signUp(){
         System.out.println("------kkkkk");
-
+        if (!validateForm()) {
+            return;
+        }
             createAccount(formEmail.getText().toString(), formPassword.getText().toString());
-
     }
 
     private void createAccount(String email, String password) {
@@ -84,13 +86,15 @@ public class Activity_SigeUp extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-
     private boolean validateForm() {
         boolean valid = true;
 
         String email = formEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
             formEmail.setError("Required.");
+            valid = false;
+        } else if (!email.contains("@")) {
+            formEmail.setError("Please write your email");
             valid = false;
         } else {
             formEmail.setError(null);
@@ -112,9 +116,6 @@ public class Activity_SigeUp extends AppCompatActivity implements View.OnClickLi
         changeActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(changeActivity);
     }
-
-
-
 
 
 }

@@ -62,6 +62,8 @@ public class BackendStub implements IBackend{
 
     @Override
     public void createTip(ATipDTO tip) {
+        tip.setAuthor(user);
+        tip.setCreationDate( new Date() );
         demoList.add(tip);
     }
 

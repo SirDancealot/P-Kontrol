@@ -93,7 +93,7 @@
         android:layout_centerHorizontal="true"
 
         android:background="@drawable/custom_scene1_loginbutton"
-        android:text="Login"
+        android:text="@string/profile_login"
         android:textColor="#FFF"
 
         android:layout_marginBottom="150dp"
@@ -107,7 +107,7 @@
          android:layout_centerHorizontal="true"
          android:layout_marginBottom="58dp"
          android:background="@drawable/custom_login_button"
-         android:text="Sign up"
+         android:text="@string/profile_sign_up"
          android:textColor="#FFF"
 
          app:layout_constraintBottom_toBottomOf="parent"
