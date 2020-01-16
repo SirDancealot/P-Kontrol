@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.MainMenuActivity;
+import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

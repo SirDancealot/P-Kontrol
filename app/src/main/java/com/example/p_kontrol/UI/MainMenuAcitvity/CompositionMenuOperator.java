@@ -28,7 +28,7 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
         // Menu Category Buttons
         menuBtn_profile      = view.findViewById(R.id.menuBtn_profile)             ;
         menuBtn_FreePark     = view.findViewById(R.id.menuBtn_FreePark)            ;
-        menuBtn_Contribute   = view.findViewById(R.id.menuBtn_Contribute)          ;
+        menuBtn_Contribute   = view.findViewById(R.id.menuBtn_CreateTip)          ;
         menuBtn_Community    = view.findViewById(R.id.menuBtn_Community)           ;
         menuBtn_ParkAlarm    = view.findViewById(R.id.menuBtn_ParkAlarm)           ;
         menuBtn_PVagt        = view.findViewById(R.id.menuBtn_PVagt)               ;
@@ -60,7 +60,7 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
             case (R.id.menuBtn_FreePark):
                 context.menuBtn_FreePark();
                 break;
-            case (R.id.menuBtn_Contribute):
+            case (R.id.menuBtn_CreateTip):
                 context.menuBtn_Contribute();
                 break;
             // Menu Line 2.

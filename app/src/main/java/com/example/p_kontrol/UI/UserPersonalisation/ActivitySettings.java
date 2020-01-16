@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.MainMenuActivity;
 import com.facebook.CallbackManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;

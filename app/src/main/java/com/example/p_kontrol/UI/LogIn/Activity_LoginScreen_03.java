@@ -16,7 +16,7 @@ import androidx.core.util.Pair;
 
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.MainMenuActivity;
+import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

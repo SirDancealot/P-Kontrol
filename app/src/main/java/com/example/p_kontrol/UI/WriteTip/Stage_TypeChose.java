@@ -17,7 +17,7 @@ import com.example.p_kontrol.R;
  * @responsibilty responsibility to create a room to type in the text for the tip.
  *
  * */
-public class Stage_TypeChose extends WriteTipState implements View.OnClickListener {
+public class Stage_TypeChose extends AbstractWriteTipState implements View.OnClickListener {
 
     String TAG = "WriteTip STATE WriteText ";
 
