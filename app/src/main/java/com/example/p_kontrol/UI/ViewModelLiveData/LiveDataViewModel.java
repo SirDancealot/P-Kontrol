@@ -6,13 +6,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +36,36 @@ public class LiveDataViewModel extends ViewModel {
         bk.getTips(location, tipList);
     }
     public void createTip() {
-        Log.d(TAG, "createTip: ");
-        bk.createTip(tipCreateObject.getValue());
-        updateTips(new LatLng(55.43521, 12.23504));//todo make this not hardcoded
+        Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
+        if (tipCreateObject != null) {
+            ATipDTO dto = tipCreateObject.getValue();
+            bk.createTip(dto);
+            updateTips(new LatLng(55.43521, 12.23504));//todo make this not hardcoded
+        }
     }
     public void updatePVagter(LatLng location){
         bk.getPVagter(location, pVagtList.getValue());
+    }
+
+
+
+    //######    Setters     ######
+
+
+    public void setTipCreateObject(ATipDTO tipCreateObject) {
+        if (this.tipCreateObject != null)
+            Log.d(TAG, "setTipCreateObject: before set: \n" + this.tipCreateObject.getValue() + "\n");
+        else
+            Log.d(TAG, "setTipCreateObject: before set: null");
+
+        Log.d(TAG, "setTipCreateObject: input: \n" + tipCreateObject + "\n");
+
+        this.tipCreateObject.setValue(tipCreateObject);
+
+        if (this.tipCreateObject != null)
+            Log.d(TAG, "setTipCreateObject: after set: \n" + this.tipCreateObject.getValue());
+        else
+            Log.d(TAG, "setTipCreateObject: after set: null");
     }
 
     //######    Getters     ######
@@ -63,7 +85,7 @@ public class LiveDataViewModel extends ViewModel {
 
         return pVagtList;
     }
-    public MutableLiveData<ATipDTO> getMutableTipCreateObject() { //TODO make getter and let this
+    public LiveData<ATipDTO> getTipCreateObject() { //TODO make getter and let this
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>(new ATipDTO());
         }

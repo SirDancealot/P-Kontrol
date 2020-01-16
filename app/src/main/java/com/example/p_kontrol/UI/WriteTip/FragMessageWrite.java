@@ -93,8 +93,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     @Override
     public void onMessageSubmit(){
 
-        ITipDTO tip = viewModel.getMutableTipCreateObject().getValue();
-        String s = tip.getMessage();
+
         // todo check Message for syntax Errors
         boolean validated = true;
 

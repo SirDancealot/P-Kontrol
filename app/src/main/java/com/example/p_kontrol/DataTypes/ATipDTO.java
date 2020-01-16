@@ -88,10 +88,10 @@ public class ATipDTO implements ITipDTO{
 
     @Override
     public String toString() {
-        return "TipDTO{" +
-                "author='" + author + '\'' +
-                ", messege='" + message + '\'' +
-                ", location=" + l +
+        return "TipDTO{\n" +
+                "author = '" + author + "'\n" +
+                ", message = '" + message + "'\n" +
+                ", location = " + l + "'\n" +
                 '}';
     }
 }

@@ -110,7 +110,6 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         switch (i) {
             case 0: // Chose location
                 showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, "Creating a Tip", "Select a Location to Place tip");
-                model.getMutableTipCreateObject();
 
                 mapOperator.setStateSelection();
                 mapOperator.visibilityOfInteractBtns(View.VISIBLE);
@@ -147,7 +146,6 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                 break;
             case 2: // finish Tip and send to back end for saving.
                 showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
-                ATipDTO dto = model.getMutableTipCreateObject().getValue();
                 model.createTip();
                 break;
         }

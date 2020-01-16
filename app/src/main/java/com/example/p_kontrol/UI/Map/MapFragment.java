@@ -66,7 +66,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
     }
 
     @Override
