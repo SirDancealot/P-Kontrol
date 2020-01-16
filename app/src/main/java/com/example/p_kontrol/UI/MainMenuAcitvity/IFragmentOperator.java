@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI;
+package com.example.p_kontrol.UI.MainMenuAcitvity;
 
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 

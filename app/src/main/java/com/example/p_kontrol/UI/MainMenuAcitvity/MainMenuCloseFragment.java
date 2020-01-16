@@ -1,4 +1,4 @@
-package com.example.p_kontrol.UI;
+package com.example.p_kontrol.UI.MainMenuAcitvity;
 
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -13,13 +13,7 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.MainMenuActivity;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Arrays;
+import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
 
 public class Activity_LoginScreen_03  extends AppCompatActivity implements View.OnClickListener{
 

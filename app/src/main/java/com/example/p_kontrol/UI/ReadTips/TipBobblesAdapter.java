@@ -11,7 +11,7 @@ import androidx.lifecycle.LiveData;
 
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.example.p_kontrol.UI.IFragmentOperator;
+import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
