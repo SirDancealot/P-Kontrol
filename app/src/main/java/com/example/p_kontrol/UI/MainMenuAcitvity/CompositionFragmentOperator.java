@@ -24,7 +24,7 @@ import java.util.List;
 
 class CompositionFragmentOperator   implements IFragmentOperator {
 
-    AppCompatActivity context;
+    MainMenuActivityController context;
     View view;
     private String TAG = this.getClass().getName();
 
@@ -50,7 +50,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     LiveData<List<ATipDTO>> tipList;
 
 
-    public CompositionFragmentOperator(AppCompatActivity context, View view){
+    public CompositionFragmentOperator(MainMenuActivityController context, View view){
 
         this.context = context;
         this.view = view;
@@ -160,4 +160,8 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         return boolFragTopMessageBar;
     }
 
+    @Override
+    public LiveDataViewModel getViewModel() {
+        return context.getViewModel();
+    }
 }

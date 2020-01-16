@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
 
@@ -42,14 +43,16 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private View view, container,suroundings;
     private TextView readMore, tip, name;
     private CircleImageView profImg;
+    private ATipDTO tipDTO;
     private LinearLayout topBar;
     private ImageView like, dislike;
     private String likeStatus;
 
     private IFragmentOperator fragmentOperator;
 
-    public FragTipBobble(IFragmentOperator fragmentOperator){
+    public FragTipBobble(IFragmentOperator fragmentOperator, ATipDTO tipDTO){
     this.fragmentOperator = fragmentOperator;
+        this.tipDTO = tipDTO;
         // Requiired empty public constructor
     }
 

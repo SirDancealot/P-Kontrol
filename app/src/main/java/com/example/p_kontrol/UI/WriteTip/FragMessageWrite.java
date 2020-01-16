@@ -31,6 +31,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     List<AbstractWriteTipState> statesList;
     ViewPager.OnPageChangeListener pageChangeListener;
     ITipWriteListener listener;
+    int stateIndex = 0;
 
     LiveDataViewModel viewModel;
     public FragMessageWrite(ITipWriteListener listener) {
@@ -88,11 +89,26 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()){
+            case R.id.WriteTip_Navigation_next:
+                if( !((stateIndex + 1) >= (statesList.size()-1))  ){
+
+                    viewPagerContent.setCurrentItem(stateIndex++);
+                    setProgresBarProgress(stateIndex);
+
+                }
+                break;
+            case R.id.WriteTip_Navigation_prev:
+                break;
+            case R.id.WriteTip_ButtonCancel:
+                break;
+            case R.id.WriteTip_outerBounds:
+                break;
+        }
     }
 
     @Override
     public void onMessageSubmit(){
-
 
         // todo check Message for syntax Errors
         boolean validated = true;
