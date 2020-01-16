@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import com.example.p_kontrol.R;
 
-class CompositionMenuOperator       implements View.OnClickListener, IMenuOperator{
+class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
 
     IMenuOperationsController context;
     private String TAG = this.getClass().getName();

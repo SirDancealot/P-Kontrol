@@ -63,9 +63,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         boolFragMessageWrite    = false;
         boolFragTipBobble       = false;
 
-
-        fragment_messageWrite = new FragMessageWrite()  ;
-
         //Open topMessageBar. is not Opened from anywhere but here, but hidden and Shown.
         fragment_topMessage   = new FragTopMessageBar() ;
         FragmentToogleTransaction(R.id.mainMenu_topMsgBarContainer,  fragment_topMessage, true);
@@ -109,7 +106,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     // write Tip
     @Override
     public void openWriteTip(ITipWriteListener writeListener) {
-        fragment_messageWrite.setFragWriteMessageListener(writeListener);
+        fragment_messageWrite = new FragMessageWrite(writeListener);
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
         boolFragMessageWrite = true;
     }

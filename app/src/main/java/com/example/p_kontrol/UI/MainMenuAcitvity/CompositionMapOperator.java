@@ -38,33 +38,6 @@ class CompositionMapOperator        implements IMapOperator   {
         mapView_btnContainerAceptCancel = view.findViewById(R.id.mainMenu_acceptCancelContainer);
         mapView_btnContainerAceptCancel.setVisibility(View.GONE);
 
-        /*
-        mapListener = new IMapFragmentListener() {
-            @Override
-            public void onReady() {}
-
-            @Override
-            public void onChangeState() {
-            }
-
-            @Override
-            public void onSelectedLocation() {
-            }
-
-            @Override
-            public void onUpdate(){
-            }
-
-            @Override
-            public void onTipClick(int index) {
-                mapController.onTipClick(index);
-            }
-
-        };
-        SupportMapFragment mapFrag = (SupportMapFragment) this.context.getSupportFragmentManager().findFragmentById(R.id.mainMenu_map);
-        mapFragment = new MapFragment( mapFrag,context, mapListener);
-
-*/
         mapListener = new IMapFragmentListener() {
             @Override
             public void onTipClick(int index) {

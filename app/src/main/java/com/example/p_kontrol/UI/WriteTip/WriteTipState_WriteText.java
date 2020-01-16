@@ -20,13 +20,17 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
  * @responsibilty responsibility to create a room to type in the text for the tip.
  *
  * */
-public class Stage_WriteText extends WriteTipState {
+public class WriteTipState_WriteText extends AbstractWriteTipState {
 
     String TAG = "WriteTip STATE WriteText ";
 
     View view;
     TextView text;
     LiveDataViewModel viewModel;
+
+    public WriteTipState_WriteText(IWriteTipStateListener listener) {
+        super(listener);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -72,7 +72,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         menuOperator.toggleMenu();
 
         // starting Contribute process at index 0. meaning the very first step.
-        CreateTip();
+        createTip();
 
     }
     @Override
@@ -103,10 +103,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     }
 
     // Create Tip
-    private void CreateTip(){
-        CreateTip_Process(0);
+    private void createTip(){
+        createTip_Process(0);
     }
-    private void CreateTip_Process ( int i){
+    private void createTip_Process(int i){
         switch (i) {
             case 0: // Chose location
                 showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, "Creating a Tip", "Select a Location to Place tip");
@@ -119,7 +119,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
-                        CreateTip_Process(1);
+                        createTip_Process(1);
                     }
                 });
                 mapOperator.onCancelClick(new View.OnClickListener() {
@@ -135,9 +135,9 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                 mapOperator.setStateStandby();
                 fragmentOperator.openWriteTip(new ITipWriteListener() {
                     @Override
-                    public void onMessageDone(ATipDTO dto) {
+                    public void onMessageDone() {
                         fragmentOperator.closeWriteTip();
-                        CreateTip_Process(2);
+                        createTip_Process(2);
                     }
                     @Override
                     public void onCancelTip() {

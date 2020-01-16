@@ -4,38 +4,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager.widget.ViewPager;
-
-import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Map.IState;
-import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
-import com.example.p_kontrol.UI.TopMessageBar.FragTopMessageBar;
-import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
-import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
-import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
-import com.example.p_kontrol.UI.Map.IMapFragmentListener;
-import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
-import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
-import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-
-import java.util.List;
 
 /**
  * @responsibilty responsibility to Handle UI interaction on this XML layout.
