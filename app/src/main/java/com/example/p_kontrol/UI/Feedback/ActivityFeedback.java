@@ -72,6 +72,7 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
 //
 //    }
 
+    final String FB_GROUP_ID = "1057084904626319";
 
     Button navToFacebookBtn;
 
@@ -88,7 +89,7 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
     public void onClick(View v) {
 
         //TODO This links to "DTU - brugte bøger", change this to the id in the addressbar of the desired group.
-        navToFacebookPage("1014970751849130");
+        navToFacebookPage(FB_GROUP_ID);
     }
 
     public void navToFacebookPage(String id) {
