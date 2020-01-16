@@ -43,7 +43,7 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar {
         header  = view.findViewById(R.id.topMsgBar_header   );
         subtitle= view.findViewById(R.id.topMsgBar_subTitle );
 
-        isShown = true;
+        hide();
         return view;
     }
 

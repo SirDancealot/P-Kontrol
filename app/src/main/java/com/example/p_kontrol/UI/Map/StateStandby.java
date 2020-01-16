@@ -46,9 +46,7 @@ public class StateStandby extends State {
                 listener.onTipClick(Integer.parseInt(marker.getTitle()));
                 Log.i(TAG, "updateMap: PUT A PIN IN IT!!!!! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ");
                 return true;
-
             });
-
         }
     }
 

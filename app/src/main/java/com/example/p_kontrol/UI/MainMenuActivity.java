@@ -150,6 +150,13 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
         fragmentOperator = new CompositionFragmentOperator(this,container);
 
         model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
     }
 
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
@@ -202,7 +209,6 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
         mapOperator.centerOnUserLocation();
     }
 
-    //User InterActionMethods
     // Create Tip
     private void CreateTip(){
         CreateTip_Process(0);
@@ -210,7 +216,7 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
     private void CreateTip_Process ( int i){
         switch (i) {
             case 0: // Chose location
-
+                showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, "Creating a Tip", "Select a Location to Place tip");
                 model.getMutableTipCreateObject();
 
                 mapOperator.setStateSelection();
@@ -231,6 +237,7 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
                 });
                 break;
             case 1: // Write Tip
+                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "Creating a Tip", "Write the actual Tip");
                 fragmentOperator.openWriteTip(new ITipWriteListener() {
                     @Override
                     public void onMessageDone(ATipDTO dto) {
@@ -244,44 +251,17 @@ class MainMenuActivityController extends AppCompatActivity implements IMenuOpera
                 });
                 break;
             case 2: // finish Tip and send to back end for saving.
+                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
                 ATipDTO dto = model.getMutableTipCreateObject().getValue();
                 model.createTip();
                 break;
         }
     }
-/*
-    private void fillInTip_WriteTip(){
-        fragment_messageWrite = new FragMessageWrite();
-        toogleFragment_WriteTip(true);
-        fragment_messageWrite.setFragWriteMessageListener(new ITipWriteListener() {
 
-            @Override
-            public void onMessageDone(ATipDTO dto) {
-                newTipDTO.setMessage(dto.getMessage());// newTipDTO is a static object that can always be called
-                toogleFragment_WriteTip(false);
-                getSupportFragmentManager().popBackStack();
-                CreateTip_Process(2); // calls self to Complete the tip
-            }
 
-            @Override
-            public void onCancelTip() {
-                toogleFragment_WriteTip(false);
-                // does not call self to complete.
-            }
-
-        });
+    private void showTopMsgBar(int imageId, String header, String subtitle){
+        fragmentOperator.showTopMsgBar(imageId, header, subtitle);
     }
-    private void CreateTip_finish(){
-        AUserDTO currentUser = new UserDTO("tempUser", "tempLastName", "");
-
-        newTipDTO.setAuthor(currentUser);
-        newTipDTO.setCreationDate(dateNow);
-        TipDTO tipDTO = newTipDTO.copy();
-
-        backend.createTip(tipDTO);
-        temp_listofDTO.add(tipDTO);
-        mapFragment.setListOfTipDto(getDTOlist());
-    }*/
 
 }
 class CompositionFragmentOperator   implements IFragmentOperator {
@@ -331,7 +311,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         //Open topMessageBar. is not Opened from anywhere but here, but hidden and Shown.
         fragment_topMessage   = new FragTopMessageBar() ;
         FragmentToogleTransaction(R.id.mainMenu_topMsgBarContainer,  fragment_topMessage, true);
-        fragment_topMessage.hide();
 
         // Live Data list , that calls adapter to notify of changes when changes are made.
         model = ViewModelProviders.of(context).get(LiveDataViewModel.class);
@@ -348,7 +327,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
 
     // Open Close Fragments and or Views.
     private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
-
         if(Open){
             transaction = fragmentManager.beginTransaction();
             try {
@@ -367,19 +345,9 @@ class CompositionFragmentOperator   implements IFragmentOperator {
             Log.v("transaction","Removing fragment");
         }
     }
-   /*public void toogleFragment_WriteTip(boolean open){
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , open);
-        boolFragMessageWrite = open;
-    }
-    public void toogleFragment_WriteTip(){
 
-    }
-    public void closeTipBobbleViewPager() {
-        viewPager_tipBobles.setVisibility(View.GONE);
-        Log.i(TAG, "closeTipBobbleViewPager: Closed");
-    }*/
+    // Toggles
 
-    // Toogles
     // write Tip
     @Override
     public void openWriteTip(ITipWriteListener writeListener) {
@@ -412,9 +380,11 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     //TopMsgBar
     @Override
     public void showTopMsgBar(int imageId, String header, String subTitle) {
+
         fragment_topMessage.setHeader(header);
         fragment_topMessage.setSubtitle(subTitle);
         fragment_topMessage.setImage(imageId);
+        fragment_topMessage.show();
     }
     @Override
     public void hideTopMsgBar() {
