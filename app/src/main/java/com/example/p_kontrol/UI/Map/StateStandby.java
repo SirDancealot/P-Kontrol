@@ -2,8 +2,6 @@ package com.example.p_kontrol.UI.Map;
 
 import android.util.Log;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
@@ -16,7 +14,7 @@ import java.util.List;
 public class StateStandby extends State {
 
 
-    public StateStandby(MapFragment2 parent) {
+    public StateStandby(MapFragment parent) {
         super(parent);
         map.clear();
         centerMethod();

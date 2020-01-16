@@ -22,7 +22,6 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IState;
 import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
-import com.example.p_kontrol.UI.Map.MapFragment2;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
@@ -429,7 +428,7 @@ class CompositionMapOperator        implements IMapOperator   {
     View view;
     private String TAG = this.getClass().getName();
 
-    MapFragment2 mapFragment;
+    MapFragment mapFragment;
     IMapFragmentListener mapListener     ;
 
     Button mapView_centerBtn;
@@ -481,7 +480,7 @@ class CompositionMapOperator        implements IMapOperator   {
                 mapController.onTipClick(index);
             }
         };
-        mapFragment = new MapFragment2(context, mapListener);
+        mapFragment = new MapFragment(context, mapListener);
 
         FragmentManager fragmentManager = context.getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

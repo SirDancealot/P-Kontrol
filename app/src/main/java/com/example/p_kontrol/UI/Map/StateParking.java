@@ -1,16 +1,9 @@
 package com.example.p_kontrol.UI.Map;
 
-import android.media.MediaPlayer;
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.PVagtDTO;
-import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,7 +26,7 @@ public class StateParking extends State {
     //MediaPlayer m = new MediaPlayer().create(this, R.raw.alarm);
 
 
-    public StateParking(MapFragment2 parent, FragmentActivity lifeOwner) {
+    public StateParking(MapFragment parent, FragmentActivity lifeOwner) {
         super(parent);
         zoomIn();
         map.clear();

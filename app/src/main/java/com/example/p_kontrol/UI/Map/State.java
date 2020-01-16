@@ -7,8 +7,6 @@ import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -26,13 +24,13 @@ abstract public class State implements IState  {
     // Defaults.
     final String TAG = "State"      ;
 
-    MapFragment2 parent             ;
+    MapFragment parent             ;
     IMapFragmentListener listener   ;
     GoogleMap map                   ;
 
     LiveDataViewModel viewModel     ;
 
-    public State( MapFragment2 parent ) {
+    public State( MapFragment parent ) {
         //retrieving Objects
         this.parent     = parent;
 

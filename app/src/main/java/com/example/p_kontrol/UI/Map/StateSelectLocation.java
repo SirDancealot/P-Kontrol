@@ -4,8 +4,6 @@ import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,7 +22,7 @@ public class StateSelectLocation extends State {
     IMapSelectedLocationListener listenerDone;
 
 
-    public StateSelectLocation(MapFragment2 parent) {
+    public StateSelectLocation(MapFragment parent) {
         super(parent);
         zoomIn();
         map.clear();
