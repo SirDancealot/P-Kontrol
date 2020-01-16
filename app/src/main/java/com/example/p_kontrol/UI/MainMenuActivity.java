@@ -124,6 +124,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         setupFragments();
         backend = new Backend();
         map_setupMap();
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
 
         // login firebase
 

@@ -44,7 +44,7 @@ public class AUserDTO implements IUserDTO , Serializable {
     }
 
     @Override
-    public void setProfileImageSRC(String profileSrc) {
+    public void setProfileSRC(String profileSrc) {
         this.profileSrc = profileSrc;
     }
 

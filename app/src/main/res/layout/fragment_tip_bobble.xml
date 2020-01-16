@@ -28,7 +28,7 @@
 
         <!-- Header -->
         <LinearLayout
-            android:id="@+id/tip_bobble_top_bar"
+            android:id="@+id/bobbelTip_top_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/shape_squarerounded_top_colored"
@@ -110,7 +110,7 @@
             >
 
             <ImageView
-                android:id="@+id/tip_dislike"
+                android:id="@+id/bobbelTip_dislike"
                 android:maxHeight="3dp"
                 android:maxWidth="3dp"
                 android:layout_width="0dp"
@@ -129,7 +129,7 @@
                 android:text="Se Mere" />
 
             <ImageView
-                android:id="@+id/tip_like"
+                android:id="@+id/bobbelTip_like"
                 android:maxHeight="3dp"
                 android:maxWidth="3dp"
                 android:layout_width="0dp"

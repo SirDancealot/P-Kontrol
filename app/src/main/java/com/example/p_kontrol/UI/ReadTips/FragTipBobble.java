@@ -44,6 +44,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private CircleImageView profImg;
     private LinearLayout topBar;
     private ImageView like, dislike;
+    private String likeStatus;
 
 
     public FragTipBobble() {
@@ -67,12 +68,15 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
         suroundings = view.findViewById(R.id.bobbelTip_FragmentContainer)                ;
         container   = view.findViewById(R.id.bobbelTip_container)   ;
-        topBar      = view.findViewById(R.id.tip_bobble_top_bar)    ;
-        like        = view.findViewById(R.id.tip_like)              ;
-        dislike     = view.findViewById(R.id.tip_dislike)           ;
+        topBar      = view.findViewById(R.id.bobbelTip_top_bar)    ;
+        like        = view.findViewById(R.id.bobbelTip_like)              ;
+        dislike     = view.findViewById(R.id.bobbelTip_dislike)           ;
 
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         tips = userInfoDTO.getTips();
+        like.setOnClickListener(this);
+        dislike.setOnClickListener(this);
+        likeStatus = "normal";
 
 
         currentTip = tips.get(Integer.parseInt(getArguments().getString(BOBBLE_INDEX)));
@@ -82,10 +86,19 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         //Get Arguments
         try{
 
-            if(currentTip.getLikers().contains(userInfoDTO.getId())){
-
-            } else if (currentTip.getDislikers().contains(userInfoDTO.getId())){
-
+            if(currentTip.getLikers() != null) {
+                if (currentTip.getLikers().contains(userInfoDTO.getId())) {
+                    dislike.setImageResource(R.drawable.ic_tip_dislike);
+                    like.setImageResource(R.drawable.ic_tip_like_on);
+                    likeStatus = "like";
+                }
+            }
+            if(currentTip.getDislikers() != null) {
+                if (currentTip.getDislikers().contains(userInfoDTO.getId())) {
+                    dislike.setImageResource(R.drawable.ic_tip_dislike_on);
+                    like.setImageResource(R.drawable.ic_tip_like);
+                    likeStatus = "dislike";
+                }
             }
 
 
@@ -128,6 +141,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
 
         }catch (Exception e){
+            System.out.println(e);
             // if nothing is recieved.
             name.setText("Unknown Name");
             tip.setText("Unknown Tip");
@@ -139,7 +153,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         readMore.setOnClickListener(this);
 
 
+
         if ( currentTip.getAuthor().getProfileSRC() != null){
+            System.out.println("kkkkk ---------- henter img");
+            System.out.println(currentTip.getAuthor().getProfileSRC());
             URL = currentTip.getAuthor().getProfileSRC();
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.dontAnimate();
@@ -174,13 +191,27 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
                 Log.i(TAG, "onClick: ReadBox ");
                 break;
-            case (R.id.tip_like):
-                dislike.setImageResource(R.drawable.ic_tip_dislike);
-                like.setImageResource(R.drawable.ic_tip_like_on);
+            case (R.id.bobbelTip_like):
+                if(likeStatus == "like"){
+                    like.setImageResource(R.drawable.ic_tip_like);
+                    likeStatus = "normal";
+
+                } else {
+                    dislike.setImageResource(R.drawable.ic_tip_dislike);
+                    like.setImageResource(R.drawable.ic_tip_like_on);
+                    likeStatus = "like";
+                }
                 break;
-            case (R.id.tip_dislike):
-                dislike.setImageResource(R.drawable.ic_tip_dislike_on);
-                like.setImageResource(R.drawable.ic_tip_like);
+            case (R.id.bobbelTip_dislike):
+                if(likeStatus == "dislike"){
+                    dislike.setImageResource(R.drawable.ic_tip_dislike);
+                    likeStatus = "normal";
+
+                } else {
+                    dislike.setImageResource(R.drawable.ic_tip_dislike_on);
+                    like.setImageResource(R.drawable.ic_tip_like);
+                    likeStatus = "dislike";
+                }
                 break;
             default:
                 // do nothing
