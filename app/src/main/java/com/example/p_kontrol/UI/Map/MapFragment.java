@@ -94,7 +94,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         map.setPadding(0,170,0,0);
 
 
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+
+        getPermission();
         setStateStandby();
     }
 
