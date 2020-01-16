@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 
 public interface IFragmentOperator {
@@ -17,7 +18,7 @@ public interface IFragmentOperator {
     boolean isTipBobbleOpen();
     boolean isTopBarOpen();
 
-
+    LiveDataViewModel getViewModel();
 
 }
 

@@ -129,7 +129,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                 });
                 break;
             case 1: // Write Tip
-                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "Creating a Tip", "Write the actual Tip");
+                showTopMsgBar(R.drawable.ic_topmsgbar_writing, "Creating a Tip", "Write the actual Tip");
                 mapOperator.visibilityOfInteractBtns(View.GONE);
                 mapOperator.setStateStandby();
                 fragmentOperator.openWriteTip(new ITipWriteListener() {
@@ -154,6 +154,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
 
     private void showTopMsgBar(int imageId, String header, String subtitle){
         fragmentOperator.showTopMsgBar(imageId, header, subtitle);
+    }
+
+    public LiveDataViewModel getViewModel(){
+        return model;
     }
 
 }
