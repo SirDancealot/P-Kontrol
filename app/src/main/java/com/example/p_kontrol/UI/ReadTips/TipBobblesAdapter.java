@@ -7,9 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.LiveData;
 
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,20 +31,22 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
 
 
     // Variables
-    List<ATipDTO> tips;
+    IFragmentOperator fragmentOperator;
+    LiveData<List<ATipDTO>> tips;
 
-    public TipBobblesAdapter(FragmentManager fm, List<ATipDTO> tips){
+    public TipBobblesAdapter(FragmentManager fm, LiveData<List<ATipDTO>> tips, IFragmentOperator fragmentOperator){
         super(fm);
         this.tips = tips;
+        this.fragmentOperator = fragmentOperator;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
 
-        FragTipBobble frag = new FragTipBobble();
+        FragTipBobble frag = new FragTipBobble(fragmentOperator);
         Bundle bundle = new Bundle();
-        ATipDTO thisElement = tips.get(position);
+        ATipDTO thisElement = tips.getValue().get(position);
 
         Log.d(TAG, "getItem:" + thisElement.getAuthor().getFirstName());
         bundle.putString(BOBBLE_NAME, thisElement.getAuthor().getFirstName() );
@@ -65,6 +69,6 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return tips.size();
+        return tips.getValue().size();
     }
 }

@@ -2,12 +2,16 @@ package com.example.p_kontrol.DataBase;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -18,6 +22,7 @@ import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -27,10 +32,59 @@ public class FirestoreDAO implements IDatabase {
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
     GeoFirestore geoFirestore = new GeoFirestore(tips);
+    GeoQuery query;
 
+    /**
+     * Retrieves a list of documents by id in from the provided location.
+     *
+     * @param collection the collection to be searched
+     * @param ids a list of the specific documents to be retrieved from the collection
+     * @return Returns a list of DocumentSnapshot's for the requested documents
+     */
     @Override
-    public List<QuerySnapshot> getDocumentList (CollectionReference collection, List<String> ids){
-        return null;
+    public List<DocumentSnapshot> getDocumentList (CollectionReference collection, @NonNull @NotNull List<String> ids){
+        Log.d(TAG, "getDocumentList: begin");
+        
+        @NotNull @NonNull List<DocumentSnapshot> list = new LinkedList<>();
+        LinkedList<Boolean> counter = new LinkedList(); //list used to count number of processed elements and store data about their success. true means successful.
+        List<Task<DocumentSnapshot>> taskList = new LinkedList<>();
+
+        //For all documents, retrieve them and add them to a list
+        for (String id : ids) {
+            taskList.add(collection.document(id).get()
+//                    .addOnCompleteListener(
+//                        task -> {
+//                            Log.d(TAG, "getDocumentList: complete");
+//                            if (task.isSuccessful()) {
+//                                synchronized (list) {
+//                                    list.add(task.getResult());
+//                                }
+//                            } else {
+//                                Log.e(TAG, "getDocumentList: document: " + id, task.getException());
+//                            }
+//
+//
+//                        }
+//                    )
+            )
+            ;
+        }
+
+        try {
+            Tasks.await(
+                    Tasks.whenAllComplete(
+                            taskList.toArray(new Task[0]) //hvorfor er vi på main thread her??????
+                    )
+            );
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for (Task<DocumentSnapshot> task : taskList) {
+            list.add(task.getResult());
+        }
+
+        return list;
     }
 
     @Override
@@ -86,44 +140,111 @@ public class FirestoreDAO implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, List<ATipDTO> targetList) {
-        String collection = "tips";
+    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList) {
+        Log.d(TAG, "queryByLocation: " + location);
+        if (query != null)
+            query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
+        else
+            query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
 
-        GeoQuery query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
+        query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
+    }
 
-        query.addGeoQueryEventListener(new GeoQueryEventListener() {
-            boolean updateIndividual = false;
-            ArrayList<String> documents = new ArrayList<>();
-            @Override
-            public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
-                Log.d(TAG, "onKeyEntered: Document " + s + " has entered the search area at " + geoPoint.toString());
-                if (updateIndividual) {
+    /**
+     * Inner class for at kunne udvide den eksisterende GeoQueryLocation primært med en constructor
+     */
+    private class CustomGeoQueryLocation implements GeoQueryEventListener {
+        String TAG = "GeoFirestore";
 
-                } else {
-                    documents.add(s);
+        IDatabase dao;
+        MutableLiveData<List<ATipDTO>> tipList;
+        CollectionReference collection;
+
+        boolean updateIndividual = false; //Boolean describing whether or not to wait for a batch or not
+        ArrayList<String> documents = new ArrayList<>();
+
+        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ATipDTO>> tipList, CollectionReference collection) {
+            this.dao = dao;
+            this.tipList = tipList;
+            this.collection = collection;
+        }
+
+        @Override
+        public void onGeoQueryError(@NotNull Exception e) {
+            Log.e(TAG, "onGeoQueryError: An error has occurred in querying", e);
+        }
+
+        /**
+         * Bliver kaldt når alle de allerede eksisterende tips er blevet fundet til at man kan initialisere mange på en gang
+         */
+        @Override
+        public void onGeoQueryReady() {
+            Log.d(TAG, "onGeoQueryReady: begin");
+            
+            updateIndividual = true;
+            List<ATipDTO> tips = tipList.getValue();
+            List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
+
+            Log.d(TAG, "onGeoQueryReady: start loop");
+            int i = 0;
+            if (tips != null) {
+                for (DocumentSnapshot snapshot : snapshots) {
+                    Log.d(TAG, "onGeoQueryReady: in loop at " + i);
+                    tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
                 }
             }
 
-            @Override
-            public void onKeyExited(@NotNull String s) {
-                Log.d(TAG, "onKeyExited: Document " + s + " has left the search area");
+            Log.d(TAG, "onGeoQueryReady: post value");
+            tipList.postValue(tips);
+        }
+
+        @Override
+        public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
+            Log.d(TAG, "onKeyEntered: ");
+            
+            if (updateIndividual) {
+                List<String> list = new ArrayList<>();
+                list.add(s);
+
+                ATipDTO tipDTO = getDocumentList(tips,  list).get(0).toObject(ATipDTO.class);
+                if (tipDTO != null) {
+                    Objects.requireNonNull(tipList.getValue()).add(tipDTO);
+                }
+            } else {
+                documents.add(s);
+            }
+        }
+
+        @Override
+        public void onKeyExited(@NotNull String s) {
+            Log.d(TAG, "onKeyExited: ");
+            
+            List<ATipDTO> tips = tipList.getValue();
+
+            final ATipDTO[] exitedTip = new ATipDTO[1];
+
+            collection.document(s)
+                    .get()
+                    .addOnCompleteListener(
+                            task -> {
+                                if (task.isSuccessful() && task.getResult() != null) {
+                                    exitedTip[0] = task.getResult().toObject(ATipDTO.class);
+                                }
+                            }
+                    );
+
+            if (tips != null) {
+                tips.remove(exitedTip);
             }
 
-            @Override
-            public void onKeyMoved(@NotNull String s, @NotNull GeoPoint geoPoint) {
-                Log.d(TAG, "onKeyMoved: Document " + s + " has moved within the search area to " + geoPoint.toString());
-            }
+            tipList.setValue(tips);
 
-            @Override
-            public void onGeoQueryReady() {
-                Log.d(TAG, "onGeoQueryReady: all initial data has been loaded");
-                updateIndividual = true;
-            }
+        }
 
-            @Override
-            public void onGeoQueryError(@NotNull Exception e) {
-                Log.e(TAG, "onGeoQueryError: there was an error with this querry", e);
-            }
-        });
+        @Override
+        public void onKeyMoved(@NotNull String s, @NotNull GeoPoint geoPoint) {
+            Log.d(TAG, "onKeyMoved: ");
+            //Dette er kun nødvendigt at implementere hvis tips positioner kommer til at kunne fløtte sig
+        }
     }
 }

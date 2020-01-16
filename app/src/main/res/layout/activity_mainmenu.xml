@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".UI.MainMenuActivity"
-
+    tools:context=".UI.MainMenuAcitvity.MainMenuActivity"
+    android:id="@+id/mainMenu_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <!-- Map -->
-        <fragment
+        <FrameLayout
             android:id="@+id/mainMenu_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
@@ -105,15 +105,22 @@
             app:layout_constraintStart_toStartOf="parent"
             />
         <!-- Write Tip  -->
+        <FrameLayout
+            android:id="@+id/mainMenu_midScreenFragmentContainer"
+            android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <!-- top message box -->
-            <FrameLayout
-                android:id="@+id/mainMenu_midScreenFragmentContainer"
-                android:name="com.example.p_kontrol.Fragments.FragMessageWrite"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/mainMenu_topMsgBarContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

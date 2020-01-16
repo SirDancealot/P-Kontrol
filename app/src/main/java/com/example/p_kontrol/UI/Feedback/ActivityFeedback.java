@@ -75,6 +75,10 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
     final String FB_GROUP_ID = "1057084904626319";
 
     Button navToFacebookBtn;
+    //IBackend backend = new Backend();
+    Spinner dropDownCategory;
+    EditText feedbackText;
+    Button sendFeedbackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,4 +111,13 @@ public class ActivityFeedback extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {    }
+    public void onClick(View v) {
+
+        if (categoryText.equals(getResources().getString(R.string.feedback_choose_category))) {
+            sendFeedbackBtn.setError("Please choose a category in the drop down menu");
+            Toast.makeText(this, sendFeedbackBtn.getError(), Toast.LENGTH_LONG).show();
+        } else {
+            //backend.postFeedback(categoryText, feedbackText.getText().toString());
+        }
+    }
 }
