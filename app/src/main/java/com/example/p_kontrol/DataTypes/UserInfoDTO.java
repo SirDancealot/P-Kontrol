@@ -15,7 +15,6 @@ public class UserInfoDTO {
     private String email;
     private String id;
     private Object token;
-    List<ATipDTO> tips;
 
 
 
@@ -105,14 +104,6 @@ public class UserInfoDTO {
 
     public void setToken(Object token) {
         this.token = token;
-    }
-
-    public List<ATipDTO> getTips() {
-        return tips;
-    }
-
-    public void setTips(List<ATipDTO> tips) {
-        this.tips = tips;
     }
 
     public FirebaseUser getUser() {

@@ -37,7 +37,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     UserInfoDTO userInfoDTO;
     List<ATipDTO> tips;
     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
-    ATipDTO currentTip;
 
     // regular Variables
     private View view, container,suroundings;
@@ -56,8 +55,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         // Requiired empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,29 +74,23 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         like        = view.findViewById(R.id.bobbelTip_like)              ;
         dislike     = view.findViewById(R.id.bobbelTip_dislike)           ;
 
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        tips = userInfoDTO.getTips();
         like.setOnClickListener(this);
         dislike.setOnClickListener(this);
         likeStatus = "normal";
 
 
-        currentTip = tips.get(Integer.parseInt(getArguments().getString(BOBBLE_INDEX)));
-
-
-
         //Get Arguments
         try{
 
-            if(currentTip.getLikers() != null) {
-                if (currentTip.getLikers().contains(userInfoDTO.getId())) {
+            if(tipDTO.getLikers() != null) {
+                if (tipDTO.getLikers().contains(userInfoDTO.getId())) {
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
                     likeStatus = "like";
                 }
             }
-            if(currentTip.getDislikers() != null) {
-                if (currentTip.getDislikers().contains(userInfoDTO.getId())) {
+            if(tipDTO.getDislikers() != null) {
+                if (tipDTO.getDislikers().contains(userInfoDTO.getId())) {
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = "dislike";
@@ -108,7 +99,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
 
             //tip type
-            type = currentTip.getType();
+            type = tipDTO.getType();
             if(type == "normal"){
                 //todo Hans set farven til standart farve
             } else if(type == "free"){
@@ -119,8 +110,8 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
             //name of Profile
 
-            if (currentTip.getAuthor().getFirstName() != null){
-                name.setText(getArguments().getString(currentTip.getAuthor().getFirstName()));
+            if (tipDTO.getAuthor().getFirstName() != null){
+                name.setText(getArguments().getString(tipDTO.getAuthor().getFirstName()));
             } else {
                 name.setText("Anonym");
             }
@@ -128,7 +119,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
 
             // tip Shortend Text.
-            String tipText = currentTip.getMessage();
+            String tipText = tipDTO.getMessage();
             String[] split_tip_test = tipText.split("\n");
 
 
@@ -138,7 +129,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 if (tipText.length() > 65){
                     tipText = tipText.substring(0, 65) + "...";
                 } else{
-                    readMore.setText(DATE_FORMAT.format(currentTip.getCreationDate()));
+                    readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
                 }
             }
             tip.setText(tipText);
@@ -159,10 +150,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
 
 
-        if ( currentTip.getAuthor().getProfileSRC() != null){
+        if ( tipDTO.getAuthor().getProfileSRC() != null){
             System.out.println("kkkkk ---------- henter img");
-            System.out.println(currentTip.getAuthor().getProfileSRC());
-            URL = currentTip.getAuthor().getProfileSRC();
+            System.out.println(tipDTO.getAuthor().getProfileSRC());
+            URL = tipDTO.getAuthor().getProfileSRC();
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.dontAnimate();
             //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
@@ -189,8 +180,8 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 Log.i(TAG, "onClick:bobbelTip_container  ");
                 break;
             case (R.id.bobbelTip_readMore):
-                readMore.setText(DATE_FORMAT.format(currentTip.getCreationDate()));
-                tip.setText(currentTip.getMessage());
+                readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
+                tip.setText(tipDTO.getMessage());
 
 
                 Log.i(TAG, "onClick: ReadBox ");

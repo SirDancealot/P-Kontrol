@@ -42,10 +42,6 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         FragTipBobble frag = new FragTipBobble(fragmentOperator, tips.getValue().get(position));
-        Bundle bundle = new Bundle();
-
-        bundle.putString(BOBBLE_INDEX, Integer.toString(position) );
-        frag.setArguments(bundle);
 
         return frag;
     }
