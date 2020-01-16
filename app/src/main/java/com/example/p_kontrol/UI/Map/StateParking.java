@@ -41,11 +41,12 @@ public class StateParking extends State {
         zoomIn();
         map.clear();
         this.context = parent.getContext();
-        MediaPlayer.create(context, R.raw.alarm);
 
         LiveDataViewModel model = ViewModelProviders.of(parent).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
+
+        m.create(context, R.raw.alarm);
 
 
     }
@@ -71,7 +72,7 @@ public class StateParking extends State {
         for (PVagtDTO vagt : pVagtList) {
 
             if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + time) {
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("danger_icon", 69, 100)));
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("known_danger_icon", 100, 100)));
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -81,20 +82,25 @@ public class StateParking extends State {
                     }
                 });
 
-                m.start();
+
 
 
 
 
             } else {
 
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("danger_icon", 69, 100)));
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("danger_icon", 100, 100)));
 
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(marker -> {
                     listener.onTipClick(Integer.parseInt(marker.getTitle()));
                     return true;
                 });
+
+
+                m.start();
+
+
 
             }
         }

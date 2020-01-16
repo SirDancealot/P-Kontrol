@@ -65,6 +65,8 @@ public class LiveDataViewModel extends ViewModel {
         }
         List<PVagtDTO> l = new LinkedList<>();
         l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
+        l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(100000), "123"));
+
 
         pVagtList.setValue(l);
 
