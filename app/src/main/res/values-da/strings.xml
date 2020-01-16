@@ -86,7 +86,16 @@
     <string name="feedback_message_text">Feedback besked</string>
     <string name="feedback_hint_text">Skriv din feedback her</string>
     <string name="feedback_send_text">Send feedback</string>
+    <string name="feedback_fb_title">Vær venlig og giv os noget feedback, og føl dig fri til at diskutere denne app i denne Facebook gruppe!</string>
+    <string name="feedback_fb_link_btn">Facebook gruppe</string>
 
+    <string name="profile_forgot_password">Forgot password?</string>
+    <string name="common_signin_button_text">Log ind</string>
+    <string name="profile_create_account">Har du ikke en bruger? Opret en!</string>
+    <string name="profile_facebook">Fortsæt med Facebook</string>
+    <string name="profile_google">Log ind</string>
+    <string name="profile_login">Log ind</string>
+    <string name="profile_sign_up">Opret bruger</string>
 
     <string-array name="feedback_categories_array">
         <item>@string/feedback_choose_category</item>

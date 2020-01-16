@@ -110,7 +110,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                System.out.println("---------kkkkk");
+//                System.out.println("---------kkkkk");
                 handleFacebookAccessToken(loginResult.getAccessToken());
 
             }
@@ -173,7 +173,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
-            System.out.println("---------kkkkk facebook inde");
+//            System.out.println("---------kkkkk facebook inde");
             FirebaseUser user = mAuth.getCurrentUser();
             userInfoDTO.setUser(user);
             ChangeActivityNext();
@@ -191,7 +191,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         super.onActivityResult(requestCode, resultCode, data);
 
         Log.d(TAG, "onActivityResult: " + requestCode);
-        System.out.println("---------kkkkk" + requestCode);
+//        System.out.println("---------kkkkk" + requestCode);
 
         loding.setVisibility(View.VISIBLE);
 
@@ -222,7 +222,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
-        System.out.println("---------kkkkk facebook");
+//        System.out.println("---------kkkkk facebook");
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)

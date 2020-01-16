@@ -72,16 +72,16 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        System.out.println("--------kkkkk");
-        System.out.println(user);
-        System.out.println("--------kkkkk");
+//        System.out.println("--------kkkkk");
+//        System.out.println(user);
+//        System.out.println("--------kkkkk");
 
         if(user != null){
-            System.out.println("--------inde!!");
+//            System.out.println("--------inde!!");
             userInfoDTO.setUser(user);
             Intent changeActivity = new Intent( this , MainMenuActivity.class);
             startActivity(changeActivity);
-            System.out.println("--------ude!!");
+//            System.out.println("--------ude!!");
         } else {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {

@@ -104,7 +104,7 @@
             android:id="@+id/LoginScreen_3_FormForgottenPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot password?"
+            android:text="@string/profile_forgot_password"
 
             />
     </LinearLayout>
@@ -140,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
-            android:text="Don't have an account? Sign up"
+            android:text="@string/profile_create_account"
             android:layout_marginBottom="35dp"
             />
 
@@ -159,7 +159,8 @@
                 android:layout_gravity="center_horizontal|top"
                 android:layout_marginBottom="30dp"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp" />
+                android:paddingBottom="20dp"
+                android:text="@string/profile_facebook"/>
         </LinearLayout>
 
 
@@ -173,6 +174,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/profile_google"
              />
 
 
