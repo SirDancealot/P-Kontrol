@@ -47,6 +47,7 @@
     <string name="WriteTip_TextInput">Skriv her..</string>
     <string name="writeTip_title_step3">Tag billede</string>
     <string name="writeTip_title_step4">Tak for din informationsdeling</string>
+    <string name="writeTip_type_contribution">Vælg tip type</string>
     <string name="writeTip_submit_contribution">Færdiggør deling</string>
     <string name="writeTip_submit">Del</string>
 

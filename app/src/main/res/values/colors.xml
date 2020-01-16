@@ -23,6 +23,10 @@
     <color name="black_overlay">#66000000</color>
     <!-- den bugger uden -->
     <color name="colorPrimaryDark">#5C9DB8</color>
+    <!-- green, yellow and red for tips -->
 
+    <color name="typeGreen">#50F300</color>
+    <color name="typeYellow">#FFEB3B</color>
+    <color name="typeRed">#EC0000</color>
 
 </resources>

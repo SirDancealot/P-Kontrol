@@ -29,11 +29,11 @@ public class StateStandby extends State {
                 // todo ret navne
                 if(tip.getType() != null){
                     if(tip.getType() == "normal"){
-                        iconName = "map_tip_pin_icon";
+                        iconName = "ic_tip_like";
                     } else if(tip.getType() == "free"){
-                        iconName = "map_tip_pin_icon";
+                        iconName = "ic_tip_like_on";
                     } else if(tip.getType() == "alert") {
-                        iconName = "map_tip_pin_icon";
+                        iconName = "ic_tip_dislike_on";
                     }
                 } else {
                     iconName = "map_tip_pin_icon";
