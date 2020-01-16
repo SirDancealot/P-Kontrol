@@ -19,17 +19,17 @@ import androidx.core.util.Pair;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
-import com.example.p_kontrol.UI.MainMenuActivity;
+
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
@@ -42,6 +42,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+
 import java.util.Arrays;
 
 public class Activity_LoginScreen_03  extends AppCompatActivity implements View.OnClickListener, OnCompleteListener<AuthResult> {
@@ -49,7 +50,6 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
     String TAG = "Login Screen 3";
     private static final int RC_SIGN_IN_GOOGLE = 9001;
     private static final int RC_SIGN_IN_FACEBOOK = 64206;
-
 
 
     // https://github.com/firebase/quickstart-android/blob/90389865dc8a64495b1698c4793cd4deecc4d0ee/auth/app/src/main/java/com/google/firebase/quickstart/auth/java/GoogleSignInActivity.java#L101-L120

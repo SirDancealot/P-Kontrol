@@ -13,7 +13,7 @@ import android.view.Window;
 
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.MainMenuActivity;
+import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
