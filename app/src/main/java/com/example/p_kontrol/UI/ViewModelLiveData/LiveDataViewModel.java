@@ -33,25 +33,20 @@ public class LiveDataViewModel extends ViewModel {
 
     private IBackend bk = BackendStub.getBackend();
 
-
     public void updateTips(LatLng location){
         Log.d(TAG, "updateTips: ");
         bk.getTips(location, tipList);
     }
-
     public void createTip() {
         Log.d(TAG, "createTip: ");
         bk.createTip(tipCreateObject.getValue());
         updateTips(new LatLng(55.43521, 12.23504));//todo make this not hardcoded
     }
-
     public void updatePVagter(LatLng location){
         bk.getPVagter(location, pVagtList.getValue());
     }
 
-
     //######    Getters     ######
-
     public LiveData<List<ATipDTO>> getTipList() {
         if (tipList == null) {
             tipList = new MutableLiveData<>();
@@ -62,14 +57,12 @@ public class LiveDataViewModel extends ViewModel {
 
         return tipList;
     }
-
     public LiveData<List<PVagtDTO>> getPvagtList() {
         if (pVagtList == null)
             pVagtList = new MutableLiveData<>();
 
         return pVagtList;
     }
-
     public MutableLiveData<ATipDTO> getMutableTipCreateObject() { //TODO make getter and let this
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>();
@@ -78,9 +71,6 @@ public class LiveDataViewModel extends ViewModel {
         return tipCreateObject;
     }
 
-
-
-    //######    setters     ######
     // Map Data
     public MutableLiveData<LatLng> getCurrentWindowLocation(){
         if(map_WindowLocation == null){
