@@ -190,22 +190,27 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 if(likeStatus == "like"){
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = "normal";
+                    //todo remove like
 
                 } else {
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
                     likeStatus = "like";
+                    //todo set like
+
                 }
                 break;
             case (R.id.bobbelTip_dislike):
                 if(likeStatus == "dislike"){
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     likeStatus = "normal";
+                    //todo remove dislike
 
                 } else {
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = "dislike";
+                    // todo set dislike
                 }
                 break;
             default:
