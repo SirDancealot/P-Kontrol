@@ -106,7 +106,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     // write Tip
     @Override
     public void openWriteTip(ITipWriteListener writeListener) {
-        fragment_messageWrite = new FragMessageWrite(writeListener);
+        fragment_messageWrite = new FragMessageWrite(writeListener,this.context);
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
         boolFragMessageWrite = true;
     }

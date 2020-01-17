@@ -142,6 +142,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
+                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
                     }
                 });
                 break;
@@ -158,6 +159,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onCancelTip() {
                         fragmentOperator.closeWriteTip();
+                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
                     }
                 });
                 break;
