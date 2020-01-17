@@ -129,8 +129,10 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         // todo check Message for syntax Errors
         boolean validated = true;
 
-        if (viewModel.getCurrentTip() == null
-                || !(viewModel.getCurrentTip().getMessage().trim().length() > 0)
+        //checks if message is empty or whitespace
+        if (
+//                viewModel.getCurrentTip() == null ||
+                        !(viewModel.getCurrentTip().getMessage().trim().length() > 0)
         ) {
             validated = false;
         }
