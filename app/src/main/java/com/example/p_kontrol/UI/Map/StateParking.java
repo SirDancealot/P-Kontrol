@@ -54,7 +54,6 @@ public class StateParking extends State {
 
         //Mark Current Location of Car parking
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.parkingSpot.getName(), 150, 75)));
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap()
         map.addMarker(markerOptions.position(currentLocation));
 
 
