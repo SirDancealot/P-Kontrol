@@ -8,17 +8,13 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
-import com.example.p_kontrol.UI.Map.MapFragment;
-import com.example.p_kontrol.UI.Map.StateFreePark;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 

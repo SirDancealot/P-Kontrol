@@ -3,7 +3,6 @@ package com.example.p_kontrol.UI.MainMenuAcitvity;
 import android.util.Log;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -12,7 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
 import com.example.p_kontrol.UI.TopMessageBar.FragTopMessageBar;
@@ -47,7 +46,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
 
     // DAta Acces
     LiveDataViewModel model;
-    LiveData<List<ATipDTO>> tipList;
+    LiveData<List<TipDTO>> tipList;
 
 
     public CompositionFragmentOperator(MainMenuActivityController context, View view){
@@ -120,7 +119,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     @Override
     public void showTipBobbles(int index) {
 
-        List<ATipDTO> list = null;
+        List<TipDTO> list = null;
 
         viewPager_tipBobles.setVisibility(View.VISIBLE);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);

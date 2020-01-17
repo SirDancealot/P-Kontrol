@@ -8,23 +8,21 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LiveDataViewModel extends ViewModel {
 
     private String TAG = "ViewModelMaster";
 
-    private MutableLiveData<List<ATipDTO>> tipList;
+    private MutableLiveData<List<TipDTO>> tipList;
     private MutableLiveData<List<PVagtDTO>> pVagtList;
-    private MutableLiveData<ATipDTO> tipCreateObject;
+    private MutableLiveData<TipDTO> tipCreateObject;
     private MutableLiveData<LatLng> currentLocation;
 
     // Map Data.MutableLiveData<
@@ -34,11 +32,11 @@ public class LiveDataViewModel extends ViewModel {
 
     // todo er dette rigtigt? August
     // Write tip
-    private ATipDTO currentTip;
-    public ATipDTO getCurrentTip() {
+    private TipDTO currentTip;
+    public TipDTO getCurrentTip() {
         return currentTip;
     }
-    public void setCurrentTip(ATipDTO currentTip) {
+    public void setCurrentTip(TipDTO currentTip) {
         this.currentTip = currentTip;
     }
 
@@ -53,7 +51,7 @@ public class LiveDataViewModel extends ViewModel {
     public void createTip() {
         Log.d(TAG, "createTip: " + this + "\n" + tipCreateObject.getValue());
         if (tipCreateObject != null) {
-            ATipDTO dto = tipCreateObject.getValue();
+            TipDTO dto = tipCreateObject.getValue();
             bk.createTip(dto);
             updateTips(new LatLng(55.43521, 12.23504));//todo make this not hardcoded
         }
@@ -66,21 +64,21 @@ public class LiveDataViewModel extends ViewModel {
     //######    Setters     ######
 
 
-    public void setTipCreateObject(ATipDTO tipCreateObject) {
+    public void setTipCreateObject(TipDTO tipCreateObject) {
         Log.d(TAG, "setTipCreateObject: " + this + "\n" + tipCreateObject + "\n");
 
         this.tipCreateObject.setValue(tipCreateObject);
     }
 
     //######    Getters     ######
-    public LiveData<List<ATipDTO>> getTipList() {
+    public LiveData<List<TipDTO>> getTipList() {
         Log.d(TAG, "getTipList: " + this);
         if (tipList == null) {
             tipList = new MutableLiveData<>();
         }
 
         if (tipList.getValue() == null)
-            tipList.setValue(new ArrayList<ATipDTO>());
+            tipList.setValue(new ArrayList<TipDTO>());
 
         return tipList;
     }
@@ -99,11 +97,11 @@ public class LiveDataViewModel extends ViewModel {
 
         return pVagtList;
     }
-    public LiveData<ATipDTO> getTipCreateObject() { //TODO make getter and let this
+    public LiveData<TipDTO> getTipCreateObject() { //TODO make getter and let this
         Log.d(TAG, "getTipCreateObject: " + this);
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>();
-            tipCreateObject.setValue(new ATipDTO());
+            tipCreateObject.setValue(new TipDTO());
         }
 
         return tipCreateObject;

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -25,7 +25,7 @@ public class StateSelectLocation extends State {
         super(parent);
         map.clear();
 
-        ATipDTO dto = viewModel.getTipCreateObject().getValue();
+        TipDTO dto = viewModel.getTipCreateObject().getValue();
         dto.setL(new GeoPoint(parent.DEFAULT_LOCATION.latitude, parent.DEFAULT_LOCATION.longitude));
         viewModel.setTipCreateObject(dto);
 
@@ -40,7 +40,7 @@ public class StateSelectLocation extends State {
             public void onMapClick(LatLng latLng) {
                 map.clear();
 
-                ATipDTO dto = viewModel.getTipCreateObject().getValue();
+                TipDTO dto = viewModel.getTipCreateObject().getValue();
                 dto.setL(new GeoPoint(latLng.latitude, latLng.longitude));
                 viewModel.setTipCreateObject(dto);
 
@@ -57,7 +57,7 @@ public class StateSelectLocation extends State {
 
     }
     @Override
-    public void updateMap(List<ATipDTO> list) {
+    public void updateMap(List<TipDTO> list) {
 
     }
     @Override

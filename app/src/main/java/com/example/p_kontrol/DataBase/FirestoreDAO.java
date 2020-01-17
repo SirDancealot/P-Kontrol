@@ -88,7 +88,7 @@ public class FirestoreDAO implements IDatabase {
     }
 
     @Override
-    public List<ATipDTO> getTipList(LatLng location, double radius) {
+    public List<TipDTO> getTipList(LatLng location, double radius) {
         Task<QuerySnapshot> query = tips.get();
 
         try {
@@ -109,7 +109,7 @@ public class FirestoreDAO implements IDatabase {
     }
 
     @Override
-    public void createTip(ATipDTO tip) {
+    public void createTip(TipDTO tip) {
         String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
@@ -125,7 +125,7 @@ public class FirestoreDAO implements IDatabase {
     }
 
     @Override
-    public void updateTip(ATipDTO tip) { }
+    public void updateTip(TipDTO tip) { }
 
     @Override
     public AUserDTO getUser(int id) {
@@ -140,7 +140,7 @@ public class FirestoreDAO implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList) {
+    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<TipDTO>> tipList) {
         Log.d(TAG, "queryByLocation: " + location);
         if (query != null)
             query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
@@ -157,13 +157,13 @@ public class FirestoreDAO implements IDatabase {
         String TAG = "GeoFirestore";
 
         IDatabase dao;
-        MutableLiveData<List<ATipDTO>> tipList;
+        MutableLiveData<List<TipDTO>> tipList;
         CollectionReference collection;
 
         boolean updateIndividual = false; //Boolean describing whether or not to wait for a batch or not
         ArrayList<String> documents = new ArrayList<>();
 
-        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ATipDTO>> tipList, CollectionReference collection) {
+        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<TipDTO>> tipList, CollectionReference collection) {
             this.dao = dao;
             this.tipList = tipList;
             this.collection = collection;
@@ -182,7 +182,7 @@ public class FirestoreDAO implements IDatabase {
             Log.d(TAG, "onGeoQueryReady: begin");
             
             updateIndividual = true;
-            List<ATipDTO> tips = tipList.getValue();
+            List<TipDTO> tips = tipList.getValue();
             List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
 
             Log.d(TAG, "onGeoQueryReady: start loop");
@@ -190,7 +190,7 @@ public class FirestoreDAO implements IDatabase {
             if (tips != null) {
                 for (DocumentSnapshot snapshot : snapshots) {
                     Log.d(TAG, "onGeoQueryReady: in loop at " + i);
-                    tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
+                    tips.add(Objects.requireNonNull(snapshot.toObject(TipDTO.class)));
                 }
             }
 
@@ -206,7 +206,7 @@ public class FirestoreDAO implements IDatabase {
                 List<String> list = new ArrayList<>();
                 list.add(s);
 
-                ATipDTO tipDTO = getDocumentList(tips,  list).get(0).toObject(ATipDTO.class);
+                TipDTO tipDTO = getDocumentList(tips,  list).get(0).toObject(TipDTO.class);
                 if (tipDTO != null) {
                     Objects.requireNonNull(tipList.getValue()).add(tipDTO);
                 }
@@ -219,16 +219,16 @@ public class FirestoreDAO implements IDatabase {
         public void onKeyExited(@NotNull String s) {
             Log.d(TAG, "onKeyExited: ");
             
-            List<ATipDTO> tips = tipList.getValue();
+            List<TipDTO> tips = tipList.getValue();
 
-            final ATipDTO[] exitedTip = new ATipDTO[1];
+            final TipDTO[] exitedTip = new TipDTO[1];
 
             collection.document(s)
                     .get()
                     .addOnCompleteListener(
                             task -> {
                                 if (task.isSuccessful() && task.getResult() != null) {
-                                    exitedTip[0] = task.getResult().toObject(ATipDTO.class);
+                                    exitedTip[0] = task.getResult().toObject(TipDTO.class);
                                 }
                             }
                     );

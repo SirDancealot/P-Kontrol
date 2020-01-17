@@ -9,7 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,7 +44,7 @@ abstract public class State implements IState  {
     }
 
     @Override
-    public void updateMap(List<ATipDTO> list) {}
+    public void updateMap(List<TipDTO> list) {}
     @Override
     public void setDoneListner(IMapFragmentListener listener) {
         this.listener = listener;

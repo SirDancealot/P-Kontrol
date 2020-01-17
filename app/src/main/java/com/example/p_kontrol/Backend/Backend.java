@@ -3,11 +3,8 @@ package com.example.p_kontrol.Backend;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
-import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetPVagter;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,7 +37,7 @@ public class Backend implements IBackend {
 
     //TODO make backend handle preferences
 
-    List<ATipDTO> aTipDTOS;
+    List<TipDTO> tipDTOS;
 
     // Android internal
     private String TAG = "Backend";
@@ -50,15 +47,15 @@ public class Backend implements IBackend {
     final int PVAGT_SEARCH_RADIUS = 120;
 
     // private data
-    private List<ATipDTO> dtoList = new LinkedList<>();
+    private List<TipDTO> dtoList = new LinkedList<>();
 
     @Override // when needing tips from new location
-    public List<ATipDTO> getTips(LatLng location, MutableLiveData<List<ATipDTO>> tipList) {
+    public List<TipDTO> getTips(LatLng location, MutableLiveData<List<TipDTO>> tipList) {
         // todo rethink getTips and updateTipsFromDB
         updateTipsFromDB( location, tipList);
-         return  aTipDTOS;
+         return tipDTOS;
     }
-    private void updateTipsFromDB(LatLng location, MutableLiveData<List<ATipDTO>> tipList) {
+    private void updateTipsFromDB(LatLng location, MutableLiveData<List<TipDTO>> tipList) {
         dtoList = new LinkedList<>();
         AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, tipList);
         async.execute();
@@ -77,7 +74,7 @@ public class Backend implements IBackend {
 
 
     @Override
-    public void createTip(ATipDTO tip) {
+    public void createTip(TipDTO tip) {
         Log.d(TAG, "createTip: ");
         UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
         if(userInfoDTO.getToken() != null){
@@ -92,7 +89,7 @@ public class Backend implements IBackend {
     }
 
     @Override
-    public void rateTip(int star, ATipDTO tip) {
+    public void rateTip(int star, TipDTO tip) {
 
     }
 

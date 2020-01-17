@@ -1,16 +1,13 @@
 package com.example.p_kontrol.DataTypes;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 
 import org.imperiumlabs.geofirestore.core.GeoHash;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class TipDTO extends ATipDTO {
-
+public class TipDTO implements ITipDTO{
 
     private AUserDTO author;
     private String message;
@@ -18,20 +15,10 @@ public class TipDTO extends ATipDTO {
     private Date creationDate;
     private String g; //location geohash
     private GeoPoint l; //location
-    // todo evaluate these
     private int type;
     private List<String> likers, dislikers;
 
-    public TipDTO(){super();}
-
-    public TipDTO(AUserDTO author, String message, int rating, Date creationDate, GeoPoint l) {
-        super();
-        this.author = author;
-        this.message = message;
-        this.rating = rating;
-        this.creationDate = creationDate;
-        this.l = l;
-    }
+    public TipDTO(){}
 
     @Override
     public int getType() {
@@ -98,6 +85,19 @@ public class TipDTO extends ATipDTO {
         g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
     }
 
+
+    @Override
+    public TipDTO copy(){
+        TipDTO newDTO = new TipDTO();
+        newDTO.setAuthor(author);
+        newDTO.setCreationDate(creationDate);
+        newDTO.setL(l);
+        newDTO.setG(g);
+        newDTO.setMessage(message);
+        newDTO.setRating(rating);
+        return newDTO;
+    }
+
     @Override
     public List<String> getLikers() {
         return this.likers;
@@ -118,26 +118,12 @@ public class TipDTO extends ATipDTO {
         this.dislikers = dislikers;
     }
 
-
-
-    @Override
-    public TipDTO copy(){
-        TipDTO newDTO = new TipDTO();
-        newDTO.setAuthor(author);
-        newDTO.setCreationDate(creationDate);
-        newDTO.setL(l);
-        newDTO.setG(g);
-        newDTO.setMessage(message);
-        newDTO.setRating(rating);
-        return newDTO;
-    }
-
     @Override
     public String toString() {
-        return "TipDTO{" +
-                "author='" + author + '\'' +
-                ", messege='" + message + '\'' +
-                ", location=" + l +
+        return "TipDTO{\n" +
+                "author = '" + author + "'\n" +
+                ", message = '" + message + "'\n" +
+                ", location = " + l + "'\n" +
                 '}';
     }
 }

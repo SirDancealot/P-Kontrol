@@ -4,12 +4,10 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -22,8 +20,8 @@ public class StateFreePark extends State {
     public StateFreePark(MapFragment parent) {
         super(parent);
 
-        LiveData<List<ATipDTO>> liveDataTipList = viewModel.getTipList();
-        List<ATipDTO> tipList = liveDataTipList.getValue();
+        LiveData<List<TipDTO>> liveDataTipList = viewModel.getTipList();
+        List<TipDTO> tipList = liveDataTipList.getValue();
         liveDataTipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
                 updateMap(list);
@@ -40,13 +38,13 @@ public class StateFreePark extends State {
 
 
     @Override
-    public void updateMap(List<ATipDTO> list ) {
+    public void updateMap(List<TipDTO> list ) {
         MarkerOptions markerOptions = null;
         map.clear();
 
         if(list != null) {
             int i = 0;
-            for (ATipDTO tip : list) {
+            for (TipDTO tip : list) {
                 if(tip.getType() != 0){
                     if(tip.getType() == TipTypes.paid.getValue()) {
                         markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.free.getName(), 69, 100)));

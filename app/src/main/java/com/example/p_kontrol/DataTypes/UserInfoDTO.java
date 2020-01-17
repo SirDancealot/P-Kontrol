@@ -41,6 +41,14 @@ public class UserInfoDTO {
         UserInfoDTO.userInfoDTO = new UserInfoDTO();
     }
 
+    public AUserDTO getSimpleUser(){
+        AUserDTO simpleUser = new AUserDTO();
+        simpleUser.setFirstName(this.name);
+        simpleUser.setLastName(this.name2);
+        simpleUser.setProfileSRC(this.url);
+        return simpleUser;
+    }
+
 
     public String getName() {
         return name;
