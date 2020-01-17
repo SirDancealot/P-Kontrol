@@ -77,6 +77,11 @@ class CompositionMapOperator        implements IMapOperator   {
     }
     @Override
     public void toggleStateParking() {
+        if(mapFragment.isFreeParkEnabled()){
+            mapFragment.setStateStandby();
+        }else{
+            mapFragment.isFreeParkEnabled();
+        }
 
     }
 

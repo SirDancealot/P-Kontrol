@@ -18,4 +18,6 @@ public interface IMapFragment {
     IState getCurrentState();
     void updatePermissions();
 
+    boolean isFreeParkEnabled();
+
 }
