@@ -37,11 +37,11 @@ public class LiveDataViewModel extends ViewModel {
 
 
     public void updateTips(LatLng location){
-        Log.d(TAG, "updateTips: ");
+        Log.d(TAG, "updateTips: " + this);
         bk.getTips(location, tipList);
     }
     public void createTip() {
-        Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
+        Log.d(TAG, "createTip: " + this + "\n" + tipCreateObject.getValue());
         if (tipCreateObject != null) {
             ATipDTO dto = tipCreateObject.getValue();
             bk.createTip(dto);
@@ -57,23 +57,14 @@ public class LiveDataViewModel extends ViewModel {
 
 
     public void setTipCreateObject(ATipDTO tipCreateObject) {
-        if (this.tipCreateObject != null)
-            Log.d(TAG, "setTipCreateObject: before set: \n" + this.tipCreateObject.getValue() + "\n");
-        else
-            Log.d(TAG, "setTipCreateObject: before set: null");
-
-        Log.d(TAG, "setTipCreateObject: input: \n" + tipCreateObject + "\n");
+        Log.d(TAG, "setTipCreateObject: " + this + "\n" + tipCreateObject + "\n");
 
         this.tipCreateObject.setValue(tipCreateObject);
-
-        if (this.tipCreateObject != null)
-            Log.d(TAG, "setTipCreateObject: after set: \n" + this.tipCreateObject.getValue());
-        else
-            Log.d(TAG, "setTipCreateObject: after set: null");
     }
 
     //######    Getters     ######
     public LiveData<List<ATipDTO>> getTipList() {
+        Log.d(TAG, "getTipList: " + this);
         if (tipList == null) {
             tipList = new MutableLiveData<>();
         }
@@ -99,6 +90,7 @@ public class LiveDataViewModel extends ViewModel {
         return pVagtList;
     }
     public LiveData<ATipDTO> getTipCreateObject() { //TODO make getter and let this
+        Log.d(TAG, "getTipCreateObject: " + this);
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>();
             tipCreateObject.setValue(new ATipDTO());
@@ -109,32 +101,37 @@ public class LiveDataViewModel extends ViewModel {
 
     // Map Data
     public MutableLiveData<LatLng> getCurrentWindowLocation(){
+        Log.d(TAG, "getCurrentWindowLocation: " + this);
         if(map_WindowLocation == null){
             map_WindowLocation = new MutableLiveData<>();
         }
         return  map_WindowLocation;
     }
     public MutableLiveData<LatLng> getCurrentWindowZoom(){
+        Log.d(TAG, "getCurrentWindowZoom: " + this);
         if(map_WindowZoom == null){
             map_WindowZoom = new MutableLiveData<>();
         }
         return  map_WindowZoom;
     }
     public MutableLiveData<LatLng> getCurrentLocation(){ // The User location or Car Location
+        Log.d(TAG, "getCurrentLocation: " + this);
         if(map_currentLocation == null){
             map_currentLocation = new MutableLiveData<>();
         }
         return  map_currentLocation;
     }
     public void updatePVagter(LatLng location){
+        Log.d(TAG, "updatePVagter: " + this);
         bk.getPVagter(location, pVagtList );
     }
 
     public void createPVagt(PVagtDTO vagt){
+        Log.d(TAG, "CreatePVagt: " + this);
+
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
         }
-        Log.d(TAG, "CreatePVagt: " + this);
         if (pVagtList.getValue() != null)
             l.addAll(pVagtList.getValue());
         //l.add(vagt);

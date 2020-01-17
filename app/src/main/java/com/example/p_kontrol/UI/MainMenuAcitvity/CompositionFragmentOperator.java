@@ -160,8 +160,8 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         return boolFragTopMessageBar;
     }
 
-    @Override
-    public LiveDataViewModel getViewModel() {
-        return context.getViewModel();
-    }
+//    @Override
+//    public LiveDataViewModel getViewModel() {
+//        return context.getViewModel();
+//    }
 }

@@ -67,7 +67,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = context.getViewModel();
+        viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
     }
 
     @Override
@@ -158,10 +158,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     public FusedLocationProviderClient getFusedLocationProviderClient() {
         return fusedLocationProviderClient;
     }
-    @NonNull
-    public LiveDataViewModel getViewModel() {
-        return viewModel;
-    }
+//    @NonNull
+//    public LiveDataViewModel getViewModel() {
+//        return viewModel;
+//    }
 
 
     // Internal methods

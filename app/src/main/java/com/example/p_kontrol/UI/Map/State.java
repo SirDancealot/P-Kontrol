@@ -7,6 +7,7 @@ import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -36,7 +37,7 @@ abstract public class State implements IState  {
 
         map         = parent.getMap();
         listener    = parent.getFragmentListener();
-        viewModel   = parent.getViewModel();
+        viewModel   = ViewModelProviders.of(this.parent.getActivity()).get(LiveDataViewModel.class); //parent.getViewModel();
 
         // Setting Listeners
         centerMethod();

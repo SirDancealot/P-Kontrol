@@ -47,7 +47,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         mapOperator      = new CompositionMapOperator(this,container, this);
         fragmentOperator = new CompositionFragmentOperator(this,container);
 
-        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class); //getParent().getViewModel()
 
     }
 
@@ -168,8 +168,8 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         fragmentOperator.showTopMsgBar(imageId, header, subtitle);
     }
 
-    public LiveDataViewModel getViewModel(){
-        return model;
-    }
+//    public LiveDataViewModel getViewModel(){
+//        return model;
+//    }
 
 }
