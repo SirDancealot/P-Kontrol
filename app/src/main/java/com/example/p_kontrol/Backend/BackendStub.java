@@ -35,7 +35,9 @@ public class BackendStub implements IBackend{
     ATipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
 
     List<ATipDTO> demoList = new ArrayList<>();
-    List<PVagtDTO> l = new LinkedList<>();
+    List<PVagtDTO> l;
+
+    MutableLiveData<List<PVagtDTO>> pvagtlist;
 
 
     static IBackend backend = null;
@@ -44,10 +46,13 @@ public class BackendStub implements IBackend{
         demoList.add(tip1);
         demoList.add(tip2);
         demoList.add(tip3);
+        l = new LinkedList<>();
         l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
         l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
         l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
         l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
+
+
     }
 
 
@@ -81,14 +86,21 @@ public class BackendStub implements IBackend{
     @Override
     public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list) {
 
+        this.pvagtlist = list;
 
-        list.setValue(l);
+
 
     }
 
     public void createPVagt(PVagtDTO vagt){
 
+
+
+
+
         l.add(vagt);
+        pvagtlist.setValue(l);
+
     }
 
     @Override

@@ -17,6 +17,7 @@ import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
@@ -96,7 +97,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         Log.i("click","P-Vagt btn clicked \n");
 
         //report pVagt at current location
-        model.createPVagt(new PVagtDTO(model.getCurrentLocation().getValue(), new Date(), "123" ));
+        model.createPVagt(new PVagtDTO(new LatLng(55.703400, 12.523536), new Date(), "123" ));
 
 
 

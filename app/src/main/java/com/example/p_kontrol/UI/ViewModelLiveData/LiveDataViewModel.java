@@ -1,5 +1,7 @@
 package com.example.p_kontrol.UI.ViewModelLiveData;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -28,7 +30,11 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<LatLng> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
 
+
+    //test
     private IBackend bk = BackendStub.getBackend();
+    List<PVagtDTO> l = new LinkedList<>();
+
 
 
     public void updateTips(LatLng location){
@@ -43,16 +49,7 @@ public class LiveDataViewModel extends ViewModel {
         }
     }
 
-    public void updatePVagter(LatLng location){
-        bk.getPVagter(location, pVagtList );
-    }
 
-    public void createPVagt(PVagtDTO vagt){
-
-
-
-        bk.createPVagt(vagt);
-    }
 
 
     //######    Getters     ######
@@ -69,9 +66,13 @@ public class LiveDataViewModel extends ViewModel {
     public LiveData<List<PVagtDTO>> getPvagtList() {
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
+            l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
+            l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
+            l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
+            l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
+            pVagtList.setValue(l);
         }
-
-
+        pVagtList.setValue(l);
 
         return pVagtList;
     }
@@ -104,7 +105,22 @@ public class LiveDataViewModel extends ViewModel {
         }
         return  map_currentLocation;
     }
+    public void updatePVagter(LatLng location){
+        bk.getPVagter(location, pVagtList );
+    }
 
+    public void createPVagt(PVagtDTO vagt){
+        if (pVagtList == null) {
+            pVagtList = new MutableLiveData<>();
+        }
+        Log.i("Create", "CreatePVagt");
+        l.add(vagt);
+        pVagtList.setValue(l);
+
+
+
+        //bk.createPVagt(vagt);
+    }
 
 
 }

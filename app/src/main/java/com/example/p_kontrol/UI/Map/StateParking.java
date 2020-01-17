@@ -42,12 +42,14 @@ public class StateParking extends State {
         map.clear();
         this.context = parent.getContext();
 
+        // MediaPlayer
+        m = MediaPlayer.create(context, R.raw.alarm);
+
         LiveDataViewModel model = ViewModelProviders.of(parent).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
 
-        // MediaPlayer
-        m.create(context, R.raw.alarm);
+
 
 
         //Mark Current Location of Car parking
@@ -98,7 +100,7 @@ public class StateParking extends State {
                 });
 
 
-                m.start();
+              m.start();
 
 
 
