@@ -44,7 +44,14 @@ public class LiveDataViewModel extends ViewModel {
     }
 
     public void updatePVagter(LatLng location){
-        bk.getPVagter(location, pVagtList.getValue() );
+        bk.getPVagter(location, pVagtList );
+    }
+
+    public void createPVagt(PVagtDTO vagt){
+
+
+
+        bk.createPVagt(vagt);
     }
 
 
@@ -63,15 +70,12 @@ public class LiveDataViewModel extends ViewModel {
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
         }
-        List<PVagtDTO> l = new LinkedList<>();
-        l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
-        l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(100000), "123"));
 
 
-        pVagtList.setValue(l);
 
         return pVagtList;
     }
+
 
     public MutableLiveData<ATipDTO> getMutableTipCreateObject() {
         if (tipCreateObject == null) {

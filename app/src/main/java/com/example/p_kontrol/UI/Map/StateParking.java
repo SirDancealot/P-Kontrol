@@ -46,22 +46,22 @@ public class StateParking extends State {
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
 
+        // MediaPlayer
         m.create(context, R.raw.alarm);
 
 
+        //Mark Current Location of Car parking
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("car_icon", 200, 100)));
+        map.addMarker(markerOptions.position(currentLocation));
+
+
     }
 
-   /* @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-       // currentLocation = parent.getLocation();
+    @Override
+    public void centerMethod() {
 
-        LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
-        model.updatePVagter(currentLocation);
-        model.getPvagtList().observe(this, pVagtList -> updatePVagter(pVagtList));
     }
-*/
 
     public void updatePVagter(List<PVagtDTO> pVagtList) {
 

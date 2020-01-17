@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
@@ -16,6 +17,8 @@ import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
+
+import java.util.Date;
 
 public  class MainMenuActivityController extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
 
@@ -91,6 +94,11 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     @Override
     public void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
+
+        //report pVagt at current location
+        model.createPVagt(new PVagtDTO(model.getCurrentLocation().getValue(), new Date(), "123" ));
+
+
 
     }
 
