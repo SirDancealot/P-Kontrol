@@ -3,6 +3,8 @@ package com.example.p_kontrol.Backend;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetPVagter;
@@ -21,7 +23,8 @@ public class Backend implements IBackend {
     //singleton init
 
     private static Backend b = null;
-    private Backend(){};
+    private Backend(){
+    }
 
     public static Backend getBackend(){
         if(b==null){
@@ -75,7 +78,7 @@ public class Backend implements IBackend {
 
     @Override
     public void createTip(ATipDTO tip) {
-
+        Log.d(TAG, "createTip: ");
         UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
         if(userInfoDTO.getToken() != null){
 

@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -20,13 +19,17 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
  * @responsibilty responsibility to create a room to type in the text for the tip.
  *
  * */
-public class Stage_WriteText extends WriteTipState {
+public class WriteTipState_WriteText extends AbstractWriteTipState {
 
     String TAG = "WriteTip STATE WriteText ";
 
     View view;
     TextView text;
     LiveDataViewModel viewModel;
+
+    public WriteTipState_WriteText(IWriteTipStateListener listener) {
+        super(listener);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public class Stage_WriteText extends WriteTipState {
         text        = view.findViewById(R.id.WriteTip_TextInput);
 
 
-        viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
         text.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -47,25 +50,9 @@ public class Stage_WriteText extends WriteTipState {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 dto.setMessage(s.toString());
                 // todo make sure this no Null pointer casts
-                ATipDTO dto = viewModel.getMutableTipCreateObject().getValue();
+                ATipDTO dto = viewModel.getTipCreateObject().getValue();
                 dto.setMessage(s.toString());
-                viewModel.getMutableTipCreateObject().setValue(dto);
-
-                //                TODO add this to backend when writing tips
-//                boolean tooManyNewlineChars = Pattern.matches(".*\\n{3,}?.*",text.toString());
-
-//                String str = text.getText().toString();
-//                str = str.replace(" ", ""); //removes whitespace for checking for too many newlines
-//                str = str.replace("\t", "");
-//                boolean foundNewline = str.contains("\n\n\n\n"); // looks for newlines one after another
-//
-//                while (str.charAt(str.length() - 1) == '\n') //test this. should remove newlines at end of message.
-//                    str = str.substring(0, str.length() - 2);
-//
-
-
-
-
+                viewModel.setTipCreateObject(dto);
 
             }
 

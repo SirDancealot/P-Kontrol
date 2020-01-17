@@ -43,49 +43,45 @@ public class FirestoreDAO implements IDatabase {
      */
     @Override
     public List<DocumentSnapshot> getDocumentList (CollectionReference collection, @NonNull @NotNull List<String> ids){
+        Log.d(TAG, "getDocumentList: begin");
+        
         @NotNull @NonNull List<DocumentSnapshot> list = new LinkedList<>();
         LinkedList<Boolean> counter = new LinkedList(); //list used to count number of processed elements and store data about their success. true means successful.
-
-        Object countLock = new Object();
+        List<Task<DocumentSnapshot>> taskList = new LinkedList<>();
 
         //For all documents, retrieve them and add them to a list
         for (String id : ids) {
-            collection.document(id).get()
-                    .addOnCompleteListener(
-                        task -> {
-                            if (task.isSuccessful()) {
-                                synchronized (list) {
-                                    list.add(task.getResult());
-                                    counter.add(true); //add to count
-                                }
-                            } else {
-                                synchronized (countLock) {
-                                    counter.add(false); //add to count
-                                }
-                                Log.e(TAG, "getDocumentList: document: " + id, task.getException());
-                            }
-
-
-                        }
-                    )
-                    .addOnCanceledListener(
-                            () -> {
-                                synchronized (countLock) {
-                                    counter.add(false); //add to count
-                                }
-                            }
-                    )
+            taskList.add(collection.document(id).get()
+//                    .addOnCompleteListener(
+//                        task -> {
+//                            Log.d(TAG, "getDocumentList: complete");
+//                            if (task.isSuccessful()) {
+//                                synchronized (list) {
+//                                    list.add(task.getResult());
+//                                }
+//                            } else {
+//                                Log.e(TAG, "getDocumentList: document: " + id, task.getException());
+//                            }
+//
+//
+//                        }
+//                    )
+            )
             ;
         }
 
-        //wait for all data to either fail or be retrieved
-        while (counter.size() < ids.size()){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //wait for it
+        try {
+            Tasks.await(
+                    Tasks.whenAllComplete(
+                            taskList.toArray(new Task[0]) //hvorfor er vi på main thread her??????
+                    )
+            );
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for (Task<DocumentSnapshot> task : taskList) {
+            list.add(task.getResult());
         }
 
         return list;
@@ -145,25 +141,26 @@ public class FirestoreDAO implements IDatabase {
 
     @Override
     public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList) {
-
+        Log.d(TAG, "queryByLocation: " + location);
         if (query != null)
             query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
         else
             query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
 
         query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
-
     }
 
     /**
      * Inner class for at kunne udvide den eksisterende GeoQueryLocation primært med en constructor
      */
     private class CustomGeoQueryLocation implements GeoQueryEventListener {
+        String TAG = "GeoFirestore";
+
         IDatabase dao;
         MutableLiveData<List<ATipDTO>> tipList;
         CollectionReference collection;
 
-        boolean updateIndividual = false;
+        boolean updateIndividual = false; //Boolean describing whether or not to wait for a batch or not
         ArrayList<String> documents = new ArrayList<>();
 
         public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ATipDTO>> tipList, CollectionReference collection) {
@@ -174,7 +171,7 @@ public class FirestoreDAO implements IDatabase {
 
         @Override
         public void onGeoQueryError(@NotNull Exception e) {
-            Log.e(TAG, "onGeoQueryError: An error has occured in querying", e);
+            Log.e(TAG, "onGeoQueryError: An error has occurred in querying", e);
         }
 
         /**
@@ -182,20 +179,37 @@ public class FirestoreDAO implements IDatabase {
          */
         @Override
         public void onGeoQueryReady() {
+            Log.d(TAG, "onGeoQueryReady: begin");
+            
             updateIndividual = true;
             List<ATipDTO> tips = tipList.getValue();
             List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
-            for (DocumentSnapshot snapshot : snapshots) {
-                tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
+
+            Log.d(TAG, "onGeoQueryReady: start loop");
+            int i = 0;
+            if (tips != null) {
+                for (DocumentSnapshot snapshot : snapshots) {
+                    Log.d(TAG, "onGeoQueryReady: in loop at " + i);
+                    tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
+                }
             }
+
+            Log.d(TAG, "onGeoQueryReady: post value");
             tipList.postValue(tips);
         }
 
         @Override
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
+            Log.d(TAG, "onKeyEntered: ");
+            
             if (updateIndividual) {
-                //Kode til at opdatere tips løbende skal være her
+                List<String> list = new ArrayList<>();
+                list.add(s);
 
+                ATipDTO tipDTO = getDocumentList(tips,  list).get(0).toObject(ATipDTO.class);
+                if (tipDTO != null) {
+                    Objects.requireNonNull(tipList.getValue()).add(tipDTO);
+                }
             } else {
                 documents.add(s);
             }
@@ -203,18 +217,33 @@ public class FirestoreDAO implements IDatabase {
 
         @Override
         public void onKeyExited(@NotNull String s) {
+            Log.d(TAG, "onKeyExited: ");
+            
             List<ATipDTO> tips = tipList.getValue();
-            ArrayList<String> documents = new ArrayList<String>();
-            documents.add(s);
-            List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
-            DocumentSnapshot snapshot = snapshots.get(0);
-            snapshot.toObject(ATipDTO.class); //find tippet der matcher denne i tips og slet den fra listen og sæt tips på ny i MutableLiveData
 
+            final ATipDTO[] exitedTip = new ATipDTO[1];
+
+            collection.document(s)
+                    .get()
+                    .addOnCompleteListener(
+                            task -> {
+                                if (task.isSuccessful() && task.getResult() != null) {
+                                    exitedTip[0] = task.getResult().toObject(ATipDTO.class);
+                                }
+                            }
+                    );
+
+            if (tips != null) {
+                tips.remove(exitedTip);
+            }
+
+            tipList.setValue(tips);
 
         }
 
         @Override
         public void onKeyMoved(@NotNull String s, @NotNull GeoPoint geoPoint) {
+            Log.d(TAG, "onKeyMoved: ");
             //Dette er kun nødvendigt at implementere hvis tips positioner kommer til at kunne fløtte sig
         }
     }

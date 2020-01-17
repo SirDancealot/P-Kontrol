@@ -25,6 +25,11 @@ public class StateSelectLocation extends State {
         super(parent);
         zoomIn();
         map.clear();
+
+        ATipDTO dto = viewModel.getTipCreateObject().getValue();
+        dto.setL(new GeoPoint(parent.DEFAULT_LOCATION.latitude, parent.DEFAULT_LOCATION.longitude));
+        viewModel.setTipCreateObject(dto);
+
     }
 
     // Listeners
@@ -36,9 +41,9 @@ public class StateSelectLocation extends State {
             public void onMapClick(LatLng latLng) {
                 map.clear();
 
-                ATipDTO dto = viewModel.getMutableTipCreateObject().getValue();
+                ATipDTO dto = viewModel.getTipCreateObject().getValue();
                 dto.setL(new GeoPoint(latLng.latitude, latLng.longitude));
-                viewModel.getMutableTipCreateObject().setValue(dto);
+                viewModel.setTipCreateObject(dto);
 
                 map.addMarker(new MarkerOptions().position(latLng));
             }

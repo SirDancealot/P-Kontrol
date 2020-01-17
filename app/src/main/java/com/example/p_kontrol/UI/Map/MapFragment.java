@@ -66,7 +66,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
     }
 
     @Override
@@ -88,6 +88,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     @Override
     public void onMapReady(GoogleMap googleMap){
         map = googleMap;
+
+        //sets the position of the ui elements of the map, a bit lower, as to not overlap with the topbar
+        // automaticly adjusts the centering to the mapped area shown with the topbar
+        map.setPadding(0,170,0,0);
+
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
         setStateStandby();
     }

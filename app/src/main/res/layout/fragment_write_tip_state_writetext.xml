@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="UI.WriteTip.FragMessageWrite"
+    tools:context=".UI.WriteTip.oldFiles.FragMessageWrite"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
@@ -49,7 +49,7 @@
             android:padding="5dp"
 
             android:ems="10"
-            android:hint="Write here.."
+            android:hint="@string/WriteTip_TextInput"
             android:inputType="textMultiLine"
             android:gravity="top|left"
             android:minHeight="75dp" />

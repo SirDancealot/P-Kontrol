@@ -12,9 +12,13 @@ import com.example.p_kontrol.R;
  * @responsibility responsibility to createListner call when user submits.
  *
  * */
-public class Stage_Submit extends WriteTipState {
+public class WriteTipState_Submit extends AbstractWriteTipState {
 
     View view;
+
+    public WriteTipState_Submit(IWriteTipStateListener listener) {
+        super(listener);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,7 +31,7 @@ public class Stage_Submit extends WriteTipState {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onDone();
+                listener.onMessageSubmit();
             }
         });
 

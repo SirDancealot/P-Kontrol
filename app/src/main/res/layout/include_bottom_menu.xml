@@ -81,15 +81,15 @@
                 android:textSize="15sp"
                 android:textColor="@color/color_matWhite"
                 />
-            <!-- Contribute btn -->
+            <!-- CreateTip btn -->
             <Button
                 android:paddingTop="15dp"
-                android:id="@+id/menuBtn_Contribute"
+                android:id="@+id/menuBtn_CreateTip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:drawableTop="@drawable/ic_icon_pin"
-                android:text="@string/menu_txt_contribute"
+                android:text="@string/menu_txt_createTip"
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"

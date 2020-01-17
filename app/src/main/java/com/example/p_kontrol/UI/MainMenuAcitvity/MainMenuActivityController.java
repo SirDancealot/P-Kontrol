@@ -77,7 +77,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         menuOperator.toggleMenu();
 
         // starting Contribute process at index 0. meaning the very first step.
-        CreateTip();
+        createTip();
 
     }
     @Override
@@ -115,14 +115,13 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     }
 
     // Create Tip
-    private void CreateTip(){
-        CreateTip_Process(0);
+    private void createTip(){
+        createTip_Process(0);
     }
-    private void CreateTip_Process ( int i){
+    private void createTip_Process(int i){
         switch (i) {
             case 0: // Chose location
                 showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, "Creating a Tip", "Select a Location to Place tip");
-                model.getMutableTipCreateObject();
 
                 mapOperator.setStateSelection();
                 mapOperator.visibilityOfInteractBtns(View.VISIBLE);
@@ -131,7 +130,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
-                        CreateTip_Process(1);
+                        createTip_Process(1);
                     }
                 });
                 mapOperator.onCancelClick(new View.OnClickListener() {
@@ -142,14 +141,14 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                 });
                 break;
             case 1: // Write Tip
-                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "Creating a Tip", "Write the actual Tip");
+                showTopMsgBar(R.drawable.ic_topmsgbar_writing, "Creating a Tip", "Write the actual Tip");
                 mapOperator.visibilityOfInteractBtns(View.GONE);
                 mapOperator.setStateStandby();
                 fragmentOperator.openWriteTip(new ITipWriteListener() {
                     @Override
-                    public void onMessageDone(ATipDTO dto) {
+                    public void onMessageDone() {
                         fragmentOperator.closeWriteTip();
-                        CreateTip_Process(2);
+                        createTip_Process(2);
                     }
                     @Override
                     public void onCancelTip() {
@@ -159,7 +158,6 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                 break;
             case 2: // finish Tip and send to back end for saving.
                 showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
-                ATipDTO dto = model.getMutableTipCreateObject().getValue();
                 model.createTip();
                 break;
         }
@@ -168,6 +166,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
 
     private void showTopMsgBar(int imageId, String header, String subtitle){
         fragmentOperator.showTopMsgBar(imageId, header, subtitle);
+    }
+
+    public LiveDataViewModel getViewModel(){
+        return model;
     }
 
 }

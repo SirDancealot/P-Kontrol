@@ -12,8 +12,8 @@ import java.util.List;
  * */
 public class WriteTipAdapter extends FragmentPagerAdapter {
 
-    List<Fragment> fragmentList;
-    public WriteTipAdapter(@NonNull FragmentManager fm, List<Fragment> fragmentList) {
+    List<AbstractWriteTipState> fragmentList;
+    public WriteTipAdapter(@NonNull FragmentManager fm, List<AbstractWriteTipState> fragmentList) {
         super(fm);
         this.fragmentList = fragmentList;
     }

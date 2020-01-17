@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.LogIn.Activity_SigeUp"
+    android:orientation="vertical"
+    >
+
+
+    <!-- Top Shape Container -->
+    <LinearLayout
+        android:id="@+id/LoginScreen_BackgroundBlue"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:background="@drawable/loginscreen_header_background"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        android:paddingTop="50dp"
+        android:paddingBottom="25dp"
+        android:transitionName="LoginScreen_BackgroundBlue"
+
+        >
+
+
+        <!-- Logo Container -->
+        <LinearLayout
+            android:id="@+id/LoginScreen_3_LogoContainer"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+
+            android:orientation="vertical"
+            android:transitionName="LoginScreen_LogoContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!--<ImageView
+                android:id="@+id/LoginScreen_LogoImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="103dp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/logo" />
+    -->
+            <LinearLayout
+                android:id="@+id/LoginScreen_LogoContainer"
+                android:layout_width="196dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Stress-free parking Together"
+
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:transitionName="LoginScreen_LogoContainer">
+                <!--<ImageView
+                    android:id="@+id/LoginScreen_LogoImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="103dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/logo" />
+        -->
+                <TextView
+                    android:layout_width="196dp"
+                    android:layout_height="117dp"
+                    android:text="Stress-free parking Together"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <!-- Text inputs    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+
+        >
+
+        <EditText
+            android:id="@+id/signUp_FormEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="15dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="#ADEEE3"
+            android:textStyle="bold"
+
+            />
+
+        <EditText
+            android:id="@+id/signUp_FormPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/signUp_SignIn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
+
+            android:background="@drawable/custom_login_button"
+            android:text="@string/common_signin_button_text"
+            android:textColor="#FFF" />
+
+    </LinearLayout>
+
+</LinearLayout>

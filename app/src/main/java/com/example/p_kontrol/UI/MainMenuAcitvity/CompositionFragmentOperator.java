@@ -24,7 +24,7 @@ import java.util.List;
 
 class CompositionFragmentOperator   implements IFragmentOperator {
 
-    AppCompatActivity context;
+    MainMenuActivityController context;
     View view;
     private String TAG = this.getClass().getName();
 
@@ -50,7 +50,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     LiveData<List<ATipDTO>> tipList;
 
 
-    public CompositionFragmentOperator(AppCompatActivity context, View view){
+    public CompositionFragmentOperator(MainMenuActivityController context, View view){
 
         this.context = context;
         this.view = view;
@@ -62,9 +62,6 @@ class CompositionFragmentOperator   implements IFragmentOperator {
 
         boolFragMessageWrite    = false;
         boolFragTipBobble       = false;
-
-
-        fragment_messageWrite = new FragMessageWrite()  ;
 
         //Open topMessageBar. is not Opened from anywhere but here, but hidden and Shown.
         fragment_topMessage   = new FragTopMessageBar() ;
@@ -109,7 +106,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     // write Tip
     @Override
     public void openWriteTip(ITipWriteListener writeListener) {
-        fragment_messageWrite.setFragWriteMessageListener(writeListener);
+        fragment_messageWrite = new FragMessageWrite(writeListener);
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
         boolFragMessageWrite = true;
     }
@@ -163,4 +160,8 @@ class CompositionFragmentOperator   implements IFragmentOperator {
         return boolFragTopMessageBar;
     }
 
+    @Override
+    public LiveDataViewModel getViewModel() {
+        return context.getViewModel();
+    }
 }
