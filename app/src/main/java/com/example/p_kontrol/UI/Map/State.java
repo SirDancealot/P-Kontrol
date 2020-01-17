@@ -7,6 +7,7 @@ import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -36,7 +37,7 @@ abstract public class State implements IState  {
 
         map         = parent.getMap();
         listener    = parent.getFragmentListener();
-        viewModel   = parent.getViewModel();
+        viewModel   = ViewModelProviders.of(this.parent.getActivity()).get(LiveDataViewModel.class); //parent.getViewModel();
 
         // Setting Listeners
         centerMethod();
@@ -59,7 +60,10 @@ abstract public class State implements IState  {
                     if ( task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
                         Location location = (Location) task.getResult();
-                        LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
+                        LatLng result = null;
+                        if (location != null) {
+                            result = new LatLng(location.getLatitude(),location.getLongitude());
+                        }
                         viewModel.getCurrentLocation().setValue(result);
                         animeCamara(result);
 

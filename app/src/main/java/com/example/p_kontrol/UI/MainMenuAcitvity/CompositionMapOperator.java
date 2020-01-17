@@ -11,10 +11,11 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IMapFragmentListener;
 import com.example.p_kontrol.UI.Map.IState;
 import com.example.p_kontrol.UI.Map.MapFragment;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 class CompositionMapOperator        implements IMapOperator   {
 
-    AppCompatActivity context;
+    MainMenuActivityController context;
     IMapOperatorController mapController;
     View view;
     private String TAG = this.getClass().getName();
@@ -27,7 +28,7 @@ class CompositionMapOperator        implements IMapOperator   {
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
 
-    public CompositionMapOperator(AppCompatActivity context,View view, IMapOperatorController mapController ){
+    public CompositionMapOperator(MainMenuActivityController context,View view, IMapOperatorController mapController ){
         this.context = context;
         this.view = view;
         this.mapController = mapController;
@@ -77,7 +78,7 @@ class CompositionMapOperator        implements IMapOperator   {
     }
     @Override
     public void setStateParking() {
-
+        mapFragment.setStateParking();
     }
 
     @Override
