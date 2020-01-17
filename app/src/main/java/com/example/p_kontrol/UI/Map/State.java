@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -91,6 +92,7 @@ abstract public class State implements IState  {
     public void setListeners(){
         map.setOnMapClickListener(null);
     }
+
     public Bitmap resizeMapIcons(String iconName, int width, int height){
 
         Resources res = parent.getContext().getResources();
