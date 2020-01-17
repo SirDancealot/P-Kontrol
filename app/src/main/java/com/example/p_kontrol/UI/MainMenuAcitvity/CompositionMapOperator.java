@@ -75,6 +75,7 @@ class CompositionMapOperator        implements IMapOperator   {
     @Override
     public void setStateStandby() {
         mapFragment.setStateStandby();
+        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
     }
     @Override
     public void toggleStateParking() {
