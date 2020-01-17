@@ -80,6 +80,11 @@ class CompositionMapOperator        implements IMapOperator   {
 
     }
 
+    @Override
+    public void setStateFreeParking() {
+        mapFragment.setStateFreePark();
+    }
+
 
     @Override
     public void onAcceptClick(View.OnClickListener onclick){

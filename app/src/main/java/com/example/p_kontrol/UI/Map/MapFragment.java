@@ -106,6 +106,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         currentState = new StateStandby(this );
     }
     @Override
+    public void setStateFreePark(){
+        currentState = new StateFreePark(this );
+    }
+    @Override
     public void setStateSelectLocation() {
         currentState = new StateSelectLocation(this );
     }
