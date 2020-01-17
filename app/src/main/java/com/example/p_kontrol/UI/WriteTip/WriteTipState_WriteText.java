@@ -52,6 +52,7 @@ public class WriteTipState_WriteText extends AbstractWriteTipState {
                 // todo make sure this no Null pointer casts
                 ATipDTO dto = viewModel.getTipCreateObject().getValue();
                 dto.setMessage(s.toString());
+                viewModel.setCurrentTip(dto); // August muligvis temp ting
                 viewModel.setTipCreateObject(dto);
 
             }

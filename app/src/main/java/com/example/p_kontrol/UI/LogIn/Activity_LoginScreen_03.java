@@ -19,7 +19,6 @@ import androidx.core.util.Pair;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -29,7 +28,6 @@ import com.facebook.login.widget.LoginButton;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
@@ -41,7 +39,6 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
 
 import java.util.Arrays;
 
@@ -265,12 +262,8 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
             return;
         }
         loding.setVisibility(View.VISIBLE);
-
-
-        System.out.println(mAuth.getUid());
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this);
-
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this);
     }
 
 }

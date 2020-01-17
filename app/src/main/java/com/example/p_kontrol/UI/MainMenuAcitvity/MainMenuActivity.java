@@ -53,9 +53,9 @@ public class MainMenuActivity extends MainMenuActivityController{
         else {
             Log.d(TAG, "onBackPressed: back pressed");
             //TODO: find ud af om vi skal bruge dialog box eller fade out
-            //fragment_close.show(getSupportFragmentManager(), "closeFragment");
-            super.onBackPressed();
-            overridePendingTransition(0, android.R.anim.fade_out);
+            fragment_close.show(getSupportFragmentManager(), "closeFragment");
+            //super.onBackPressed();
+            //overridePendingTransition(0, android.R.anim.fade_out);
         }
     }
 
@@ -72,28 +72,8 @@ public class MainMenuActivity extends MainMenuActivityController{
     }
     // [START auth_fui_result]
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
 
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                //todo replace with WM
-                //userInfoDTO.setUser(user);
-
-                // ...
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
-    }
 }
 
 
