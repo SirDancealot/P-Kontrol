@@ -89,6 +89,8 @@ public class BackendStub implements IBackend{
     public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list) {
 
         this.pvagtlist = list;
+        pvagtlist.setValue(l);
+
 
 
 
@@ -96,12 +98,14 @@ public class BackendStub implements IBackend{
 
     public void createPVagt(PVagtDTO vagt){
 
-
+        if(pvagtlist == null)
+            pvagtlist = new MutableLiveData<>();
 
 
 
         l.add(vagt);
         pvagtlist.setValue(l);
+
 
     }
 

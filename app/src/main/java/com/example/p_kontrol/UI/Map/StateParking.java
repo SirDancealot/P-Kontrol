@@ -65,6 +65,11 @@ public class StateParking extends State {
 
     }
 
+    @Override
+    public void zoomIn(){
+
+    }
+
     public void updatePVagter(List<PVagtDTO> pVagtList) {
 
 

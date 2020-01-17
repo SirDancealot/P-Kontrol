@@ -97,7 +97,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         Log.i("click","P-Vagt btn clicked \n");
 
         //report pVagt at current location
-        model.createPVagt(new PVagtDTO(new LatLng(55.703400, 12.523536), new Date(), "123" ));
+        model.createPVagt(new PVagtDTO(model.getCurrentLocation().getValue(), new Date(), "123" ));
 
 
 

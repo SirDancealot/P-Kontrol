@@ -85,15 +85,16 @@ public class LiveDataViewModel extends ViewModel {
     }
 
     public LiveData<List<PVagtDTO>> getPvagtList() {
+        Log.d(TAG, "getPvagtList: " + this);
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
-            l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
-            l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
-            l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
-            l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
-            pVagtList.setValue(l);
+            //l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
+            //l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
+            //l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
+            //l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
+            //pVagtList.setValue(l);
         }
-        pVagtList.setValue(l);
+
 
         return pVagtList;
     }
@@ -133,13 +134,12 @@ public class LiveDataViewModel extends ViewModel {
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
         }
-        Log.i("Create", "CreatePVagt");
-        l.add(vagt);
-        pVagtList.setValue(l);
-
-
-
-        //bk.createPVagt(vagt);
+        Log.d(TAG, "CreatePVagt: " + this);
+        if (pVagtList.getValue() != null)
+            l.addAll(pVagtList.getValue());
+        //l.add(vagt);
+        //pVagtList.setValue(l);
+        bk.createPVagt(vagt);
     }
 
 
