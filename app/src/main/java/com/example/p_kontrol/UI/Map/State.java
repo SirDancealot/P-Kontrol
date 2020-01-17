@@ -40,7 +40,6 @@ abstract public class State implements IState  {
         viewModel   = ViewModelProviders.of(this.parent.getActivity()).get(LiveDataViewModel.class); //parent.getViewModel();
 
         // Setting Listeners
-        centerMethod();
         setListeners();
     }
 

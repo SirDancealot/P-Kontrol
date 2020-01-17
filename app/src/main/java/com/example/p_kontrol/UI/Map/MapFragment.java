@@ -103,6 +103,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
         getPermission();
         setStateStandby();
+        currentState.centerMethod(); // todo Hans!! har jeg gjort noget forkert? her?
     }
 
 
