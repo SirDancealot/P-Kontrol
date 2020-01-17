@@ -26,6 +26,7 @@ public class WriteTipState_WriteText extends AbstractWriteTipState {
     View view;
     TextView text;
     LiveDataViewModel viewModel;
+    ATipDTO dto = new ATipDTO();
 
     public WriteTipState_WriteText(IWriteTipStateListener listener) {
         super(listener);
@@ -41,6 +42,20 @@ public class WriteTipState_WriteText extends AbstractWriteTipState {
 
 
         viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
+
+
+
+        dto = viewModel.getTipCreateObject().getValue();
+
+
+
+        dto.setMessage("");
+
+
+        viewModel.setCurrentTip(dto); // August muligvis temp ting
+
+        System.out.println("nnnnnnn" + dto.toString());
+
         text.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -48,9 +63,7 @@ public class WriteTipState_WriteText extends AbstractWriteTipState {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                dto.setMessage(s.toString());
                 // todo make sure this no Null pointer casts
-                ATipDTO dto = viewModel.getTipCreateObject().getValue();
                 dto.setMessage(s.toString());
                 viewModel.setCurrentTip(dto); // August muligvis temp ting
                 viewModel.setTipCreateObject(dto);
