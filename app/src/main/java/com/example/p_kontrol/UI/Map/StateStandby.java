@@ -44,21 +44,28 @@ public class StateStandby extends State {
             int i = 0;
             for (ATipDTO tip : list) {
                 // todo ret navne
-                String tipPinName = Pins.paid.getName();
+
+                Pins pin = Pins.paid;
                 if(tip.getType() != 0){
                     // CANNOT BE SWITCH BECAUSE SWITCH DOSENT ALLOW ENUMERATIONS AS CONSTANT EXPRESSION
                     if( tip.getType() == TipTypes.paid.getValue() ){
-                        tipPinName = Pins.paid.getName();
+                        pin = Pins.paid;
                     }
                     else if(tip.getType() == TipTypes.free.getValue() ){
-                        tipPinName = Pins.free.getName();
+                        pin = Pins.free;
                     }
                     else if(tip.getType() == TipTypes.alarm.getValue() ) {
-                        tipPinName = Pins.alarm.getName();
+                        pin = Pins.alarm;
                     }
                 }
 
-                markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(tipPinName, 69, 100)));
+                String pinName = pin.getName();
+                int scalingConst = pin.getDimY() / 100;       //100 is the desired height
+                int pinX = pin.getDimX() / scalingConst;
+                int pinY = pin.getDimY() / scalingConst;
+
+
+                markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 

@@ -50,9 +50,16 @@ public class StateParking extends State {
         model.updatePVagter(currentLocation);
 
 
+        //Pin
+        Pins pin = Pins.parkingSpot;
+        String pinName = pin.getName();
+        int scalingConst = pin.getDimY() / 75;       //75 is the desired height
+        int pinX = pin.getDimX() / scalingConst;
+        int pinY = pin.getDimY() / scalingConst;
+
 
         //Mark Current Location of Car parking
-        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.parkingSpot.getName(), 150, 75)));
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
         map.addMarker(markerOptions.position(currentLocation));
 
 
@@ -61,10 +68,20 @@ public class StateParking extends State {
 
     public void updatePVagter(List<PVagtDTO> pVagtList) {
         int i = 0;
+
         for (PVagtDTO vagt : pVagtList) {
 
             if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + time) {
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.pVagtOld.getName(), 100, 100)));
+
+                //Pin
+                Pins pin = Pins.pVagtOld;
+                String pinName = pin.getName();
+                int scalingConst = pin.getDimY() / 100;       //100 is the desired height
+                int pinX = pin.getDimX() / scalingConst;
+                int pinY = pin.getDimY() / scalingConst;
+
+
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -74,14 +91,16 @@ public class StateParking extends State {
                     }
                 });
 
-
-
-
-
-
             } else {
 
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.pVagt.getName(), 100, 100)));
+                //Pin
+                Pins pin = Pins.pVagt;
+                String pinName = pin.getName();
+                int scalingConst = pin.getDimY() / 100;       //100 is the desired height
+                int pinX = pin.getDimX() / scalingConst;
+                int pinY = pin.getDimY() / scalingConst;
+
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
 
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(marker -> {
