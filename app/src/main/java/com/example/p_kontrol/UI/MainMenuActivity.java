@@ -1,8 +1,12 @@
 package com.example.p_kontrol.UI;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.p_kontrol.Backend.Backend;
 import com.example.p_kontrol.Backend.IBackend;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
@@ -126,12 +131,28 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     LiveDataViewModel model; //se her
     MutableLiveData<ATipDTO> tipCreateObject;
 
+    //Service Connection
+    FirestoreDAO mService;
+    boolean bound = false;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
+            mService = binder.getService();
+            bound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
-
-
 
         //TODO send person til logind 1 hvis de ikke er logget ind
         temp_setUpDemoTips(temp_listofDTO);
@@ -152,7 +173,14 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 mapContext.getCurrentState().updateMap(list);
         });
         tipCreateObject = model.getMutableTipCreateObject();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //connect to service
+        Intent startService = new Intent(this, FirestoreDAO.class);
+        bindService(startService, connection, Context.BIND_AUTO_CREATE);
     }
 
     // setups called by onCreate.

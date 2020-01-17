@@ -1,13 +1,22 @@
 package com.example.p_kontrol.DataBase;
 
 import android.app.Service;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Binder;
+import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
+import com.example.p_kontrol.UI.MainMenuActivity;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -28,12 +37,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class FirestoreDAO implements IDatabase {
+public class FirestoreDAO extends Service implements IDatabase {
     String TAG = "FirestoreDAO";
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
     GeoFirestore geoFirestore = new GeoFirestore(tips);
     GeoQuery query;
+    private final IBinder daoBinder = new DAOBinder();
+
+    public class DAOBinder extends Binder {
+        public FirestoreDAO getService() {
+            return FirestoreDAO.this;
+        }
+    }
 
     /**
      * Retrieves a list of documents by id in from the provided location.
@@ -150,6 +166,12 @@ public class FirestoreDAO implements IDatabase {
             query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
 
         query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return daoBinder;
     }
 
     /**
