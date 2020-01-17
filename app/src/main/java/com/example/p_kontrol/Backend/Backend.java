@@ -65,10 +65,10 @@ public class Backend implements IBackend {
     }
 
     //Get P vagter from parking location
-    public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> pVagtList){
+    public void getPVagter(LatLng location, List<PVagtDTO> pVagtList){
 
-        AsyncGetPVagter asyncPVagt = new AsyncGetPVagter(location, PVAGT_SEARCH_RADIUS, pVagtList);
-        asyncPVagt.execute();
+      //  AsyncGetPVagter asyncPVagt = new AsyncGetPVagter(location, PVAGT_SEARCH_RADIUS, pVagtList);
+      //  asyncPVagt.execute();
     }
 
 

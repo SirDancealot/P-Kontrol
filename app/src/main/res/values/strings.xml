@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- TODO: fix inconsistency with danish/english text -->
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: fix inconsistency with danish/english text -->
 <resources>
     <string name="app_name">C5 P-Kontrol</string>
     <string name="round_corner">Round Corner</string>
@@ -16,7 +15,7 @@
     <!-- Menu Texts -->
     <string name="menu_txt_profile">Profile</string>
     <string name="menu_txt_freePark">Free Park</string>
-    <string name="menu_txt_contribute">Contribute</string>
+    <string name="menu_txt_createTip">Create Tip</string>
     <string name="menu_txt_feedback">Feedback</string>
     <string name="menu_txt_parkAlarm">Park Alarm</string>
     <string name="menu_txt_pVagt">P-Vagt</string>
@@ -29,24 +28,28 @@
     <string name="profile_tip_changeProfileImage">change profile image</string>
 
     <!-- Profile Rating Texts -->
-    <string name="profile_Rating_0"> ikke deltaget endnu </string>
-    <string name="profile_Rating_1"> nice du er igang! </string>
-    <string name="profile_Rating_2"> på vej til at blive god </string>
-    <string name="profile_Rating_3"> sejt! </string>
-    <string name="profile_Rating_4"> Woa du er god </string>
-    <string name="profile_Rating_5"> Master rated </string>
+    <string name="profile_Rating_0"> Not yet participated </string>
+    <string name="profile_Rating_1"> Getting started! </string>
+    <string name="profile_Rating_2"> Getting into it! </string>
+    <string name="profile_Rating_3"> Cool! </string>
+    <string name="profile_Rating_4"> On fire! </string>
+    <string name="profile_Rating_5"> Master rated! </string>
 
     <!-- profile Rating Table  -->
-    <string name="profile_template_tableColumn_1">deltagen</string>
-    <string name="profile_template_tableColumn_2">antal</string>
-    <string name="profile_template_tableColumn_3">resultat</string>
+    <string name="profile_template_tableColumn_1">Participation</string>
+    <string name="profile_template_tableColumn_2">Numbers</string>
+    <string name="profile_template_tableColumn_3">Result</string>
 
     <!-- Fragment Write a Tip  -->
     <!-- Write Tip Headers -->
     <string name="writeTip_title_step1">Choose location of your tip</string>
     <string name="writeTip_title_step2">Tell us about the area</string>
+    <string name="WriteTip_TextInput">Write here..</string>
     <string name="writeTip_title_step3">Take Picture</string>
     <string name="writeTip_title_step4">Thank you for your contribution</string>
+    <string name="writeTip_type_contribution">Choose tip type</string>
+    <string name="writeTip_submit_contribution">Submit Contribution</string>
+    <string name="writeTip_submit">submit</string>
 
     <!-- Write Tip Internal View Hints  -->
     <string name="writeTip_View_ChooseCategory">Choose Category </string>
@@ -59,8 +62,6 @@
         <item>category 1 </item>
         <item>category 2 </item>
         <item>category 3 </item>
-        <item>category 4 </item>
-        <item>category 5 </item>
     </string-array>
 
     <!-- Write Tip Navigation texts -->
@@ -79,11 +80,28 @@
 
 
     <!-- close fragment strings -->
-    <string name="close_frag_confirm">Yes</string>
-    <string name="close_frag_deny">No</string>
-    <string name="close_frag_title">Close the app?</string>
+    <string name="close_frag_confirm" translatable="false">Yes</string>
+    <string name="close_frag_deny" translatable="false">No</string>
+    <string name="close_frag_title" translatable="false">Close the app?</string>
 
     <string name="feedback_choose_category">Choose Category</string>
+    <string name="feedback_title">Please provide us with feedback!</string>
+    <string name="feedback_category_text">Category</string>
+    <string name="feedback_message_text">Feedback message</string>
+    <string name="feedback_hint_text">Please write your feedback here</string>
+    <string name="feedback_send_text">Send feedback</string>
+    <string name="feedback_fb_title">Please leave some feedback and feel free to discuss our app in this facebook group!</string>
+    <string name="feedback_fb_link_btn">Our Facebook Group</string>
+
+    <string name="profile_forgot_password">Forgot password?</string>
+    <string name="common_signin_button_text">Log ind</string>
+    <string name="profile_create_account">Don\'t have an account? Sign up</string>
+    <string name="profile_facebook">Continue with Facebook</string>
+    <string name="profile_google">Login</string>
+    <string name="profile_login">Login</string>
+    <string name="profile_sign_up">Sign up</string>
+
+
     <string-array name="feedback_categories_array">
         <item>@string/feedback_choose_category</item>
         <item>Map</item>

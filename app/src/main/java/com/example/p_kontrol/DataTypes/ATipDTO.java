@@ -5,7 +5,7 @@ import com.google.firebase.firestore.GeoPoint;
 import org.imperiumlabs.geofirestore.core.GeoHash;
 
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 
 public class ATipDTO implements ITipDTO{
 
@@ -15,8 +15,19 @@ public class ATipDTO implements ITipDTO{
     private Date creationDate;
     private String g; //location geohash
     private GeoPoint l; //location
+    private int type;
+    private List<String> likers, dislikers;
 
     public ATipDTO(){}
+
+    @Override
+    public int getType() {
+        return type;
+    }
+    @Override
+    public void setType(int type) {
+        this.type = type;
+    }
 
     @Override
     public AUserDTO getAuthor() {
@@ -88,11 +99,31 @@ public class ATipDTO implements ITipDTO{
     }
 
     @Override
+    public List<String> getLikers() {
+        return this.likers;
+    }
+
+    @Override
+    public void setLikers(List<String> likers) {
+        this.likers = likers;
+    }
+
+    @Override
+    public List<String> getDislikers() {
+        return this.dislikers;
+    }
+
+    @Override
+    public void setDislikers(List<String> dislikers) {
+        this.dislikers = dislikers;
+    }
+
+    @Override
     public String toString() {
-        return "TipDTO{" +
-                "author='" + author + '\'' +
-                ", messege='" + message + '\'' +
-                ", location=" + l +
+        return "TipDTO{\n" +
+                "author = '" + author + "'\n" +
+                ", message = '" + message + "'\n" +
+                ", location = " + l + "'\n" +
                 '}';
     }
 

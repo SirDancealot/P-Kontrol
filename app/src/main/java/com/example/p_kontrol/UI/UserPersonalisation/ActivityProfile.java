@@ -100,7 +100,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             // [END auth_fui_signout]
             Handler handler = new Handler();
             handler.postDelayed(() -> {
-                Intent i = new Intent(ActivityProfile.this, Activity_LoginScreen_01.class);
+                Intent i = new Intent(ActivityProfile.this, Activity_LoginScreen_01.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }, 500);
         }
@@ -129,6 +129,9 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
 
     public void setContent(){
+
+
+
         if (userInfoDTO.getLogin()) {
             fname.setText(userInfoDTO.getName() + " " + userInfoDTO.getName2());
             RequestOptions requestOptions = new RequestOptions();

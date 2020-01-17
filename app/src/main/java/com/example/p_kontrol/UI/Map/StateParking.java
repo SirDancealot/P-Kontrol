@@ -1,27 +1,15 @@
 package com.example.p_kontrol.UI.Map;
 
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
-import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.util.Date;
 import java.util.List;
 
 public class StateParking extends State {
@@ -35,29 +23,29 @@ public class StateParking extends State {
     int time = 1200000;
 
     //Mediaplayer
-    MediaPlayer m = new MediaPlayer().create(this, R.raw.alarm);
+    //MediaPlayer m = new MediaPlayer().create(this, R.raw.alarm);
 
 
-    public StateParking(MapContext context) {
-        super(context);
+    public StateParking(MapFragment parent, FragmentActivity lifeOwner) {
+        super(parent);
         zoomIn();
         map.clear();
-        currentLocation = context.getLocation();
+       // currentLocation = context.getLocation();
 
 
     }
 
-    @Override
+   /* @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        currentLocation = context.getLocation();
+       // currentLocation = parent.getLocation();
 
         LiveDataViewModel model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
         model.updatePVagter(currentLocation);
         model.getPvagtList().observe(this, pVagtList -> updatePVagter(pVagtList));
     }
-
+*/
 
     public void updatePVagter(List<PVagtDTO> pVagtList) {
 
@@ -78,7 +66,7 @@ public class StateParking extends State {
 
 
                 //Play annoying alarm sound
-                m.start();
+    //            m.start();
 
 
             } else {
