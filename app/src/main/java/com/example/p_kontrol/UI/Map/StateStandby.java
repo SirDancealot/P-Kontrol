@@ -39,7 +39,7 @@ public class StateStandby extends State {
 
     @Override
     public void updateMap(List<ATipDTO> list ) {
-        String iconName = null;
+        MarkerOptions markerOptions = null;
 
         if(list != null) {
             int i = 0;
@@ -47,18 +47,19 @@ public class StateStandby extends State {
                 // todo ret navne
                 if(tip.getType() != null){
                     if(tip.getType() == "normal"){
-                        iconName = "ic_tip_like";
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.paid.getName(), 69, 100)));
                     } else if(tip.getType() == "free"){
-                        iconName = "map_tip_pin_icon";
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.free.getName(), 69, 100)));
                     } else if(tip.getType() == "alert") {
-                        iconName = "ic_tip_dislike_on";
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.alarm.getName(), 69, 100)));
+
                     }
                 } else {
-                    iconName = "map_tip_pin_icon";
+                    markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon", 69, 100)));
+
                 }
 
-
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(iconName, 69, 100)));
+                markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.alarm.getName(), 69, 100)));
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
