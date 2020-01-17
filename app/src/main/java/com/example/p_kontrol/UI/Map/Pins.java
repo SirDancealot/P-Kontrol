@@ -6,7 +6,8 @@ public enum Pins{
     paid("map_tip_pin_paid"),
     alarm("map_tip_pin_alarm"),
     pVagt("map_pvagt_pin_alarm"),
-    pVagtOld("map_pvagt_pin_alarmold");
+    pVagtOld("map_pvagt_pin_alarmold"),
+    parkingSpot("map_parkingspot");
 
     private final String name;
 
