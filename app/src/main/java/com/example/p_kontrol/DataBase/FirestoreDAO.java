@@ -51,60 +51,6 @@ public class FirestoreDAO extends Service implements IDatabase {
         }
     }
 
-    /**
-     * Retrieves a list of documents by id in from the provided location.
-     *
-     * @param collection the collection to be searched
-     * @param ids a list of the specific documents to be retrieved from the collection
-     * @return Returns a list of DocumentSnapshot's for the requested documents
-     */
-    @Override
-    public List<DocumentSnapshot> getDocumentList (CollectionReference collection, @NonNull @NotNull List<String> ids){
-        Log.d(TAG, "getDocumentList: begin");
-        
-        @NotNull @NonNull List<DocumentSnapshot> list = new LinkedList<>();
-        LinkedList<Boolean> counter = new LinkedList(); //list used to count number of processed elements and store data about their success. true means successful.
-        List<Task<DocumentSnapshot>> taskList = new LinkedList<>();
-
-        //For all documents, retrieve them and add them to a list
-        for (String id : ids) {
-            taskList.add(collection.document(id).get()
-//                    .addOnCompleteListener(
-//                        task -> {
-//                            Log.d(TAG, "getDocumentList: complete");
-//                            if (task.isSuccessful()) {
-//                                synchronized (list) {
-//                                    list.add(task.getResult());
-//                                }
-//                            } else {
-//                                Log.e(TAG, "getDocumentList: document: " + id, task.getException());
-//                            }
-//
-//
-//                        }
-//                    )
-            )
-            ;
-        }
-
-        try {
-            Tasks.await(
-                    Tasks.whenAllComplete(
-                            taskList.toArray(new Task[taskList.size()]) //hvorfor er vi på main thread her??????
-                    )
-            );
-            Log.d(TAG, "getDocumentList: got past await");
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        for (Task<DocumentSnapshot> task : taskList) {
-            list.add(task.getResult());
-        }
-        Log.d(TAG, "getDocumentList: return");
-        return list;
-    }
-
     @Override
     public List<ATipDTO> getTipList(LatLng location, double radius) {
         Task<QuerySnapshot> query = tips.get();
@@ -184,8 +130,6 @@ public class FirestoreDAO extends Service implements IDatabase {
         MutableLiveData<List<ATipDTO>> tipList;
         CollectionReference collection;
 
-        boolean updateIndividual = false; //Boolean describing whether or not to wait for a batch or not
-        ArrayList<String> documents = new ArrayList<>();
 
         public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ATipDTO>> tipList, CollectionReference collection) {
             this.dao = dao;
@@ -203,55 +147,44 @@ public class FirestoreDAO extends Service implements IDatabase {
          */
         @Override
         public void onGeoQueryReady() {
-//            Log.d(TAG, "onGeoQueryReady: begin");
-//
-//            updateIndividual = true;
-//            List<ATipDTO> tips = tipList.getValue();
-//            List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
-//
-//            Log.d(TAG, "onGeoQueryReady: start loop");
-//            int i = 0;
-//            if (tips != null) {
-//                for (DocumentSnapshot snapshot : snapshots) {
-//                    Log.d(TAG, "onGeoQueryReady: in loop at " + i);
-//                    tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
-//                }
-//            }
-//
-//            Log.d(TAG, "onGeoQueryReady: post value");
-//            tipList.postValue(tips);
+           Log.d(TAG, "all data now found");
+
         }
 
+
+        /**
+         * This method is called if a document enters the queried area
+         *
+         * @param s The key of the document that was moved
+         * @param geoPoint The location of the document
+         */
         @Override
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: ");
-            
-            //if (updateIndividual) {
-                List<String> list = new ArrayList<>();
-                list.add(s);
 
-                tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
-                    ATipDTO tipDTO = documentSnapshot.toObject(ATipDTO.class);
+            tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
+                ATipDTO tipDTO = documentSnapshot.toObject(ATipDTO.class);
 
-                    List<ATipDTO> temp = tipList.getValue();
-                    if (temp != null) {
-                        temp.add(tipDTO);
-                        tipList.postValue(temp);
-                    }
-                });
+                List<ATipDTO> temp = tipList.getValue();//TODO make this thread safe
+                if (temp != null) {
+                    temp.add(tipDTO);
+                    tipList.postValue(temp);
+                }
+            });
 
-
-
-            //} else {
-              //  documents.add(s);
-            //}
         }
 
+
+        /**
+         * Called when a document that was queried leaves the range
+         *
+         * @param s The key of the document that was moved
+         */
         @Override
         public void onKeyExited(@NotNull String s) {
             Log.d(TAG, "onKeyExited: ");
             
-            List<ATipDTO> tips = tipList.getValue();
+            List<ATipDTO> tips = tipList.getValue();//TODO make this thread safe
 
             final ATipDTO[] exitedTip = new ATipDTO[1];
 
@@ -262,20 +195,30 @@ public class FirestoreDAO extends Service implements IDatabase {
                                 if (task.isSuccessful() && task.getResult() != null) {
                                     exitedTip[0] = task.getResult().toObject(ATipDTO.class);
                                 }
+
+                                if (tips != null) {
+                                    for (ATipDTO tip : tips) {
+                                        if (tip.equals(exitedTip[0]))
+                                            tips.remove(tip);
+                                    }
+                                }
+
+                                tipList.setValue(tips);
                             }
                     );
 
-            if (tips != null) {
-                for (ATipDTO tip : tips) {
-                    if (tip.equals(exitedTip[0]))
-                        tips.remove(tip);
-                }
-            }
 
-            tipList.setValue(tips);
+
+
 
         }
 
+        /**
+         * This method is called when a document in range of the search is moved
+         *
+         * @param s The key of the document that was moved
+         * @param geoPoint The location of the document
+         */
         @Override
         public void onKeyMoved(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyMoved: ");

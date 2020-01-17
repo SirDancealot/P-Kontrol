@@ -14,8 +14,6 @@ public interface IDatabase {
 
     List<ATipDTO> getTipList(LatLng location, double radius);
 
-    public List<DocumentSnapshot> getDocumentList (CollectionReference collection, List<String> ids);
-
     void createTip(ATipDTO tip);
 
     void updateTip(ATipDTO tip);
