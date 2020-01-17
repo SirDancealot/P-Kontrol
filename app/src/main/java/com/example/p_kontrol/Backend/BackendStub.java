@@ -2,10 +2,13 @@ package com.example.p_kontrol.Backend;
 
 
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
@@ -19,6 +22,8 @@ import com.google.firebase.firestore.GeoPoint;
 
 public class BackendStub implements IBackend{
 
+    private String TAG = "BackendStub";
+
     //Test data creation
     private GeoPoint dtulocaiton1 = new GeoPoint(55.98256, 12.51958);
     private GeoPoint dtulocaiton2 = new GeoPoint(55.18266, 12.51968);
@@ -28,18 +33,29 @@ public class BackendStub implements IBackend{
 
     UserDTO user = new UserDTO("valdemar", "h", "niceimg");
 
-
     ATipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
     ATipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
     ATipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
 
     List<ATipDTO> demoList = new ArrayList<>();
+    List<PVagtDTO> l;
+
+    MutableLiveData<List<PVagtDTO>> pvagtlist;
+
+
     static IBackend backend = null;
 
-    public BackendStub(){
+    private BackendStub(){
         demoList.add(tip1);
         demoList.add(tip2);
         demoList.add(tip3);
+        l = new LinkedList<>();
+        l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
+        l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
+        l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
+        l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
+
+
     }
 
 
@@ -73,7 +89,22 @@ public class BackendStub implements IBackend{
     }
 
     @Override
-    public void getPVagter(LatLng location, List<PVagtDTO> list) {
+    public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list) {
+        Log.d(TAG, "getPVagter: " + list + "{" + list.getValue() + "}");
+        this.pvagtlist = list;
+        pvagtlist.setValue(l);
+
+
+
+
+    }
+
+    public void createPVagt(PVagtDTO vagt){
+        Log.d(TAG, "createPVagt: ");
+
+
+        l.add(vagt);
+        pvagtlist.setValue(l);
 
     }
 

@@ -11,6 +11,7 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IMapFragmentListener;
 import com.example.p_kontrol.UI.Map.IState;
 import com.example.p_kontrol.UI.Map.MapFragment;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 class CompositionMapOperator        implements IMapOperator   {
 
@@ -26,7 +27,6 @@ class CompositionMapOperator        implements IMapOperator   {
     Button mapView_acceptBtn;
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
-
 
     public CompositionMapOperator(AppCompatActivity context,View view, IMapOperatorController mapController ){
         this.context = context;
@@ -85,8 +85,13 @@ class CompositionMapOperator        implements IMapOperator   {
         }else{
             mapFragment.setStateFreePark();
         }
+        mapFragment.setStateParking();
 
     }
+
+
+
+
 
     @Override
     public void onAcceptClick(View.OnClickListener onclick){
