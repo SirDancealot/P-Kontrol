@@ -113,7 +113,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 if (tipDTO.getLikers().contains(userInfoDTO.getId())) {
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
-                    likeStatus = "like";
+                    likeStatus = 0;
 
                 }
             }
@@ -121,20 +121,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 if (tipDTO.getDislikers().contains(userInfoDTO.getId())) {
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
                     like.setImageResource(R.drawable.ic_tip_like);
-                    likeStatus = "dislike";
+                    likeStatus = -1;
                 }
             }
 
-
-            //tip type
-            type = tipDTO.getType();
-            if(type == "normal"){
-                //todo Hans set farven til standart farve
-            } else if(type == "free"){
-                //todo Hans set farven til grøn
-            } else if(type == "alert"){
-                //todo Hans set farven til rød
-            }
 
             //name of Profile
 
@@ -225,14 +215,13 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             case (R.id.bobbelTip_like):         // Like a Tip
                 if(likeStatus == 1){
                     like.setImageResource(R.drawable.ic_tip_like);
-                    likeStatus = "normal";
                     //todo remove rating
 
                     likeStatus = 0;
                 } else {
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
-                    likeStatus = "like";
+                    likeStatus = 1;
                     //todo set like
                     IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), true);
 
@@ -246,7 +235,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 } else {
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
                     like.setImageResource(R.drawable.ic_tip_like);
-                    likeStatus = "dislike";
+                    likeStatus = -1;
                     IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), false);
                 }
                 break;
