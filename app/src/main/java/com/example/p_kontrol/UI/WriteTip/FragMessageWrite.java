@@ -21,7 +21,7 @@ import java.util.List;
 public class FragMessageWrite extends Fragment implements View.OnClickListener, IWriteTipStateListener {
 
     // Views
-    private View view, WriteTip_outerBounds;
+    private View view,contentContainer, WriteTip_outerBounds;
     private ViewPager viewPagerContent;
     private Button navNext, navPrev, navCancel;
     private CustomProgressBar progressBar;
@@ -51,18 +51,22 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         navCancel           = view.findViewById(R.id.WriteTip_ButtonCancel)     ;
         progressBar         = view.findViewById(R.id.WriteTip_NavBar)           ;
         WriteTip_outerBounds= view.findViewById(R.id.WriteTip_outerBounds)      ;
+        contentContainer    = view.findViewById(R.id.WriteTip_ContentContainer)      ;
 
         // Navigation Button listners
         navNext.setOnClickListener(this);
         navPrev.setOnClickListener(this);
         navCancel.setOnClickListener(this);
         WriteTip_outerBounds.setOnClickListener(this);
+        contentContainer.setOnClickListener(this);
 
         // Page listener for using the Navigation Bar in the top.
         pageChangeListener = new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                stateIndex = position;
                 setProgresBarProgress(position);
+                hideOrShowNextPrevButtons();
             }
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -84,6 +88,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         super.onStart();
         viewPagerContent.setAdapter(adapter);
         viewPagerContent.setOnPageChangeListener(pageChangeListener);
+        hideOrShowNextPrevButtons();
     }
 
     @Override
@@ -91,18 +96,24 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
         switch (v.getId()){
             case R.id.WriteTip_Navigation_next:
-                if( !((stateIndex + 1) >= (statesList.size()-1))  ){
+                if( (stateIndex + 1) >= (statesList.size()-1)  ){
 
-                    viewPagerContent.setCurrentItem(stateIndex++);
+                    viewPagerContent.setCurrentItem(++stateIndex,true);
                     setProgresBarProgress(stateIndex);
-
                 }
                 break;
             case R.id.WriteTip_Navigation_prev:
+                if( (stateIndex - 1 ) <= (statesList.size()-1)  ){
+
+                    viewPagerContent.setCurrentItem(--stateIndex,true);
+                    setProgresBarProgress(stateIndex);
+                }
                 break;
             case R.id.WriteTip_ButtonCancel:
+                listener.onCancelTip();
                 break;
             case R.id.WriteTip_outerBounds:
+                listener.onCancelTip();
                 break;
         }
     }
@@ -124,7 +135,19 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     private void setProgresBarProgress(int i ){
         progressBar.setProgressValue(i + 1);
     }
+    private void hideOrShowNextPrevButtons(){
+        if(stateIndex == 0){
+            navPrev.setVisibility(View.GONE);
+            navNext.setVisibility(View.VISIBLE);
+        }else if(stateIndex == (statesList.size()-1) ){
+            navNext.setVisibility(View.GONE);
+            navPrev.setVisibility(View.VISIBLE);
+        }else{
+            navPrev.setVisibility(View.VISIBLE);
+            navNext.setVisibility(View.VISIBLE);
+        }
 
+    };
 }
 
 
