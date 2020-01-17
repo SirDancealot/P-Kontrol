@@ -16,7 +16,7 @@ interface IMapOperator{
 
     void setStateSelection();
     void setStateStandby();
-    void setStateParking();
+    void toggleStateParking();
     void setStateFreeParking();
     void centerOnUserLocation();
 }
