@@ -64,8 +64,8 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
-        mapOperator.setStateFreeParking();
-
+        mapOperator.toggleStateParking();
+        menuOperator.toggleFreeParkEnabled();
     }
     @Override
     public void menuBtn_Contribute(){

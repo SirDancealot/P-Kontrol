@@ -6,4 +6,7 @@ interface IMenuOperator{
     void openMenu();
 
     boolean isMenuOpen();
+
+
+    void toggleFreeParkEnabled();
 }

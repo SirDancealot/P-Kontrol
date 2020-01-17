@@ -27,6 +27,7 @@ class CompositionMapOperator        implements IMapOperator   {
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
 
+
     public CompositionMapOperator(AppCompatActivity context,View view, IMapOperatorController mapController ){
         this.context = context;
         this.view = view;
@@ -77,19 +78,14 @@ class CompositionMapOperator        implements IMapOperator   {
     }
     @Override
     public void toggleStateParking() {
+        boolean value = mapFragment.isFreeParkEnabled();
         if(mapFragment.isFreeParkEnabled()){
             mapFragment.setStateStandby();
         }else{
-            mapFragment.isFreeParkEnabled();
+            mapFragment.setStateFreePark();
         }
 
     }
-
-    @Override
-    public void setStateFreeParking() {
-        mapFragment.setStateFreePark();
-    }
-
 
     @Override
     public void onAcceptClick(View.OnClickListener onclick){

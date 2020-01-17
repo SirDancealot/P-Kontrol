@@ -105,6 +105,13 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
     public boolean isMenuOpen() {
         return drag_State;
     }
-
-
+    @Override
+    public void toggleFreeParkEnabled() {
+        if(stateFreePark){
+            menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
+        }else{
+            menuBtn_FreePark.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
+        }
+        stateFreePark = !stateFreePark;
+    }
 }

@@ -19,5 +19,4 @@ public interface IMapFragment {
     void updatePermissions();
 
     boolean isFreeParkEnabled();
-
 }
