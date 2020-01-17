@@ -20,7 +20,6 @@ public class StateFreePark extends State {
 
     public StateFreePark(MapFragment parent) {
         super(parent);
-        map.clear();
 
 
         LiveData<List<ATipDTO>> tipList = viewModel.getTipList();
@@ -35,31 +34,26 @@ public class StateFreePark extends State {
         } );
         // todo ViewModel Se Her
         viewModel.updateTips(null);
-
-        System.out.println("kkkk ------ free");
-        zoomOut();
         updateMap(temp);
     }
 
-    @Override
-    public void zoomOut(){
+
+    public void animeCamara(LatLng geo){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(map.getCameraPosition().target)
-                .zoom(1).build();
+                .zoom(13).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     @Override
     public void updateMap(List<ATipDTO> list ) {
         MarkerOptions markerOptions = null;
+        map.clear();
 
         if(list != null) {
             int i = 0;
             for (ATipDTO tip : list) {
-
-
-
-
                 if(tip.getType() != null){
                     if(tip.getType() == "free") {
                         markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.free.getName(), 69, 100)));
@@ -70,15 +64,13 @@ public class StateFreePark extends State {
                                 listener.onTipClick(Integer.parseInt(marker.getTitle()));
                                 Log.i(TAG, "updateMap: PUT A PIN IN IT!!!!! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ");
                                 return true;
-
                             }
                         });
                     }
                 }
-
-
             }
         }
-    }
 
+
+    }
 }
