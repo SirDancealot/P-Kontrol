@@ -55,11 +55,10 @@ public class StateStandby extends State {
 
                     }
                 } else {
-                    markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon", 69, 100)));
+                    markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.paid.getName(), 69, 100)));
 
                 }
 
-                markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.alarm.getName(), 69, 100)));
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
