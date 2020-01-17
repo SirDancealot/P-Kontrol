@@ -15,17 +15,17 @@ public class ATipDTO implements ITipDTO{
     private Date creationDate;
     private String g; //location geohash
     private GeoPoint l; //location
-    private String type;
+    private int type;
     private List<String> likers, dislikers;
 
     public ATipDTO(){}
 
     @Override
-    public String getType() {
+    public int getType() {
         return type;
     }
     @Override
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

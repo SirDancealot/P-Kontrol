@@ -18,7 +18,8 @@ public class TipDTO extends ATipDTO {
     private Date creationDate;
     private String g; //location geohash
     private GeoPoint l; //location
-    private String type;
+    // todo evaluate these
+    private int type;
     private List<String> likers, dislikers;
 
     public TipDTO(){super();}
@@ -33,11 +34,11 @@ public class TipDTO extends ATipDTO {
     }
 
     @Override
-    public String getType() {
+    public int getType() {
         return type;
     }
     @Override
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
