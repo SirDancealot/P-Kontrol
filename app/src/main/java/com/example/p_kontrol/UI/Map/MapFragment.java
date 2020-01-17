@@ -97,6 +97,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         // automaticly adjusts the centering to the mapped area shown with the topbar
         map.setPadding(0,170,0,0);
 
+        styleMapCall();
+        map.getUiSettings().setMyLocationButtonEnabled(false);
 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
