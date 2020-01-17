@@ -40,7 +40,7 @@ public class StateStandby extends State {
 
         int i = 0;
         for (ATipDTO tip : list) {
-            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("map_tip_pin_icon", 69, 100)));
+            MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.paid.getName(), 69, 100)));
             map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
             map.setOnMarkerClickListener(marker -> {
                 listener.onTipClick(Integer.parseInt(marker.getTitle()));
