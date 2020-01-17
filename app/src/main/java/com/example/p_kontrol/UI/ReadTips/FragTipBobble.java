@@ -89,7 +89,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         try{
             //name of Profile
             if (tipDTO.getAuthor().getFirstName() != null){
-                name.setText(getArguments().getString(tipDTO.getAuthor().getFirstName()));
+                name.setText(tipDTO.getAuthor().getFirstName());
             } else {
                 name.setText("Anonym");
             }
