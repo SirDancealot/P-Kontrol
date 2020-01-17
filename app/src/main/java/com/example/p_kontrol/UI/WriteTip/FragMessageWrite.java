@@ -41,7 +41,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view        = inflater.inflate(R.layout.fragment_message_write, container, false);
-        viewModel   = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        viewModel   = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
 
         // View Retrieving
         viewPagerContent    = view.findViewById(R.id.WriteTip_InternalViewPager);
@@ -96,14 +96,14 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
         switch (v.getId()){
             case R.id.WriteTip_Navigation_next:
-                if( (stateIndex + 1) >= (statesList.size()-1)  ){
+                if( !((stateIndex + 1) > (statesList.size()-1))  ){
 
                     viewPagerContent.setCurrentItem(++stateIndex,true);
                     setProgresBarProgress(stateIndex);
                 }
                 break;
             case R.id.WriteTip_Navigation_prev:
-                if( (stateIndex - 1 ) <= (statesList.size()-1)  ){
+                if( (stateIndex) > 0  ){
 
                     viewPagerContent.setCurrentItem(--stateIndex,true);
                     setProgresBarProgress(stateIndex);
@@ -123,6 +123,12 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
         // todo check Message for syntax Errors
         boolean validated = true;
+
+        if (viewModel.getCurrentTip() == null
+                || !(viewModel.getCurrentTip().getMessage().trim().length() > 0)
+        ) {
+            validated = false;
+        }
 
         if(validated){
             listener.onMessageDone();

@@ -15,7 +15,7 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 class CompositionMapOperator        implements IMapOperator   {
 
-    MainMenuActivityController context;
+    AppCompatActivity context;
     IMapOperatorController mapController;
     View view;
     private String TAG = this.getClass().getName();
@@ -28,7 +28,7 @@ class CompositionMapOperator        implements IMapOperator   {
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
 
-    public CompositionMapOperator(MainMenuActivityController context,View view, IMapOperatorController mapController ){
+    public CompositionMapOperator(AppCompatActivity context,View view, IMapOperatorController mapController ){
         this.context = context;
         this.view = view;
         this.mapController = mapController;
@@ -77,14 +77,19 @@ class CompositionMapOperator        implements IMapOperator   {
         mapFragment.setStateStandby();
     }
     @Override
-    public void setStateParking() {
+    public void toggleStateParking() {
+        boolean value = mapFragment.isFreeParkEnabled();
+        if(mapFragment.isFreeParkEnabled()){
+            mapFragment.setStateStandby();
+        }else{
+            mapFragment.setStateFreePark();
+        }
         mapFragment.setStateParking();
+
     }
 
-    @Override
-    public void setStateFreeParking() {
-        mapFragment.setStateFreePark();
-    }
+
+
 
 
     @Override

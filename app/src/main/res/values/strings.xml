@@ -17,7 +17,7 @@
     <string name="menu_txt_freePark">Free Park</string>
     <string name="menu_txt_createTip">Create Tip</string>
     <string name="menu_txt_feedback">Feedback</string>
-    <string name="menu_txt_parkAlarm">Park Alarm</string>
+    <string name="menu_txt_parkAlarm">Park Here</string>
     <string name="menu_txt_pVagt">P-Vagt</string>
 
     <!-- Profile -->
@@ -47,7 +47,7 @@
     <string name="WriteTip_TextInput">Write here..</string>
     <string name="writeTip_title_step3">Take Picture</string>
     <string name="writeTip_title_step4">Thank you for your contribution</string>
-    <string name="writeTip_type_contribution">chose tip type</string>
+    <string name="writeTip_type_contribution">Choose tip type</string>
     <string name="writeTip_submit_contribution">Submit Contribution</string>
     <string name="writeTip_submit">submit</string>
 
@@ -62,8 +62,6 @@
         <item>category 1 </item>
         <item>category 2 </item>
         <item>category 3 </item>
-        <item>category 4 </item>
-        <item>category 5 </item>
     </string-array>
 
     <!-- Write Tip Navigation texts -->

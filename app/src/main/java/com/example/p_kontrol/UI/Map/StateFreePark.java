@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipTypes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -21,31 +22,29 @@ public class StateFreePark extends State {
     public StateFreePark(MapFragment parent) {
         super(parent);
 
-
-        LiveData<List<ATipDTO>> tipList = viewModel.getTipList();
-        List<ATipDTO>  temp = tipList.getValue();
-
-        tipList.observe(parent.getViewLifecycleOwner(), list -> {
+        LiveData<List<ATipDTO>> liveDataTipList = viewModel.getTipList();
+        List<ATipDTO> tipList = liveDataTipList.getValue();
+        liveDataTipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
                 updateMap(list);
             }catch (NullPointerException e){
                 Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
             }
         } );
+
         // todo ViewModel Se Her
         viewModel.updateTips(null);
-        updateMap(temp);
+        updateMap(tipList);
     }
 
 
+    @Override
     public void animeCamara(LatLng geo){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(map.getCameraPosition().target)
                 .zoom(13).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
-
     @Override
     public void updateMap(List<ATipDTO> list ) {
         MarkerOptions markerOptions = null;
@@ -54,8 +53,8 @@ public class StateFreePark extends State {
         if(list != null) {
             int i = 0;
             for (ATipDTO tip : list) {
-                if(tip.getType() != null){
-                    if(tip.getType() == "free") {
+                if(tip.getType() != 0){
+                    if(tip.getType() == TipTypes.paid.getValue()) {
                         markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.free.getName(), 69, 100)));
                         map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -70,7 +69,5 @@ public class StateFreePark extends State {
                 }
             }
         }
-
-
     }
 }

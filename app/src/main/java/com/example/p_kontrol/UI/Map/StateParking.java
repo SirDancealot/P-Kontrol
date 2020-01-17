@@ -45,15 +45,15 @@ public class StateParking extends State {
         // MediaPlayer
         m = MediaPlayer.create(context, R.raw.alarm);
 
-        LiveDataViewModel model = ViewModelProviders.of(parent).get(LiveDataViewModel.class);
+        LiveDataViewModel model = ViewModelProviders.of(parent.getActivity()).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
-
+        model.updatePVagter(currentLocation);
 
 
 
         //Mark Current Location of Car parking
-        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("car_icon", 200, 100)));
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.parkingSpot.getName(), 150, 75)));
         map.addMarker(markerOptions.position(currentLocation));
 
 
@@ -71,15 +71,11 @@ public class StateParking extends State {
     }
 
     public void updatePVagter(List<PVagtDTO> pVagtList) {
-
-
-
-
         int i = 0;
         for (PVagtDTO vagt : pVagtList) {
 
             if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + time) {
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("known_danger_icon", 100, 100)));
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.pVagtOld.getName(), 100, 100)));
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -96,7 +92,7 @@ public class StateParking extends State {
 
             } else {
 
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("danger_icon", 100, 100)));
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.pVagt.getName(), 100, 100)));
 
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(marker -> {

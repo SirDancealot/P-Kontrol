@@ -54,12 +54,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     GoogleMap map;
 
     // My Data
-    MainMenuActivityController context;
+    Activity context;
     IState currentState;
     IMapFragmentListener listener;
     LiveDataViewModel viewModel;
 
-    public MapFragment(MainMenuActivityController context, IMapFragmentListener listener) {
+    boolean isFreeParkEnabled = false;
+
+    public MapFragment(Activity context, IMapFragmentListener listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -95,7 +97,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         map.setPadding(0,170,0,0);
 
 
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+
+        getPermission();
         setStateStandby();
     }
 
@@ -109,14 +114,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     @Override
     public void setStateStandby(){
         currentState = new StateStandby(this );
+        isFreeParkEnabled = false;
     }
     @Override
     public void setStateFreePark(){
         currentState = new StateFreePark(this );
+        isFreeParkEnabled = true;
     }
     @Override
     public void setStateSelectLocation() {
         currentState = new StateSelectLocation(this );
+        isFreeParkEnabled = false;
     }
     @Override
     public void centerMap() {
@@ -141,9 +149,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
                     }
                 });
     }
-
-
-
+    @Override
+    public boolean isFreeParkEnabled() {
+        return isFreeParkEnabled;
+    }
 
     // States Need these
     @NonNull
