@@ -47,7 +47,8 @@ public class StateStandby extends State {
 
         LiveDataViewModel viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
         viewModel.getTipList().observe(this, this::updateMap);
-        viewModel.updateTips(context.getLocation()); //TODO find ud af om det er det view location eller physical location
+        //viewModel.updateTips(context.getLocation()); //TODO find ud af om det er det view location eller physical location
+
         updateMap(Objects.requireNonNull(viewModel.getTipList().getValue()));
     }
 

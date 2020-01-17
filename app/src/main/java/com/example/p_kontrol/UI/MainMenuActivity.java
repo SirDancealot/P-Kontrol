@@ -58,7 +58,7 @@ import com.google.firebase.firestore.auth.User;
 import com.google.rpc.Help;
 
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -165,6 +165,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         createSignInIntent();
 
+
         model = ViewModelProviders.of(this).get(LiveDataViewModel.class); //se her
         model.getTipList().observe(this,
                 list -> {
@@ -172,6 +173,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             if (mapContext.getCurrentState() != null)
                 mapContext.getCurrentState().updateMap(list);
         });
+
         tipCreateObject = model.getMutableTipCreateObject();
     }
 
@@ -181,6 +183,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         //connect to service
         Intent startService = new Intent(this, FirestoreDAO.class);
         bindService(startService, connection, Context.BIND_AUTO_CREATE);
+
+
+        ATipDTO serviceTipTest = new ATipDTO();
+        serviceTipTest.setAuthor(new AUserDTO());
+        serviceTipTest.setMessage("Tip created by service");
+        mService.createTip(serviceTipTest);
     }
 
     // setups called by onCreate.
