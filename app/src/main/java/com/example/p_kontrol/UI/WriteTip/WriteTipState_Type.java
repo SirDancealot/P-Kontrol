@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -53,6 +54,9 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
     public void onClick(View v) {
 
         dto = viewModel.getCurrentTip();
+        if(dto == null){
+            dto = new TipDTO();
+        }
         dto.setType(TipTypes.paid.getValue());
 
         switch (v.getId()){
@@ -72,6 +76,8 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
                 updateActiveButton();
                 break;
         }
+        viewModel.setCurrentTip(dto);
+
     }
 
     private void updateActiveButton(){
@@ -88,8 +94,8 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
                 break;
             case 3:
                 btnFreePark.setBackgroundResource(R.drawable.shape_buttonstyle_02);
-                btnPaidPark.setBackgroundResource(R.drawable.shape_buttonstyle_02_activated);
-                btnWarning.setBackgroundResource(R.drawable.shape_buttonstyle_02);
+                btnPaidPark.setBackgroundResource(R.drawable.shape_buttonstyle_02);
+                btnWarning.setBackgroundResource(R.drawable.shape_buttonstyle_02_activated);
                 break;
         }
     }
