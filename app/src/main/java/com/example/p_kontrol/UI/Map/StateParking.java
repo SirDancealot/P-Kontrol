@@ -53,7 +53,7 @@ public class StateParking extends State {
 
 
         //Mark Current Location of Car parking
-        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("car_icon", 200, 100)));
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.parkingSpot.getName(), 150, 75)));
         map.addMarker(markerOptions.position(currentLocation));
 
 
@@ -75,7 +75,7 @@ public class StateParking extends State {
         for (PVagtDTO vagt : pVagtList) {
 
             if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + time) {
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("known_danger_icon", 100, 100)));
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.pVagtOld.getName(), 100, 100)));
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -92,7 +92,7 @@ public class StateParking extends State {
 
             } else {
 
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("danger_icon", 100, 100)));
+                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.pVagt.getName(), 100, 100)));
 
                 map.addMarker(markerOptions.position(vagt.getLocation()));
                 map.setOnMarkerClickListener(marker -> {
