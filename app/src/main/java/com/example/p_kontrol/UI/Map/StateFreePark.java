@@ -40,13 +40,7 @@ public class StateFreePark extends State {
     }
 
 
-    @Override
-    public void animeCamara(LatLng geo){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
+
     @Override
     public void updateMap(List<ATipDTO> list ) {
         MarkerOptions markerOptions = null;
