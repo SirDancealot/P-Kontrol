@@ -146,27 +146,31 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 if (tipText.length() > 65) {
                     tipText = tipText.substring(0, 65) + "...";
                 } else {
-                    readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
+                    //readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
+                    readMore.setText("date stand in");
                 }
             }
             tip.setText(tipText);
         }
     }
     private void getProfileImage(){
-        if ( tipDTO.getAuthor().getProfileSRC() != null){
-            System.out.println("kkkkk ---------- henter img");
-            System.out.println(tipDTO.getAuthor().getProfileSRC());
-            URL = tipDTO.getAuthor().getProfileSRC();
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.dontAnimate();
-            //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
-            Glide.with(FragTipBobble.this).load(URL).into(profImg);
+        if (tipDTO .getAuthor() != null ) {
+            if (tipDTO.getAuthor().getProfileSRC() != null) {
+                System.out.println("kkkkk ---------- henter img");
+                System.out.println(tipDTO.getAuthor().getProfileSRC());
+                URL = tipDTO.getAuthor().getProfileSRC();
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.dontAnimate();
+                //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
+                Glide.with(FragTipBobble.this).load(URL).into(profImg);
+            } else {
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.dontAnimate();
+                Glide.with(FragTipBobble.this).load(R.drawable.anonym).into(profImg);
+            }
         } else {
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.dontAnimate();
-            Glide.with(FragTipBobble.this).load(R.drawable.anonym).into(profImg);
+            Log.e(TAG, "getProfileImage: author == null" );
         }
-
     }
 
     @Override

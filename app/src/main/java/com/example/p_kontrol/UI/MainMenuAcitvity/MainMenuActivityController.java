@@ -24,6 +24,7 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 
 public  class MainMenuActivityController extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
+    String TAG = "MenuController";
 
     // THIS IS THE CONTROLLER CLASS
     final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
@@ -35,6 +36,24 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     // -- ** -- View Model stuff  -- ** -- **  -- ** -- **  -- ** -- **
 
     LiveDataViewModel model;
+
+    //Service Connection
+    protected FirestoreDAO mService;
+    boolean bound = false;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
+            mService = binder.getService();
+            bound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+        }
+    };
 
 
     @Override
@@ -59,9 +78,20 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         super.onStart();
         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
 
+        //connect to service
+        Log.d(TAG, "onStart: start");
+        Intent startService = new Intent(this, FirestoreDAO.class);
+        bindService(startService, connection, Context.BIND_AUTO_CREATE);
+    }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (bound){
+            model.startTipQuery(mService);
+        } else {
+            Log.d(TAG, "onStart: service not bound");
+        }
     }
 
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
@@ -162,7 +192,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                 break;
             case 2: // finish Tip and send to back end for saving.
                 showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
-                model.createTip();
+                ATipDTO tip = model.getTipCreateObject().getValue();
+                tip.setAuthor(new AUserDTO());
+                model.setTipCreateObject(tip);
+                model.createTip(mService);
                 break;
         }
     }

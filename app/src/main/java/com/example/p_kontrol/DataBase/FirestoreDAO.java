@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.AtomicFile;
 import android.util.Log;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -126,7 +128,7 @@ public class FirestoreDAO extends Service implements IDatabase {
 
     @Override
     public void createTip(ATipDTO tip) {
-        String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
+        String id = "tip-" + System.currentTimeMillis();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
                 .addOnCompleteListener(task -> {
@@ -201,40 +203,48 @@ public class FirestoreDAO extends Service implements IDatabase {
          */
         @Override
         public void onGeoQueryReady() {
-            Log.d(TAG, "onGeoQueryReady: begin");
-            
-            updateIndividual = true;
-            List<ATipDTO> tips = tipList.getValue();
-            List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
-
-            Log.d(TAG, "onGeoQueryReady: start loop");
-            int i = 0;
-            if (tips != null) {
-                for (DocumentSnapshot snapshot : snapshots) {
-                    Log.d(TAG, "onGeoQueryReady: in loop at " + i);
-                    tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
-                }
-            }
-
-            Log.d(TAG, "onGeoQueryReady: post value");
-            tipList.postValue(tips);
+//            Log.d(TAG, "onGeoQueryReady: begin");
+//
+//            updateIndividual = true;
+//            List<ATipDTO> tips = tipList.getValue();
+//            List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
+//
+//            Log.d(TAG, "onGeoQueryReady: start loop");
+//            int i = 0;
+//            if (tips != null) {
+//                for (DocumentSnapshot snapshot : snapshots) {
+//                    Log.d(TAG, "onGeoQueryReady: in loop at " + i);
+//                    tips.add(Objects.requireNonNull(snapshot.toObject(ATipDTO.class)));
+//                }
+//            }
+//
+//            Log.d(TAG, "onGeoQueryReady: post value");
+//            tipList.postValue(tips);
         }
 
         @Override
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: ");
             
-            if (updateIndividual) {
+            //if (updateIndividual) {
                 List<String> list = new ArrayList<>();
                 list.add(s);
 
-                ATipDTO tipDTO = getDocumentList(tips,  list).get(0).toObject(ATipDTO.class);
-                if (tipDTO != null) {
-                    Objects.requireNonNull(tipList.getValue()).add(tipDTO);
-                }
-            } else {
-                documents.add(s);
-            }
+                tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
+                    ATipDTO tipDTO = documentSnapshot.toObject(ATipDTO.class);
+
+                    List<ATipDTO> temp = tipList.getValue();
+                    if (temp != null) {
+                        temp.add(tipDTO);
+                        tipList.postValue(temp);
+                    }
+                });
+
+
+
+            //} else {
+              //  documents.add(s);
+            //}
         }
 
         @Override

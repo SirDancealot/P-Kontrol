@@ -33,23 +33,6 @@ public class MainMenuActivity extends MainMenuActivityController{
     private String TAG = "MainMenuActivity_androidMethods";
     static final int RC_SIGN_IN = 3452;
 
-    //Service Connection
-    FirestoreDAO mService;
-    boolean bound = false;
-    private ServiceConnection connection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
-            mService = binder.getService();
-            bound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            bound = false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,25 +40,6 @@ public class MainMenuActivity extends MainMenuActivityController{
         fragment_close= new MainMenuCloseFragment(this);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //connect to service
-        Log.d(TAG, "onStart: start");
-        Intent startService = new Intent(this, FirestoreDAO.class);
-        bindService(startService, connection, Context.BIND_AUTO_CREATE);
-
-        if (bound){
-            ATipDTO serviceTipTest = new ATipDTO();
-            serviceTipTest.setAuthor(new AUserDTO());
-            serviceTipTest.setMessage("Tip created by service");
-            mService.createTip(serviceTipTest);
-        } else {
-            Log.d(TAG, "onStart: service not bound");
-        }
-        
-    }
 
     // Android Specifiks
     @Override
@@ -120,7 +84,6 @@ public class MainMenuActivity extends MainMenuActivityController{
 
 
 }
-
 
 
 
