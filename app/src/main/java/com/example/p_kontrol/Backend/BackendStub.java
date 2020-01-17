@@ -2,6 +2,8 @@ package com.example.p_kontrol.Backend;
 
 
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ import com.google.firebase.firestore.GeoPoint;
 
 public class BackendStub implements IBackend{
 
+    private String TAG = "BackendStub";
+
     //Test data creation
     private GeoPoint dtulocaiton1 = new GeoPoint(55.98256, 12.51958);
     private GeoPoint dtulocaiton2 = new GeoPoint(55.18266, 12.51968);
@@ -28,7 +32,6 @@ public class BackendStub implements IBackend{
     Date date = new Date(millis);
 
     UserDTO user = new UserDTO("valdemar", "h", "niceimg");
-
 
     ATipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
     ATipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
@@ -42,7 +45,7 @@ public class BackendStub implements IBackend{
 
     static IBackend backend = null;
 
-    public BackendStub(){
+    private BackendStub(){
         demoList.add(tip1);
         demoList.add(tip2);
         demoList.add(tip3);
@@ -87,7 +90,7 @@ public class BackendStub implements IBackend{
 
     @Override
     public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list) {
-
+        Log.d(TAG, "getPVagter: " + list + "{" + list.getValue() + "}");
         this.pvagtlist = list;
         pvagtlist.setValue(l);
 
@@ -97,15 +100,11 @@ public class BackendStub implements IBackend{
     }
 
     public void createPVagt(PVagtDTO vagt){
-
-        if(pvagtlist == null)
-            pvagtlist = new MutableLiveData<>();
-
+        Log.d(TAG, "createPVagt: ");
 
 
         l.add(vagt);
         pvagtlist.setValue(l);
-
 
     }
 

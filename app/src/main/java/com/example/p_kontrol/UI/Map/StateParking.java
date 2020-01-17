@@ -45,10 +45,10 @@ public class StateParking extends State {
         // MediaPlayer
         m = MediaPlayer.create(context, R.raw.alarm);
 
-        LiveDataViewModel model = ViewModelProviders.of(parent).get(LiveDataViewModel.class);
+        LiveDataViewModel model = ViewModelProviders.of(parent.getActivity()).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
-
+        model.updatePVagter(currentLocation);
 
 
 
@@ -71,10 +71,6 @@ public class StateParking extends State {
     }
 
     public void updatePVagter(List<PVagtDTO> pVagtList) {
-
-
-
-
         int i = 0;
         for (PVagtDTO vagt : pVagtList) {
 

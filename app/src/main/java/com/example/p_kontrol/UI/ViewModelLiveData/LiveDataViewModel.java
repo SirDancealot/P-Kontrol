@@ -27,7 +27,7 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<ATipDTO> tipCreateObject;
     private MutableLiveData<LatLng> currentLocation;
 
-    // Map Data.
+    // Map Data.MutableLiveData<
     private MutableLiveData<LatLng> map_WindowLocation;
     private MutableLiveData<LatLng> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
@@ -123,6 +123,9 @@ public class LiveDataViewModel extends ViewModel {
     }
     public void updatePVagter(LatLng location){
         Log.d(TAG, "updatePVagter: " + this);
+        if (pVagtList == null)
+            pVagtList = new MutableLiveData<>();
+
         bk.getPVagter(location, pVagtList );
     }
 
@@ -132,8 +135,6 @@ public class LiveDataViewModel extends ViewModel {
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
         }
-        if (pVagtList.getValue() != null)
-            l.addAll(pVagtList.getValue());
         //l.add(vagt);
         //pVagtList.setValue(l);
         bk.createPVagt(vagt);
