@@ -42,7 +42,7 @@ public class StateFreePark extends State {
     public void animeCamara(LatLng geo){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(map.getCameraPosition().target)
-                .zoom(13).build();
+                .build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
     @Override

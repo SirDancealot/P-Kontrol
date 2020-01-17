@@ -23,7 +23,6 @@ public class StateSelectLocation extends State {
 
     public StateSelectLocation(MapFragment parent) {
         super(parent);
-        zoomIn();
         map.clear();
 
         ATipDTO dto = viewModel.getTipCreateObject().getValue();

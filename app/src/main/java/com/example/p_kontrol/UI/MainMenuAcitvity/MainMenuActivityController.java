@@ -69,7 +69,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
-        mapOperator.toggleStateParking();
+        mapOperator.toggleStateFreePark();
         menuOperator.toggleFreeParkEnabled();
     }
     @Override
@@ -89,10 +89,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         startActivity(changeActivity);
     }
     @Override
-    public void menuBtn_ParkAlarm(){
+    public void menuBtn_Parking(){
         Log.i("click","Park Alarm btn clicked \n");
         mapOperator.toggleStateParking();
-
+        menuOperator.toggleParking();
     }
     @Override
     public void menuBtn_PVagt(){
@@ -142,6 +142,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
+                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
                     }
                 });
                 break;
@@ -158,6 +159,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onCancelTip() {
                         fragmentOperator.closeWriteTip();
+                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
                     }
                 });
                 break;

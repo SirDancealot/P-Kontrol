@@ -5,6 +5,6 @@ interface IMenuOperationsController{
     void menuBtn_FreePark();
     void menuBtn_Contribute();
     void menuBtn_Community();
-    void menuBtn_ParkAlarm();
+    void menuBtn_Parking();
     void menuBtn_PVagt();
 }

@@ -102,18 +102,7 @@ abstract public class State implements IState  {
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
-    public void zoomIn(){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .zoom(parent.DEFAULT_ZOOM_CLOSEUP).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-    public void zoomOut(){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .zoom(parent.DEFAULT_ZOOM).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
+
 
     /*
 
