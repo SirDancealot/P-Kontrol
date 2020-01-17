@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ITipDTO {
 
-    String getType();
-    void setType(String type);
+    int getType();
+    void setType(int type);
 
     AUserDTO getAuthor();
     void setAuthor(AUserDTO author);

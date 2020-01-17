@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.WriteTip.Stage_WriteText"
+    tools:context=".UI.WriteTip.WriteTipState_Type"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Thanks for Contributing -->
+    <!-- Select Type  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
         android:background="@color/colorSecondary"
-        android:id="@+id/type_bagground"
+        android:id="@+id/WriteTip_TypeLayout"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,39 +34,57 @@
             android:textSize="18sp"
 
             />
-        <!-- Submit Button -->
+        <!-- Select Types -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/type_green"
-                android:background="@color/colorHighlight"
-                android:orientation="vertical">
-            </LinearLayout>
+            <Button
+                android:id="@+id/WriteTip_TipCategory_free"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="40dp"
+                android:layout_width="200dp"
+                android:layout_gravity="center"
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="#FFEB3B"
-                android:id="@+id/type_yellow"
-                android:layout_weight="1"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:drawableLeft="@drawable/ic_button_part_tiptype_freepark"
+                android:background="@drawable/shape_buttonstyle_02"
+                android:textAllCaps="false"
+                android:text="Free Parking Tip"
+                android:textColor="@color/color_lightGray"
+            />
+            <Button
+                android:id="@+id/WriteTip_TipCategory_paid"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="40dp"
+                android:layout_width="200dp"
+                android:layout_gravity="center"
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/type_red"
-                android:background="@color/colorAlarm"
-                android:layout_weight="1"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:drawableLeft="@drawable/ic_button_part_tiptype_paid"
+                android:background="@drawable/shape_buttonstyle_02"
+                android:textAllCaps="false"
+                android:text="Paid Parking Tip"
+                android:textColor="@color/color_lightGray"
+            />
+            <Button
+                android:id="@+id/WriteTip_TipCategory_warning"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="40dp"
+                android:layout_width="200dp"
+                android:layout_gravity="center"
+
+                android:drawableLeft="@drawable/ic_button_part_tiptype_alarm"
+                android:background="@drawable/shape_buttonstyle_02"
+                android:textAllCaps="false"
+                android:text="Warning Tip"
+                android:textColor="@color/color_lightGray"
+            />
+
+
 
         </LinearLayout>
 
