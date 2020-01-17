@@ -17,6 +17,7 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
             menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
     // menu Open or Close State
     boolean drag_State;
+    boolean stateFreePark = false;
 
     public CompositionMenuOperator(IMenuOperationsController context, View view){
         this.context = context;
@@ -104,4 +105,6 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
     public boolean isMenuOpen() {
         return drag_State;
     }
+
+
 }

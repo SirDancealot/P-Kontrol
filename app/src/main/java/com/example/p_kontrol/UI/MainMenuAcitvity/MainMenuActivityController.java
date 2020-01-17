@@ -12,6 +12,7 @@ import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
+import com.example.p_kontrol.UI.Map.StateFreePark;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
@@ -66,6 +67,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
 
         // Closing the Menu down.
         menuOperator.toggleMenu();
+
+        if(mapOperator.getCurrentState() instanceof StateFreePark){
+            mapOperator.setStateStandby();
+        }
         mapOperator.setStateFreeParking();
     }
     @Override
