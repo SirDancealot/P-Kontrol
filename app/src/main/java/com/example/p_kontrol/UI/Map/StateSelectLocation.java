@@ -25,6 +25,7 @@ public class StateSelectLocation extends State {
         super(parent);
         map.clear();
 
+        map.addMarker(new MarkerOptions().position(map.getCameraPosition().target));
         TipDTO dto = viewModel.getTipCreateObject().getValue();
         dto.setL(new GeoPoint(parent.DEFAULT_LOCATION.latitude, parent.DEFAULT_LOCATION.longitude));
         viewModel.setTipCreateObject(dto);
