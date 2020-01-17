@@ -96,14 +96,14 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
         switch (v.getId()){
             case R.id.WriteTip_Navigation_next:
-                if( (stateIndex + 1) >= (statesList.size()-1)  ){
+                if( !((stateIndex + 1) > (statesList.size()-1))  ){
 
                     viewPagerContent.setCurrentItem(++stateIndex,true);
                     setProgresBarProgress(stateIndex);
                 }
                 break;
             case R.id.WriteTip_Navigation_prev:
-                if( (stateIndex - 1 ) <= (statesList.size()-1)  ){
+                if( (stateIndex - 1 ) > 0  ){
 
                     viewPagerContent.setCurrentItem(--stateIndex,true);
                     setProgresBarProgress(stateIndex);

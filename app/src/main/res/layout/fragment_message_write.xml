@@ -42,24 +42,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
 
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:translationX="-15dp"
+
                 app:ptip_progressBarHeight="3"
                 app:ptip_progressBorderThickness="1"
-                app:ptip_progressNumSteps="2"
+                app:ptip_progressNumSteps="3"
 
-                app:ptip_progressPointMargin="25"
+                app:ptip_progressPointMargin="50"
                 app:ptip_progressPointdiagonal="10"
                 app:ptip_progressValue="1"
 
                 app:ptip_progress_ColorBorder="@color/color_matWhite"
                 app:ptip_progress_ColorNonProgress="@color/colorSecondary"
-                app:ptip_progress_ColorProgress="@color/colorPrimaryDark"
+                app:ptip_progress_ColorProgress="@color/colorPrimaryDark" />
 
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-
-                />
             <Button
                 android:id="@+id/WriteTip_ButtonCancel"
                 style="?android:attr/borderlessButtonStyle"

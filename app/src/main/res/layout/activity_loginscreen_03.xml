@@ -68,14 +68,12 @@
 
             <TextView
                 android:layout_width="196dp"
-                android:layout_height="117dp"
+                android:layout_height="wrap_content"
                 android:text="Stress-free parking Together"
                 android:textAlignment="center"
                 android:textColor="@color/color_pureWhite"
                 android:textSize="22dp" />
-
         </LinearLayout>
-
     </RelativeLayout>
 
 
