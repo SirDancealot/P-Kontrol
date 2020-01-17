@@ -79,7 +79,6 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
-                android:textColor="@color/color_matWhite"
                 />
             <!-- CreateTip btn -->
             <Button

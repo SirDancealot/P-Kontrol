@@ -13,6 +13,7 @@ public interface IMapFragment {
 
     void centerMap();
     void setStateStandby();
+    void setStateFreePark();
     void setStateSelectLocation();
     IState getCurrentState();
     void updatePermissions();
