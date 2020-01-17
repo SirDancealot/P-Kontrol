@@ -14,6 +14,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
+import static com.example.p_kontrol.UI.Map.Pins.free;
+
 public class StateFreePark extends State {
 
 
@@ -42,12 +44,18 @@ public class StateFreePark extends State {
         MarkerOptions markerOptions = null;
         map.clear();
 
+        Pins pin = Pins.free;
+        String pinName = pin.getName();
+        int scalingConst = pin.getDimY() / 100;       //100 is the desired height
+        int pinX = pin.getDimX() / scalingConst;
+        int pinY = pin.getDimY() / scalingConst;
+
         if(list != null) {
             int i = 0;
             for (TipDTO tip : list) {
                 if(tip.getType() != 0){
-                    if(tip.getType() == TipTypes.paid.getValue()) {
-                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.free.getName(), 69, 100)));
+                    if(tip.getType() == TipTypes.free.getValue()) {
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
                         map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                             @Override
