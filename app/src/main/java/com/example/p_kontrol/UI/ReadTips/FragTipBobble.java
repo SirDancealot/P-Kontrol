@@ -104,7 +104,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 //todo Hans set farven til standart farve
             } else if(type == "free"){
                 //todo Hans set farven til grøn
-            } else if(type == "alert"){
+            } else if(type == "alarm"){
                 //todo Hans set farven til rød
             }
 

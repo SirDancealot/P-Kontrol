@@ -5,9 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.p_kontrol.DataTypes.ATipDTO;
-import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.TipTypes;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -45,18 +44,18 @@ public class StateStandby extends State {
             int i = 0;
             for (ATipDTO tip : list) {
                 // todo ret navne
-                if(tip.getType() != null){
-                    if(tip.getType() == "normal"){
-                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.paid.getName(), 69, 100)));
-                    } else if(tip.getType() == "free"){
-                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.free.getName(), 69, 100)));
-                    } else if(tip.getType() == "alert") {
-                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.alarm.getName(), 69, 100)));
-
+                String tipPinName = Pins.paid.getName();
+                if(tip.getType() != 0){
+                    // CANNOT BE SWITCH BECAUSE SWITCH DOSENT ALLOW ENUMERATIONS AS CONSTANT EXPRESSION
+                    if( tip.getType() == TipTypes.paid.getValue() ){
+                        tipPinName = Pins.paid.getName();
                     }
-                } else {
-                    markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.paid.getName(), 69, 100)));
-
+                    else if(tip.getType() == TipTypes.free.getValue() ){
+                        tipPinName = Pins.free.getName();
+                    }
+                    else if(tip.getType() == TipTypes.alarm.getValue() ) {
+                        tipPinName = Pins.alarm.getName();
+                    }
                 }
 
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
