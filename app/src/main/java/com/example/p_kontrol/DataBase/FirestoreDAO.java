@@ -15,8 +15,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
-import com.example.p_kontrol.UI.MainMenuActivity;
-import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;

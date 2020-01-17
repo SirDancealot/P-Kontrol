@@ -1,10 +1,17 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,10 +33,48 @@ public class MainMenuActivity extends MainMenuActivityController{
     private String TAG = "MainMenuActivity_androidMethods";
     static final int RC_SIGN_IN = 3452;
 
+    //Service Connection
+    FirestoreDAO mService;
+    boolean bound = false;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
+            mService = binder.getService();
+            bound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragment_close= new MainMenuCloseFragment(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //connect to service
+        Log.d(TAG, "onStart: start");
+        Intent startService = new Intent(this, FirestoreDAO.class);
+        bindService(startService, connection, Context.BIND_AUTO_CREATE);
+
+        if (bound){
+            ATipDTO serviceTipTest = new ATipDTO();
+            serviceTipTest.setAuthor(new AUserDTO());
+            serviceTipTest.setMessage("Tip created by service");
+            mService.createTip(serviceTipTest);
+        } else {
+            Log.d(TAG, "onStart: service not bound");
+        }
+        
     }
 
     // Android Specifiks

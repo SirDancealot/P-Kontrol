@@ -1,14 +1,20 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
@@ -29,6 +35,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     // -- ** -- View Model stuff  -- ** -- **  -- ** -- **  -- ** -- **
 
     LiveDataViewModel model;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     protected void onStart() {
         super.onStart();
         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
+
+
+
+
     }
 
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
