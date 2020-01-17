@@ -12,4 +12,6 @@ public interface IPVagtDTO {
 
     public Date getCreationDate();
 
+    public String getUid();
+
 }

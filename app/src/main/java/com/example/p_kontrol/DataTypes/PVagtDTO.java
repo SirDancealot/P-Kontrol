@@ -7,11 +7,13 @@ import java.util.Date;
 public class PVagtDTO implements IPVagtDTO{
     LatLng location;
     Date creationDate;
+    String uid;
 
 
-    public PVagtDTO(LatLng location, Date creationDate){
+    public PVagtDTO(LatLng location, Date creationDate, String uid){
         this.location = location;
         this. creationDate = creationDate;
+        this.uid = uid;
     }
 
 
@@ -21,6 +23,10 @@ public class PVagtDTO implements IPVagtDTO{
 
     public Date getCreationDate(){
         return creationDate;
+    }
+
+    public String getUid(){
+        return uid;
     }
 
 

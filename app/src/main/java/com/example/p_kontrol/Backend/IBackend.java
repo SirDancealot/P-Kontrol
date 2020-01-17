@@ -18,7 +18,9 @@ public interface IBackend {
     void rateTip(int star, ATipDTO tip);
 
 
-    void getPVagter(LatLng location, List<PVagtDTO> list);
+    void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list);
+
+    void createPVagt(PVagtDTO vagt);
 
 
     //User

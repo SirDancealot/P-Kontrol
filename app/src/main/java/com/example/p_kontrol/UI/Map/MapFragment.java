@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivityController;
 import com.example.p_kontrol.UI.Map.IMapFragment;
 import com.example.p_kontrol.UI.Map.IMapFragmentListener;
 import com.example.p_kontrol.UI.Map.IState;
@@ -107,6 +108,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
     // IMapFragment
     @Override
+    public void setStateParking(){
+        currentState = new StateParking(this );
+    }
+    @Override
     public void setStateStandby(){
         currentState = new StateStandby(this );
         isFreeParkEnabled = false;
@@ -166,10 +171,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     public FusedLocationProviderClient getFusedLocationProviderClient() {
         return fusedLocationProviderClient;
     }
-    @NonNull
-    public LiveDataViewModel getViewModel() {
-        return viewModel;
-    }
+//    @NonNull
+//    public LiveDataViewModel getViewModel() {
+//        return viewModel;
+//    }
+
 
     // Internal methods
     private void styleMapCall() {
