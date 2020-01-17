@@ -20,7 +20,6 @@ public class StateStandby extends State {
     public StateStandby(MapFragment parent) {
         super(parent);
         map.clear();
-        centerMethod();
 
 
         LiveData<List<ATipDTO>> tipList = viewModel.getTipList();

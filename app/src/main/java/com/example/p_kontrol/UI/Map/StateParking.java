@@ -38,7 +38,6 @@ public class StateParking extends State {
 
     public StateParking(MapFragment parent) {
         super(parent);
-        zoomIn();
         map.clear();
         this.context = parent.getContext();
 
@@ -59,16 +58,6 @@ public class StateParking extends State {
 
     }
 
-
-    @Override
-    public void centerMethod() {
-
-    }
-
-    @Override
-    public void zoomIn(){
-
-    }
 
     public void updatePVagter(List<PVagtDTO> pVagtList) {
         int i = 0;
