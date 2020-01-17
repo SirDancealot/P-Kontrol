@@ -109,7 +109,7 @@
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
                 />
-            <!-- Park Alarm btn -->
+            <!-- Park alarm btn -->
             <Button
                 android:paddingTop="10dp"
                 android:id="@+id/menuBtn_ParkAlarm"

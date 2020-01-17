@@ -8,9 +8,9 @@ public interface IUserDTO {
         EmptyUser.setUserId(userId);
         EmptyUser.setFirstName(firstName);
         EmptyUser.setLastName(lastName);
-        EmptyUser.setProfileImageSRC(profileImg);
+        EmptyUser.setProfileSRC(profileImg);
         return EmptyUser;
-    };
+    }
 
     int getUserId();
     String getFirstName();
@@ -21,6 +21,6 @@ public interface IUserDTO {
     void setUserId(int userId);
     void setFirstName(String firstName);
     void setLastName(String lastName);
-    void setProfileImageSRC(String profileSrc);
+    void setProfileSRC(String profileSrc);
 
 }
