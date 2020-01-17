@@ -8,6 +8,8 @@
     <color name="colorHighlightSecond"> #ADEEE3</color><!-- lighterGreen -->
     <color name="colorAccent">#D6C5A6</color>
 
+    <!-- Alarm Color -->
+    <color name="colorAlarm">#de9786</color><!-- lightGreen --> <color name="colorAlarmShadow">#e06d52</color><!-- lightGreen Shadow -->
 
     <!-- ColorScheme NonColors -->
     <color name="color_pureWhite">#fff</color>
