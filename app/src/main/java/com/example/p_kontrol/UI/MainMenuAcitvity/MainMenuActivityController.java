@@ -83,7 +83,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     }
     @Override
     public void menuBtn_ParkAlarm(){
-        Log.i("click","Park Alarm btn clicked \n");
+        Log.i("click","Park alarm btn clicked \n");
     }
     @Override
     public void menuBtn_PVagt(){

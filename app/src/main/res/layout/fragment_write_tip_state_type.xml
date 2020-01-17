@@ -46,7 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/type_green"
-                android:background="@color/typeGreen"
+                android:background="@color/colorHighlight"
                 android:orientation="vertical">
             </LinearLayout>
 
@@ -63,7 +63,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/type_red"
-                android:background="@color/typeRed"
+                android:background="@color/colorAlarm"
                 android:layout_weight="1"
                 android:orientation="vertical">
             </LinearLayout>
