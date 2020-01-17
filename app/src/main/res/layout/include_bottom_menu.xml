@@ -69,15 +69,15 @@
                 />
             <!-- Free Park btn -->
             <Button
-                android:paddingTop="15dp"
+                android:paddingTop="10dp"
                 android:id="@+id/menuBtn_FreePark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/color_pureWhite"
-                android:drawableTop="@drawable/ic_icon_coins"
+                android:drawableTop="@drawable/ic_icon_freepark"
                 android:text="@string/menu_txt_freePark"
                 android:textAllCaps="false"
-                android:drawablePadding="15dp"
+                android:drawablePadding="0dp"
                 android:textSize="15sp"
                 />
             <!-- CreateTip btn -->
@@ -110,14 +110,14 @@
                 />
             <!-- Park alarm btn -->
             <Button
-                android:paddingTop="10dp"
+                android:paddingTop="20dp"
                 android:id="@+id/menuBtn_ParkAlarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/color_pureWhite"
 
-                android:drawableTop="@drawable/ic_icon_alarm"
-                android:drawablePadding="15dp"
+                android:drawableTop="@drawable/ic_icon_park"
+                android:drawablePadding="10dp"
                 android:text="@string/menu_txt_parkAlarm"
 
                 android:textAllCaps="false"
