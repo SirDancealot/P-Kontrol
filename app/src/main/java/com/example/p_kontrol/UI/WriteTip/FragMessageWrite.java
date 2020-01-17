@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.Util.CustomProgressBar;
@@ -73,6 +72,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         // setList af States, this is also the ;
         statesList = new LinkedList<>();
         statesList.add(new WriteTipState_WriteText(this));
+        statesList.add(new WriteTipState_Type(this));
         statesList.add(new WriteTipState_Submit(this));
         adapter = new WriteTipAdapter(getChildFragmentManager(),statesList);
 

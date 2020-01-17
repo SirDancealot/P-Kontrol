@@ -11,19 +11,28 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 /**
  * @responsibilty responsibility to create a room to type in the text for the tip.
  *
  * */
-public class Stage_TypeChose extends AbstractWriteTipState implements View.OnClickListener {
+public class WriteTipState_Type extends AbstractWriteTipState implements View.OnClickListener {
 
     String TAG = "WriteTip STATE WriteText ";
 
     View view;
-    LinearLayout bagground;
-    ImageView green, yellow, red;
+    LinearLayout bagground, green, yellow, red;
+    LiveDataViewModel viewModel;
+
+
+    public WriteTipState_Type(IWriteTipStateListener listener) {
+        super(listener);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +48,7 @@ public class Stage_TypeChose extends AbstractWriteTipState implements View.OnCli
         yellow.setOnClickListener(this);
         red.setOnClickListener(this);
 
-        dto.setType("normal");
+        viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
         bagground.setBackgroundColor(getResources().getColor(R.color.typeYellow));
 
 
@@ -49,6 +58,9 @@ public class Stage_TypeChose extends AbstractWriteTipState implements View.OnCli
 
     @Override
     public void onClick(View v) {
+
+        dto = viewModel.getCurrentTip();
+        dto.setType("normal");
 
         if(v == green){
             dto.setType("free");

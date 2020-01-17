@@ -49,7 +49,7 @@ public class StateStandby extends State {
                     if(tip.getType() == "normal"){
                         iconName = "ic_tip_like";
                     } else if(tip.getType() == "free"){
-                        iconName = "ic_tip_like_on";
+                        iconName = "map_tip_pin_icon";
                     } else if(tip.getType() == "alert") {
                         iconName = "ic_tip_dislike_on";
                     }
