@@ -9,7 +9,7 @@
     <color name="colorAccent">#D6C5A6</color>
 
     <!-- Alarm Color -->
-    <color name="colorAlarm">#de9786</color><!-- lightGreen --> <color name="colorAlarmShadow">#e06d52</color><!-- lightGreen Shadow -->
+    <color name="colorAlarm">#de9786</color><!-- lightGreen --> <color name="colorAlarmShadow">#e06d52</color><!-- lightGreen Shadow --><color name="colorAlarmShadowDark">#9f4733</color><!-- lightGreen Shadow -->
 
     <!-- ColorScheme NonColors -->
     <color name="color_pureWhite">#fff</color>

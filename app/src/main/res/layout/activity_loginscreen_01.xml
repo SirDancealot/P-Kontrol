@@ -14,7 +14,7 @@
     >
 
     <!-- Circles -->
-    <AbsoluteLayout
+    <RelativeLayout
         android:id="@+id/LoginScreen_BackgroundBlue"
         android:transitionName="LoginScreen_BackgroundBlue"
         android:layout_width="0dp"
@@ -29,8 +29,8 @@
             android:id="@+id/LoginScreen_Circle1"
             android:layout_width="400dp"
             android:layout_height="400dp"
-            android:layout_x="-150dp"
-            android:layout_y="-150dp"
+            android:translationX="-150dp"
+            android:translationY="-150dp"
             android:background="@drawable/shape_circle_lightgreen"
             android:transitionName="LoginScreen_Circle1"
             />
@@ -40,12 +40,12 @@
             android:background="@drawable/shape_circle_green"
             android:layout_width="400dp"
             android:layout_height="400dp"
-            android:layout_x="270dp"
-            android:layout_y="403dp"
+            android:translationX="270dp"
+            android:translationY="403dp"
             android:transitionName="LoginScreen_Circle2"
             />
 
-    </AbsoluteLayout>
+    </RelativeLayout>
 
     <!-- Content Besides Circles -->
     <LinearLayout
