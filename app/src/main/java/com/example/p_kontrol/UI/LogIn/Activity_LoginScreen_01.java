@@ -13,8 +13,8 @@ import android.view.Window;
 
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
+
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
-import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -72,26 +72,17 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-//        System.out.println("--------kkkkk");
-//        System.out.println(user);
-//        System.out.println("--------kkkkk");
 
         if(user != null){
-//            System.out.println("--------inde!!");
             userInfoDTO.setUser(user);
             Intent changeActivity = new Intent( this , MainMenuActivity.class);
             startActivity(changeActivity);
-//            System.out.println("--------ude!!");
         } else {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-//                    changeAct();
-//TODO use changeAct() when it works
-                    Intent login_intent = new Intent(Activity_LoginScreen_01.this, Activity_LoginScreen_03.class );
-                    startActivity(login_intent);
-
+                    changeAct();
                 }
             }, 1000);
         }

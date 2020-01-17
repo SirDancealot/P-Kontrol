@@ -32,6 +32,16 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<LatLng> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
 
+    // todo er dette rigtigt? August
+    // Write tip
+    private ATipDTO currentTip;
+    public ATipDTO getCurrentTip() {
+        return currentTip;
+    }
+    public void setCurrentTip(ATipDTO currentTip) {
+        this.currentTip = currentTip;
+    }
+
     private IBackend bk = BackendStub.getBackend();
     List<PVagtDTO> l = new LinkedList<>();
 

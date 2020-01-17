@@ -3,6 +3,8 @@ package com.example.p_kontrol.DataTypes;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import java.util.List;
+
 public class UserInfoDTO {
 
     // Dette er en Singleton da det udelukkende er den indloggede bruger.
@@ -13,6 +15,7 @@ public class UserInfoDTO {
     private String email;
     private String id;
     private Object token;
+
 
 
     private String url;

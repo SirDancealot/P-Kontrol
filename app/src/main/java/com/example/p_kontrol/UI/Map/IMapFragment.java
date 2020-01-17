@@ -14,6 +14,7 @@ public interface IMapFragment {
     void centerMap();
     void setStateParking();
     void setStateStandby();
+    void setStateFreePark();
     void setStateSelectLocation();
     IState getCurrentState();
     void updatePermissions();

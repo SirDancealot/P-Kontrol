@@ -3,8 +3,12 @@ package com.example.p_kontrol.DataTypes;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
+import java.util.List;
 
 public interface ITipDTO {
+
+    int getType();
+    void setType(int type);
 
     AUserDTO getAuthor();
     void setAuthor(AUserDTO author);
@@ -26,4 +30,10 @@ public interface ITipDTO {
     void setL(GeoPoint location);
 
     ITipDTO copy();
+
+    List<String> getLikers();
+    void setLikers(List<String> likers);
+
+    List<String> getDislikers();
+    void setDislikers(List<String> dislikers);
 }

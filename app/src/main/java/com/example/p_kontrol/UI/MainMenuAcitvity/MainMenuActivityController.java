@@ -68,7 +68,10 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
-        //setupTipBobblesPagerViewer();
+
+        // Closing the Menu down.
+        menuOperator.toggleMenu();
+        mapOperator.setStateFreeParking();
     }
     @Override
     public void menuBtn_Contribute(){
@@ -113,6 +116,9 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     public void onCenterClick(View v){
         mapOperator.centerOnUserLocation();
     }
+
+    // Free park state
+
 
     // Create Tip
     private void createTip(){

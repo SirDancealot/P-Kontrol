@@ -7,6 +7,7 @@ import org.imperiumlabs.geofirestore.core.GeoHash;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class TipDTO extends ATipDTO {
 
@@ -17,7 +18,9 @@ public class TipDTO extends ATipDTO {
     private Date creationDate;
     private String g; //location geohash
     private GeoPoint l; //location
-
+    // todo evaluate these
+    private int type;
+    private List<String> likers, dislikers;
 
     public TipDTO(){super();}
 
@@ -30,6 +33,14 @@ public class TipDTO extends ATipDTO {
         this.l = l;
     }
 
+    @Override
+    public int getType() {
+        return type;
+    }
+    @Override
+    public void setType(int type) {
+        this.type = type;
+    }
 
     @Override
     public AUserDTO getAuthor() {
@@ -85,6 +96,26 @@ public class TipDTO extends ATipDTO {
     public void setL(GeoPoint l) {
         this.l = l;
         g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
+    }
+
+    @Override
+    public List<String> getLikers() {
+        return this.likers;
+    }
+
+    @Override
+    public void setLikers(List<String> likers) {
+        this.likers = likers;
+    }
+
+    @Override
+    public List<String> getDislikers() {
+        return this.dislikers;
+    }
+
+    @Override
+    public void setDislikers(List<String> dislikers) {
+        this.dislikers = dislikers;
     }
 
 
