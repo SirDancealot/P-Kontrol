@@ -2,8 +2,8 @@ package com.example.p_kontrol.UI.Map;
 
 
 public enum Pins{
-    free("map_tip_pin_paid"),
-    paid("map_tip_pin_regular"),
+    free("map_tip_pin_regular"),
+    paid("map_tip_pin_paid"),
     alarm("map_tip_pin_alarm");
 
     private final String name;
