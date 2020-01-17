@@ -49,7 +49,7 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
         red.setOnClickListener(this);
 
         viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
-        bagground.setBackgroundColor(getResources().getColor(R.color.typeYellow));
+        bagground.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
 
 
@@ -64,13 +64,13 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
 
         if(v == green){
             dto.setType("free");
-            bagground.setBackgroundColor(getResources().getColor(R.color.typeGreen));
+            bagground.setBackgroundColor(getResources().getColor(R.color.colorHighlight));
         } else if(v == yellow){
             dto.setType("normal");
-            bagground.setBackgroundColor(getResources().getColor(R.color.typeYellow));
+            bagground.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         } else if(v == red){
             dto.setType("alert");
-            bagground.setBackgroundColor(getResources().getColor(R.color.typeRed));
+            bagground.setBackgroundColor(getResources().getColor(R.color.colorAlarm));
 
         }
     }
