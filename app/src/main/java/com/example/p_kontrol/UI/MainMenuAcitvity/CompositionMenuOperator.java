@@ -14,10 +14,11 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
     // Menu Views.
     View menuBtnContainer,dragHandle;
     Button menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   ,menuBtn_ParkAlarm  ,menuBtn_PVagt      ;
+            menuBtn_Community   , menuBtn_Parking,menuBtn_PVagt      ;
     // menu Open or Close State
     boolean drag_State;
     boolean stateFreePark = false;
+    boolean stateParking = false;
 
     public CompositionMenuOperator(IMenuOperationsController context, View view){
         this.context = context;
@@ -31,7 +32,7 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
         menuBtn_FreePark     = view.findViewById(R.id.menuBtn_FreePark)            ;
         menuBtn_Contribute   = view.findViewById(R.id.menuBtn_CreateTip)          ;
         menuBtn_Community    = view.findViewById(R.id.menuBtn_Community)           ;
-        menuBtn_ParkAlarm    = view.findViewById(R.id.menuBtn_ParkAlarm)           ;
+        menuBtn_Parking = view.findViewById(R.id.menuBtn_ParkAlarm)           ;
         menuBtn_PVagt        = view.findViewById(R.id.menuBtn_PVagt)               ;
 
         // Setting Listeners
@@ -40,7 +41,7 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
         menuBtn_FreePark.setOnClickListener(this);
         menuBtn_Contribute.setOnClickListener(this);
         menuBtn_Community.setOnClickListener(this);
-        menuBtn_ParkAlarm.setOnClickListener(this);
+        menuBtn_Parking.setOnClickListener(this);
         menuBtn_PVagt.setOnClickListener(this);
 
         // Setup Menu Toggle Position
@@ -69,7 +70,7 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
                 context.menuBtn_Community();
                 break;
             case (R.id.menuBtn_ParkAlarm):
-                context.menuBtn_ParkAlarm();
+                context.menuBtn_Parking();
                 break;
             case (R.id.menuBtn_PVagt):
                 context.menuBtn_PVagt();
@@ -113,5 +114,14 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
             menuBtn_FreePark.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
         }
         stateFreePark = !stateFreePark;
+    }
+    @Override
+    public void toggleParking(){
+        if(stateParking){
+            menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
+        }else{
+            menuBtn_Parking.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
+        }
+        stateParking = !stateParking;
     }
 }

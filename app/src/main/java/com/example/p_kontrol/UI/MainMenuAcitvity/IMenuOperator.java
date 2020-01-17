@@ -9,4 +9,5 @@ interface IMenuOperator{
 
 
     void toggleFreeParkEnabled();
+    void toggleParking();
 }

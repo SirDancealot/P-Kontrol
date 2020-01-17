@@ -60,6 +60,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     LiveDataViewModel viewModel;
 
     boolean isFreeParkEnabled = false;
+    boolean isParkingEnabled = false;
 
     public MapFragment(Activity context, IMapFragmentListener listener) {
         this.context = context;
@@ -110,21 +111,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     @Override
     public void setStateParking(){
         currentState = new StateParking(this );
+        isFreeParkEnabled = false;
+        isParkingEnabled = true;
     }
     @Override
     public void setStateStandby(){
         currentState = new StateStandby(this );
         isFreeParkEnabled = false;
+        isParkingEnabled = false;
     }
     @Override
     public void setStateFreePark(){
         currentState = new StateFreePark(this );
         isFreeParkEnabled = true;
+        isParkingEnabled = false;
     }
     @Override
     public void setStateSelectLocation() {
         currentState = new StateSelectLocation(this );
         isFreeParkEnabled = false;
+        isParkingEnabled = false;
     }
     @Override
     public void centerMap() {
@@ -153,6 +159,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     public boolean isFreeParkEnabled() {
         return isFreeParkEnabled;
     }
+    @Override
+    public boolean isParkingEnabled(){return isParkingEnabled; }
 
     // States Need these
     @NonNull
