@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.IRatingDTO;
+import com.example.p_kontrol.DataTypes.RatingDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
@@ -70,7 +72,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
         suroundings = view.findViewById(R.id.bobbelTip_FragmentContainer)                ;
         container   = view.findViewById(R.id.bobbelTip_container)   ;
-        topBar      = view.findViewById(R.id.bobbelTip_top_bar)    ;
+        topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
         like        = view.findViewById(R.id.bobbelTip_like)              ;
         dislike     = view.findViewById(R.id.bobbelTip_dislike)           ;
 
@@ -87,6 +89,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
                     likeStatus = "like";
+
                 }
             }
             if(tipDTO.getDislikers() != null) {
@@ -190,13 +193,14 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 if(likeStatus == "like"){
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = "normal";
-                    //todo remove like
+                    //todo remove rating
 
                 } else {
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
                     likeStatus = "like";
                     //todo set like
+                    IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), true);
 
                 }
                 break;
@@ -210,7 +214,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = "dislike";
-                    // todo set dislike
+                    IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), false);
                 }
                 break;
             default:
