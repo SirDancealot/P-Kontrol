@@ -135,7 +135,6 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "updatePVagter: " + this);
         if (pVagtList == null)
             pVagtList = new MutableLiveData<>();
-
         bk.getPVagter(location, pVagtList );
     }
 

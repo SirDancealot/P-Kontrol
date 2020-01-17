@@ -97,7 +97,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     @Override
     public void menuBtn_ParkAlarm(){
         Log.i("click","Park Alarm btn clicked \n");
-        mapOperator.setStateParking();
+        mapOperator.toggleStateParking();
 
     }
     @Override
