@@ -52,7 +52,7 @@
                 android:drawableLeft="@drawable/ic_button_part_tiptype_freepark"
                 android:background="@drawable/shape_buttonstyle_02"
                 android:textAllCaps="false"
-                android:text="Free Parking Tip"
+                android:text="@string/writeTip_type_freeParking"
                 android:textColor="@color/color_lightGray"
             />
             <Button
@@ -66,7 +66,7 @@
                 android:drawableLeft="@drawable/ic_button_part_tiptype_paid"
                 android:background="@drawable/shape_buttonstyle_02"
                 android:textAllCaps="false"
-                android:text="Paid Parking Tip"
+                android:text="@string/writeTip_type_paidParking"
                 android:textColor="@color/color_lightGray"
             />
             <Button
@@ -80,7 +80,7 @@
                 android:drawableLeft="@drawable/ic_button_part_tiptype_alarm"
                 android:background="@drawable/shape_buttonstyle_02"
                 android:textAllCaps="false"
-                android:text="Warning Tip"
+                android:text="@string/writeTip_type_warningParking"
                 android:textColor="@color/color_lightGray"
             />
 

@@ -51,7 +51,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     @Override
     protected void onStart() {
         super.onStart();
-        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
+        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
     }
 
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
@@ -122,7 +122,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     private void createTip_Process(int i){
         switch (i) {
             case 0: // Chose location
-                showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, "Creating a Tip", "Select a Location to Place tip");
+                showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, getResources().getString(R.string.topbar_createTip_header), getResources().getString(R.string.topbar_createTip_subTitle));
 
                 mapOperator.setStateSelection();
                 mapOperator.visibilityOfInteractBtns(View.VISIBLE);
@@ -138,12 +138,12 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
-                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
+                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
                     }
                 });
                 break;
             case 1: // Write Tip
-                showTopMsgBar(R.drawable.ic_topmsgbar_writing, "Creating a Tip", "Write the actual Tip");
+                showTopMsgBar(R.drawable.ic_topmsgbar_writing, getResources().getString(R.string.topbar_writeTip_heaeder), getResources().getString(R.string.topbar_writeTip_subTitle));
                 mapOperator.visibilityOfInteractBtns(View.GONE);
                 mapOperator.setStateStandby();
                 fragmentOperator.openWriteTip(new ITipWriteListener() {
@@ -155,12 +155,12 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                     @Override
                     public void onCancelTip() {
                         fragmentOperator.closeWriteTip();
-                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
+                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
                     }
                 });
                 break;
             case 2: // finish Tip and send to back end for saving.
-                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, "P-Tip", "read or create a tip?");
+                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
                 model.createTip();
                 break;
         }
