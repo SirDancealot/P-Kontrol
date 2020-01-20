@@ -3,8 +3,6 @@ package com.example.p_kontrol.UI.ReadTips;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,21 +30,21 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
+/**
+ * @responsibilty to contain all the responsibility for showing it Data for a single tip in a specific layout
+ * */
 public class FragTipBobble extends Fragment implements View.OnClickListener{
+
     // Settings
-    final int TIP_SHORT_MAX_LENGTH = 250;
-    final String TAG ="FragTipBobble";
-    // Argument Keys
-    final String BOBBLE_INDEX = "bobbleTip_index";
-    String URL;
-    int type;
-    UserInfoDTO userInfoDTO;
-    List<ITipDTO> tips;
-    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    final String TAG = this.getClass().getName();
+
+    private String URL;
+    private int type;
+    private UserInfoDTO userInfoDTO;
+    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     // regular Variables
-    private View view, tipcontainer,suroundings;
+    private View view, tipcontainer;
     private TextView readMore, tip, name;
     private CircleImageView profImg;
     private ITipDTO tipDTO;
@@ -56,12 +54,16 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
     private IFragmentOperator fragmentOperator;
 
+    /** @responsibilty to contain all the responsibility for showing it Data for a single tip in a specific layout
+     * @param  fragmentOperator passed by adapter.
+     * @param tipDTO this TipDto Data
+     * */
     public FragTipBobble(IFragmentOperator fragmentOperator, ITipDTO tipDTO){
     this.fragmentOperator = fragmentOperator;
         this.tipDTO = tipDTO;
-        // Requiired empty public constructor
     }
 
+// android things
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,63 +114,50 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         }
         getProfileImage();
 
-            if(tipDTO.getLikers() != null) {
-                if (tipDTO.getLikers().contains(userInfoDTO.getId())) {
+        return view;
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case (R.id.bobbelTip_FragmentContainer):    // clicking on the Suroundings of the TipBobble Closes it
+                fragmentOperator.closeTipBobbles();
+                break;
+            case (R.id.bobbelTip_readMore):             // readMore
+                readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
+                tip.setText(tipDTO.getMessage());
+                break;
+            case (R.id.bobbelTip_like):         // Like a Tip
+                if(likeStatus == 1){
+                    like.setImageResource(R.drawable.ic_tip_like);
+                    likeStatus = 0;
+                } else {
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
-                    likeStatus = 0;
-
+                    likeStatus = 1;
                 }
-            }
-            if(tipDTO.getDislikers() != null) {
-                if (tipDTO.getDislikers().contains(userInfoDTO.getId())) {
+                break;
+            case (R.id.bobbelTip_dislike):      // Dislike a Tip
+                if(likeStatus == -1){
+                    dislike.setImageResource(R.drawable.ic_tip_dislike);
+                    likeStatus = 0;
+                    //todo remove dislike
+                } else {
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = -1;
+                    // todo set dislike
                 }
-            }
-
-
-            //name of Profile
-
-            if (tipDTO.getAuthor() != null && tipDTO.getAuthor().getFirstName() != null){ //this will not work
-                if (getArguments() != null) {
-                    name.setText(getArguments().getString(tipDTO.getAuthor().getFirstName()));
-                }
-            } else {
-                name.setText("Anonym"); //todo bør oversættes
-            }
-
-
-
-            // tip Shortend Text.
-            String tipText = tipDTO.getMessage();
-
-
-        LiveDataViewModel model = ViewModelProviders.of(getActivity()).get(LiveDataViewModel.class);
-        MutableLiveData<IRatingDTO> rating;
-        model.getRatingsObject().observe(this, ratings -> getTipRatings(ratings));
-
-        return view;
-
-    }
-
-    //Valdemars ting
-
-
-
-    public void getTipRatings(ITipDTO tip){
-
-
-        //model.getRatings(tip);
-
-    }
-
-    public void getTipRatings(List<IRatingDTO> ratings){
-
+                break;
+            default:
+                // do nothing
+                break;
+        }
     }
 
 
+    /**
+     * determine the Images for likes button, based on if a user have liked or not.
+     * */
     private void preRenderLikes(){
         if(tipDTO.getLikers() != null) {
             if (tipDTO.getLikers().contains(userInfoDTO.getId())) {
@@ -185,6 +174,9 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             }
         }
     }
+    /**
+     * color Fragment Header based on Type of Tip
+     * */
     private void evalTipType(){
         //tip type
         type = tipDTO.getType();
@@ -196,6 +188,9 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             topBar.setBackgroundResource(R.drawable.shape_squarerounded_top_red);
         }
     }
+    /**
+     *  Trims down text if it is to large
+     * */
     private void trimText(){
         // tip Shortend Text.
         String tipText = tipDTO.getMessage();
@@ -213,6 +208,9 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             tip.setText(tipText);
         }
     }
+    /**
+     * gets the profileImage to show on the tip
+     * */
     private void getProfileImage(){
         if (tipDTO .getAuthor() != null ) {
             if (tipDTO.getAuthor().getProfileSRC() != null) {
@@ -232,46 +230,5 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case (R.id.bobbelTip_FragmentContainer):    // clicking on the Suroundings of the TipBobble Closes it
-                fragmentOperator.closeTipBobbles();
-                break;
-            case (R.id.bobbelTip_readMore):             // readMore
-                readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
-                tip.setText(tipDTO.getMessage());
-                break;
-            case (R.id.bobbelTip_like):         // Like a Tip
-                if(likeStatus == 1){
-                    like.setImageResource(R.drawable.ic_tip_like);
-                    //todo remove rating
 
-                    likeStatus = 0;
-                } else {
-                    dislike.setImageResource(R.drawable.ic_tip_dislike);
-                    like.setImageResource(R.drawable.ic_tip_like_on);
-                    likeStatus = 1;
-                    //todo set like
-                    IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), true);
-
-                }
-                break;
-            case (R.id.bobbelTip_dislike):      // Dislike a Tip
-                if(likeStatus == -1){
-                    dislike.setImageResource(R.drawable.ic_tip_dislike);
-                    likeStatus = 0;
-                    //todo remove dislike
-                } else {
-                    dislike.setImageResource(R.drawable.ic_tip_dislike_on);
-                    like.setImageResource(R.drawable.ic_tip_like);
-                    likeStatus = -1;
-                    //IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), false);
-                }
-                break;
-            default:
-                // do nothing
-            break;
-        }
-    }
 }

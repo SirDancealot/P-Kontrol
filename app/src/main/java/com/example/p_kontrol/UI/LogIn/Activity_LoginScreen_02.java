@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
-import com.example.p_kontrol.UI.MainMenuAcitvity.YesNoDialogFragment;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -34,30 +33,29 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
+/**
+ * @responsibilty to give the user options for logging in.
+ * */
 public class Activity_LoginScreen_02 extends AppCompatActivity implements View.OnClickListener, OnCompleteListener<AuthResult> {
 
+    // Android Specifiks
     String TAG = "Login Screen 3";
+    private MainMenuCloseFragment fragment_close;
+
+    // Login with Google
     private static final int RC_SIGN_IN_GOOGLE = 9001;
-    private static final int RC_SIGN_IN_FACEBOOK = 64206;
-
-
-    // https://github.com/firebase/quickstart-android/blob/90389865dc8a64495b1698c4793cd4deecc4d0ee/auth/app/src/main/java/com/google/firebase/quickstart/auth/java/GoogleSignInActivity.java#L101-L120
-    private FirebaseAuth mAuth;
-
-    private YesNoDialogFragment fragment_close;
     private GoogleSignInClient mGoogleSignInClient;
-    private CallbackManager mCallbackManager;
-    UserInfoDTO userInfoDTO;
 
-    // Login Formulae Inputs
+    // Login with FaceBook
+    private static final int RC_SIGN_IN_FACEBOOK = 64206;
+    private CallbackManager mCallbackManager;
+
+    //General
+    private FirebaseAuth mAuth;
+    UserInfoDTO userInfoDTO;
     View loding;
 
-    // Main Interaction Buttons
-    Button signIn_regular, signIn_faceBook;
-    TextView signUp;
-
-
+    // android specifics
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -66,7 +64,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         mAuth = FirebaseAuth.getInstance();
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         findViewById(R.id.LoginScreen_3_SignIn_Google).setOnClickListener(this);
-        fragment_close= new YesNoDialogFragment(this, 0);
+        fragment_close= new MainMenuCloseFragment(this);
 
 
 
@@ -113,52 +111,6 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
     }
 
     @Override
-    public void onClick(View v) {
-        // each event possible have a unique method for that button event. see below.
-        switch(v.getId()){
-            case R.id.LoginScreen_3_SignIn_Google:
-                signIn_MethodGoogle();
-                break;
-        }
-    }
-
-    public void signIn_MethodGoogle(){
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
-
-    }
-    public void signUp_Method(){
-        Intent changeActivity = new Intent( this, Activity_SigeUp.class);
-        startActivity(changeActivity);
-    }
-
-    public void ChangeActivityNext(){
-        Intent changeActivity = new Intent( this, MainMenuActivity.class);
-        changeActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(changeActivity);
-    }
-
-
-
-
-    @Override
-    public void onComplete(@NonNull Task<AuthResult> task) {
-        if (task.isSuccessful()) {
-            // Sign in success, update UI with the signed-in user's information
-            Log.d(TAG, "signInWithCredential:success");
-            FirebaseUser user = mAuth.getCurrentUser();
-            userInfoDTO.setUser(user);
-            ChangeActivityNext();
-        } else {
-            // If sign in fails, display a message to the user.
-            Log.w(TAG, "signInWithCredential:failure", task.getException());
-        }
-    }
-
-
-    // google
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -178,29 +130,13 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
                 Log.w(TAG, "Google sign in failed", e);
             }
         } else if(requestCode == RC_SIGN_IN_FACEBOOK) {
-                mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         } else {
             loding.setVisibility(View.GONE);
 
         }
 
     }
-
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this);
-    }
-
-    private void handleFacebookAccessToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this);
-    }
-
 
     /**
      * BackStack management
@@ -209,6 +145,72 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
     public void onBackPressed() {
         fragment_close.show(getSupportFragmentManager(), "closeFragment");
     }
+
+    //interfaces
+
+    // OnCompleteListener<AuthResult>
+    @Override
+    public void onComplete(@NonNull Task<AuthResult> task) {
+        if (task.isSuccessful()) {
+            // Sign in success, update UI with the signed-in user's information
+            Log.d(TAG, "signInWithCredential:success");
+            FirebaseUser user = mAuth.getCurrentUser();
+            userInfoDTO.setUser(user);
+            ChangeActivityNext();
+        } else {
+            // If sign in fails, display a message to the user.
+            Log.w(TAG, "signInWithCredential:failure", task.getException());
+        }
+    }
+
+    //View.OnClickListener
+    @Override
+    public void onClick(View v) {
+        // each event possible have a unique method for that button event. see below.
+        switch(v.getId()){
+            case R.id.LoginScreen_3_SignIn_Google:
+                signIn_MethodGoogle();
+                break;
+        }
+    }
+
+
+    // internal calls
+
+    /** operates the signing in with google */
+    public void signIn_MethodGoogle(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
+
+    }
+
+    /** operates the signing in with facebook */
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this);
+    }
+
+    /** simply changes to next activity, will be called on a succesfull logic*/
+    public void ChangeActivityNext(){
+        Intent changeActivity = new Intent( this, MainMenuActivity.class);
+        changeActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(changeActivity);
+    }
+
+    /**  checks user with firebase */
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this);
+    }
+
+
+
+
+
 
 
 }
