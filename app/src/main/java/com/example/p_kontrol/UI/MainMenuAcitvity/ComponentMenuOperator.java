@@ -67,7 +67,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
                 break;
             // Menu Line 2.
             case (R.id.menuBtn_Community):
-                context.menuBtn_Community();
+                context.menuBtn_FeedBack();
                 break;
             case (R.id.menuBtn_ParkAlarm):
                 context.menuBtn_Parking();
