@@ -12,7 +12,6 @@ import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -38,19 +37,16 @@ public class LiveDataViewModel extends ViewModel {
     // todo er dette rigtigt? August
     // Write tip
     private TipDTO currentTip;
-    public TipDTO getCurrentTip() {
-
 
     public LiveDataViewModel(){
         tipList = new MutableLiveData<>();
         pVagtList = new MutableLiveData<>();
-        tipCreateObject = new MutableLiveData<>(new ATipDTO());
-
+        tipCreateObject = new MutableLiveData<>(new TipDTO());
     }
 
 
 
-    public ATipDTO getCurrentTip() {
+    public TipDTO getCurrentTip() {
         return currentTip;
     }
     public void setCurrentTip(TipDTO currentTip) {
@@ -61,10 +57,6 @@ public class LiveDataViewModel extends ViewModel {
     List<PVagtDTO> l = new LinkedList<>();
 
 
-
-    public void updatePVagter(LatLng location){
-        bk.getPVagter(location, pVagtList.getValue());
-    }
 
 
 
@@ -94,7 +86,7 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "getPvagtList: " + this);
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
-
+        }
         return pVagtList;
     }
     public LiveData<TipDTO> getTipCreateObject() { //TODO make getter and let this
@@ -156,12 +148,13 @@ public class LiveDataViewModel extends ViewModel {
         firestoreDAO.queryByLocation(map_currentLocation.getValue(), 20, tipList);
     }
 
-    public void createTip(FirestoreDAO firestoreDAO) {
+    // todo fix this . cannot have input of FireBase DAO, UI dosent know it.
+    public void createTip() {
         Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
-                ATipDTO dto = tipCreateObject.getValue();
-                firestoreDAO.createTip(dto);
+                TipDTO dto = tipCreateObject.getValue();
+               // firestoreDAO.createTip(dto);
             } else {
                 Log.e(TAG, "createTip: tipCreateObject.getValue() is null");
             }
