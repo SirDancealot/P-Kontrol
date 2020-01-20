@@ -3,6 +3,8 @@ package com.example.p_kontrol.UI.ReadTips;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,12 +19,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.IRatingDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.RatingDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.Map.MapFragment;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -39,7 +44,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     String URL;
     int type;
     UserInfoDTO userInfoDTO;
-    List<ATipDTO> tips;
     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     // regular Variables
@@ -138,8 +142,31 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
             // tip Shortend Text.
             String tipText = tipDTO.getMessage();
+
+
+        LiveDataViewModel model = ViewModelProviders.of(getActivity()).get(LiveDataViewModel.class);
+        MutableLiveData<IRatingDTO> rating;
+        model.getRatingsObject().observe(this, ratings -> getTipRatings(ratings));
+
         return view;
+
     }
+
+    //Valdemars ting
+
+
+
+    public void getTipRatings(ITipDTO tip){
+
+
+        //model.getRatings(tip);
+
+    }
+
+    public void getTipRatings(List<IRatingDTO> ratings){
+
+    }
+
 
     private void preRenderLikes(){
         if(tipDTO.getLikers() != null) {

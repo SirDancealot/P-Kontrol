@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel;
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.IRatingDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -41,6 +43,9 @@ public class LiveDataViewModel extends ViewModel {
     public void setCurrentTip(ATipDTO currentTip) {
         this.currentTip = currentTip;
     }
+
+    //Raing
+    private MutableLiveData<List<IRatingDTO>> ratings;
 
     private IBackend bk = BackendStub.getBackend();
     List<PVagtDTO> l = new LinkedList<>();
@@ -148,6 +153,27 @@ public class LiveDataViewModel extends ViewModel {
         //pVagtList.setValue(l);
         bk.createPVagt(vagt);
     }
+
+    public void createRating(IRatingDTO rating){
+        if(ratings == null)
+            ratings = new MutableLiveData();
+
+        ratings.getValue().add(rating);
+    }
+
+    public void getRatings(ITipDTO tip){
+        //
+    }
+
+    public MutableLiveData<List<IRatingDTO>> getRatingsObject(){
+        if(ratings == null)
+            ratings = new MutableLiveData();
+
+        return ratings;
+    }
+
+
+
 
 
 }

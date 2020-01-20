@@ -6,8 +6,10 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -69,6 +71,8 @@ public class StateParking extends State {
     public void zoomIn(){
 
     }
+
+
 
     public void updatePVagter(List<PVagtDTO> pVagtList) {
         int i = 0;

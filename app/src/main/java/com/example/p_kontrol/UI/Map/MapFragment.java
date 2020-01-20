@@ -171,10 +171,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     public FusedLocationProviderClient getFusedLocationProviderClient() {
         return fusedLocationProviderClient;
     }
-//    @NonNull
-//    public LiveDataViewModel getViewModel() {
-//        return viewModel;
-//    }
+    @NonNull
+    public LiveDataViewModel getViewModel() {
+        return viewModel;
+    }
 
 
     // Internal methods
