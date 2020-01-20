@@ -34,6 +34,8 @@
     <string name="profile_Rating_3"> Cool! </string>
     <string name="profile_Rating_4"> On fire! </string>
     <string name="profile_Rating_5"> Master rated! </string>
+    <string name="deleteBtn"> Delete all data! </string>
+    <string name="logOutBtn"> Log out </string>
 
     <!-- profile Rating Table  -->
     <string name="profile_template_tableColumn_1">Participation</string>

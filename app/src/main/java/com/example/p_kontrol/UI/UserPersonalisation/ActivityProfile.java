@@ -31,13 +31,12 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     ImageView backpress;
 
     ImageView profilePic;
-    TextView changeProfilePic;
     Uri imageUri;
     private static final int PICK_IMAGE = 100;
     private CircleImageView fimg;
     private TextView fname, femail;
     private UserInfoDTO userInfoDTO;
-    private Button logud;
+    private Button logOut, delete;
 
 
 
@@ -50,8 +49,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
 
         fimg = findViewById(R.id.profilePic);
         fname = findViewById(R.id.profile_profileName);
-        logud = findViewById(R.id.logud);
-        logud.setOnClickListener(this);
+        logOut = findViewById(R.id.logOut);
+        delete = findViewById(R.id.deleteData);
+
+        logOut.setOnClickListener(this);
+        delete.setOnClickListener(this);
 
 
 
@@ -78,10 +80,10 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         if (v == backpress) {
             onBackPressed();
         }
-        if (v == changeProfilePic) {
-            openGallery();
+        if (v == delete) {
+            // todo delete all user data
         }
-        if (v == logud){
+        if (v == logOut){
             userInfoDTO.setLogin(false);
             userInfoDTO.setUrl("");
             userInfoDTO.setEmail("");
@@ -138,7 +140,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             requestOptions.dontAnimate();
             Glide.with(ActivityProfile.this).load(userInfoDTO.getUrl()).into(fimg);
         } else {
-            fname.setText("Name");
+            fname.setText("");
             fimg.setImageResource(0);
         }
     }
