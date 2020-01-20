@@ -1,10 +1,8 @@
-package com.example.p_kontrol.DataTypes;
-
-import java.util.List;
+package com.example.p_kontrol.DataTypes.Interfaces;
 
 public interface IUserDTO {
 
-    static IUserDTO getUserDTO(IUserDTO EmptyUser ,int userId, String firstName , String lastName, String profileImg){
+    static IUserDTO getUserDTO(IUserDTO EmptyUser, String userId, String firstName , String lastName, String profileImg){
         EmptyUser.setUserId(userId);
         EmptyUser.setFirstName(firstName);
         EmptyUser.setLastName(lastName);
@@ -12,13 +10,13 @@ public interface IUserDTO {
         return EmptyUser;
     }
 
-    int getUserId();
+    String getUserId();
     String getFirstName();
     String getLastName();
     String getProfileSRC();
 
     // Sets
-    void setUserId(int userId);
+    void setUserId(String userId);
     void setFirstName(String firstName);
     void setLastName(String lastName);
     void setProfileSRC(String profileSrc);

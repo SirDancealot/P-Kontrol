@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
 import com.example.p_kontrol.DataTypes.*;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;

@@ -3,7 +3,7 @@ package com.example.p_kontrol.Backend.NetworkAsyncCalls;
 import android.os.AsyncTask;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 
 import java.util.List;

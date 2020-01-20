@@ -1,6 +1,5 @@
 package com.example.p_kontrol.UI.ViewModelLiveData;
 
-import android.app.Service;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -9,12 +8,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
-import com.example.p_kontrol.DataTypes.ITipDTO;
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ import java.util.List;
 public class LiveDataViewModel extends ViewModel {
 
     private String TAG = "ViewModelMaster";
+    private FirestoreDAO dao;
 
     private MutableLiveData<List<ITipDTO>> tipList;
     private MutableLiveData<List<PVagtDTO>> pVagtList;
@@ -33,7 +33,7 @@ public class LiveDataViewModel extends ViewModel {
 
     // Map Data.MutableLiveData<
     private MutableLiveData<LatLng> map_WindowLocation;
-    private MutableLiveData<LatLng> map_WindowZoom;
+    private MutableLiveData<Float> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
 
 
@@ -58,6 +58,9 @@ public class LiveDataViewModel extends ViewModel {
         this.currentTip = currentTip;
     }
 
+    //Raing
+    private MutableLiveData<List<IRatingDTO>> ratings;
+
     private IBackend bk = BackendStub.getBackend();
     List<PVagtDTO> l = new LinkedList<>();
 
@@ -68,14 +71,23 @@ public class LiveDataViewModel extends ViewModel {
     //######    Setters     ######
 
 
+    public void setDao(FirestoreDAO dao) {
+        this.dao = dao;
+    }
+
     public void setTipCreateObject(ITipDTO tipCreateObject) {
-        Log.d(TAG, "setTipCreateObject: " + this + "\n" + tipCreateObject + "\n");
+        if (this.tipCreateObject != null)
+            Log.d(TAG, "setTipCreateObject: before set: \n" + this.tipCreateObject.getValue() + "\n");
+        else
+            Log.d(TAG, "setTipCreateObject: before set: null");
+
+        Log.d(TAG, "setTipCreateObject: input: \n" + tipCreateObject + "\n");
 
         this.tipCreateObject.setValue(tipCreateObject);
     }
 
     //######    Getters     ######
-    public LiveData<List<ITipDTO>> getTipList() {
+    public MutableLiveData<List<ITipDTO>> getTipList() {
         Log.d(TAG, "getTipList: " + this);
         if (tipList == null) {
             tipList = new MutableLiveData<>();
@@ -110,15 +122,17 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "getCurrentWindowLocation: " + this);
         if(map_WindowLocation == null){
             map_WindowLocation = new MutableLiveData<>();
+            map_WindowLocation.setValue(new LatLng(0, 0));
         }
         return  map_WindowLocation;
     }
-    public MutableLiveData<LatLng> getCurrentWindowZoom(){
+    public MutableLiveData<Float> getCurrentWindowZoom(){
         Log.d(TAG, "getCurrentWindowZoom: " + this);
         if(map_WindowZoom == null){
             map_WindowZoom = new MutableLiveData<>();
+            map_WindowZoom.setValue(0.0f);
         }
-        return  map_WindowZoom;
+        return map_WindowZoom;
     }
     public MutableLiveData<LatLng> getCurrentLocation(){ // The User location or Car Location
         Log.d(TAG, "getCurrentLocation: " + this);
@@ -145,24 +159,58 @@ public class LiveDataViewModel extends ViewModel {
         bk.createPVagt(vagt);
     }
 
+    public void createRating(IRatingDTO rating){
+        if(ratings == null)
+            ratings = new MutableLiveData();
+
+        ratings.getValue().add(rating);
+    }
+
+    public void getRatings(ITipDTO tip){
+        //
+    }
+
+    public MutableLiveData<List<IRatingDTO>> getRatingsObject(){
+        if(ratings == null)
+            ratings = new MutableLiveData();
+
+        return ratings;
+    }
+
+
+
+
 
 
 
 
     //######    Service calls     ######
-    public void startTipQuery(FirestoreDAO firestoreDAO){
-        firestoreDAO.queryByLocation(map_currentLocation.getValue(), 20, tipList);
+    public void startTipQuery(){
+        if (dao == null){
+            Log.e(TAG, "startTipQuery: dao is null");
+            return;
+        }
+
+        Log.d(TAG, "startTipQuery: ");
+        dao.queryByLocation(getCurrentWindowLocation(), getCurrentWindowZoom(), getTipList());
     }
+
 
     // todo fix this . cannot have input of FireBase DAO, UI dosent know it.
     public void createTip() {
+        if (dao == null){
+            Log.e(TAG, "createTip: dao is null");
+            return;
+        }
+
         Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
                 ITipDTO dto = tipCreateObject.getValue();
                 dto.setAuthor(userInfoDTO.getSimpleUser());
                 dto.setCreationDate(new Date());
-               // firestoreDAO.createTip(dto);
+                dao.createTip(dto);
+                //firestoreDAO.createTip(dto);
             } else {
                 Log.e(TAG, "createTip: tipCreateObject.getValue() is null");
             }

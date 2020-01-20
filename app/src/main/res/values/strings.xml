@@ -82,9 +82,10 @@
 
 
     <!-- close fragment strings -->
-    <string name="close_frag_confirm" translatable="false">Yes</string>
-    <string name="close_frag_deny" translatable="false">No</string>
-    <string name="close_frag_title" translatable="false">Close the app?</string>
+    <string name="close_frag_confirm">Yes</string>
+    <string name="close_frag_deny">No</string>
+    <string name="close_frag_title0">Close the app?</string>
+    <string name="close_frag_title1">Delete all your personal data, it can\'t be restored?</string>
 
     <string name="feedback_choose_category">Choose Category</string>
     <string name="feedback_title">Please provide us with feedback!</string>

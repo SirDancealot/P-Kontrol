@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -36,7 +36,7 @@ public class AsyncGetTips extends AsyncTask< Void, Void, Void >{
         Log.d(TAG, "doInBackground: ");
         try {
 
-            DAO.queryByLocation(location, radius, tipList);
+            //DAO.queryByLocation(location, radius, tipList);
 
 
         }catch(Exception e){

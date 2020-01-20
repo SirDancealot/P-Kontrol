@@ -2,9 +2,7 @@ package com.example.p_kontrol.UI.Map;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
-import android.util.Log;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 

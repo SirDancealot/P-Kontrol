@@ -20,7 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_01;
-import com.facebook.AccessToken;
+import com.example.p_kontrol.UI.MainMenuAcitvity.YesNoDialogFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +37,8 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     private TextView fname, femail;
     private UserInfoDTO userInfoDTO;
     private Button logOut, delete;
+    private YesNoDialogFragment fragment_close;
+
 
 
 
@@ -46,6 +48,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
 
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        fragment_close= new YesNoDialogFragment(this, 1);
 
         fimg = findViewById(R.id.profilePic);
         fname = findViewById(R.id.profile_profileName);
@@ -81,6 +84,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             onBackPressed();
         }
         if (v == delete) {
+            fragment_close.show(getSupportFragmentManager(), "closeFragment");
             // todo delete all user data
         }
         if (v == logOut){

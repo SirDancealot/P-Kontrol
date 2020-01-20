@@ -61,10 +61,11 @@ interface IMapOperator{
      * */
     void toggleStateFreePark();
     /**
-     * @return IState implementation, it is used to check what state you are in, foreksample in the backstack handleing.
+     * @return State implementation, it is used to check what state you are in, foreksample in the backstack handleing.
      * */
     State getCurrentState();
 
+    void onCenterClick(View v);
 }
 
 // interfaces Menu

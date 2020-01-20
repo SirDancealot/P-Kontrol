@@ -14,12 +14,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
+import com.example.p_kontrol.DataTypes.RatingDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -73,6 +77,9 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         profImg     = view.findViewById(R.id.bobbelTip_Img)         ;
         tip         = view.findViewById(R.id.bobbelTip_mainTextView);
         readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
+        suroundings = view.findViewById(R.id.bobbelTip_FragmentContainer)                ;
+        container   = view.findViewById(R.id.bobbelTip_container)   ;
+        topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
         tipcontainer= view.findViewById(R.id.bobbelTip_container)   ;
         topBar      = view.findViewById(R.id.bobbelTip_top_bar)    ;
         like        = view.findViewById(R.id.bobbelTip_like)              ;
@@ -190,13 +197,12 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         if(tipText != null) {
             String[] split_tip_test = tipText.split("\n");
             if (split_tip_test.length > 4) {
-                tipText = split_tip_test[0] + split_tip_test[1] + split_tip_test[2] + split_tip_test[3];
+                tipText = split_tip_test[0] + " " + split_tip_test[1] + " " + split_tip_test[2] + " " + split_tip_test[3];
             } else {
                 if (tipText.length() > 65) {
                     tipText = tipText.substring(0, 65) + "...";
                 } else {
-                    //readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
-                    readMore.setText("date stand in");
+                    readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
                 }
             }
             tip.setText(tipText);
@@ -213,7 +219,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 URL = tipDTO.getAuthor().getProfileSRC();
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.dontAnimate();
-                //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
                 Glide.with(FragTipBobble.this).load(URL).into(profImg);
             } else {
                 RequestOptions requestOptions = new RequestOptions();

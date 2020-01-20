@@ -1,4 +1,4 @@
-package com.example.p_kontrol.DataTypes;
+package com.example.p_kontrol.DataTypes.Interfaces;
 
 import com.google.android.gms.maps.model.LatLng;
 

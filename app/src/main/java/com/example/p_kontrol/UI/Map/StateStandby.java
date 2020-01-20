@@ -4,7 +4,8 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,17 +33,17 @@ public class StateStandby extends State {
 
 
         LiveData<List<ITipDTO>> tipList = viewModel.getTipList();
-        List<ITipDTO>  temp = tipList.getValue();
 
         tipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
                 updateMap(list);
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
             }
         } );
         // todo ViewModel Se Her
         //viewModel.updateTips(null); TODO this might be redundant with the service implementation
+        updateMap(tipList.getValue());
     }
 
     /** sets all tips onto the map ready to read.
@@ -51,6 +52,7 @@ public class StateStandby extends State {
     @Override
     public void updateMap(List<ITipDTO> list ) {
         MarkerOptions markerOptions = null;
+        map.clear();
 
         if(list != null) {
             int i = 0;
