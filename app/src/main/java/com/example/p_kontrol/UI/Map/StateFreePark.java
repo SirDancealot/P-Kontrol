@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,8 +31,8 @@ public class StateFreePark extends State {
     public StateFreePark(MapFragment parent) {
         super(parent);
 
-        LiveData<List<TipDTO>> liveDataTipList = viewModel.getTipList();
-        List<TipDTO> tipList = liveDataTipList.getValue();
+        LiveData<List<ITipDTO>> liveDataTipList = viewModel.getTipList();
+        List<ITipDTO> tipList = liveDataTipList.getValue();
         liveDataTipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
                 updateMap(list);
@@ -49,7 +50,7 @@ public class StateFreePark extends State {
      *  and therefore only shows free tips
      * */
     @Override
-    public void updateMap(List<TipDTO> list ) {
+    public void updateMap(List<ITipDTO> list ) {
         MarkerOptions markerOptions = null;
         map.clear();
 
@@ -61,7 +62,7 @@ public class StateFreePark extends State {
 
         if(list != null) {
             int i = 0;
-            for (TipDTO tip : list) {
+            for (ITipDTO tip : list) {
                 if(tip.getType() != 0){
                     if(tip.getType() == TipTypes.free.getValue()) {
                         markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));

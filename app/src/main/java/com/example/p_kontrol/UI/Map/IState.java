@@ -1,6 +1,6 @@
 package com.example.p_kontrol.UI.Map;
 
-import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ public interface IState {
      * an Update Method, also here for the right to be overidden
      * @param list the list of tipsMarkers to set on the map.
      * */
-    void updateMap(List<TipDTO> list);
+    void updateMap(List<ITipDTO> list);
 }

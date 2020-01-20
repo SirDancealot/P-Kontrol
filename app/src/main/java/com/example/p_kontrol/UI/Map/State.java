@@ -9,7 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,7 +50,7 @@ abstract public class State implements IState  {
      * @inheritDoc
      * */
     @Override
-    public void updateMap(List<TipDTO> list) {}
+    public void updateMap(List<ITipDTO> list) {}
     /**
      * @inheritDoc
      * */

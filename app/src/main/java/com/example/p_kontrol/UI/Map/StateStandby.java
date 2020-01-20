@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,8 +30,8 @@ public class StateStandby extends State {
         map.clear();
 
 
-        LiveData<List<TipDTO>> tipList = viewModel.getTipList();
-        List<TipDTO>  temp = tipList.getValue();
+        LiveData<List<ITipDTO>> tipList = viewModel.getTipList();
+        List<ITipDTO>  temp = tipList.getValue();
 
         tipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
@@ -44,12 +45,12 @@ public class StateStandby extends State {
     }
 
     @Override
-    public void updateMap(List<TipDTO> list ) {
+    public void updateMap(List<ITipDTO> list ) {
         MarkerOptions markerOptions = null;
 
         if(list != null) {
             int i = 0;
-            for (TipDTO tip : list) {
+            for (ITipDTO tip : list) {
                 // todo ret navne
 
                 Pins pin = Pins.paid;

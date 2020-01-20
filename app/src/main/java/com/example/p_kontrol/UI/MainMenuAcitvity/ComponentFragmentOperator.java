@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
@@ -47,7 +48,7 @@ class ComponentFragmentOperator implements IFragmentOperator {
 
     // Data Access
     private LiveDataViewModel model;
-    private LiveData<List<TipDTO>> tipList;
+    private LiveData<List<ITipDTO>> tipList;
 
     /**
      *  ComponentFragmentOperator is the Component which has the Delegated responsibility to Manage the Opening and Closing of Fragments. Not when and where they open, but simply to open them
@@ -120,7 +121,7 @@ class ComponentFragmentOperator implements IFragmentOperator {
     @Override
     public void showTipBobbles(int index) {
 
-        List<TipDTO> list = null;
+        List<ITipDTO> list = null;
 
         viewPager_tipBobles.setVisibility(View.VISIBLE);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);
