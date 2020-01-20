@@ -16,7 +16,6 @@ import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
-import com.example.p_kontrol.DataTypes.UserDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;

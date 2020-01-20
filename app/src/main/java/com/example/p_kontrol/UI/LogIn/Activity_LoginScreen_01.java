@@ -17,10 +17,12 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+/**
+ * @responsibilty to check if the User is already logged in.
+ * */
 public class Activity_LoginScreen_01 extends AppCompatActivity {
 
-    String TAG = "LoginScreen_01";
+    String TAG = this.getClass().getName();
     View trans_circle_1;
     View trans_circle_2;
     View trans_logo;
@@ -44,7 +46,6 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
 
     }
 
-
     public void changeAct() {
         Log.w(TAG, " Changing Activities " );
 
@@ -67,7 +68,6 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         );
         startActivity(login_intent, transitionParameters.toBundle());
     }
-
     public void checkLoginSession(){
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

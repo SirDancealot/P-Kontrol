@@ -26,9 +26,9 @@ import java.util.List;
 abstract public class State  {
 
     // Defaults.
-    final String TAG = "State"      ;
+    final String TAG = this.getClass().getName()      ;
 
-    MapFragment parent             ;
+    MapFragment parent              ;
     IMapFragmentListener listener   ;
     GoogleMap map                   ;
 

@@ -11,16 +11,18 @@ public class AUserDTO implements IUserDTO, Serializable {
     String firstName;
     String lastName;
     String profileSrc;
+    String userId;
 
     public AUserDTO(){}
 
     @Override
-    public int getUserId() {
-        return 0;
+    public String getUserId() {
+        return this.userId;
     }
-    @Override
-    public void setUserId(int userId){
 
+    @Override
+    public void setUserId(String userId){
+        this.userId = userId;
     }
 
     @Override
