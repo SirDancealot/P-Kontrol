@@ -53,9 +53,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     private IMapFragmentListener listener;
     private LiveDataViewModel viewModel;
 
-    boolean isFreeParkEnabled = false;
-    boolean isParkingEnabled = false;
+    private boolean isFreeParkEnabled = false;
+    private boolean isParkingEnabled = false;
 
+    /**
+     *  MapFragment is a fragment, that ought be treated as a single object, but is implemented as a StatePatten.
+     *  @param context  the Parent Activity, such that the reference can be passed on to the states. is needed due to certain calls needs special android acces
+     *  @param listener contains the onTipClick method, given from the Activity.
+     *  @see {@link com.example.p_kontrol.UI.Map.IMapFragmentListener}
+     *
+     *  implements
+     *  @see {@link com.example.p_kontrol.UI.Map.IMapFragment}
+     *  OnMapReadyCallback.
+     *
+     *  Relevant files
+     *  @see {@link com.example.p_kontrol.UI.Map.IState}
+     *  @see {@link com.example.p_kontrol.UI.Map.State}
+     *  @see {@link com.example.p_kontrol.UI.Map.StateStandby}
+     *  @see {@link com.example.p_kontrol.UI.Map.StateFreePark}
+     *  @see {@link com.example.p_kontrol.UI.Map.StateSelectLocation}
+     *  @see {@link com.example.p_kontrol.UI.Map.StateParking}
+     *
+     * */
     public MapFragment(Activity context, IMapFragmentListener listener) {
         this.context = context;
         this.listener = listener;
