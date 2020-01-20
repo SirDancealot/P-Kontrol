@@ -81,7 +81,7 @@ class ComponentFragmentOperator implements IFragmentOperator {
 
         //Open topMessageBar. is not Opened from anywhere but here, but hidden and Shown.
         fragment_topMessage   = new FragTopMessageBar() ;
-        FragmentToogleTransaction(R.id.mainMenu_topMsgBarContainer,  fragment_topMessage, true);
+        FragmentToggleTransaction(R.id.mainMenu_topMsgBarContainer,  fragment_topMessage, true);
 
         // Live Data list , that calls adapter to notify of changes when changes are made.
         model = ViewModelProviders.of(context).get(LiveDataViewModel.class);
@@ -97,33 +97,25 @@ class ComponentFragmentOperator implements IFragmentOperator {
     }
 
     /**
-     * opens the WriteTip Fragment
-     * creates a new fragment and opens i using a fragment transaction to do so.
-     * @param writeListener is a listener that seperates Continue from Cancel.
-     * @see {@link com.example.p_kontrol.UI.WriteTip.FragMessageWrite}
-     * @See {@link com.example.p_kontrol.UI.WriteTip.ITipWriteListener}
+     * @inheritDoc
      * */
     @Override
     public void openWriteTip(ITipWriteListener writeListener) {
         fragment_messageWrite = new FragMessageWrite(writeListener,this.context);
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
+        FragmentToggleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
         boolFragMessageWrite = true;
     }
     /**
-     * close the WriteTip Fragment
-     * uses a fragment transaction to do so.
-     * @see {@link com.example.p_kontrol.UI.WriteTip.FragMessageWrite}
+     * @inheritDoc
      * */
     @Override
     public void closeWriteTip(){
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
+        FragmentToggleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
         boolFragMessageWrite = false;
     }
 
     /**
-     * show tip bobble fragment, uses an adapter to do so.
-     * @see {@link com.example.p_kontrol.UI.ReadTips.FragTipBobble}
-     * @see {@link com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter}
+     * @inheritDoc
      * */
     @Override
     public void showTipBobbles(int index) {
@@ -136,9 +128,7 @@ class ComponentFragmentOperator implements IFragmentOperator {
 
     }
     /**
-     * closes the tipbobbles Fragment
-     * sets the View.Visibility(GONE)
-     * @see {@link com.example.p_kontrol.UI.ReadTips.FragTipBobble}
+     * @inheritDoc
      * */
     @Override
     public void closeTipBobbles(){
@@ -146,6 +136,9 @@ class ComponentFragmentOperator implements IFragmentOperator {
     }
 
     //TopMessageBar
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void showTopMsgBar(int imageId, String header, String subTitle) {
 
@@ -154,27 +147,45 @@ class ComponentFragmentOperator implements IFragmentOperator {
         fragment_topMessage.setImage(imageId);
         fragment_topMessage.show();
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void hideTopMsgBar() {
         fragment_topMessage.hide();
     }
 
     // Booleans
+    /**
+     * @inheritDoc
+     * */
     @Override
     public boolean isWriteTipOpen(){
         return boolFragMessageWrite;
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public boolean isTipBobbleOpen(){
         return boolFragTipBobble;
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public boolean isTopBarOpen(){
         return boolFragTopMessageBar;
     }
 
     // Open Close Fragments and or Views.
-    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
+    /**
+     FragmentToggleTransaction is a method to open and close fragments using a slightly complicated Transaction method
+     @param containerId the container the fragment will be placed into, note it must be an Android View item id, in the current layout
+     @param fragment    teh fragment to place into the container
+     @param Open        true if open, false if remove
+     * */
+    private void FragmentToggleTransaction(int containerId, Fragment fragment, boolean Open){
         if(Open){
             transaction = fragmentManager.beginTransaction();
             try {

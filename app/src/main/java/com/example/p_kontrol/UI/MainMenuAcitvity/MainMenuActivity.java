@@ -102,10 +102,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     //  -- * -- * -- * -- * -- * IMenuOperationsController -- * -- * -- * -- * -- * -- *
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Profile Button is clicked
-     * @return void
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_profile(){
         Log.i("click","Profile btn clicked \n");
@@ -114,20 +112,18 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when FreePark Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
         mapOperator.toggleStateFreePark();
-        menuOperator.toggleFreePark();
+        menuOperator.toggleMenuBtnFreePark();
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Contribute Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_Contribute(){
 
@@ -140,9 +136,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Feedback Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_FeedBack(){
         Log.i("click","Community btn clicked \n");
@@ -151,20 +146,18 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Parking Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_Parking(){
         Log.i("click","Park Alarm btn clicked \n");
         mapOperator.toggleStateParking();
-        menuOperator.toggleParking();
+        menuOperator.toggleMenuBtnParking();
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when P-Vagt Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
@@ -177,9 +170,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     // -- * -- * -- * -- * -- * Map IMapOperatorController -- * -- * -- * -- * -- * -- *
 
     /**
-     * implements interface IMapOperatorController.
-     * to controll what happens when a Tip marker is clicked on the map.
-     */
+     * @inheritDoc
+     * */
     @Override
     public void onTipClick(int index){
         fragmentOperator.showTipBobbles(index);
@@ -187,9 +179,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMapOperatorController.
-     * to controll what happens when the CenterButton is clicked.
-     */
+     * @inheritDoc
+     * */
     @Override
     public void onCenterClick(View v){
         mapOperator.centerOnUserLocation();

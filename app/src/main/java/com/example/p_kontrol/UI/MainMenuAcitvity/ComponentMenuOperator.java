@@ -90,8 +90,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
     // Interface IMenuOperator
     /**
-     *  is Called mainly from the Menu Handle.
-     *  toggleMenu opens and closes the Menu repeatedly
+     * @inheritDoc
      * */
     @Override
     public void toggleMenu( ){
@@ -108,7 +107,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     }
 
     /**
-     *  closes the menu
+     * @inheritDoc
      * */
     @Override
     public void closeMenu() {
@@ -117,7 +116,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     }
 
     /**
-     *  opens the menu
+     * @inheritDoc
      * */
     @Override
     public void openMenu() {
@@ -126,7 +125,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     }
 
     /**
-     *  returns false if map is closed, true if it is open.
+     * @inheritDoc
      * */
     @Override
     public boolean isMenuOpen() {
@@ -134,11 +133,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     }
 
     /**
-     *  Enables and Disables the FreePark State.
-     *  Free Park is a Filter state that only shows tips in the category of free tips.
+     * @inheritDoc
      * */
     @Override
-    public void toggleFreePark() {
+    public void toggleMenuBtnFreePark() {
         if(stateFreePark){
             menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
         }else{
@@ -148,12 +146,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     }
 
     /**
-    * Enables and Disables the Parking State
-    * Parking state is a state where you place down your location as a parking location,
-    * and that location is then set to listens for P alerts.
-    * */
+     * @inheritDoc
+     * */
     @Override
-    public void toggleParking(){
+    public void toggleMenuBtnParking(){
         if(stateParking){
             menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
         }else{

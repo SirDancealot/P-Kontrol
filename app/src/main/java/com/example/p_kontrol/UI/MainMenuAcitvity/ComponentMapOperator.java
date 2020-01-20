@@ -67,14 +67,7 @@ class ComponentMapOperator implements IMapOperator   {
                 mapController.onTipClick(index);
             }
         };
-        // map CenterButton Listener.
-        mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapController.onCenterClick(v);
-                //mapFragment.centerMap();
-            }
-        });
+
 
         // Setting up the map Fragment
         mapFragment = new MapFragment(context, mapListener);
@@ -88,19 +81,61 @@ class ComponentMapOperator implements IMapOperator   {
 
     }
 
+    //GoogleMap Specifiks
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void updatePermissions(){
+        mapFragment.updatePermissions();
+    }
+
+    // Button Clicks
+    @Override
+    public void onAcceptClick(View.OnClickListener onclick){
+      mapView_acceptBtn.setOnClickListener(onclick);
+  }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void onCancelClick(View.OnClickListener onclick){
+        mapView_cancelBtn.setOnClickListener(onclick);
+    }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void onCenterClick(View.OnClickListener onclick){
+        mapView_cancelBtn.setOnClickListener(onclick);
+    }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void centerOnUserLocation(){
         mapFragment.centerMap();
     }
+
+    //States
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateSelection() {
         mapFragment.setStateSelectLocation();
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateStandby() {
         mapFragment.setStateStandby();
         mapView_btnContainerAceptCancel.setVisibility(View.GONE);
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void toggleStateParking() {
         if(mapFragment.isParkingEnabled()){
@@ -109,6 +144,9 @@ class ComponentMapOperator implements IMapOperator   {
             mapFragment.setStateParking();
         }
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void toggleStateFreePark() {
         if(mapFragment.isFreeParkEnabled()){
@@ -117,27 +155,17 @@ class ComponentMapOperator implements IMapOperator   {
             mapFragment.setStateFreePark();
         }
     }
-
-    @Override
-    public void onAcceptClick(View.OnClickListener onclick){
-        mapView_acceptBtn.setOnClickListener(onclick);
-    }
-    @Override
-    public void onCancelClick(View.OnClickListener onclick){
-        mapView_cancelBtn.setOnClickListener(onclick);
-    }
-
-
+    /**
+     * @inheritDoc
+     * */
     @Override
     public IState getCurrentState() {
         return mapFragment.getCurrentState();
     }
-    @Override
-    public void updatePermissions(){
-        mapFragment.updatePermissions();
-    }
 
 
+    //todo move into States. Obs! its called in MainMenuActivity
+    // also remove from interface.
     @Override
     public void visibilityOfInteractBtns(int visibility){
         mapView_btnContainerAceptCancel.setVisibility(visibility);
