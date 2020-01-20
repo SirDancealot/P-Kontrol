@@ -207,8 +207,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 if (tipText.length() > 65) {
                     tipText = tipText.substring(0, 65) + "...";
                 } else {
-                    //readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
-                    readMore.setText("date stand in");
+                    readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
                 }
             }
             tip.setText(tipText);
@@ -222,7 +221,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 URL = tipDTO.getAuthor().getProfileSRC();
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.dontAnimate();
-                //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
                 Glide.with(FragTipBobble.this).load(URL).into(profImg);
             } else {
                 RequestOptions requestOptions = new RequestOptions();
@@ -268,7 +266,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = -1;
-                    IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), false);
+                    //IRatingDTO ratingDTO = new RatingDTO(userInfoDTO.getUser().getUid(), false);
                 }
                 break;
             default:
