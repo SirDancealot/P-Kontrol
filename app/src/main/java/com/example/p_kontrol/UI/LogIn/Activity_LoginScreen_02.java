@@ -1,297 +1,222 @@
 package com.example.p_kontrol.UI.LogIn;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-
-import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
+import com.example.p_kontrol.R;
+import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
+import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuCloseFragment;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
-public class Activity_LoginScreen_02 extends AppCompatActivity implements View.OnClickListener{
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
-    String TAG = "LoginScreen2";
-    // Login Screen 1.
-    Button screen2_LoginBtn;
-    Button screen2_SignUpBtn;
+import java.util.Arrays;
 
-    //transition Elements
-    View trans_circle_1, trans_circle_2,trans_logo,trans_background,trans_TopBar;
+public class Activity_LoginScreen_02 extends AppCompatActivity implements View.OnClickListener, OnCompleteListener<AuthResult> {
 
-    // facebook
-    CallbackManager cbman;
+    String TAG = "Login Screen 3";
+    private static final int RC_SIGN_IN_GOOGLE = 9001;
+    private static final int RC_SIGN_IN_FACEBOOK = 64206;
+
+
+    // https://github.com/firebase/quickstart-android/blob/90389865dc8a64495b1698c4793cd4deecc4d0ee/auth/app/src/main/java/com/google/firebase/quickstart/auth/java/GoogleSignInActivity.java#L101-L120
+    private FirebaseAuth mAuth;
+
+    private MainMenuCloseFragment fragment_close;
+    private GoogleSignInClient mGoogleSignInClient;
+    private CallbackManager mCallbackManager;
     UserInfoDTO userInfoDTO;
 
-   @Override
-   protected void onCreate (Bundle savedInstanceState){
-       super.onCreate(savedInstanceState);
-        // if already logged in, skip rest
-        ifAlreadyLoggedIn();
+    // Login Formulae Inputs
+    View loding;
 
-        // Setup Functionality
-        setContentView(R.layout.activity_loginscreen_02);
-        screen2_LoginBtn = findViewById(R.id.LoginScreen_2_LoginBtn);
-        screen2_SignUpBtn = findViewById(R.id.LoginScreen_2_SignUpBtn);
+    // Main Interaction Buttons
+    Button signIn_regular, signIn_faceBook;
+    TextView signUp;
 
-        screen2_LoginBtn.setOnClickListener(this);
-        screen2_SignUpBtn.setOnClickListener(this);
-
-        // SetUp Transition elements
-       trans_circle_1 = findViewById(R.id.LoginScreen_Circle1);
-       trans_circle_2 = findViewById(R.id.LoginScreen_Circle2);
-       trans_background = findViewById(R.id.LoginScreen_BackgroundBlue);
-       trans_logo = findViewById(R.id.LoginScreen_LogoContainer);
-
-
-   }
 
     @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.LoginScreen_2_LoginBtn:
-                    Login();
-                break;
-            case R.id.LoginScreen_2_SignUpBtn:
-                    SignUp();
-                break;
-        }
-    }
-
-    public void ifAlreadyLoggedIn(){
-       // todo implement this.
-        boolean isAlreadyLoggedin = false;
-        if( isAlreadyLoggedin ){
-            changeActNext();
-        }
-    }
-    public void SignUp(){
-        Log.e(TAG, "SignUp: Not Implemented as of yet" );
-    }
-    public void Login(){
-       //todo login stuff implement here
-        changeActNext();
-    }
-
-    public void changeActNext(){
-
-        Intent changeActivity = new Intent( Activity_LoginScreen_02.this, Activity_LoginScreen_03.class);
-        ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                Activity_LoginScreen_02.this,
-                // All Custom Shared elements
-                new Pair<>(trans_logo, trans_logo.getTransitionName())              ,
-                new Pair<>(trans_background,trans_background.getTransitionName())
-        );
-        startActivity(changeActivity, transitionParameters.toBundle());
-        //startActivity(changeActivity);
-    }
-    public void changeActPrev(){
-        Intent changeActivity = new Intent( Activity_LoginScreen_02.this, Activity_LoginScreen_01.class);
-        ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                Activity_LoginScreen_02.this,
-                // All Custom Shared elements
-                new Pair<>(trans_circle_1, trans_circle_1.getTransitionName())      ,
-                new Pair<>(trans_circle_2, trans_circle_2.getTransitionName())      ,
-                new Pair<>(trans_logo, trans_logo.getTransitionName())              ,
-                new Pair<>(trans_background,trans_background.getTransitionName())   ,
-                // Android standard elements
-                new Pair<>(trans_TopBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME)
-        );
-        startActivity(changeActivity, transitionParameters.toBundle());
-    }
-
-
-/*
-@Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_loginscreen_03);
 
-        if (AccessToken.getCurrentAccessToken() != null) {
-            getFBContent(AccessToken.getCurrentAccessToken());
-        } else {
+        mAuth = FirebaseAuth.getInstance();
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        findViewById(R.id.LoginScreen_3_SignIn_Google).setOnClickListener(this);
+        fragment_close= new MainMenuCloseFragment(this);
 
-            setContentView(R.layout.activity_loginscreen_02);
 
-            // Screen 1's elements
-            screen1_loginBtn = findViewById(R.id.LoginScreen_3_LoginBtn);
-            screen1_SignUpBtn = findViewById(R.id.LoginScreen_3_SignUpBtn);
-            cbman = CallbackManager.Factory.create();
 
-            setupListeners_Screen1();
-        }
-    }
+        // Login Formulae Inputs
+        loding          = findViewById(R.id.progress_bar);
 
 
 
 
 
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-    private void setupListeners_Screen1(){
-        screen1_loginBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                screen1_loginBtn(v);
-            }
-        });
-
-        screen1_SignUpBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                screen1_SignInBtn(v);
-            }
-        });
-
-    }
-
-
-    private void setupListeners_Screen2(){
-        screen2_loginManual.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                screen2_loginManual(v);
-            }
-        });
-
-        screen2_loginGoogle.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                screen2_loginGoogle(v);
-            }
-        });
-
-    }
-
-    // Btn Methods for Screen 1.
-    private void screen1_loginBtn(View v){
-        Log.v("screen 1","Login btn clicked \n");
-        setContentView(R.layout.activity_LoginScreen_04);
-
-        screen2_loginManual = findViewById(R.id.LoginScreen_3_SignIn)       ;
-        screen2_loginFaceB  = findViewById(R.id.login_button)               ;
-        screen2_loginGoogle = findViewById(R.id.LoginScreen_3_LogGoogle)    ;
-
-        screen2_loginFaceB.setPermissions(Arrays.asList("email", "public_profile"));
-        screen2_loginFaceB.registerCallback(cbman, new FacebookCallback<LoginResult>() {
+        mCallbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = findViewById(R.id.LoginScreen_3_SignIn_FaceBook);
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                System.out.println("1");
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+//                System.out.println("---------kkkkk");
+                handleFacebookAccessToken(loginResult.getAccessToken());
 
             }
 
             @Override
             public void onCancel() {
-                System.out.println("2");
+                Log.d(TAG, "facebook:onCancel");
 
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(Activity_LoginScreen_02.this, "Error: No Wifi", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "facebook:onError", error);
 
             }
         });
 
-
-        System.out.println("vi går ind");
-
-        if (AccessToken.getCurrentAccessToken() != null) getFBContent(AccessToken.getCurrentAccessToken());
-
-        setupListeners_Screen2();
-
-    }
-    private void screen1_SignInBtn(View v){
-        Log.v("screen 1","Sign in btn clicked \n");
     }
 
-    // Btn Methods for Screen 2.
-    private void screen2_loginManual(View v){
-        Log.v("screen 2","login Manual btn clicked \n");
-        changeto_Activiy_MapView();
+    @Override
+    public void onClick(View v) {
+        // each event possible have a unique method for that button event. see below.
+        switch(v.getId()){
+            case R.id.LoginScreen_3_SignIn_Google:
+                signIn_MethodGoogle();
+                break;
+        }
     }
-    private void screen2_loginFaceB(View v){
-        Log.v("screen 2","login FaceBook btn clicked \n");
-        changeto_Activiy_MapView();
+
+    public void signIn_MethodGoogle(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
+
     }
-    private void screen2_loginGoogle(View v){
-        Log.v("screen 2","login Google btn clicked \n");
-        changeto_Activiy_MapView();
+    public void signUp_Method(){
+        Intent changeActivity = new Intent( this, Activity_SigeUp.class);
+        startActivity(changeActivity);
     }
-    private void changeto_Activiy_MapView(){
-        Intent changeActivity = new Intent(this, MainMenuActivity.class);
+
+    public void ChangeActivityNext(){
+        Intent changeActivity = new Intent( this, MainMenuActivity.class);
+        changeActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(changeActivity);
     }
 
 
-    //facebook
+
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        cbman.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-            System.out.println(currentAccessToken);
-            if (currentAccessToken != null){
-                getFBContent(currentAccessToken);
-            } else {
-                userInfoDTO.setLogin(false);
-                userInfoDTO.setUrl("");
-                userInfoDTO.setEmail("");
-                userInfoDTO.setName("");
-                userInfoDTO.setName2("");
-                Toast.makeText(Activity_LoginScreen_02.this,"Logget ud",Toast.LENGTH_LONG).show();
-            }
+    public void onComplete(@NonNull Task<AuthResult> task) {
+        if (task.isSuccessful()) {
+            // Sign in success, update UI with the signed-in user's information
+            Log.d(TAG, "signInWithCredential:success");
+            FirebaseUser user = mAuth.getCurrentUser();
+            userInfoDTO.setUser(user);
+            ChangeActivityNext();
+        } else {
+            // If sign in fails, display a message to the user.
+            Log.w(TAG, "signInWithCredential:failure", task.getException());
         }
-    };
-
-    private void getFBContent(AccessToken token) {
-
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
-
-        GraphRequest request = GraphRequest.newMeRequest(token, new GraphRequest.GraphJSONObjectCallback() {
-
-
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                System.out.println(">Z>>>>>>>>>> vi er her");
-
-                try {
-
-                    userInfoDTO.setName(object.getString("first_name"));
-                    userInfoDTO.setName2(object.getString("last_name"));
-                    userInfoDTO.setEmail(object.getString("email"));
-                    userInfoDTO.setId(object.getString("id"));
-                    System.out.println(userInfoDTO.getName() + " " + userInfoDTO.getEmail() + "\n");
-
-                    userInfoDTO.setUrl("https://graph.facebook.com/" + userInfoDTO.getId() + "/picture?type=normal");
-                    userInfoDTO.setLogin(true);
-
-                    Intent i = new Intent(Activity_LoginScreen_02.this, MainMenuActivity.class);
-                    startActivity(i);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields","first_name,last_name,email,id");
-        request.setParameters(parameters);
-        request.executeAsync();
     }
-    */
+
+
+    // google
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "onActivityResult: " + requestCode);
+        loding.setVisibility(View.VISIBLE);
+
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN_GOOGLE) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        } else if(requestCode == RC_SIGN_IN_FACEBOOK) {
+                mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        } else {
+            loding.setVisibility(View.GONE);
+
+        }
+
+    }
+
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this);
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this);
+    }
+
+
+    /**
+     * BackStack management
+     */
+    @Override
+    public void onBackPressed() {
+        fragment_close.show(getSupportFragmentManager(), "closeFragment");
+    }
 
 
 }
