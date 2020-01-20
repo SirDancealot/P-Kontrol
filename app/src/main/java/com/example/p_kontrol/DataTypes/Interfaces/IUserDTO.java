@@ -2,7 +2,7 @@ package com.example.p_kontrol.DataTypes.Interfaces;
 
 public interface IUserDTO {
 
-    static IUserDTO getUserDTO(IUserDTO EmptyUser ,int userId, String firstName , String lastName, String profileImg){
+    static IUserDTO getUserDTO(IUserDTO EmptyUser, String userId, String firstName , String lastName, String profileImg){
         EmptyUser.setUserId(userId);
         EmptyUser.setFirstName(firstName);
         EmptyUser.setLastName(lastName);
