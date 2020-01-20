@@ -8,6 +8,6 @@ interface IMenuOperator{
     boolean isMenuOpen();
 
 
-    void toggleFreeParkEnabled();
+    void toggleFreePark();
     void toggleParking();
 }

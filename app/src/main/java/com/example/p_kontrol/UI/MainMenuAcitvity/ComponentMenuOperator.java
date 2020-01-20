@@ -13,12 +13,13 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
     // Menu Views.
     View menuBtnContainer,dragHandle;
-    Button menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   , menuBtn_Parking,menuBtn_PVagt      ;
+    Button menuBtn_profile      ,menuBtn_FreePark   ,menuBtn_Contribute ,
+            menuBtn_Community   ,menuBtn_Parking    ,menuBtn_PVagt      ;
+
     // menu Open or Close State
-    boolean drag_State;
-    boolean stateFreePark = false;
-    boolean stateParking = false;
+    boolean drag_State      = false ;
+    boolean stateFreePark   = false ;
+    boolean stateParking    = false ;
 
     public ComponentMenuOperator(IMenuOperationsController context, View view){
         this.context = context;
@@ -45,10 +46,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         menuBtn_PVagt.setOnClickListener(this);
 
         // Setup Menu Toggle Position
-        drag_State = false;
         menuBtnContainer.setVisibility(View.GONE);
     }
 
+    // interface View.OnClickListener
     @Override
     public void onClick(View v){
         switch(v.getId()){
@@ -78,7 +79,11 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         }
     }
 
-    // Interface
+    // Interface IMenuOperator
+    /**
+     *  is Called mainly from the Menu Handle.
+     *  toggleMenu opens and closes the Menu repeatedly
+     * */
     @Override
     public void toggleMenu( ){
         // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
@@ -92,22 +97,35 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             drag_State = true;
         }
     }
+    /**
+     *  closes the menu
+     * */
     @Override
     public void closeMenu() {
         menuBtnContainer.setVisibility(View.GONE);
         drag_State = false;
     }
+    /**
+     *  opens the menu
+     * */
     @Override
     public void openMenu() {
         menuBtnContainer.setVisibility(View.VISIBLE);
         drag_State = true;
     }
+    /**
+     *  returns false if map is closed, true if it is open.
+     * */
     @Override
     public boolean isMenuOpen() {
         return drag_State;
     }
+    /**
+     *  Enables and Disables the FreePark State.
+     *  Free Park is a Filter state that only shows tips in the category of free tips.
+     * */
     @Override
-    public void toggleFreeParkEnabled() {
+    public void toggleFreePark() {
         if(stateFreePark){
             menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
         }else{
@@ -115,6 +133,11 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         }
         stateFreePark = !stateFreePark;
     }
+    /**
+    * Enables and Disables the Parking State
+    * Parking state is a state where you place down your location as a parking location,
+    * and that location is then set to listens for P alerts.
+    * */
     @Override
     public void toggleParking(){
         if(stateParking){

@@ -40,8 +40,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     //Service Connection , also Data Access
     private LiveDataViewModel model;            //
-    protected FirestoreDAO mService;    //
-    private boolean bound = false;              //
+    protected FirestoreDAO mService;
+    private boolean bound = false;
     private ServiceConnection connection = new ServiceConnection() {
 
         @Override
@@ -121,7 +121,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
         mapOperator.toggleStateFreePark();
-        menuOperator.toggleFreeParkEnabled();
+        menuOperator.toggleFreePark();
     }
 
     /**
