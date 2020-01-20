@@ -21,9 +21,9 @@ import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 
 import java.util.List;
 
-class CompositionFragmentOperator   implements IFragmentOperator {
+class ComponentFragmentOperator implements IFragmentOperator {
 
-    MainMenuActivityController context;
+    MainMenuActivity context;
     View view;
     private String TAG = this.getClass().getName();
 
@@ -49,7 +49,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
     LiveData<List<TipDTO>> tipList;
 
 
-    public CompositionFragmentOperator(MainMenuActivityController context, View view){
+    public ComponentFragmentOperator(MainMenuActivity context, View view){
 
         this.context = context;
         this.view = view;
@@ -73,7 +73,7 @@ class CompositionFragmentOperator   implements IFragmentOperator {
             try {
                 adapter_TipBobbles.notifyDataSetChanged();
             }catch (NullPointerException e){
-                Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
+                Log.i(TAG, "ComponentFragmentOperator: Null pointer, adapter for tips was null");
             }
         } );
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tipList,this);
