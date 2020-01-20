@@ -84,7 +84,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     @Override
     public void createPVagt(IPVagtDTO pVagt) {
         String id = pVagt.getL().toString() + "-" + System.currentTimeMillis();
-        tips.document(id).set(pVagt)
+        pVagter.document(id).set(pVagt)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
                 .addOnCompleteListener(task -> {
                     if (task.isCanceled()) {

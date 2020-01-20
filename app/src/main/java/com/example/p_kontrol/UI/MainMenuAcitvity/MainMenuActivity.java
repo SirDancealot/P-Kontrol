@@ -21,6 +21,7 @@ import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
 /**
@@ -186,6 +187,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         PVagtDTO pvagt = new PVagtDTO();
         pvagt.setCreationDate(new Date());
         pvagt.setUid("123");
+        pvagt.setL(new GeoPoint(model.getCurrentLocation().getValue().latitude, model.getCurrentLocation().getValue().longitude));
 
         model.createPVagt(pvagt);
 
