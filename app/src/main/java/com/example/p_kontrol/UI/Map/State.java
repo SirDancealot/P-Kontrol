@@ -34,7 +34,7 @@ abstract public class State implements IState  {
     /**
      * @param parent the State Wrapper, is needed to call data from the activity and to be able to change states from within the states.
      * */
-    public State( MapFragment parent ) {
+    public State( MapFragment parent ){
         //retrieving Objects
         this.parent     = parent;
 

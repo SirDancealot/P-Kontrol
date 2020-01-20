@@ -36,7 +36,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFragment {
 
     // Defaults
-    final int   DEFAULT_ZOOM_CLOSEUP = 17;
     final int   DEFAULT_ZOOM = 15;
     final LatLng DEFAULT_LOCATION = new LatLng(55.731318, 12.396567);
 
@@ -45,14 +44,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
     // Google Map Thingies
     private FusedLocationProviderClient fusedLocationProviderClient;
-    SupportMapFragment mapFragment;
-    GoogleMap map;
+    private SupportMapFragment mapFragment;
+    private GoogleMap map;
 
     // My Data
-    Activity context;
-    IState currentState;
-    IMapFragmentListener listener;
-    LiveDataViewModel viewModel;
+    private Activity context;
+    private IState currentState;
+    private IMapFragmentListener listener;
+    private LiveDataViewModel viewModel;
 
     boolean isFreeParkEnabled = false;
     boolean isParkingEnabled = false;
