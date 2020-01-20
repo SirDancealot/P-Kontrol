@@ -2,10 +2,11 @@ package com.example.p_kontrol.UI.MainMenuAcitvity;
 
 import android.view.View;
 
-import com.example.p_kontrol.UI.Map.IState;
+import com.example.p_kontrol.UI.Map.State;
 
-//InterFaces Map
-
+/**
+ * @responsibilty to specify methods to operate the Map.
+ * */
 interface IMapOperator{
 
     // todo remove form here and set this functionality into each state.
@@ -34,8 +35,8 @@ interface IMapOperator{
      * */
     void onCenterClick(View.OnClickListener onclick);
     /**
-     * uses the Istate interface method center();
-     * @See {@link com.example.p_kontrol.UI.Map.IState}
+     * uses the Abstract class method center();
+     * @See {@link com.example.p_kontrol.UI.Map.State}
      * */
     void centerOnUserLocation();
 
@@ -62,7 +63,7 @@ interface IMapOperator{
     /**
      * @return IState implementation, it is used to check what state you are in, foreksample in the backstack handleing.
      * */
-    IState getCurrentState();
+    State getCurrentState();
 
 }
 

@@ -32,7 +32,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-
+/**
+ * @responsibilty act as a single object type Fragment, that manages the map, and use a listener for onclick on the markers on the map
+ *
+ * */
 public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFragment {
 
     // Defaults
@@ -49,7 +52,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
     // My Data
     private Activity context;
-    private IState currentState;
+    private State currentState;
     private IMapFragmentListener listener;
     private LiveDataViewModel viewModel;
 
@@ -57,6 +60,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     private boolean isParkingEnabled = false;
 
     /**
+     *  @responsibilty act as a single object type Fragment, that manages the map, and use a listener for onclick on the markers on the map.
+     *
      *  MapFragment is a fragment, that ought be treated as a single object, but is implemented as a StatePatten.
      *  @param context  the Parent Activity, such that the reference can be passed on to the states. is needed due to certain calls needs special android acces
      *  @param listener contains the onTipClick method, given from the Activity.
@@ -67,7 +72,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
      *  OnMapReadyCallback.
      *
      *  Relevant files
-     *  @see {@link com.example.p_kontrol.UI.Map.IState}
      *  @see {@link com.example.p_kontrol.UI.Map.State}
      *  @see {@link com.example.p_kontrol.UI.Map.StateStandby}
      *  @see {@link com.example.p_kontrol.UI.Map.StateFreePark}
@@ -122,7 +126,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     }
 
 
-
     // interface IMapFragment
         // States
     /**
@@ -169,7 +172,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
      * @inheritDoc
      * */
     @Override
-    public IState getCurrentState() {
+    public State getCurrentState() {
         return currentState;
     }
 

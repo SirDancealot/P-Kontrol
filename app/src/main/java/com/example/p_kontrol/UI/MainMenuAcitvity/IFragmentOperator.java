@@ -2,7 +2,9 @@ package com.example.p_kontrol.UI.MainMenuAcitvity;
 
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
-
+/**
+ * @responsibilty to specify methods to operate the different Fragments that can be shown as overlay on the screen. .
+ * */
 public interface IFragmentOperator {
 
     // WriteTip Fragment

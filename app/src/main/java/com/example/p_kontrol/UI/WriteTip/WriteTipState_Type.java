@@ -15,7 +15,7 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 /**
- * @responsibilty responsibility to create a room to type in the text for the tip.
+ * @responsibilty responsibility to give the Tip a type, that specifies the category of tip.
  *
  * */
 public class WriteTipState_Type extends AbstractWriteTipState implements View.OnClickListener {
@@ -28,10 +28,12 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
     Button btnFreePark, btnPaidPark, btnWarning;
     int activeButtonid = 0;
 
+    /**
+     * @inheritDoc
+     * */
     public WriteTipState_Type(IWriteTipStateListener listener) {
         super(listener);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +82,9 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
 
     }
 
+    /**
+     * an internal call that makes sure only one button is visibly checked
+     * */
     private void updateActiveButton(){
         switch (activeButtonid){
             case 1:
