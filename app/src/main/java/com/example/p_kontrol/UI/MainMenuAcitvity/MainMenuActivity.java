@@ -62,20 +62,27 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     // Android LifeCycle Calls, onCreate onStart onResume.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // setup the Layout and the Main View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
         container = findViewById(R.id.mainMenu_layout);
 
-        // setting compositions
-        // delegates responsibility for Creating Views out to keep code simple, however, each referes back here
-        // for controll.
+        // setting responsibility delegating components
         menuOperator     = new ComponentMenuOperator(this, container );
         mapOperator      = new ComponentMapOperator(this,container, this);
         fragmentOperator = new ComponentFragmentOperator(this,container);
 
+        // getting data
         model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
         fragment_close= new MainMenuCloseFragment(this);
 
+        // setting up the center Click button , since it dosent change, set it here.
+        mapOperator.onCenterClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapOperator.centerOnUserLocation();
+            }
+        });
     }
 
     @Override
