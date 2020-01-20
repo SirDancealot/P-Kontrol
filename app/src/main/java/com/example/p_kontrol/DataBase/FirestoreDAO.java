@@ -188,7 +188,7 @@ public class FirestoreDAO extends Service implements IDatabase {
                 list.add(s);
 
                 tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
-                    ITipDTO tipDTO = documentSnapshot.toObject(ITipDTO.class);
+                    TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
 
                 List<ITipDTO> temp = tipList.getValue();//TODO make this thread safe
                 if (temp != null) {
