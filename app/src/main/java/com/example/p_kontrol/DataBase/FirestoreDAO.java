@@ -225,8 +225,7 @@ public class FirestoreDAO extends Service implements IDatabase {
         @Override
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: ");
-            
-            //if (updateIndividual) {
+
                 List<String> list = new ArrayList<>();
                 list.add(s);
 
@@ -240,11 +239,6 @@ public class FirestoreDAO extends Service implements IDatabase {
                     }
                 });
 
-
-
-            //} else {
-              //  documents.add(s);
-            //}
         }
 
         @Override
