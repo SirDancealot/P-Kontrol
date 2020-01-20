@@ -176,7 +176,11 @@ public class LiveDataViewModel extends ViewModel {
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
                 TipDTO dto = tipCreateObject.getValue();
-                dao.createTip(dto);
+                if (dto.getAuthor() != null) {
+                    dao.createTip(dto);
+                } else {
+                    Log.e(TAG, "createTip: tipCreateObject.getAuthor is null");
+                }
             } else {
                 Log.e(TAG, "createTip: tipCreateObject.getValue() is null");
             }

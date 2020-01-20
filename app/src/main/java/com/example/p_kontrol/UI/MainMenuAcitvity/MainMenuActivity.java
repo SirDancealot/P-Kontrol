@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
@@ -132,6 +134,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         menuOperator.toggleMenu();
 
         // starting Contribute process at index 0. meaning the very first step.
+        TipDTO tipCreate = model.getTipCreateObject().getValue();
+        tipCreate.setAuthor(UserInfoDTO.getUserInfoDTO().getSimpleUser());
         createTip();
 
     }
