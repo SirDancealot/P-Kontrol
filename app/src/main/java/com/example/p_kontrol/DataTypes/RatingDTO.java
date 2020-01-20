@@ -1,5 +1,7 @@
 package com.example.p_kontrol.DataTypes;
 
+import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
+
 public class RatingDTO implements IRatingDTO {
 
 

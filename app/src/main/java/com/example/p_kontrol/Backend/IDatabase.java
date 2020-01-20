@@ -2,6 +2,10 @@ package com.example.p_kontrol.Backend;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.IdbTipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.google.android.gms.maps.model.LatLng;
@@ -12,11 +16,11 @@ import java.util.List;
 
 public interface IDatabase {
 
-    List<TipDTO> getTipList(LatLng location, double radius);
+    List<ITipDTO> getTipList(LatLng location, double radius);
 
-    void createTip(TipDTO tip);
+    void createTip(ITipDTO tip);
 
-    void updateTip(TipDTO tip);
+    void updateTip(ITipDTO tip);
 
     AUserDTO getUser(int id);
 
@@ -28,6 +32,6 @@ public interface IDatabase {
      * @param radius a {@code double} radius in kilometers for the query
      * @param targetList the target list in which the tips should end
      */
-    void queryByLocation(MutableLiveData<LatLng> location, MutableLiveData<Float> radius, MutableLiveData<List<TipDTO>> targetList);
+    void queryByLocation(MutableLiveData<LatLng> location, MutableLiveData<Float> radius, MutableLiveData<List<ITipDTO>> targetList);
 
 }

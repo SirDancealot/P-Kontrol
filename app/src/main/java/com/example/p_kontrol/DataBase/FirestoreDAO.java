@@ -12,7 +12,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
@@ -53,7 +52,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public List<TipDTO> getTipList(LatLng location, double radius) {
+    public List<ITipDTO> getTipList(LatLng location, double radius) {
         Task<QuerySnapshot> query = tips.get();
 
         try {
@@ -74,7 +73,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void createTip(TipDTO tip) {
+    public void createTip(ITipDTO tip) {
         String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
@@ -90,7 +89,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void updateTip(TipDTO tip) { }
+    public void updateTip(ITipDTO tip) { }
 
     @Override
     public AUserDTO getUser(int id) {
@@ -149,11 +148,11 @@ public class FirestoreDAO extends Service implements IDatabase {
         String TAG = "GeoFirestore";
 
         IDatabase dao;
-        MutableLiveData<List<TipDTO>> tipList;
+        MutableLiveData<List<ITipDTO>> tipList;
         CollectionReference collection;
 
 
-        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<TipDTO>> tipList, CollectionReference collection) {
+        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ITipDTO>> tipList, CollectionReference collection) {
             this.dao = dao;
             this.tipList = tipList;
             this.collection = collection;
@@ -183,10 +182,11 @@ public class FirestoreDAO extends Service implements IDatabase {
         @Override
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: " + s);
-            tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
-                TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
 
-                List<TipDTO> temp = tipList.getValue();//TODO make this thread safe
+                tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
+                    ITipDTO tipDTO = documentSnapshot.toObject(ITipDTO.class);
+
+                List<ITipDTO> temp = tipList.getValue();//TODO make this thread safe
                 if (temp != null) {
                     temp.add(tipDTO);
                     tipList.postValue(temp);
@@ -204,8 +204,8 @@ public class FirestoreDAO extends Service implements IDatabase {
         @Override
         public void onKeyExited(@NotNull String s) {
             Log.d(TAG, "onKeyExited: " + s);
-            
-            List<TipDTO> tips = new ArrayList<TipDTO>(tipList.getValue());
+
+            List<ITipDTO> tips = new ArrayList<ITipDTO>(tipList.getValue());
 
             collection.document(s)
                     .get()
@@ -215,13 +215,13 @@ public class FirestoreDAO extends Service implements IDatabase {
                                 if (task.isSuccessful() && task.getResult() != null) {
                                     exitedTip = task.getResult().toObject(TipDTO.class);
                                 }
-                                List<TipDTO> removeList = new ArrayList<TipDTO>();
-                                for (TipDTO tip : tips) {
+                                List<ITipDTO> removeList = new ArrayList<ITipDTO>();
+                                for (ITipDTO tip : tips) {
                                     if (tip.equals(exitedTip))
                                         removeList.add(tip);
                                 }
 
-                                List<TipDTO> finalList = tipList.getValue();
+                                List<ITipDTO> finalList = tipList.getValue();
                                 finalList.removeAll(removeList);
                                 tipList.setValue(finalList);
                             }

@@ -1,10 +1,12 @@
 package com.example.p_kontrol.DataTypes;
 
+import com.example.p_kontrol.DataTypes.Interfaces.IUserDTO;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class AUserDTO implements IUserDTO , Serializable {
+public class AUserDTO implements IUserDTO, Serializable {
 
     String firstName;
     String lastName;

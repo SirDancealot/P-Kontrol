@@ -16,15 +16,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.IRatingDTO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.RatingDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 import java.text.SimpleDateFormat;
@@ -42,21 +42,21 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     String URL;
     int type;
     UserInfoDTO userInfoDTO;
-    List<TipDTO> tips;
+    List<ITipDTO> tips;
     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     // regular Variables
     private View view, tipcontainer,suroundings;
     private TextView readMore, tip, name;
     private CircleImageView profImg;
-    private TipDTO tipDTO;
+    private ITipDTO tipDTO;
     private LinearLayout topBar;
     private ImageView like, dislike;
     private int likeStatus;
 
     private IFragmentOperator fragmentOperator;
 
-    public FragTipBobble(IFragmentOperator fragmentOperator, TipDTO tipDTO){
+    public FragTipBobble(IFragmentOperator fragmentOperator, ITipDTO tipDTO){
     this.fragmentOperator = fragmentOperator;
         this.tipDTO = tipDTO;
         // Requiired empty public constructor
@@ -131,10 +131,12 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
             //name of Profile
 
-            if (tipDTO.getAuthor().getFirstName() != null){
-                name.setText(getArguments().getString(tipDTO.getAuthor().getFirstName()));
+            if (tipDTO.getAuthor() != null && tipDTO.getAuthor().getFirstName() != null){ //this will not work
+                if (getArguments() != null) {
+                    name.setText(getArguments().getString(tipDTO.getAuthor().getFirstName()));
+                }
             } else {
-                name.setText("Anonym");
+                name.setText("Anonym"); //todo bør oversættes
             }
 
 

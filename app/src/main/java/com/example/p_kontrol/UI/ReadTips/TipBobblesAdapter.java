@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.LiveData;
 
 
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 
@@ -27,9 +28,9 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
 
     // Variables
     IFragmentOperator fragmentOperator;
-    LiveData<List<TipDTO>> tips;
+    LiveData<List<ITipDTO>> tips;
 
-    public TipBobblesAdapter(FragmentManager fm, LiveData<List<TipDTO>> tips, IFragmentOperator fragmentOperator){
+    public TipBobblesAdapter(FragmentManager fm, LiveData<List<ITipDTO>> tips, IFragmentOperator fragmentOperator){
         super(fm);
         this.tips = tips;
         this.fragmentOperator = fragmentOperator;

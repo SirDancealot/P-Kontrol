@@ -1,6 +1,4 @@
-package com.example.p_kontrol.DataTypes;
-
-import java.util.List;
+package com.example.p_kontrol.DataTypes.Interfaces;
 
 public interface IUserDTO {
 

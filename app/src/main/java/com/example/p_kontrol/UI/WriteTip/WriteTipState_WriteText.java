@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -26,7 +27,7 @@ public class WriteTipState_WriteText extends AbstractWriteTipState {
     View view;
     TextView text;
     LiveDataViewModel viewModel;
-    TipDTO dto = new TipDTO();
+    ITipDTO dto = new TipDTO();
 
     public WriteTipState_WriteText(IWriteTipStateListener listener) {
         super(listener);

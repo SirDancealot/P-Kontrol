@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,13 +18,20 @@ import java.util.List;
 
 public class StateStandby extends State {
 
-
+    /** Standby is a state where you can read tips, by clicking on the tip.
+     *
+     * StateSelectLocation Extends State
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateStandby(MapFragment parent) {
         super(parent);
         map.clear();
 
 
-        LiveData<List<TipDTO>> tipList = viewModel.getTipList();
+        LiveData<List<ITipDTO>> tipList = viewModel.getTipList();
 
         tipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
@@ -37,13 +46,13 @@ public class StateStandby extends State {
     }
 
     @Override
-    public void updateMap(List<TipDTO> list ) {
+    public void updateMap(List<ITipDTO> list ) {
         MarkerOptions markerOptions = null;
         map.clear();
 
         if(list != null) {
             int i = 0;
-            for (TipDTO tip : list) {
+            for (ITipDTO tip : list) {
                 // todo ret navne
 
                 Pins pin = Pins.paid;
