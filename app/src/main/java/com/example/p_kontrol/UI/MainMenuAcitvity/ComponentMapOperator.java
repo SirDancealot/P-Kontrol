@@ -111,7 +111,7 @@ class ComponentMapOperator implements IMapOperator   {
      * */
     @Override
     public void onCenterClick(View.OnClickListener onclick){
-        mapView_cancelBtn.setOnClickListener(onclick);
+        mapView_centerBtn.setOnClickListener(onclick);
     }
     /**
      * @inheritDoc
@@ -165,6 +165,14 @@ class ComponentMapOperator implements IMapOperator   {
     @Override
     public State getCurrentState() {
         return mapFragment.getCurrentState();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public void onCenterClick(View v) {
+        centerOnUserLocation();
     }
 
 

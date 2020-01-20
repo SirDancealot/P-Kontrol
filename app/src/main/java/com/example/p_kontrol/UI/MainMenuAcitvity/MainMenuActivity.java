@@ -195,14 +195,6 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         menuOperator.closeMenu();
     }
 
-    /**
-     * @inheritDoc
-     * */
-    @Override
-    public void onCenterClick(View v){
-        mapOperator.centerOnUserLocation();
-    }
-
     // -- * -- * -- * -- * -- * Private Controller Methods -- * -- * -- * -- * -- * -- * -- *
 
     /**
