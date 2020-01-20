@@ -167,6 +167,9 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         super.onActivityResult(requestCode, resultCode, data);
 
         Log.d(TAG, "onActivityResult: " + requestCode);
+        if(loding == null){
+            loding = findViewById(R.id.progress_bar);
+        }
         loding.setVisibility(View.VISIBLE);
 
 

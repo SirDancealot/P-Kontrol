@@ -57,8 +57,6 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         }
     };
 
-
-
 // METHODS
 
     // Android LifeCycle Calls, onCreate onStart onResume.
@@ -103,12 +101,22 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
 
     //  -- * -- * -- * -- * -- * IMenuOperationsController -- * -- * -- * -- * -- * -- *
+    /**
+     * implements interface IMenuOperationsController.
+     * to controll what happens when Profile Button is clicked
+     * @return void
+     */
     @Override
     public void menuBtn_profile(){
         Log.i("click","Profile btn clicked \n");
         Intent changeActivity = new Intent( this , ActivityProfile.class );
         startActivity(changeActivity);
     }
+
+    /**
+     * implements interface IMenuOperationsController.
+     * to controll what happens when FreePark Button is clicked
+     */
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
@@ -116,6 +124,10 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         menuOperator.toggleFreeParkEnabled();
     }
 
+    /**
+     * implements interface IMenuOperationsController.
+     * to controll what happens when Contribute Button is clicked
+     */
     @Override
     public void menuBtn_Contribute(){
 
@@ -127,13 +139,21 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     }
 
+    /**
+     * implements interface IMenuOperationsController.
+     * to controll what happens when Feedback Button is clicked
+     */
     @Override
-    public void menuBtn_Community(){
+    public void menuBtn_FeedBack(){
         Log.i("click","Community btn clicked \n");
         Intent changeActivity = new Intent( this , ActivityFeedback.class);
         startActivity(changeActivity);
     }
 
+    /**
+     * implements interface IMenuOperationsController.
+     * to controll what happens when Parking Button is clicked
+     */
     @Override
     public void menuBtn_Parking(){
         Log.i("click","Park Alarm btn clicked \n");
@@ -141,6 +161,10 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         menuOperator.toggleParking();
     }
 
+    /**
+     * implements interface IMenuOperationsController.
+     * to controll what happens when P-Vagt Button is clicked
+     */
     @Override
     public void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
@@ -151,12 +175,21 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     // -- * -- * -- * -- * -- * Map IMapOperatorController -- * -- * -- * -- * -- * -- *
+
+    /**
+     * implements interface IMapOperatorController.
+     * to controll what happens when a Tip marker is clicked on the map.
+     */
     @Override
     public void onTipClick(int index){
         fragmentOperator.showTipBobbles(index);
         menuOperator.closeMenu();
     }
 
+    /**
+     * implements interface IMapOperatorController.
+     * to controll what happens when the CenterButton is clicked.
+     */
     @Override
     public void onCenterClick(View v){
         mapOperator.centerOnUserLocation();
@@ -164,10 +197,17 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     // -- * -- * -- * -- * -- * Private Controller Methods -- * -- * -- * -- * -- * -- * -- *
 
+    /**
+     * simple method to start the CreateTip process, since it is a step by step process.
+     * see createTip_Process(int i);
+     */
     private void createTip(){
         createTip_Process(0); // start the CreateTip Process at stage 0.
     }
 
+    /**
+     * complicated method to controll step-by-step,  the create tip Process
+     */
     private void createTip_Process(int i){
         switch (i) {
             case 0: // Chose location
@@ -215,12 +255,19 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         }
     }
 
+    /**
+     * simple method to edit the top messageBar, such that the managing of the top bar would be easy.
+     * by using a find usages in the same class.
+     */
     private void showTopMsgBar(int imageId, String header, String subtitle){
         fragmentOperator.showTopMsgBar(imageId, header, subtitle);
     }
 
 
     // -- * -- * -- * -- * -- * Android Specific things -- * -- * -- * -- * -- * -- * -- *
+    /**
+     * BackStack management
+     */
     @Override
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed: Something happened");
@@ -246,6 +293,10 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
             //overridePendingTransition(0, android.R.anim.fade_out);
         }
     }
+    /**
+     * is an important call, that updates the permissions on the google map implementation,
+     * these permissions are
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
