@@ -18,7 +18,7 @@ public interface IFragmentOperator {
     boolean isTipBobbleOpen();
     boolean isTopBarOpen();
 
-    LiveDataViewModel getViewModel();
+    //LiveDataViewModel getViewModel();
 
 }
 

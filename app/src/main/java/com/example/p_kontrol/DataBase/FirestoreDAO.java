@@ -52,7 +52,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public List<ATipDTO> getTipList(LatLng location, double radius) {
+    public List<TipDTO> getTipList(LatLng location, double radius) {
         Task<QuerySnapshot> query = tips.get();
 
         try {
@@ -73,8 +73,8 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void createTip(ATipDTO tip) {
-        String id = "tip-" + System.currentTimeMillis();
+    public void createTip(TipDTO tip) {
+        String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
                 .addOnCompleteListener(task -> {
@@ -89,7 +89,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void updateTip(ATipDTO tip) { }
+    public void updateTip(TipDTO tip) { }
 
     @Override
     public AUserDTO getUser(int id) {
@@ -104,8 +104,8 @@ public class FirestoreDAO extends Service implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList) {
-        Log.d(TAG, "queryByLocation: " + location + ", " + radius);
+    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<TipDTO>> tipList) {
+        Log.d(TAG, "queryByLocation: " + location);
         if (query != null)
             query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
         else
@@ -127,11 +127,11 @@ public class FirestoreDAO extends Service implements IDatabase {
         String TAG = "GeoFirestore";
 
         IDatabase dao;
-        MutableLiveData<List<ATipDTO>> tipList;
+        MutableLiveData<List<TipDTO>> tipList;
         CollectionReference collection;
 
 
-        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ATipDTO>> tipList, CollectionReference collection) {
+        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<TipDTO>> tipList, CollectionReference collection) {
             this.dao = dao;
             this.tipList = tipList;
             this.collection = collection;
@@ -163,9 +163,9 @@ public class FirestoreDAO extends Service implements IDatabase {
             Log.d(TAG, "onKeyEntered: ");
 
             tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
-                ATipDTO tipDTO = documentSnapshot.toObject(ATipDTO.class);
+                TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
 
-                List<ATipDTO> temp = tipList.getValue();//TODO make this thread safe
+                List<TipDTO> temp = tipList.getValue();//TODO make this thread safe
                 if (temp != null) {
                     temp.add(tipDTO);
                     tipList.postValue(temp);
@@ -184,20 +184,20 @@ public class FirestoreDAO extends Service implements IDatabase {
         public void onKeyExited(@NotNull String s) { // todo fix null pointer exceptions that araise whenever this is called
             Log.d(TAG, "onKeyExited: ");
             
-            List<ATipDTO> tips = tipList.getValue();//TODO make this thread safe
+            List<TipDTO> tips = tipList.getValue();//TODO make this thread safe
 
-            final ATipDTO[] exitedTip = new ATipDTO[1];
+            final TipDTO[] exitedTip = new TipDTO[1];
 
             collection.document(s)
                     .get()
                     .addOnCompleteListener(
                             task -> {
                                 if (task.isSuccessful() && task.getResult() != null) {
-                                    exitedTip[0] = task.getResult().toObject(ATipDTO.class);
+                                    exitedTip[0] = task.getResult().toObject(TipDTO.class);
                                 }
 
                                 if (tips != null) {
-                                    for (ATipDTO tip : tips) {
+                                    for (TipDTO tip : tips) {
                                         if (tip.equals(exitedTip[0]))
                                             tips.remove(tip);
                                     }

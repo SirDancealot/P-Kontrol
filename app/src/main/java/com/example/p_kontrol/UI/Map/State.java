@@ -7,8 +7,9 @@ import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,15 +37,14 @@ abstract public class State implements IState  {
 
         map         = parent.getMap();
         listener    = parent.getFragmentListener();
-        viewModel   = parent.getViewModel();
+        viewModel   = ViewModelProviders.of(this.parent.getActivity()).get(LiveDataViewModel.class); //parent.getViewModel();
 
         // Setting Listeners
-        centerMethod();
         setListeners();
     }
 
     @Override
-    public void updateMap(List<ATipDTO> list) {}
+    public void updateMap(List<TipDTO> list) {}
     @Override
     public void setDoneListner(IMapFragmentListener listener) {
         this.listener = listener;
@@ -59,7 +59,10 @@ abstract public class State implements IState  {
                     if ( task.isSuccessful()) {
                         // Set the map's camera position to the current location of the device.
                         Location location = (Location) task.getResult();
-                        LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
+                        LatLng result = null;
+                        if (location != null) {
+                            result = new LatLng(location.getLatitude(),location.getLongitude());
+                        }
                         viewModel.getCurrentLocation().setValue(result);
                         animeCamara(result);
 
@@ -96,18 +99,7 @@ abstract public class State implements IState  {
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
     }
-    public void zoomIn(){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .zoom(parent.DEFAULT_ZOOM_CLOSEUP).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-    public void zoomOut(){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .zoom(parent.DEFAULT_ZOOM).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
+
 
     /*
 

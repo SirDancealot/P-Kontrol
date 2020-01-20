@@ -22,10 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Map.IMapFragment;
-import com.example.p_kontrol.UI.Map.IMapFragmentListener;
-import com.example.p_kontrol.UI.Map.IState;
-import com.example.p_kontrol.UI.Map.StateStandby;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -59,6 +55,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     LiveDataViewModel viewModel;
 
     boolean isFreeParkEnabled = false;
+    boolean isParkingEnabled = false;
 
     public MapFragment(Activity context, IMapFragmentListener listener) {
         this.context = context;
@@ -95,31 +92,43 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         // automaticly adjusts the centering to the mapped area shown with the topbar
         map.setPadding(0,170,0,0);
 
+        styleMapCall();
+        map.getUiSettings().setMyLocationButtonEnabled(false);
 
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
 
         getPermission();
         setStateStandby();
+        currentState.centerMethod(); // todo Hans!! har jeg gjort noget forkert? her?
     }
 
 
 
     // IMapFragment
     @Override
+    public void setStateParking(){
+        currentState = new StateParking(this );
+        isFreeParkEnabled = false;
+        isParkingEnabled = true;
+    }
+    @Override
     public void setStateStandby(){
         currentState = new StateStandby(this );
         isFreeParkEnabled = false;
+        isParkingEnabled = false;
     }
     @Override
     public void setStateFreePark(){
         currentState = new StateFreePark(this );
         isFreeParkEnabled = true;
+        isParkingEnabled = false;
     }
     @Override
     public void setStateSelectLocation() {
         currentState = new StateSelectLocation(this );
         isFreeParkEnabled = false;
+        isParkingEnabled = false;
     }
     @Override
     public void centerMap() {
@@ -148,6 +157,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     public boolean isFreeParkEnabled() {
         return isFreeParkEnabled;
     }
+    @Override
+    public boolean isParkingEnabled(){return isParkingEnabled; }
+
+
 
     // States Need these
     @NonNull
@@ -166,10 +179,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     public FusedLocationProviderClient getFusedLocationProviderClient() {
         return fusedLocationProviderClient;
     }
-    @NonNull
-    public LiveDataViewModel getViewModel() {
-        return viewModel;
-    }
+//    @NonNull
+//    public LiveDataViewModel getViewModel() {
+//        return viewModel;
+//    }
+
 
     // Internal methods
     private void styleMapCall() {

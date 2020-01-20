@@ -4,17 +4,17 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
+
+import static com.example.p_kontrol.UI.Map.Pins.free;
 
 public class StateFreePark extends State {
 
@@ -22,8 +22,8 @@ public class StateFreePark extends State {
     public StateFreePark(MapFragment parent) {
         super(parent);
 
-        LiveData<List<ATipDTO>> liveDataTipList = viewModel.getTipList();
-        List<ATipDTO> tipList = liveDataTipList.getValue();
+        LiveData<List<TipDTO>> liveDataTipList = viewModel.getTipList();
+        List<TipDTO> tipList = liveDataTipList.getValue();
         liveDataTipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
                 updateMap(list);
@@ -38,24 +38,24 @@ public class StateFreePark extends State {
     }
 
 
+
     @Override
-    public void animeCamara(LatLng geo){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .zoom(13).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-    @Override
-    public void updateMap(List<ATipDTO> list ) {
+    public void updateMap(List<TipDTO> list ) {
         MarkerOptions markerOptions = null;
         map.clear();
 
+        Pins pin = Pins.free;
+        String pinName = pin.getName();
+        int scalingConst = pin.getDimY() / 100;       //100 is the desired height
+        int pinX = pin.getDimX() / scalingConst;
+        int pinY = pin.getDimY() / scalingConst;
+
         if(list != null) {
             int i = 0;
-            for (ATipDTO tip : list) {
+            for (TipDTO tip : list) {
                 if(tip.getType() != 0){
-                    if(tip.getType() == TipTypes.paid.getValue()) {
-                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(Pins.free.getName(), 69, 100)));
+                    if(tip.getType() == TipTypes.free.getValue()) {
+                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
                         map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                             @Override

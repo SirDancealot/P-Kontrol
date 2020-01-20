@@ -1,9 +1,11 @@
 package com.example.p_kontrol.UI.WriteTip;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +22,7 @@ import java.util.List;
 public class FragMessageWrite extends Fragment implements View.OnClickListener, IWriteTipStateListener {
 
     // Views
+    Activity activity;
     private View view,contentContainer, WriteTip_outerBounds;
     private ViewPager viewPagerContent;
     private Button navNext, navPrev, navCancel;
@@ -33,8 +36,9 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     int stateIndex = 0;
 
     LiveDataViewModel viewModel;
-    public FragMessageWrite(ITipWriteListener listener) {
+    public FragMessageWrite(ITipWriteListener listener, Activity activity) {
         this.listener = listener;
+        this.activity = activity;
     }
 
     @Override
@@ -66,6 +70,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
                 stateIndex = position;
                 setProgresBarProgress(position);
                 hideOrShowNextPrevButtons();
+                hideKeyboard();
             }
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
@@ -97,14 +102,14 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         switch (v.getId()){
             case R.id.WriteTip_Navigation_next:
                 if( !((stateIndex + 1) > (statesList.size()-1))  ){
-
+                    hideKeyboard();
                     viewPagerContent.setCurrentItem(++stateIndex,true);
                     setProgresBarProgress(stateIndex);
                 }
                 break;
             case R.id.WriteTip_Navigation_prev:
                 if( (stateIndex) > 0  ){
-
+                    hideKeyboard();
                     viewPagerContent.setCurrentItem(--stateIndex,true);
                     setProgresBarProgress(stateIndex);
                 }
@@ -124,8 +129,10 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         // todo check Message for syntax Errors
         boolean validated = true;
 
-        if (viewModel.getCurrentTip() == null
-                || !(viewModel.getCurrentTip().getMessage().trim().length() > 0)
+        //checks if message is empty or whitespace
+        if (
+//                viewModel.getCurrentTip() == null ||
+                        !(viewModel.getCurrentTip().getMessage().trim().length() > 0)
         ) {
             validated = false;
         }
@@ -153,7 +160,22 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
             navNext.setVisibility(View.VISIBLE);
         }
 
-    };
+    }
+
+    private void hideKeyboard() {
+        try {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            //Find the currently focused view, so we can grab the correct window token from it.
+            View view = activity.getCurrentFocus();
+            //If no view currently has focus, create a new one, just so we can grab a window token from it
+            if (view == null) {
+                view = new View(activity);
+            }
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }catch (Exception e){
+
+        }
+    }
 }
 
 

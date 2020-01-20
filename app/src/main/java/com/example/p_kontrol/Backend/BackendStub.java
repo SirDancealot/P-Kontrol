@@ -2,22 +2,27 @@ package com.example.p_kontrol.Backend;
 
 
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
-import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 
 
 public class BackendStub implements IBackend{
+
+    private String TAG = "BackendStub";
 
     //Test data creation
     private GeoPoint dtulocaiton1 = new GeoPoint(55.98256, 12.51958);
@@ -25,21 +30,33 @@ public class BackendStub implements IBackend{
     private GeoPoint dtulocaiton3 = new GeoPoint(55.78396, 12.51998);
     long millis = System.currentTimeMillis();
     Date date = new Date(millis);
+    UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
 
-    UserDTO user = new UserDTO("valdemar", "h", "niceimg");
+    TipDTO tip1 = new TipDTO();
+
+    List<TipDTO> demoList = new ArrayList<>();
+    List<PVagtDTO> l;
+
+    MutableLiveData<List<PVagtDTO>> pvagtlist;
 
 
-    ATipDTO tip1 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
-    ATipDTO tip2 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton2.getLatitude(), dtulocaiton2.getLongitude()));
-    ATipDTO tip3 = new TipDTO(user, "test Message", 4, date, new GeoPoint(dtulocaiton3.getLatitude(), dtulocaiton3.getLongitude()));
-
-    List<ATipDTO> demoList = new ArrayList<>();
     static IBackend backend = null;
 
-    public BackendStub(){
+    private BackendStub(){
+        tip1.setAuthor(userInfoDTO.getSimpleUser());
         demoList.add(tip1);
-        demoList.add(tip2);
-        demoList.add(tip3);
+        tip1.setMessage("test Message");
+        tip1.setMessage("test Message");
+        tip1.setCreationDate(new Date() );
+        tip1.setL(new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
+
+        l = new LinkedList<>();
+        l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
+        l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
+        l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
+        l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
+
+
     }
 
 
@@ -54,32 +71,47 @@ public class BackendStub implements IBackend{
     }
 
     @Override
-    public List<ATipDTO> getTips(LatLng location, MutableLiveData<List<ATipDTO>> list) {
+    public List<TipDTO> getTips(LatLng location, MutableLiveData<List<TipDTO>> list) {
         // todo ViewModel Se Her
         list.setValue(demoList);
         return demoList;
     }
 
     @Override
-    public void createTip(ATipDTO tip) {
-        tip.setAuthor(user);
+    public void createTip(TipDTO tip) {
+        tip.setAuthor(userInfoDTO.getSimpleUser());
         tip.setCreationDate( new Date() );
         demoList.add(tip);
     }
 
     @Override
-    public void rateTip(int star, ATipDTO tip) {
+    public void rateTip(int star, TipDTO tip) {
 
     }
 
     @Override
-    public void getPVagter(LatLng location, List<PVagtDTO> list) {
+    public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list) {
+        Log.d(TAG, "getPVagter: " + list + "{" + list.getValue() + "}");
+        this.pvagtlist = list;
+        pvagtlist.setValue(l);
+
+
+
+
+    }
+
+    public void createPVagt(PVagtDTO vagt){
+        Log.d(TAG, "createPVagt: ");
+
+
+        l.add(vagt);
+        pvagtlist.setValue(l);
 
     }
 
     @Override
     public AUserDTO getUser(int id) {
-        return user;
+        return userInfoDTO.getSimpleUser();
     }
 
     @Override

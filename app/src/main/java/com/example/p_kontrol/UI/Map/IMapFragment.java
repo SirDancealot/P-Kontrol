@@ -12,6 +12,7 @@ public interface IMapFragment {
 
 
     void centerMap();
+    void setStateParking();
     void setStateStandby();
     void setStateFreePark();
     void setStateSelectLocation();
@@ -19,4 +20,5 @@ public interface IMapFragment {
     void updatePermissions();
 
     boolean isFreeParkEnabled();
+    boolean isParkingEnabled();
 }

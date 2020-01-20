@@ -57,8 +57,6 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
     UserInfoDTO userInfoDTO;
 
     // Login Formulae Inputs
-    EditText formEmail;
-    EditText formPassword;
     View loding;
 
     // Main Interaction Buttons
@@ -77,17 +75,7 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
 
 
         // Login Formulae Inputs
-        formEmail       = findViewById(R.id.LoginScreen_3_FormEmail);
-        formPassword    = findViewById(R.id.LoginScreen_3_FormPassword);
         loding          = findViewById(R.id.progress_bar);
-
-        // Main Interaction Buttons
-        signIn_regular = findViewById(R.id.LoginScreen_3_SignIn);
-        signUp = findViewById(R.id.LoginScreen_3_SignUp);
-
-        // setting listeners to it self. see onClick method.
-        signIn_regular.setOnClickListener(this);
-        signUp.setOnClickListener(this);
 
 
 
@@ -132,21 +120,12 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
     public void onClick(View v) {
         // each event possible have a unique method for that button event. see below.
         switch(v.getId()){
-            case R.id.LoginScreen_3_SignIn:
-                signIn_Methodregular();
-                break;
             case R.id.LoginScreen_3_SignIn_Google:
                 signIn_MethodGoogle();
-                break;
-            case R.id.LoginScreen_3_SignUp:
-                signUp_Method();
                 break;
         }
     }
 
-    public void signIn_Methodregular(){
-        signIn(formEmail.getText().toString(), formPassword.getText().toString());
-    }
     public void signIn_MethodGoogle(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
@@ -171,7 +150,6 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
-//            System.out.println("---------kkkkk facebook inde");
             FirebaseUser user = mAuth.getCurrentUser();
             userInfoDTO.setUser(user);
             ChangeActivityNext();
@@ -189,8 +167,9 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
         super.onActivityResult(requestCode, resultCode, data);
 
         Log.d(TAG, "onActivityResult: " + requestCode);
-//        System.out.println("---------kkkkk" + requestCode);
-
+        if(loding == null){
+            loding = findViewById(R.id.progress_bar);
+        }
         loding.setVisibility(View.VISIBLE);
 
 
@@ -220,50 +199,8 @@ public class Activity_LoginScreen_03  extends AppCompatActivity implements View.
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
-//        System.out.println("---------kkkkk facebook");
-
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this);
     }
-
-
-
-
-    private boolean validateForm() {
-        boolean valid = true;
-
-        String email = formEmail.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            formEmail.setError("Required.");
-            valid = false;
-        } else if (!email.contains("@")) {
-            formEmail.setError("Please write your email");
-            valid = false;
-        } else {
-            formEmail.setError(null);
-        }
-
-        String password = formPassword.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            formPassword.setError("Required.");
-            valid = false;
-        } else {
-            formPassword.setError(null);
-        }
-
-        return valid;
-    }
-
-
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
-        loding.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this);
-    }
-
 }

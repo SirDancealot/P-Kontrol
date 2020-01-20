@@ -1,8 +1,5 @@
 package com.example.p_kontrol.UI.ReadTips;
 
-import android.os.Bundle;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,10 +7,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.LiveData;
 
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TipBobblesAdapter extends FragmentPagerAdapter {
@@ -29,9 +25,9 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
 
     // Variables
     IFragmentOperator fragmentOperator;
-    LiveData<List<ATipDTO>> tips;
+    LiveData<List<TipDTO>> tips;
 
-    public TipBobblesAdapter(FragmentManager fm, LiveData<List<ATipDTO>> tips, IFragmentOperator fragmentOperator){
+    public TipBobblesAdapter(FragmentManager fm, LiveData<List<TipDTO>> tips, IFragmentOperator fragmentOperator){
         super(fm);
         this.tips = tips;
         this.fragmentOperator = fragmentOperator;

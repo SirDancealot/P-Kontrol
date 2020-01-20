@@ -2,7 +2,7 @@ package com.example.p_kontrol.Backend;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.CollectionReference;
@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface IDatabase {
 
-    List<ATipDTO> getTipList(LatLng location, double radius);
+    List<TipDTO> getTipList(LatLng location, double radius);
 
-    void createTip(ATipDTO tip);
+    void createTip(TipDTO tip);
 
-    void updateTip(ATipDTO tip);
+    void updateTip(TipDTO tip);
 
     AUserDTO getUser(int id);
 
@@ -28,6 +28,6 @@ public interface IDatabase {
      * @param radius a {@code double} radius in kilometers for the query
      * @param targetList the target list in which the tips should end
      */
-    void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> targetList);
+    void queryByLocation(LatLng location, double radius, MutableLiveData<List<TipDTO>> targetList);
 
 }

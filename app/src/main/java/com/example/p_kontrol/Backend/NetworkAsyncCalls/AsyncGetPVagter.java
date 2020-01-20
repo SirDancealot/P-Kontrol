@@ -6,9 +6,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.p_kontrol.Backend.IDatabase;
-import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -43,7 +42,7 @@ public class AsyncGetPVagter extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    protected void onPostExecute(List<ATipDTO> result) {
+    protected void onPostExecute(List<TipDTO> result) {
 
     }
 }

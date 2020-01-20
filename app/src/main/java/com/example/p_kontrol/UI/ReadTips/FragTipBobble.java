@@ -10,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
-import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
 
@@ -37,21 +35,21 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     String URL;
     int type;
     UserInfoDTO userInfoDTO;
-    List<ATipDTO> tips;
+    List<TipDTO> tips;
     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     // regular Variables
     private View view, tipcontainer,suroundings;
     private TextView readMore, tip, name;
     private CircleImageView profImg;
-    private ATipDTO tipDTO;
+    private TipDTO tipDTO;
     private LinearLayout topBar;
     private ImageView like, dislike;
     private int likeStatus;
 
     private IFragmentOperator fragmentOperator;
 
-    public FragTipBobble(IFragmentOperator fragmentOperator, ATipDTO tipDTO){
+    public FragTipBobble(IFragmentOperator fragmentOperator, TipDTO tipDTO){
     this.fragmentOperator = fragmentOperator;
         this.tipDTO = tipDTO;
         // Requiired empty public constructor
@@ -92,7 +90,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         try{
             //name of Profile
             if (tipDTO.getAuthor().getFirstName() != null){
-                name.setText(getArguments().getString(tipDTO.getAuthor().getFirstName()));
+                name.setText(tipDTO.getAuthor().getFirstName());
             } else {
                 name.setText("Anonym");
             }
