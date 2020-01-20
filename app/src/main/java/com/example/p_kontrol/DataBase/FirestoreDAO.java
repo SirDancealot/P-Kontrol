@@ -105,7 +105,7 @@ public class FirestoreDAO extends Service implements IDatabase {
 
     @Override
     public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ATipDTO>> tipList) {
-        Log.d(TAG, "queryByLocation: " + location);
+        Log.d(TAG, "queryByLocation: " + location + ", " + radius);
         if (query != null)
             query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
         else
@@ -181,7 +181,7 @@ public class FirestoreDAO extends Service implements IDatabase {
          * @param s The key of the document that was moved
          */
         @Override
-        public void onKeyExited(@NotNull String s) {
+        public void onKeyExited(@NotNull String s) { // todo fix null pointer exceptions that araise whenever this is called
             Log.d(TAG, "onKeyExited: ");
             
             List<ATipDTO> tips = tipList.getValue();//TODO make this thread safe
@@ -206,10 +206,6 @@ public class FirestoreDAO extends Service implements IDatabase {
                                 tipList.setValue(tips);
                             }
                     );
-
-
-
-
 
         }
 
