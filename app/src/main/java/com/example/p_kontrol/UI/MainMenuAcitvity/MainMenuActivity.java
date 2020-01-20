@@ -133,6 +133,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
         // Closing the Menu down.
         menuOperator.toggleMenu();
+        // Go out of parking state or free parking state.
+        menuOperator.toggleCreateTip();
 
         // starting Contribute process at index 0. meaning the very first step.
         createTip();

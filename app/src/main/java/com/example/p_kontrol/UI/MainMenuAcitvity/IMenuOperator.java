@@ -10,4 +10,6 @@ interface IMenuOperator{
 
     void toggleFreeParkEnabled();
     void toggleParking();
+    void toggleCreateTip();
+
 }
