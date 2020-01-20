@@ -12,7 +12,9 @@ import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 
 import java.util.List;
-
+/**
+ * @responsibilty to be the adapter of a list of tips, and update self on list changes.
+ * */
 public class TipBobblesAdapter extends FragmentPagerAdapter {
 
     // Defaults
@@ -27,7 +29,13 @@ public class TipBobblesAdapter extends FragmentPagerAdapter {
     // Variables
     IFragmentOperator fragmentOperator;
     LiveData<List<ITipDTO>> tips;
-
+    /**
+     * @responsibilty to be the adapter of a list of tips, and update self on list changes.
+     *
+     * @param fm                needed for extending FragmentPagerAdapter;
+     * @param tips              liveData object, used with their observer pattern.
+     * @param fragmentOperator  needed to pass to each TipBobble Fragment, needed to know when the View is clicked OutofBounds then close the TipBobble.
+     * */
     public TipBobblesAdapter(FragmentManager fm, LiveData<List<ITipDTO>> tips, IFragmentOperator fragmentOperator){
         super(fm);
         this.tips = tips;

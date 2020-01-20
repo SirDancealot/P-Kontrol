@@ -26,21 +26,21 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
+/**
+ * @responsibilty to contain all the responsibility for showing it Data for a single tip in a specific layout
+ * */
 public class FragTipBobble extends Fragment implements View.OnClickListener{
+
     // Settings
-    final int TIP_SHORT_MAX_LENGTH = 250;
-    final String TAG ="FragTipBobble";
-    // Argument Keys
-    final String BOBBLE_INDEX = "bobbleTip_index";
-    String URL;
-    int type;
-    UserInfoDTO userInfoDTO;
-    List<ITipDTO> tips;
-    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    final String TAG = this.getClass().getName();
+
+    private String URL;
+    private int type;
+    private UserInfoDTO userInfoDTO;
+    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     // regular Variables
-    private View view, tipcontainer,suroundings;
+    private View view, tipcontainer;
     private TextView readMore, tip, name;
     private CircleImageView profImg;
     private ITipDTO tipDTO;
@@ -50,12 +50,16 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
     private IFragmentOperator fragmentOperator;
 
+    /** @responsibilty to contain all the responsibility for showing it Data for a single tip in a specific layout
+     * @param  fragmentOperator passed by adapter.
+     * @param tipDTO this TipDto Data
+     * */
     public FragTipBobble(IFragmentOperator fragmentOperator, ITipDTO tipDTO){
     this.fragmentOperator = fragmentOperator;
         this.tipDTO = tipDTO;
-        // Requiired empty public constructor
     }
 
+// android things
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,7 +73,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         profImg     = view.findViewById(R.id.bobbelTip_Img)         ;
         tip         = view.findViewById(R.id.bobbelTip_mainTextView);
         readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
-        suroundings = view.findViewById(R.id.bobbelTip_FragmentContainer)                ;
         tipcontainer= view.findViewById(R.id.bobbelTip_container)   ;
         topBar      = view.findViewById(R.id.bobbelTip_top_bar)    ;
         like        = view.findViewById(R.id.bobbelTip_like)              ;
@@ -106,72 +109,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
         return view;
     }
-
-    private void preRenderLikes(){
-        if(tipDTO.getLikers() != null) {
-            if (tipDTO.getLikers().contains(userInfoDTO.getId())) {
-                dislike.setImageResource(R.drawable.ic_tip_dislike);
-                like.setImageResource(R.drawable.ic_tip_like_on);
-                likeStatus = 1;
-            }
-        }
-        if(tipDTO.getDislikers() != null) {
-            if (tipDTO.getDislikers().contains(userInfoDTO.getId())) {
-                dislike.setImageResource(R.drawable.ic_tip_dislike_on);
-                like.setImageResource(R.drawable.ic_tip_like);
-                likeStatus = -1;
-            }
-        }
-    }
-    private void evalTipType(){
-        //tip type
-        type = tipDTO.getType();
-        if(type == TipTypes.paid.getValue()){
-            topBar.setBackgroundResource(R.drawable.shape_squarerounded_top_blue);
-        } else if(type == TipTypes.free.getValue()){
-            topBar.setBackgroundResource(R.drawable.shape_squarerounded_top_green);
-        } else if(type == TipTypes.alarm.getValue()){
-            topBar.setBackgroundResource(R.drawable.shape_squarerounded_top_red);
-        }
-    }
-    private void trimText(){
-        // tip Shortend Text.
-        String tipText = tipDTO.getMessage();
-        if(tipText != null) {
-            String[] split_tip_test = tipText.split("\n");
-            if (split_tip_test.length > 4) {
-                tipText = split_tip_test[0] + split_tip_test[1] + split_tip_test[2] + split_tip_test[3];
-            } else {
-                if (tipText.length() > 65) {
-                    tipText = tipText.substring(0, 65) + "...";
-                } else {
-                    //readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
-                    readMore.setText("date stand in");
-                }
-            }
-            tip.setText(tipText);
-        }
-    }
-    private void getProfileImage(){
-        if (tipDTO .getAuthor() != null ) {
-            if (tipDTO.getAuthor().getProfileSRC() != null) {
-                System.out.println("kkkkk ---------- henter img");
-                System.out.println(tipDTO.getAuthor().getProfileSRC());
-                URL = tipDTO.getAuthor().getProfileSRC();
-                RequestOptions requestOptions = new RequestOptions();
-                requestOptions.dontAnimate();
-                //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
-                Glide.with(FragTipBobble.this).load(URL).into(profImg);
-            } else {
-                RequestOptions requestOptions = new RequestOptions();
-                requestOptions.dontAnimate();
-                Glide.with(FragTipBobble.this).load(R.drawable.anonym).into(profImg);
-            }
-        } else {
-            Log.e(TAG, "getProfileImage: author == null" );
-        }
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -206,7 +143,87 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 break;
             default:
                 // do nothing
-            break;
+                break;
         }
     }
+
+
+    /**
+     * determine the Images for likes button, based on if a user have liked or not.
+     * */
+    private void preRenderLikes(){
+        if(tipDTO.getLikers() != null) {
+            if (tipDTO.getLikers().contains(userInfoDTO.getId())) {
+                dislike.setImageResource(R.drawable.ic_tip_dislike);
+                like.setImageResource(R.drawable.ic_tip_like_on);
+                likeStatus = 1;
+            }
+        }
+        if(tipDTO.getDislikers() != null) {
+            if (tipDTO.getDislikers().contains(userInfoDTO.getId())) {
+                dislike.setImageResource(R.drawable.ic_tip_dislike_on);
+                like.setImageResource(R.drawable.ic_tip_like);
+                likeStatus = -1;
+            }
+        }
+    }
+    /**
+     * color Fragment Header based on Type of Tip
+     * */
+    private void evalTipType(){
+        //tip type
+        type = tipDTO.getType();
+        if(type == TipTypes.paid.getValue()){
+            topBar.setBackgroundResource(R.drawable.shape_squarerounded_top_blue);
+        } else if(type == TipTypes.free.getValue()){
+            topBar.setBackgroundResource(R.drawable.shape_squarerounded_top_green);
+        } else if(type == TipTypes.alarm.getValue()){
+            topBar.setBackgroundResource(R.drawable.shape_squarerounded_top_red);
+        }
+    }
+    /**
+     *  Trims down text if it is to large
+     * */
+    private void trimText(){
+        // tip Shortend Text.
+        String tipText = tipDTO.getMessage();
+        if(tipText != null) {
+            String[] split_tip_test = tipText.split("\n");
+            if (split_tip_test.length > 4) {
+                tipText = split_tip_test[0] + split_tip_test[1] + split_tip_test[2] + split_tip_test[3];
+            } else {
+                if (tipText.length() > 65) {
+                    tipText = tipText.substring(0, 65) + "...";
+                } else {
+                    //readMore.setText(DATE_FORMAT.format(tipDTO.getCreationDate()));
+                    readMore.setText("date stand in");
+                }
+            }
+            tip.setText(tipText);
+        }
+    }
+    /**
+     * gets the profileImage to show on the tip
+     * */
+    private void getProfileImage(){
+        if (tipDTO .getAuthor() != null ) {
+            if (tipDTO.getAuthor().getProfileSRC() != null) {
+                System.out.println("kkkkk ---------- henter img");
+                System.out.println(tipDTO.getAuthor().getProfileSRC());
+                URL = tipDTO.getAuthor().getProfileSRC();
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.dontAnimate();
+                //Glide.with(FragTipBobble.this).load(R.drawable.tipprofileimg).into(profImg);
+                Glide.with(FragTipBobble.this).load(URL).into(profImg);
+            } else {
+                RequestOptions requestOptions = new RequestOptions();
+                requestOptions.dontAnimate();
+                Glide.with(FragTipBobble.this).load(R.drawable.anonym).into(profImg);
+            }
+        } else {
+            Log.e(TAG, "getProfileImage: author == null" );
+        }
+    }
+
+
 }
