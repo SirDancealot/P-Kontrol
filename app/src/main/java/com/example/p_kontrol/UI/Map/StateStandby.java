@@ -16,7 +16,14 @@ import java.util.List;
 
 public class StateStandby extends State {
 
-
+    /** Standby is a state where you can read tips, by clicking on the tip.
+     *
+     * StateSelectLocation Extends State
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateStandby(MapFragment parent) {
         super(parent);
         map.clear();

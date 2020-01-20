@@ -20,7 +20,15 @@ public class StateSelectLocation extends State {
 
     String TAG = "State Select Loaction ";
 
-
+    /** Select Location is a state where you can place a location on the map, in addition it automaticly sets your currentlocation
+     * as the standard placement of the selected location.
+     *
+     * StateSelectLocation Extends State
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateSelectLocation(MapFragment parent) {
         super(parent);
         map.clear();

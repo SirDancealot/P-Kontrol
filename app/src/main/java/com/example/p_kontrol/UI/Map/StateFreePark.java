@@ -18,7 +18,15 @@ import static com.example.p_kontrol.UI.Map.Pins.free;
 
 public class StateFreePark extends State {
 
-
+    /** Free park is essentialy a filter where only tips of the "free parking here " category is showsn
+     * @see {@link com.example.p_kontrol.UI.Map.Pins}
+     *
+     * Free park Extends
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateFreePark(MapFragment parent) {
         super(parent);
 
@@ -37,8 +45,9 @@ public class StateFreePark extends State {
         updateMap(tipList);
     }
 
-
-
+    /** Sets markers on the map but sorts out the tips currently in the Memory that arent free Tips
+     *  and therefore only shows free tips
+     * */
     @Override
     public void updateMap(List<TipDTO> list ) {
         MarkerOptions markerOptions = null;

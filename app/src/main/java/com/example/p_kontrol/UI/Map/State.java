@@ -31,6 +31,9 @@ abstract public class State implements IState  {
 
     LiveDataViewModel viewModel     ;
 
+    /**
+     * @param parent the State Wrapper, is needed to call data from the activity and to be able to change states from within the states.
+     * */
     public State( MapFragment parent ) {
         //retrieving Objects
         this.parent     = parent;
@@ -42,13 +45,15 @@ abstract public class State implements IState  {
         // Setting Listeners
         setListeners();
     }
-
+    // interface
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void updateMap(List<TipDTO> list) {}
-    @Override
-    public void setDoneListner(IMapFragmentListener listener) {
-        this.listener = listener;
-    }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void centerMethod(){
         try {
@@ -79,7 +84,10 @@ abstract public class State implements IState  {
         }
     }
 
-
+    // methods every State needs for it self
+    /**
+     * used to animate the camera to a location
+     * */
     public void animeCamara(LatLng geo){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(geo)
@@ -87,9 +95,17 @@ abstract public class State implements IState  {
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
+
+    /**
+     * needed to overide specifik listeners in specifik states.
+     * */
     public void setListeners(){
         map.setOnMapClickListener(null);
     }
+
+    /**
+     * used to set Markers on the map. in a certain height and width.
+     * */
     public Bitmap resizeMapIcons(String iconName, int width, int height){
 
         Resources res = parent.getContext().getResources();
@@ -100,34 +116,4 @@ abstract public class State implements IState  {
         return resizedBitmap;
     }
 
-
-    /*
-
-
-    public void setListeners(){
-        map.setOnMapClickListener(null);
-    }
-
-
-    public void moveCamara(LatLng geo){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(geo)
-                .zoom(DEFAULT_MAP_ZOOM ).build();
-        //map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-    public void animeCamara(LatLng geo){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(geo)
-                .zoom(DEFAULT_MAP_ZOOM ).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-    public void zoomCamara(int zoom){
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(map.getCameraPosition().target)
-                .zoom(zoom).build();
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        //map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }*/
 }
