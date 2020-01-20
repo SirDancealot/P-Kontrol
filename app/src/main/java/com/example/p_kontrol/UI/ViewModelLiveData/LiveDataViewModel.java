@@ -8,13 +8,11 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
-import com.example.p_kontrol.DataTypes.ITipDTO;
-import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
-import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
+import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;

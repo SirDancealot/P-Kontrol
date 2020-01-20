@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -104,7 +105,7 @@ public class FirestoreDAO extends Service implements IDatabase {
 
 
     @Override
-    public void queryByLocation(final MutableLiveData<LatLng> location, final MutableLiveData<Float> radius, final MutableLiveData<List<TipDTO>> tipList) {
+    public void queryByLocation(final MutableLiveData<LatLng> location, final MutableLiveData<Float> radius, final MutableLiveData<List<ITipDTO>> tipList) {
         Log.d(TAG, "queryByLocation: " + location);
         if (query != null)
             //query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());

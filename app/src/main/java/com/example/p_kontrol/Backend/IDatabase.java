@@ -2,15 +2,9 @@ package com.example.p_kontrol.Backend;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
-import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
-import com.example.p_kontrol.DataTypes.Interfaces.IdbTipDTO;
-import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
-import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
 
