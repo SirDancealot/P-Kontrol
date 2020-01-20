@@ -8,6 +8,12 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <!-- close fragment strings -->
+    <string name="close_frag_confirm">Ja</string>
+    <string name="close_frag_deny">Nej</string>
+    <string name="close_frag_title0">Vil du lukke appen?</string>
+    <string name="close_frag_title1">Vil du slette alt din date, den kan ikke genoprettes?</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -34,7 +40,7 @@
     <string name="profile_Rating_3"> sejt! </string>
     <string name="profile_Rating_4"> Woa du er god </string>
     <string name="profile_Rating_5"> Master rated </string>
-    <string name="deleteBtn"> Slet al data! </string>
+    <string name="deleteBtn"> Slet alt data! </string>
     <string name="logOutBtn"> Log ud </string>
 
     <!-- profile Rating Table  -->

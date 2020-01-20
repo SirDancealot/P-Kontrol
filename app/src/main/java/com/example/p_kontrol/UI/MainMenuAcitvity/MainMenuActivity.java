@@ -14,10 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
-import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
@@ -36,7 +33,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     // Android Specific things
     public String TAG = "MenuController";
-    private MainMenuCloseFragment fragment_close;
+    private YesNoDialogFragment fragment_close;
 
     //Activity Controller Objects, these are delegates of Responsibility to Operate Different Areas of the Code.
     private IMenuOperator       menuOperator;       // Start the Menu Views, setup Listeners and Know them.
@@ -82,7 +79,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
         // getting data
         model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
-        fragment_close= new MainMenuCloseFragment(this);
+        fragment_close= new YesNoDialogFragment(this, 0);
 
         // setting up the center Click button , since it dosent change, set it here.
         mapOperator.onCenterClick(new View.OnClickListener() {

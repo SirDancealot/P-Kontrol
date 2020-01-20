@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
-import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuCloseFragment;
+import com.example.p_kontrol.UI.MainMenuAcitvity.YesNoDialogFragment;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -45,7 +45,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
     // https://github.com/firebase/quickstart-android/blob/90389865dc8a64495b1698c4793cd4deecc4d0ee/auth/app/src/main/java/com/google/firebase/quickstart/auth/java/GoogleSignInActivity.java#L101-L120
     private FirebaseAuth mAuth;
 
-    private MainMenuCloseFragment fragment_close;
+    private YesNoDialogFragment fragment_close;
     private GoogleSignInClient mGoogleSignInClient;
     private CallbackManager mCallbackManager;
     UserInfoDTO userInfoDTO;
@@ -66,7 +66,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         mAuth = FirebaseAuth.getInstance();
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         findViewById(R.id.LoginScreen_3_SignIn_Google).setOnClickListener(this);
-        fragment_close= new MainMenuCloseFragment(this);
+        fragment_close= new YesNoDialogFragment(this, 0);
 
 
 
