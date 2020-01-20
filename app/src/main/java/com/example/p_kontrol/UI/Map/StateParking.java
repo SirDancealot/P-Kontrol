@@ -77,6 +77,7 @@ public class StateParking extends State {
 
     /**
      * a method to update the P-vagt's shown on the map
+     * @param pVagtList a list of the Pvagt alerts in the area.
      * */
     public void updatePVagter(List<PVagtDTO> pVagtList) {
         int i = 0;

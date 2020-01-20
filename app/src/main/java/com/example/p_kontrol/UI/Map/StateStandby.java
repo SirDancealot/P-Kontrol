@@ -44,6 +44,9 @@ public class StateStandby extends State {
         //viewModel.updateTips(null); TODO this might be redundant with the service implementation
     }
 
+    /** sets all tips onto the map ready to read.
+     * @param list, a list of all the tips in memory, all will be shown
+     * */
     @Override
     public void updateMap(List<ITipDTO> list ) {
         MarkerOptions markerOptions = null;

@@ -41,7 +41,12 @@ public class StateSelectLocation extends State {
 
     }
 
-    // Listeners
+    /**
+     * Overides the current listeners such that when you click on the map you set a marker,
+     * click again and it removes the previous marker, and adds a new.
+     *
+     * and no Marker on click listener.
+     * */
     @Override
     public void setListeners(){
 
@@ -66,36 +71,12 @@ public class StateSelectLocation extends State {
         });
 
     }
+
+    /**
+     * empty method.
+            * */
     @Override
     public void updateMap(List<ITipDTO> list) {
-
-    }
-    @Override
-    public void centerMethod(){
-        try {
-            Task locationResult = parent.getFusedLocationProviderClient().getLastLocation();
-            locationResult.addOnCompleteListener( parent.getContext() , new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if ( task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        Location location = (Location) task.getResult();
-                        LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
-                        viewModel.getCurrentLocation().setValue(result);
-                        map.addMarker(new MarkerOptions().position(viewModel.getCurrentLocation().getValue()));
-                        animeCamara(result);
-
-                    } else {
-                        // if location cannot be found.
-                        viewModel.getCurrentLocation().setValue( parent.DEFAULT_LOCATION );
-                        animeCamara( parent.DEFAULT_LOCATION );
-                    }
-                }
-            });
-
-        } catch(SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
     }
 
 }

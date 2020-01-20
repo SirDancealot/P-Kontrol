@@ -48,6 +48,8 @@ public class StateFreePark extends State {
 
     /** Sets markers on the map but sorts out the tips currently in the Memory that arent free Tips
      *  and therefore only shows free tips
+     *
+     * @param list, a list of all the tips in memory, but only a portion will be shown
      * */
     @Override
     public void updateMap(List<ITipDTO> list ) {
