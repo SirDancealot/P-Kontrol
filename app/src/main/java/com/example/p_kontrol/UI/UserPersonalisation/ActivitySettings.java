@@ -29,6 +29,8 @@ public class ActivitySettings extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.example_settings);
 
+        // todo delete if not used
+
     }
 
 }

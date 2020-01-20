@@ -3,7 +3,10 @@ package com.example.p_kontrol.UI.MainMenuAcitvity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 
@@ -58,6 +61,28 @@ public class YesNoDialogFragment extends DialogFragment {
             builder.setNegativeButton(R.string.close_frag_deny, ((dialog, which) -> {
                 dialog.cancel();
             }));
+        } else {
+
+            builder.setTitle(R.string.close_frag_title2)
+            /*.setMessage("")*/;
+
+            // our facebook grope
+            String id = "1057084904626319";
+
+            builder.setPositiveButton(R.string.close_frag_confirm, ((dialog, which) -> {
+                try {
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://group/" + id));
+                    startActivity(i);
+                } catch (ActivityNotFoundException e) {
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/" + id));
+                    startActivity(i);
+                }
+            }));
+
+            builder.setNegativeButton(R.string.close_frag_deny, ((dialog, which) -> {
+                dialog.cancel();
+            }));
+
         }
 
         return builder.create();

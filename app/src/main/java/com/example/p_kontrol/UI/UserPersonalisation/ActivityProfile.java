@@ -37,7 +37,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
     private TextView fname, femail;
     private UserInfoDTO userInfoDTO;
     private Button logOut, delete;
-    private YesNoDialogFragment fragment_close;
+    private YesNoDialogFragment dialogDelete;
 
 
 
@@ -48,7 +48,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
 
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        fragment_close= new YesNoDialogFragment(this, 1);
+        dialogDelete= new YesNoDialogFragment(this, 1);
 
         fimg = findViewById(R.id.profilePic);
         fname = findViewById(R.id.profile_profileName);
@@ -84,7 +84,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             onBackPressed();
         }
         if (v == delete) {
-            fragment_close.show(getSupportFragmentManager(), "closeFragment");
+            dialogDelete.show(getSupportFragmentManager(), "closeFragment");
             // todo delete all user data
         }
         if (v == logOut){
