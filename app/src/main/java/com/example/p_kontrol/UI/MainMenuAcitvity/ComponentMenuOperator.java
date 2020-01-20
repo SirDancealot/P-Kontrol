@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import com.example.p_kontrol.R;
 
-class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
+class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
     IMenuOperationsController context;
     private String TAG = this.getClass().getName();
@@ -20,7 +20,7 @@ class CompositionMenuOperator   implements View.OnClickListener, IMenuOperator{
     boolean stateFreePark = false;
     boolean stateParking = false;
 
-    public CompositionMenuOperator(IMenuOperationsController context, View view){
+    public ComponentMenuOperator(IMenuOperationsController context, View view){
         this.context = context;
 
         // Menu Buttons.

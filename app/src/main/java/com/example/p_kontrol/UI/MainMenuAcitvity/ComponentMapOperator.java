@@ -13,7 +13,7 @@ import com.example.p_kontrol.UI.Map.IState;
 import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
-class CompositionMapOperator        implements IMapOperator   {
+class ComponentMapOperator implements IMapOperator   {
 
     AppCompatActivity context;
     IMapOperatorController mapController;
@@ -28,7 +28,7 @@ class CompositionMapOperator        implements IMapOperator   {
     Button mapView_cancelBtn;
     View mapView_btnContainerAceptCancel;
 
-    public CompositionMapOperator(AppCompatActivity context,View view, IMapOperatorController mapController ){
+    public ComponentMapOperator(AppCompatActivity context, View view, IMapOperatorController mapController ){
         this.context = context;
         this.view = view;
         this.mapController = mapController;

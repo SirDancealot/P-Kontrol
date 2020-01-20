@@ -233,7 +233,7 @@ public class FirestoreDAO extends Service implements IDatabase {
                 tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
                     TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
 
-                    List<ATipDTO> temp = tipList.getValue();
+                    List<TipDTO> temp = tipList.getValue();
                     if (temp != null) {
                         temp.add(tipDTO);
                         tipList.postValue(temp);
@@ -266,7 +266,7 @@ public class FirestoreDAO extends Service implements IDatabase {
                     );
 
             if (tips != null) {
-                for (ATipDTO tip : tips) {
+                for (TipDTO tip : tips) {
                     if (tip.equals(exitedTip[0]))
                         tips.remove(tip);
                 }

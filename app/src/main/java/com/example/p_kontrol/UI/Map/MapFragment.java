@@ -22,11 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivityController;
-import com.example.p_kontrol.UI.Map.IMapFragment;
-import com.example.p_kontrol.UI.Map.IMapFragmentListener;
-import com.example.p_kontrol.UI.Map.IState;
-import com.example.p_kontrol.UI.Map.StateStandby;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
