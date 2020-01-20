@@ -19,7 +19,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 
 import java.util.List;
-
+/**
+ * @responsibilty to keep track of wher a user have parked, and give feedback if a Pvagt is in range. within the last 20 minutes
+ *
+ * */
 public class StateParking extends State {
 
     Activity context;
@@ -30,16 +33,13 @@ public class StateParking extends State {
 
     LatLng currentLocation;
 
-    /** Parking state is a state where you set your current location to be your parking spot. and then
-     *  you set the app to listen for P-Vagt Warnings.
+    /** @responsibilty to keep track of wher a user have parked, and give feedback if a Pvagt is in range. within the last 20 minutes
      *
      * if you are warned of a P-vagt then a small tone will play, if the alert is older than 20min it is a grayer version of the alert symbol
      *
      * StateParking Extends State
      * @see {@link com.example.p_kontrol.UI.Map.State}
      *
-     * and there fore implements
-     * @see {@link com.example.p_kontrol.UI.Map.IState}
      * */
     public StateParking(MapFragment parent) {
         super(parent);

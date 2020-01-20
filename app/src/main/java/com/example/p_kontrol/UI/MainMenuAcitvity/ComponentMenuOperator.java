@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.p_kontrol.R;
-
+/**
+ * @responsibilty to contain all the responsibility for initiating, knowing, and using the overlaying fragments of the app.
+ * */
 class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
     private IMenuOperationsController context;
@@ -22,6 +24,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     private boolean stateParking    = false ;
 
     /**
+     * @responsibilty to contain all the responsibility for initiating, knowing, and using the overlaying fragments of the app.
      *  ComponentMenuOperator is the Component which has the Delegated responsibility to Manage the menu.
      *  @param context       is an interface IMenuOperationsController to manage callbacks, because this class does not have the responsibility to manage what happens on menubuttons clicks. that is reserved for the context
      *  @param view          the layout view, needed to search for xml views in the layout.

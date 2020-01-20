@@ -1,5 +1,8 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
+/**
+ * @responsibilty to contain methods that describe how to operate teh Menu
+ * */
 interface IMenuOperator{
     /**
      *  is Called mainly from the Menu Handle.
