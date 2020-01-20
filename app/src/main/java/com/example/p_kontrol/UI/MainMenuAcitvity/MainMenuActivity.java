@@ -26,7 +26,10 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 
 import java.util.Date;
-
+/**
+ * @responsibilty to be the Main android Framework for everything in the app that uses a MainMenu, Map , ReadTips, WriteTips, Parking, and P alerts.
+ *
+ * */
 public  class MainMenuActivity extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
 
 // VARIABLES

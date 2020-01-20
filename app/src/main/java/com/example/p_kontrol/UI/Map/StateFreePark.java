@@ -16,17 +16,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
 
 import static com.example.p_kontrol.UI.Map.Pins.free;
-
+/**
+ * @responsibilty to sort out tips, like the Standby state, but only show the "free" category
+ *@see {@link com.example.p_kontrol.UI.Map.StateStandby}
+ * */
 public class StateFreePark extends State {
 
-    /** Free park is essentialy a filter where only tips of the "free parking here " category is showsn
+    /** @responsibilty to sort out tips, like the Standby state, but only show the "free" category
+     *@see {@link com.example.p_kontrol.UI.Map.StateStandby}
+     *
+     * pin grafic id's
      * @see {@link com.example.p_kontrol.UI.Map.Pins}
      *
      * Free park Extends
      * @see {@link com.example.p_kontrol.UI.Map.State}
      *
-     * and there fore implements
-     * @see {@link com.example.p_kontrol.UI.Map.IState}
      * */
     public StateFreePark(MapFragment parent) {
         super(parent);

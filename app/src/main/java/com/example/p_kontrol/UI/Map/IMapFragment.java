@@ -7,12 +7,12 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-
+/** @responsibilty to contain the map as a single object instanse, and operate it self.   */
 public interface IMapFragment {
 
     // Methods
-    /** method for centering the map, calls the IState centerMethod()
-     * @see {@link com.example.p_kontrol.UI.Map.IState}
+    /** method for centering the map, calls the abstract State  centerMethod()
+     * @see {@link com.example.p_kontrol.UI.Map.State}
      * */
     void centerMap();
     /** required to update permissions on the GoogleMap Object */
@@ -41,12 +41,9 @@ public interface IMapFragment {
      * */
     void setStateSelectLocation();
 
-    /** returns the Current State of the State Pattern
-     * interface
-     * @return {@link com.example.p_kontrol.UI.Map.IState}
-     *
+    /**
      * implementation
-     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * @see {@link com.example.p_kontrol.UI.Map.State}
      * @see {@link com.example.p_kontrol.UI.Map.StateSelectLocation}
      * @see {@link com.example.p_kontrol.UI.Map.StateFreePark}
      * @see {@link com.example.p_kontrol.UI.Map.StateStandby}
@@ -55,7 +52,7 @@ public interface IMapFragment {
      * abstract implementation
      * @see {@link com.example.p_kontrol.UI.Map.State}
      * */
-    IState getCurrentState();
+    State getCurrentState();
 
     /**
      * @return true if Enabled else false*/

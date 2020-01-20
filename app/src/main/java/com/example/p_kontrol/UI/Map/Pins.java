@@ -1,7 +1,7 @@
 package com.example.p_kontrol.UI.Map;
 
 /**
- * an Enumeration to keep track of data regarding the Marker icons, such that they can be easely managed
+ * * @responsibilty keep track of data regarding the Marker icons, such that they can be easely managed
  * */
 public enum Pins{
     free("map_tip_pin_regular", 354, 512),

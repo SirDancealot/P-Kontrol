@@ -29,6 +29,9 @@ public class WriteTipState_WriteText extends AbstractWriteTipState {
     LiveDataViewModel viewModel;
     ITipDTO dto = new TipDTO();
 
+    /**
+     * @inheritDoc
+     * */
     public WriteTipState_WriteText(IWriteTipStateListener listener) {
         super(listener);
     }

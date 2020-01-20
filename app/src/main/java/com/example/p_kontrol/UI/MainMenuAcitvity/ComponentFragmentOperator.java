@@ -21,7 +21,9 @@ import com.example.p_kontrol.UI.WriteTip.FragMessageWrite;
 import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 
 import java.util.List;
-
+/**
+ * @responsibilty to contain all the responsibility for initiating, knowing, and using the map.
+ * */
 class ComponentFragmentOperator implements IFragmentOperator {
 
     // Android Specifics
@@ -51,6 +53,8 @@ class ComponentFragmentOperator implements IFragmentOperator {
     private LiveData<List<ITipDTO>> tipList;
 
     /**
+     * @responsibilty to contain all the responsibility for initiating, knowing, and using the map.
+     *
      *  ComponentFragmentOperator is the Component which has the Delegated responsibility to Manage the Opening and Closing of Fragments. Not when and where they open, but simply to open them
      *  @param context  the Parent Activity, such that the reference can be passed on to the fragments. its necessary due to lifeCycle things.
      *  @param view     the layout view, needed to search for xml views in the layout.

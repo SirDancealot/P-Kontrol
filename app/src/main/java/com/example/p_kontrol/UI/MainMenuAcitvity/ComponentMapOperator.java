@@ -9,10 +9,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IMapFragmentListener;
-import com.example.p_kontrol.UI.Map.IState;
 import com.example.p_kontrol.UI.Map.MapFragment;
+import com.example.p_kontrol.UI.Map.State;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
-
+/**
+ * @responsibilty to contain all the responsibility for initiating, knowing, and using the map.
+ * */
 class ComponentMapOperator implements IMapOperator   {
 
     // Android Specifics
@@ -31,6 +33,8 @@ class ComponentMapOperator implements IMapOperator   {
 
 
     /**
+     * @responsibilty to contain all the responsibility for initiating, knowing, and using the map.
+     *
      *  ComponentMapOperator is the Component which has the Delegated responsibility to Manage the map, it uses the IMapFragment to do this.
      *  @see {@link com.example.p_kontrol.UI.Map.IMapFragment}
      *
@@ -159,7 +163,7 @@ class ComponentMapOperator implements IMapOperator   {
      * @inheritDoc
      * */
     @Override
-    public IState getCurrentState() {
+    public State getCurrentState() {
         return mapFragment.getCurrentState();
     }
 

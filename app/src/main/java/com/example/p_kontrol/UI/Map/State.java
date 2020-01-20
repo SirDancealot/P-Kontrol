@@ -19,8 +19,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.List;
-
-abstract public class State implements IState  {
+/**
+ * @responsibilty act as a base type and implementation for all states
+ * */
+abstract public class State  {
 
     // Defaults.
     final String TAG = "State"      ;
@@ -32,9 +34,10 @@ abstract public class State implements IState  {
     LiveDataViewModel viewModel     ;
 
     /**
+     * @responsibilty act as a base type and implementation for all states
      * @param parent the State Wrapper, is needed to call data from the activity and to be able to change states from within the states.
      * */
-    public State( MapFragment parent ) {
+    public State( MapFragment parent ){
         //retrieving Objects
         this.parent     = parent;
 
@@ -49,14 +52,14 @@ abstract public class State implements IState  {
 
     // interface
     /**
-     * @inheritDoc
+     * an Update Method, also here for the right to be overidden
+     * @param list the list of tipsMarkers to set on the map.
      * */
-    @Override
     public void updateMap(List<ITipDTO> list) {}
+
     /**
-     * @inheritDoc
+     * the Real implementation of the centermethod, it is individual to each state, such that it can be overidden.
      * */
-    @Override
     public void centerMethod(){
         try {
             Task locationResult = parent.getFusedLocationProviderClient().getLastLocation();

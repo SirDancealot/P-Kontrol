@@ -1,7 +1,9 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
 import android.view.View;
-
+/**
+ * @responsibilty to specify listener calls to the MapOperator it can call when are clicked.
+ * */
 public interface IMapOperatorController{
 
     /**
@@ -9,11 +11,4 @@ public interface IMapOperatorController{
      * to controll what happens when a Tip marker is clicked on the map.
      */
     void onTipClick(int index);
-
-    /**
-     * implements interface IMapOperatorController.
-     * to controll what happens when the CenterButton is clicked.
-     */
-    void onCenterClick(View v);
-
 }

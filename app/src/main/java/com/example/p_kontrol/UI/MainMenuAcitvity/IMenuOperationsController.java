@@ -1,5 +1,7 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
-
+/**
+ * @responsibilty to contain methods the menu can call beck when buttons are clicked
+ * */
 interface IMenuOperationsController{
     /**
      * implements interface IMenuOperationsController.

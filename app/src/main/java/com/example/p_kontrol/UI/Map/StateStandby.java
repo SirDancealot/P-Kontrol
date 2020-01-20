@@ -15,16 +15,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
-
+/**
+ * @responsibilty to show the tips on the map. and make em clickable
+ *
+ * */
 public class StateStandby extends State {
 
-    /** Standby is a state where you can read tips, by clicking on the tip.
+    /**@responsibilty to show the tips on the map. and make em clickable
      *
      * StateSelectLocation Extends State
      * @see {@link com.example.p_kontrol.UI.Map.State}
      *
-     * and there fore implements
-     * @see {@link com.example.p_kontrol.UI.Map.IState}
      * */
     public StateStandby(MapFragment parent) {
         super(parent);

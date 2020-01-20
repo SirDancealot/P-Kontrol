@@ -9,13 +9,16 @@ import android.widget.Button;
 
 import com.example.p_kontrol.R;
 /**
- * @responsibility responsibility to createListner call when user submits.
+ * @responsibility responsibility to act as a last state before submitting and giving the user visial feedback for submitting a Tip
  *
  * */
 public class WriteTipState_Submit extends AbstractWriteTipState {
 
     View view;
 
+    /**
+     *
+     * */
     public WriteTipState_Submit(IWriteTipStateListener listener) {
         super(listener);
     }

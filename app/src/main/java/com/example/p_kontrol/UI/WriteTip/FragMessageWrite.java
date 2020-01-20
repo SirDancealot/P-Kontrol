@@ -18,11 +18,13 @@ import com.example.p_kontrol.Util.CustomProgressBar;
 
 import java.util.LinkedList;
 import java.util.List;
-
+/** @responsibilty to Contain WriteTip States and when done Telling the Activity. */
 public class FragMessageWrite extends Fragment implements View.OnClickListener, IWriteTipStateListener {
 
-    // Views
+    String TAG = this.getClass().getName();
     Activity activity;
+
+    // Views
     private View view,contentContainer, WriteTip_outerBounds;
     private ViewPager viewPagerContent;
     private Button navNext, navPrev, navCancel;
@@ -36,10 +38,34 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     int stateIndex = 0;
 
     LiveDataViewModel viewModel;
+
+/**
+ *  @responsibilty to Contain WriteTip States and when done Telling the Activity.
+ *
+ *  FragMessageWrite is a fragment containing a PagerViewer, displaying its own child fragments.
+ *  @param activity  the Parent Activity, such that FragMessageWrite
+ *  @param listener  contains a onMessageComplete and a on onCancel.
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.ITipWriteListener}
+ *
+ *  gives all states a IWriteTipStateListener implemented by it self, it contains a onMessageSubmit() method,
+ *  this is ment to be a checking point, were the new Tip is evaluated for errors.
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.IWriteTipStateListener}
+ *
+ *  Relevant files
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.ITipWriteListener}
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.IWriteTipStateListener}
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.AbstractWriteTipState}
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.WriteTipAdapter}
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.WriteTipState_Submit}
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.WriteTipState_Type}
+ *  @see {@link com.example.p_kontrol.UI.WriteTip.WriteTipState_WriteText}
+ * */
     public FragMessageWrite(ITipWriteListener listener, Activity activity) {
         this.listener = listener;
         this.activity = activity;
     }
+
+// Android Specifiks
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,6 +122,8 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         hideOrShowNextPrevButtons();
     }
 
+// Interfaces
+
     @Override
     public void onClick(View v) {
 
@@ -145,9 +173,20 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
     }
 
+// private internal calls
+
+    /**
+     * manages the custom view CustomProgressBar
+     * and updates its status or "progress"
+     * */
     private void setProgresBarProgress(int i ){
         progressBar.setProgressValue(i + 1);
     }
+    /**
+     * this is a void call, that evaluates if the next or prev buttons shoiuld be shown
+     * the nextBtn should not be shown if it is the last state in the ViewPager
+     * the prevBtn should not be shown if it is the first State in the ViewPager
+     * */
     private void hideOrShowNextPrevButtons(){
         if(stateIndex == 0){
             navPrev.setVisibility(View.GONE);
@@ -161,7 +200,9 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         }
 
     }
-
+    /**
+     * Hides the keyboard, is called on the switching between states in the viewpager
+     * */
     private void hideKeyboard() {
         try {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -176,6 +217,7 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
         }
     }
+
 }
 
 
