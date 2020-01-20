@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
@@ -66,20 +67,27 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     // Android LifeCycle Calls, onCreate onStart onResume.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // setup the Layout and the Main View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
         container = findViewById(R.id.mainMenu_layout);
 
-        // setting compositions
-        // delegates responsibility for Creating Views out to keep code simple, however, each referes back here
-        // for controll.
+        // setting responsibility delegating components
         menuOperator     = new ComponentMenuOperator(this, container );
         mapOperator      = new ComponentMapOperator(this,container, this);
         fragmentOperator = new ComponentFragmentOperator(this,container);
 
+        // getting data
         model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
         fragment_close= new MainMenuCloseFragment(this);
 
+        // setting up the center Click button , since it dosent change, set it here.
+        mapOperator.onCenterClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapOperator.centerOnUserLocation();
+            }
+        });
     }
 
     @Override
@@ -106,10 +114,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     //  -- * -- * -- * -- * -- * IMenuOperationsController -- * -- * -- * -- * -- * -- *
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Profile Button is clicked
-     * @return void
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_profile(){
         Log.i("click","Profile btn clicked \n");
@@ -118,20 +124,18 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when FreePark Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
         mapOperator.toggleStateFreePark();
-        menuOperator.toggleFreePark();
+        menuOperator.toggleMenuBtnFreePark();
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Contribute Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_Contribute(){
 
@@ -139,16 +143,15 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         menuOperator.toggleMenu();
 
         // starting Contribute process at index 0. meaning the very first step.
-        TipDTO tipCreate = model.getTipCreateObject().getValue();
+        ITipDTO tipCreate = model.getTipCreateObject().getValue();
         tipCreate.setAuthor(UserInfoDTO.getUserInfoDTO().getSimpleUser());
         createTip();
 
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Feedback Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_FeedBack(){
         Log.i("click","Community btn clicked \n");
@@ -157,20 +160,18 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Parking Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_Parking(){
         Log.i("click","Park Alarm btn clicked \n");
         mapOperator.toggleStateParking();
-        menuOperator.toggleParking();
+        menuOperator.toggleMenuBtnParking();
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when P-Vagt Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
@@ -183,9 +184,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     // -- * -- * -- * -- * -- * Map IMapOperatorController -- * -- * -- * -- * -- * -- *
 
     /**
-     * implements interface IMapOperatorController.
-     * to controll what happens when a Tip marker is clicked on the map.
-     */
+     * @inheritDoc
+     * */
     @Override
     public void onTipClick(int index){
         fragmentOperator.showTipBobbles(index);
@@ -193,9 +193,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMapOperatorController.
-     * to controll what happens when the CenterButton is clicked.
-     */
+     * @inheritDoc
+     * */
     @Override
     public void onCenterClick(View v){
         mapOperator.centerOnUserLocation();

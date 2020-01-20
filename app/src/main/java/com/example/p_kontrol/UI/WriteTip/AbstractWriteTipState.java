@@ -7,7 +7,7 @@ import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 
 public class AbstractWriteTipState extends Fragment implements IWriteTipState {
 
-    TipDTO dto = new TipDTO();
+    ITipDTO dto = new TipDTO();
     IWriteTipStateListener listener;
 
     public AbstractWriteTipState(IWriteTipStateListener listener) {

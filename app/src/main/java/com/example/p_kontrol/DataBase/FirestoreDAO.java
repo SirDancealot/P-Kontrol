@@ -54,7 +54,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public List<TipDTO> getTipList(LatLng location, double radius) {
+    public List<ITipDTO> getTipList(LatLng location, double radius) {
         Task<QuerySnapshot> query = tips.get();
 
         try {
@@ -91,7 +91,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void updateTip(TipDTO tip) { }
+    public void updateTip(ITipDTO tip) { }
 
     @Override
     public AUserDTO getUser(int id) {
@@ -106,7 +106,7 @@ public class FirestoreDAO extends Service implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<TipDTO>> tipList) {
+    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<ITipDTO>> tipList) {
         Log.d(TAG, "queryByLocation: " + location);
         if (query != null)
             query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
@@ -129,11 +129,11 @@ public class FirestoreDAO extends Service implements IDatabase {
         String TAG = "GeoFirestore";
 
         IDatabase dao;
-        MutableLiveData<List<TipDTO>> tipList;
+        MutableLiveData<List<ITipDTO>> tipList;
         CollectionReference collection;
 
 
-        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<TipDTO>> tipList, CollectionReference collection) {
+        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ITipDTO>> tipList, CollectionReference collection) {
             this.dao = dao;
             this.tipList = tipList;
             this.collection = collection;
@@ -164,10 +164,10 @@ public class FirestoreDAO extends Service implements IDatabase {
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: ");
 
-            tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
-                TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
+                tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
+                    ITipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
 
-                List<TipDTO> temp = tipList.getValue();//TODO make this thread safe
+                List<ITipDTO> temp = tipList.getValue();//TODO make this thread safe
                 if (temp != null) {
                     temp.add(tipDTO);
                     tipList.postValue(temp);
@@ -186,9 +186,9 @@ public class FirestoreDAO extends Service implements IDatabase {
         public void onKeyExited(@NotNull String s) { // todo fix null pointer exceptions that araise whenever this is called
             Log.d(TAG, "onKeyExited: ");
             
-            List<TipDTO> tips = tipList.getValue();//TODO make this thread safe
+            List<ITipDTO> tips = tipList.getValue();//TODO make this thread safe
 
-            final TipDTO[] exitedTip = new TipDTO[1];
+            final ITipDTO[] exitedTip = new TipDTO[1];
 
             collection.document(s)
                     .get()
@@ -199,7 +199,7 @@ public class FirestoreDAO extends Service implements IDatabase {
                                 }
 
                                 if (tips != null) {
-                                    for (TipDTO tip : tips) {
+                                    for (ITipDTO tip : tips) {
                                         if (tip.equals(exitedTip[0]))
                                             tips.remove(tip);
                                     }

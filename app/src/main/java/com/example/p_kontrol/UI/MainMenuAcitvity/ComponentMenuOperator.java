@@ -8,20 +8,29 @@ import com.example.p_kontrol.R;
 
 class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
-    IMenuOperationsController context;
+    private IMenuOperationsController context;
     private String TAG = this.getClass().getName();
 
     // Menu Views.
-    View menuBtnContainer,dragHandle;
-    Button menuBtn_profile      ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   ,menuBtn_Parking    ,menuBtn_PVagt      ;
+    private View menuBtnContainer,dragHandle;
+    private Button  menuBtn_profile      ,menuBtn_FreePark   ,menuBtn_Contribute ,
+                    menuBtn_Community   ,menuBtn_Parking    ,menuBtn_PVagt      ;
 
     // menu Open or Close State
-    boolean drag_State      = false ;
-    boolean stateFreePark   = false ;
-    boolean stateParking    = false ;
+    private boolean drag_State      = false ;
+    private boolean stateFreePark   = false ;
+    private boolean stateParking    = false ;
 
-    public ComponentMenuOperator(IMenuOperationsController context, View view){
+    /**
+     *  ComponentMenuOperator is the Component which has the Delegated responsibility to Manage the menu.
+     *  @param context       is an interface IMenuOperationsController to manage callbacks, because this class does not have the responsibility to manage what happens on menubuttons clicks. that is reserved for the context
+     *  @param view          the layout view, needed to search for xml views in the layout.
+     *
+     *  the relevant interface
+     *  @see {@link com.example.p_kontrol.UI.MainMenuAcitvity.IMenuOperationsController}
+     *
+     * */
+    ComponentMenuOperator(IMenuOperationsController context, View view){
         this.context = context;
 
         // Menu Buttons.
@@ -81,8 +90,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
     // Interface IMenuOperator
     /**
-     *  is Called mainly from the Menu Handle.
-     *  toggleMenu opens and closes the Menu repeatedly
+     * @inheritDoc
      * */
     @Override
     public void toggleMenu( ){
@@ -97,35 +105,38 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             drag_State = true;
         }
     }
+
     /**
-     *  closes the menu
+     * @inheritDoc
      * */
     @Override
     public void closeMenu() {
         menuBtnContainer.setVisibility(View.GONE);
         drag_State = false;
     }
+
     /**
-     *  opens the menu
+     * @inheritDoc
      * */
     @Override
     public void openMenu() {
         menuBtnContainer.setVisibility(View.VISIBLE);
         drag_State = true;
     }
+
     /**
-     *  returns false if map is closed, true if it is open.
+     * @inheritDoc
      * */
     @Override
     public boolean isMenuOpen() {
         return drag_State;
     }
+
     /**
-     *  Enables and Disables the FreePark State.
-     *  Free Park is a Filter state that only shows tips in the category of free tips.
+     * @inheritDoc
      * */
     @Override
-    public void toggleFreePark() {
+    public void toggleMenuBtnFreePark() {
         if(stateFreePark){
             menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
         }else{
@@ -133,13 +144,12 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         }
         stateFreePark = !stateFreePark;
     }
+
     /**
-    * Enables and Disables the Parking State
-    * Parking state is a state where you place down your location as a parking location,
-    * and that location is then set to listens for P alerts.
-    * */
+     * @inheritDoc
+     * */
     @Override
-    public void toggleParking(){
+    public void toggleMenuBtnParking(){
         if(stateParking){
             menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
         }else{
