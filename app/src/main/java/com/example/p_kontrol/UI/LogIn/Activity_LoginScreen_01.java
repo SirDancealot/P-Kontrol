@@ -54,7 +54,7 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
             Log.e("Null Error", "Top Bar = null");
         }
 
-        Intent login_intent = new Intent(Activity_LoginScreen_01.this, Activity_LoginScreen_03.class );
+        Intent login_intent = new Intent(Activity_LoginScreen_01.this, Activity_LoginScreen_02.class );
         ActivityOptionsCompat transitionParameters = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 Activity_LoginScreen_01.this,
                 // All Custom Shared elements

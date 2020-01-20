@@ -48,6 +48,8 @@ abstract public class State  {
         // Setting Listeners
         setListeners();
     }
+
+
     // interface
     /**
      * an Update Method, also here for the right to be overidden
@@ -86,6 +88,8 @@ abstract public class State  {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
+
 
     // methods every State needs for it self
     /**

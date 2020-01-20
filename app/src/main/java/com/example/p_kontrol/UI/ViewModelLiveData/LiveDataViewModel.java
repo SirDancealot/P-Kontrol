@@ -14,9 +14,11 @@ import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,11 +40,13 @@ public class LiveDataViewModel extends ViewModel {
     // todo er dette rigtigt? August
     // Write tip
     private ITipDTO currentTip;
+    private UserInfoDTO userInfoDTO;
 
     public LiveDataViewModel(){
         tipList = new MutableLiveData<>();
         pVagtList = new MutableLiveData<>();
         tipCreateObject = new MutableLiveData<>(new TipDTO());
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
     }
 
 
@@ -94,7 +98,8 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "getTipCreateObject: " + this);
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>();
-            tipCreateObject.setValue(new TipDTO());
+            ITipDTO tip = new TipDTO();
+            tipCreateObject.setValue(tip);
         }
 
         return tipCreateObject;
@@ -155,6 +160,8 @@ public class LiveDataViewModel extends ViewModel {
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
                 ITipDTO dto = tipCreateObject.getValue();
+                dto.setAuthor(userInfoDTO.getSimpleUser());
+                dto.setCreationDate(new Date());
                // firestoreDAO.createTip(dto);
             } else {
                 Log.e(TAG, "createTip: tipCreateObject.getValue() is null");

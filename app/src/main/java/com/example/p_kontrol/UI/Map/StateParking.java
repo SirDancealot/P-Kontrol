@@ -25,15 +25,10 @@ import java.util.List;
  * */
 public class StateParking extends State {
 
-
-    MutableLiveData pVagtList;
     Activity context;
 
-    //Active Alert Time
-    //20 min
-    int time = 1200000;
-
-    //Mediaplayer
+    //Alert
+    int time = 1200000;//20 min
     MediaPlayer m;
 
     LatLng currentLocation;
@@ -48,17 +43,17 @@ public class StateParking extends State {
      * */
     public StateParking(MapFragment parent) {
         super(parent);
-        map.clear();
         this.context = parent.getContext();
+        map.clear();
 
         // MediaPlayer
         m = MediaPlayer.create(context, R.raw.alarm);
 
+        //Data
         LiveDataViewModel model = ViewModelProviders.of(parent.getActivity()).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
         model.updatePVagter(currentLocation);
-
 
         //Pin
         Pins pin = Pins.parkingSpot;
@@ -67,11 +62,9 @@ public class StateParking extends State {
         int pinX = pin.getDimX() / scalingConst;
         int pinY = pin.getDimY() / scalingConst;
 
-
         //Mark Current Location of Car parking
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
         map.addMarker(markerOptions.position(currentLocation));
-
 
     }
 
