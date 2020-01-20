@@ -23,22 +23,23 @@ public class StateStandby extends State {
 
 
         LiveData<List<TipDTO>> tipList = viewModel.getTipList();
-        List<TipDTO>  temp = tipList.getValue();
 
         tipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
                 updateMap(list);
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
             }
         } );
         // todo ViewModel Se Her
         //viewModel.updateTips(null); TODO this might be redundant with the service implementation
+        updateMap(tipList.getValue());
     }
 
     @Override
     public void updateMap(List<TipDTO> list ) {
         MarkerOptions markerOptions = null;
+        map.clear();
 
         if(list != null) {
             int i = 0;

@@ -1,5 +1,7 @@
 package com.example.p_kontrol.UI.ReadTips;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

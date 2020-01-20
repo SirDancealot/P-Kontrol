@@ -28,6 +28,6 @@ public interface IDatabase {
      * @param radius a {@code double} radius in kilometers for the query
      * @param targetList the target list in which the tips should end
      */
-    void queryByLocation(LatLng location, double radius, MutableLiveData<List<TipDTO>> targetList);
+    void queryByLocation(MutableLiveData<LatLng> location, MutableLiveData<Float> radius, MutableLiveData<List<TipDTO>> targetList);
 
 }

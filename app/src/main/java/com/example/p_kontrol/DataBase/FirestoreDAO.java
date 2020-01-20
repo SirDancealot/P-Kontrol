@@ -12,6 +12,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
@@ -104,14 +105,35 @@ public class FirestoreDAO extends Service implements IDatabase {
 
 
     @Override
-    public void queryByLocation(LatLng location, double radius, MutableLiveData<List<TipDTO>> tipList) {
+    public void queryByLocation(final MutableLiveData<LatLng> location, final MutableLiveData<Float> radius, final MutableLiveData<List<TipDTO>> tipList) {
         Log.d(TAG, "queryByLocation: " + location);
         if (query != null)
-            query.setLocation(new GeoPoint(location.latitude, location.longitude), radius);
-        else
-            query =  geoFirestore.queryAtLocation(new GeoPoint(location.latitude, location.longitude), radius);
+            //query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
+            query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
+        else {
+            //query =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
+            query =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
+            query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
+        }
 
-        query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
+        //TODO update location og radius i mapContext
+
+        location.observeForever(local -> {
+            //query.setLocation(new GeoPoint(local.latitude, local.longitude), radius.getValue());
+            if (radius.getValue() >= 12.7f)
+                query.setLocation(new GeoPoint(local.latitude, local.longitude), 10f);
+            else
+                query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 0f);
+        });
+
+        radius.observeForever(rad -> {
+            //query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), rad);
+            if (rad >= 12.8f)
+                query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
+            else
+                query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 0f);
+
+        });
     }
 
     @Nullable
@@ -160,8 +182,7 @@ public class FirestoreDAO extends Service implements IDatabase {
          */
         @Override
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
-            Log.d(TAG, "onKeyEntered: ");
-
+            Log.d(TAG, "onKeyEntered: " + s);
             tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
                 TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
 
@@ -181,29 +202,28 @@ public class FirestoreDAO extends Service implements IDatabase {
          * @param s The key of the document that was moved
          */
         @Override
-        public void onKeyExited(@NotNull String s) { // todo fix null pointer exceptions that araise whenever this is called
-            Log.d(TAG, "onKeyExited: ");
+        public void onKeyExited(@NotNull String s) {
+            Log.d(TAG, "onKeyExited: " + s);
             
-            List<TipDTO> tips = tipList.getValue();//TODO make this thread safe
-
-            final TipDTO[] exitedTip = new TipDTO[1];
+            List<TipDTO> tips = new ArrayList<TipDTO>(tipList.getValue());
 
             collection.document(s)
                     .get()
                     .addOnCompleteListener(
                             task -> {
+                                TipDTO exitedTip = null;
                                 if (task.isSuccessful() && task.getResult() != null) {
-                                    exitedTip[0] = task.getResult().toObject(TipDTO.class);
+                                    exitedTip = task.getResult().toObject(TipDTO.class);
+                                }
+                                List<TipDTO> removeList = new ArrayList<TipDTO>();
+                                for (TipDTO tip : tips) {
+                                    if (tip.equals(exitedTip))
+                                        removeList.add(tip);
                                 }
 
-                                if (tips != null) {
-                                    for (TipDTO tip : tips) {
-                                        if (tip.equals(exitedTip[0]))
-                                            tips.remove(tip);
-                                    }
-                                }
-
-                                tipList.setValue(tips);
+                                List<TipDTO> finalList = tipList.getValue();
+                                finalList.removeAll(removeList);
+                                tipList.setValue(finalList);
                             }
                     );
 

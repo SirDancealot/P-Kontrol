@@ -33,7 +33,7 @@ public class LiveDataViewModel extends ViewModel {
 
     // Map Data.MutableLiveData<
     private MutableLiveData<LatLng> map_WindowLocation;
-    private MutableLiveData<LatLng> map_WindowZoom;
+    private MutableLiveData<Float> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
 
 
@@ -85,7 +85,7 @@ public class LiveDataViewModel extends ViewModel {
     }
 
     //######    Getters     ######
-    public LiveData<List<TipDTO>> getTipList() {
+    public MutableLiveData<List<TipDTO>> getTipList() {
         Log.d(TAG, "getTipList: " + this);
         if (tipList == null) {
             tipList = new MutableLiveData<>();
@@ -119,15 +119,17 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "getCurrentWindowLocation: " + this);
         if(map_WindowLocation == null){
             map_WindowLocation = new MutableLiveData<>();
+            map_WindowLocation.setValue(new LatLng(0, 0));
         }
         return  map_WindowLocation;
     }
-    public MutableLiveData<LatLng> getCurrentWindowZoom(){
+    public MutableLiveData<Float> getCurrentWindowZoom(){
         Log.d(TAG, "getCurrentWindowZoom: " + this);
         if(map_WindowZoom == null){
             map_WindowZoom = new MutableLiveData<>();
+            map_WindowZoom.setValue(0.0f);
         }
-        return  map_WindowZoom;
+        return map_WindowZoom;
     }
     public MutableLiveData<LatLng> getCurrentLocation(){ // The User location or Car Location
         Log.d(TAG, "getCurrentLocation: " + this);
@@ -187,7 +189,7 @@ public class LiveDataViewModel extends ViewModel {
         }
 
         Log.d(TAG, "startTipQuery: ");
-        dao.queryByLocation(map_currentLocation.getValue(), 20, tipList);
+        dao.queryByLocation(getCurrentWindowLocation(), getCurrentWindowZoom(), getTipList());
     }
 
 

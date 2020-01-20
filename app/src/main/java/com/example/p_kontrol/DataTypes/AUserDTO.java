@@ -2,6 +2,7 @@ package com.example.p_kontrol.DataTypes;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class AUserDTO implements IUserDTO , Serializable {
 
@@ -48,4 +49,18 @@ public class AUserDTO implements IUserDTO , Serializable {
         this.profileSrc = profileSrc;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AUserDTO aUserDTO = (AUserDTO) o;
+        return Objects.equals(firstName, aUserDTO.firstName) &&
+                Objects.equals(lastName, aUserDTO.lastName) &&
+                Objects.equals(getUserId(), aUserDTO.getUserId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
+    }
 }
