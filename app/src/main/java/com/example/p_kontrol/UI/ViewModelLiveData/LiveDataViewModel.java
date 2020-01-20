@@ -21,6 +21,7 @@ import java.util.List;
 public class LiveDataViewModel extends ViewModel {
 
     private String TAG = "ViewModelMaster";
+    private FirestoreDAO dao;
 
     private MutableLiveData<List<ATipDTO>> tipList;
     private MutableLiveData<List<PVagtDTO>> pVagtList;
@@ -64,6 +65,10 @@ public class LiveDataViewModel extends ViewModel {
 
     //######    Setters     ######
 
+
+    public void setDao(FirestoreDAO dao) {
+        this.dao = dao;
+    }
 
     public void setTipCreateObject(ATipDTO tipCreateObject) {
         if (this.tipCreateObject != null)
@@ -130,16 +135,27 @@ public class LiveDataViewModel extends ViewModel {
 
 
     //######    Service calls     ######
-    public void startTipQuery(FirestoreDAO firestoreDAO){
-        firestoreDAO.queryByLocation(map_currentLocation.getValue(), 20, tipList);
+    public void startTipQuery(){
+        if (dao == null){
+            Log.e(TAG, "startTipQuery: dao is null");
+            return;
+        }
+
+        Log.d(TAG, "startTipQuery: ");
+        dao.queryByLocation(map_currentLocation.getValue(), 20, tipList);
     }
 
-    public void createTip(FirestoreDAO firestoreDAO) {
+    public void createTip() {
+        if (dao == null){
+            Log.e(TAG, "createTip: dao is null");
+            return;
+        }
+
         Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
                 ATipDTO dto = tipCreateObject.getValue();
-                firestoreDAO.createTip(dto);
+                dao.createTip(dto);
             } else {
                 Log.e(TAG, "createTip: tipCreateObject.getValue() is null");
             }

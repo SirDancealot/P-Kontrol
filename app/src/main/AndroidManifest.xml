@@ -23,10 +23,8 @@
 
         <service android:name=".DataBase.FirestoreDAO" android:exported="false"/>
 
-        <activity android:name=".UI.Feedback.ActivityFeedback"></activity>
-        <activity android:name=".UI.LogIn.Activity_SigeUp">
-
-        </activity>
+        <activity android:name=".UI.Feedback.ActivityFeedback"/>
+        <activity android:name=".UI.LogIn.Activity_SigeUp"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -55,9 +53,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.MainMenuAcitvity.MainMenuActivity">
-
-        </activity>
+        <activity android:name=".UI.MainMenuAcitvity.MainMenuActivity"/>
+        <activity android:name=".UI.MainMenuAcitvity.MainMenuActivityController"/>
     </application>
 
 </manifest>

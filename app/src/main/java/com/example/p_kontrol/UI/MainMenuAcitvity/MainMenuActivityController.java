@@ -47,6 +47,8 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
             FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
             mService = binder.getService();
             bound = true;
+            model.setDao(mService);
+            model.startTipQuery();
         }
 
         @Override
@@ -84,15 +86,6 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         bindService(startService, connection, Context.BIND_AUTO_CREATE);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (bound){
-            model.startTipQuery(mService);
-        } else {
-            Log.d(TAG, "onStart: service not bound");
-        }
-    }
 
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
     // Menu Controll.
@@ -195,7 +188,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
                 ATipDTO tip = model.getTipCreateObject().getValue();
                 tip.setAuthor(new AUserDTO());
                 model.setTipCreateObject(tip);
-                model.createTip(mService);
+                model.createTip();
                 break;
         }
     }
