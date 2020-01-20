@@ -2,27 +2,21 @@ package com.example.p_kontrol.DataBase;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.AtomicFile;
 import android.util.Log;
-import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
+import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,7 +27,6 @@ import org.imperiumlabs.geofirestore.listeners.GeoQueryEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -42,8 +35,9 @@ public class FirestoreDAO extends Service implements IDatabase {
     String TAG = "FirestoreDAO";
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
+    CollectionReference pVagter = fireDB.collection("pvagter");
     GeoFirestore geoFirestore = new GeoFirestore(tips);
-    GeoQuery query;
+    GeoQuery tipQuery, pVagtQuery;
     private final IBinder daoBinder = new DAOBinder();
 
     public class DAOBinder extends Binder {
@@ -84,9 +78,21 @@ public class FirestoreDAO extends Service implements IDatabase {
                     } else if (!task.isSuccessful()) {
                         Log.w(TAG, "createTip: Failed with message: ", task.getException());
                     }
-                })
-        ;
+                });
+    }
 
+    @Override
+    public void createPVagt(IPVagtDTO pVagt) {
+        String id = pVagt.getL().toString() + "-" + System.currentTimeMillis();
+        tips.document(id).set(pVagt)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
+                .addOnCompleteListener(task -> {
+                    if (task.isCanceled()) {
+                        Log.w(TAG, "createTip: Canceled with message: ", task.getException());
+                    } else if (!task.isSuccessful()) {
+                        Log.w(TAG, "createTip: Failed with message: ", task.getException());
+                    }
+                });
     }
 
     @Override
@@ -105,34 +111,50 @@ public class FirestoreDAO extends Service implements IDatabase {
 
 
     @Override
-    public void queryByLocation(final MutableLiveData<LatLng> location, final MutableLiveData<Float> radius, final MutableLiveData<List<ITipDTO>> tipList) {
-        Log.d(TAG, "queryByLocation: " + location);
-        if (query != null)
-            //query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
-            query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
+    public void queryTipByLocation(final MutableLiveData<LatLng> location, final MutableLiveData<Float> radius, final MutableLiveData<List<ITipDTO>> tipList) {
+        Log.d(TAG, "queryTipByLocation: " + location);
+        if (tipQuery != null)
+            //tipQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
+            tipQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
         else {
-            //query =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
-            query =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
-            query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
+            //tipQuery =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
+            tipQuery =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
+            tipQuery.addGeoQueryEventListener(new CustomGeoQueryLocation<>(this, tipList, tips, TipDTO.class));
         }
 
-        //TODO update location og radius i mapContext
-
         location.observeForever(local -> {
-            //query.setLocation(new GeoPoint(local.latitude, local.longitude), radius.getValue());
+            //tipQuery.setLocation(new GeoPoint(local.latitude, local.longitude), radius.getValue());
             if (radius.getValue() >= 12.7f)
-                query.setLocation(new GeoPoint(local.latitude, local.longitude), 10f);
+                tipQuery.setLocation(new GeoPoint(local.latitude, local.longitude), 10f);
             else
-                query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 0f);
+                tipQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 0f);
         });
 
         radius.observeForever(rad -> {
-            //query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), rad);
+            //tipQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), rad);
             if (rad >= 12.8f)
-                query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
+                tipQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
             else
-                query.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 0f);
+                tipQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 0f);
 
+        });
+    }
+
+    @Override
+    public void queryPVagtByLocation(final MutableLiveData<LatLng> location, final MutableLiveData<Float> radius, final MutableLiveData<List<IPVagtDTO>> PVagtList) {
+        if (pVagtQuery != null)
+            pVagtQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
+        else {
+            pVagtQuery =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
+            pVagtQuery.addGeoQueryEventListener(new CustomGeoQueryLocation<>(this, PVagtList, pVagter, PVagtDTO.class));
+        }
+
+        location.observeForever(local -> {
+            pVagtQuery.setLocation(new GeoPoint(local.latitude, local.longitude), 6000f /*radius.getValue()*/);
+        });
+
+        radius.observeForever(rad -> {
+            pVagtQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 6000f /*rad*/);
         });
     }
 
@@ -145,18 +167,20 @@ public class FirestoreDAO extends Service implements IDatabase {
     /**
      * Inner class for at kunne udvide den eksisterende GeoQueryLocation primært med en constructor
      */
-    private class CustomGeoQueryLocation implements GeoQueryEventListener {
+    private class CustomGeoQueryLocation<I, T extends I> implements GeoQueryEventListener {
         String TAG = "GeoFirestore";
 
         IDatabase dao;
-        MutableLiveData<List<ITipDTO>> tipList;
+        MutableLiveData<List<I>> targetList;
         CollectionReference collection;
+        final Class<T> typeClass;
 
 
-        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<ITipDTO>> tipList, CollectionReference collection) {
+        public CustomGeoQueryLocation(IDatabase dao, MutableLiveData<List<I>> targetList, CollectionReference collection, Class<T> typeClass) {
             this.dao = dao;
-            this.tipList = tipList;
+            this.targetList = targetList;
             this.collection = collection;
+            this.typeClass = typeClass;
         }
 
         @Override
@@ -187,13 +211,13 @@ public class FirestoreDAO extends Service implements IDatabase {
                 List<String> list = new ArrayList<>();
                 list.add(s);
 
-                tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
-                    TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
+                collection.document(s).get().addOnSuccessListener(documentSnapshot -> {
+                    T DTO = documentSnapshot.toObject(typeClass);
 
-                List<ITipDTO> temp = tipList.getValue();//TODO make this thread safe
+                List<I> temp = targetList.getValue();//TODO make this thread safe
                 if (temp != null) {
-                    temp.add(tipDTO);
-                    tipList.postValue(temp);
+                    temp.add(DTO);
+                    targetList.postValue(temp);
                 }
             });
 
@@ -209,25 +233,25 @@ public class FirestoreDAO extends Service implements IDatabase {
         public void onKeyExited(@NotNull String s) {
             Log.d(TAG, "onKeyExited: " + s);
 
-            List<ITipDTO> tips = new ArrayList<ITipDTO>(tipList.getValue());
+            List<I> target = new ArrayList<>(targetList.getValue());
 
             collection.document(s)
                     .get()
                     .addOnCompleteListener(
                             task -> {
-                                TipDTO exitedTip = null;
+                                TipDTO exitedT = null;
                                 if (task.isSuccessful() && task.getResult() != null) {
-                                    exitedTip = task.getResult().toObject(TipDTO.class);
+                                    exitedT = task.getResult().toObject(TipDTO.class);
                                 }
-                                List<ITipDTO> removeList = new ArrayList<ITipDTO>();
-                                for (ITipDTO tip : tips) {
-                                    if (tip.equals(exitedTip))
-                                        removeList.add(tip);
+                                List<I> removeList = new ArrayList<>();
+                                for (I t : target) {
+                                    if (t.equals(exitedT))
+                                        removeList.add(t);
                                 }
 
-                                List<ITipDTO> finalList = tipList.getValue();
+                                List<I> finalList = targetList.getValue();
                                 finalList.removeAll(removeList);
-                                tipList.setValue(finalList);
+                                targetList.setValue(finalList);
                             }
                     );
 

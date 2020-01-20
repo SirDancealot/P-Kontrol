@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
@@ -27,7 +28,7 @@ public class LiveDataViewModel extends ViewModel {
     private FirestoreDAO dao;
 
     private MutableLiveData<List<ITipDTO>> tipList;
-    private MutableLiveData<List<PVagtDTO>> pVagtList;
+    private MutableLiveData<List<IPVagtDTO>> pVagtList;
     private MutableLiveData<ITipDTO> tipCreateObject;
     private MutableLiveData<LatLng> currentLocation;
 
@@ -43,8 +44,8 @@ public class LiveDataViewModel extends ViewModel {
     private UserInfoDTO userInfoDTO;
 
     public LiveDataViewModel(){
-        tipList = new MutableLiveData<>();
-        pVagtList = new MutableLiveData<>();
+        tipList = new MutableLiveData<>(new ArrayList<>());
+        pVagtList = new MutableLiveData<>(new ArrayList<>());
         tipCreateObject = new MutableLiveData<>(new TipDTO());
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
     }
@@ -61,7 +62,6 @@ public class LiveDataViewModel extends ViewModel {
     //Raing
     private MutableLiveData<List<IRatingDTO>> ratings;
 
-    private IBackend bk = BackendStub.getBackend();
     List<PVagtDTO> l = new LinkedList<>();
 
 
@@ -99,7 +99,7 @@ public class LiveDataViewModel extends ViewModel {
         return tipList;
     }
 
-    public LiveData<List<PVagtDTO>> getPvagtList() {
+    public MutableLiveData<List<IPVagtDTO>> getPvagtList() {
         Log.d(TAG, "getPvagtList: " + this);
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
@@ -141,12 +141,6 @@ public class LiveDataViewModel extends ViewModel {
         }
         return  map_currentLocation;
     }
-    public void updatePVagter(LatLng location){
-        Log.d(TAG, "updatePVagter: " + this);
-        if (pVagtList == null)
-            pVagtList = new MutableLiveData<>();
-        bk.getPVagter(location, pVagtList );
-    }
 
     public void createPVagt(PVagtDTO vagt){
         Log.d(TAG, "CreatePVagt: " + this);
@@ -154,9 +148,7 @@ public class LiveDataViewModel extends ViewModel {
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
         }
-        //l.add(vagt);
-        //pVagtList.setValue(l);
-        bk.createPVagt(vagt);
+        dao.createPVagt(vagt);
     }
 
     public void createRating(IRatingDTO rating){
@@ -192,7 +184,17 @@ public class LiveDataViewModel extends ViewModel {
         }
 
         Log.d(TAG, "startTipQuery: ");
-        dao.queryByLocation(getCurrentWindowLocation(), getCurrentWindowZoom(), getTipList());
+        dao.queryTipByLocation(getCurrentWindowLocation(), getCurrentWindowZoom(), getTipList());
+    }
+
+    public void startPVagtQuery() {
+        if (dao == null){
+            Log.e(TAG, "startTipQuery: dao is null");
+            return;
+        }
+
+        Log.d(TAG, "startTipQuery: ");
+        dao.queryPVagtByLocation(getCurrentLocation(), getCurrentWindowZoom(), getPvagtList());
     }
 
 

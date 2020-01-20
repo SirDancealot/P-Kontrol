@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncCreateTip;
 import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
 import com.example.p_kontrol.DataTypes.*;
+import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -64,7 +65,7 @@ public class Backend implements IBackend {
     }
 
     //Get P vagter from parking location
-    public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> pVagtList){
+    public void getPVagter(LatLng location, MutableLiveData<List<IPVagtDTO>> pVagtList){
 
       //  AsyncGetPVagter asyncPVagt = new AsyncGetPVagter(location, PVAGT_SEARCH_RADIUS, pVagtList);
       //  asyncPVagt.execute();

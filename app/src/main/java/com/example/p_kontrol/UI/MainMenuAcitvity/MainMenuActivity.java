@@ -57,6 +57,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
             bound = true;
             model.setDao(mService);
             model.startTipQuery();
+            model.startPVagtQuery();
         }
 
         @Override
@@ -180,7 +181,11 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         Log.i("click","P-Vagt btn clicked \n");
 
         //report pVagt at current location
-        model.createPVagt(new PVagtDTO(model.getCurrentLocation().getValue(), new Date(), "123" ));
+        PVagtDTO pvagt = new PVagtDTO();
+        pvagt.setCreationDate(new Date());
+        pvagt.setUid("123");
+
+        model.createPVagt(pvagt);
 
     }
 

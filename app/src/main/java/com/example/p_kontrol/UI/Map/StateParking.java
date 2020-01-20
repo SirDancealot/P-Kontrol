@@ -3,9 +3,9 @@ package com.example.p_kontrol.UI.Map;
 import android.app.Activity;
 import android.media.MediaPlayer;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -51,7 +51,6 @@ public class StateParking extends State {
         LiveDataViewModel model = ViewModelProviders.of(parent.getActivity()).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
-        model.updatePVagter(currentLocation);
 
         //Pin
         Pins pin = Pins.parkingSpot;
@@ -70,10 +69,10 @@ public class StateParking extends State {
      * a method to update the P-vagt's shown on the map
      * @param pVagtList a list of the Pvagt alerts in the area.
      * */
-    public void updatePVagter(List<PVagtDTO> pVagtList) {
+    public void updatePVagter(List<IPVagtDTO> pVagtList) {
         int i = 0;
 
-        for (PVagtDTO vagt : pVagtList) {
+        for (IPVagtDTO vagt : pVagtList) {
 
             if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + time) {
 
@@ -86,7 +85,7 @@ public class StateParking extends State {
 
 
                 MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
-                map.addMarker(markerOptions.position(vagt.getLocation()));
+                map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
                 map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
@@ -106,7 +105,7 @@ public class StateParking extends State {
 
                 MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
 
-                map.addMarker(markerOptions.position(vagt.getLocation()));
+                map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
                 map.setOnMarkerClickListener(marker -> {
                     listener.onTipClick(Integer.parseInt(marker.getTitle()));
                     return true;

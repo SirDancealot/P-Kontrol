@@ -36,7 +36,7 @@ public class AsyncGetTips extends AsyncTask< Void, Void, Void >{
         Log.d(TAG, "doInBackground: ");
         try {
 
-            //DAO.queryByLocation(location, radius, tipList);
+            //DAO.queryTipByLocation(location, radius, tipList);
 
 
         }catch(Exception e){

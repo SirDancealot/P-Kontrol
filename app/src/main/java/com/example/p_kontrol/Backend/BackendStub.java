@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
@@ -38,7 +39,7 @@ public class BackendStub implements IBackend{
     List<ITipDTO> demoList = new ArrayList<>();
     List<PVagtDTO> l;
 
-    MutableLiveData<List<PVagtDTO>> pvagtlist;
+    MutableLiveData<List<IPVagtDTO>> pvagtlist;
 
 
     static IBackend backend = null;
@@ -52,10 +53,10 @@ public class BackendStub implements IBackend{
         tip1.setL(new GeoPoint(dtulocaiton1.getLatitude(), dtulocaiton1.getLongitude()));
 
         l = new LinkedList<>();
-        l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
-        l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
-        l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
-        l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
+        //l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
+        //l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
+        //l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
+        //l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
 
 
     }
@@ -91,10 +92,10 @@ public class BackendStub implements IBackend{
     }
 
     @Override
-    public void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list) {
+    public void getPVagter(LatLng location, MutableLiveData<List<IPVagtDTO>> list) {
         Log.d(TAG, "getPVagter: " + list + "{" + list.getValue() + "}");
         this.pvagtlist = list;
-        pvagtlist.setValue(l);
+        pvagtlist.setValue(new ArrayList<>());
 
 
 
@@ -106,7 +107,7 @@ public class BackendStub implements IBackend{
 
 
         l.add(vagt);
-        pvagtlist.setValue(l);
+        pvagtlist.setValue(new ArrayList<>());
 
     }
 

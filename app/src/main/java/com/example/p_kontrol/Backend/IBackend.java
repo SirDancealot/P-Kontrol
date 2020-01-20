@@ -4,6 +4,7 @@ import android.app.Service;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
@@ -20,7 +21,7 @@ public interface IBackend {
     void rateTip(int star, ITipDTO tip);
 
 
-    void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list);
+    void getPVagter(LatLng location, MutableLiveData<List<IPVagtDTO>> list);
 
     void createPVagt(PVagtDTO vagt);
 
