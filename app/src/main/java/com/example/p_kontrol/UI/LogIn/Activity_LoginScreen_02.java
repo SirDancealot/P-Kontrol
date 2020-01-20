@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
+import com.example.p_kontrol.UI.MainMenuAcitvity.YesNoDialogFragment;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -40,7 +41,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
 
     // Android Specifiks
     String TAG = "Login Screen 3";
-    private MainMenuCloseFragment fragment_close;
+    private YesNoDialogFragment dialogDelete;
 
     // Login with Google
     private static final int RC_SIGN_IN_GOOGLE = 9001;
@@ -64,7 +65,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         mAuth = FirebaseAuth.getInstance();
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
         findViewById(R.id.LoginScreen_3_SignIn_Google).setOnClickListener(this);
-        fragment_close= new MainMenuCloseFragment(this);
+        dialogDelete = new YesNoDialogFragment(this, 1);
 
 
 
@@ -143,7 +144,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
      */
     @Override
     public void onBackPressed() {
-        fragment_close.show(getSupportFragmentManager(), "closeFragment");
+        dialogDelete.show(getSupportFragmentManager(), "closeFragment");
     }
 
     //interfaces

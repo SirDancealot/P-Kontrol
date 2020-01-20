@@ -77,7 +77,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         profImg     = view.findViewById(R.id.bobbelTip_Img)         ;
         tip         = view.findViewById(R.id.bobbelTip_mainTextView);
         readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
-        suroundings = view.findViewById(R.id.bobbelTip_FragmentContainer)                ;
         container   = view.findViewById(R.id.bobbelTip_container)   ;
         topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
         tipcontainer= view.findViewById(R.id.bobbelTip_container)   ;
