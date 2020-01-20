@@ -53,7 +53,7 @@ public class StateParking extends State {
         //Pin
         Pins pin = Pins.parkingSpot;
         String pinName = pin.getName();
-        int scalingConst = pin.getDimY() / 75;       //75 is the desired height
+        int scalingConst = pin.getDimY() / 45;       //45 is the desired height
         int pinX = pin.getDimX() / scalingConst;
         int pinY = pin.getDimY() / scalingConst;
 
@@ -76,7 +76,7 @@ public class StateParking extends State {
                 //Pin
                 Pins pin = Pins.pVagtOld;
                 String pinName = pin.getName();
-                int scalingConst = pin.getDimY() / 100;       //100 is the desired height
+                int scalingConst = pin.getDimY() / 75;       //100 is the desired height
                 int pinX = pin.getDimX() / scalingConst;
                 int pinY = pin.getDimY() / scalingConst;
 
@@ -96,7 +96,7 @@ public class StateParking extends State {
                 //Pin
                 Pins pin = Pins.pVagt;
                 String pinName = pin.getName();
-                int scalingConst = pin.getDimY() / 100;       //100 is the desired height
+                int scalingConst = pin.getDimY() / 75;       //75 is the desired height
                 int pinX = pin.getDimX() / scalingConst;
                 int pinY = pin.getDimY() / scalingConst;
 
