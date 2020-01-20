@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.IdbTipDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -73,7 +75,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void createTip(TipDTO tip) {
+    public void createTip(ITipDTO tip) {
         String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))

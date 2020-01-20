@@ -1,10 +1,11 @@
 package com.example.p_kontrol.DataTypes;
 
+import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
-public class PVagtDTO implements IPVagtDTO{
+public class PVagtDTO implements IPVagtDTO {
     LatLng location;
     Date creationDate;
     String uid;

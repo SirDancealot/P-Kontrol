@@ -1,5 +1,7 @@
 package com.example.p_kontrol.DataTypes;
 
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.IdbTipDTO;
 import com.google.firebase.firestore.GeoPoint;
 
 import org.imperiumlabs.geofirestore.core.GeoHash;
@@ -7,10 +9,10 @@ import org.imperiumlabs.geofirestore.core.GeoHash;
 import java.util.Date;
 import java.util.List;
 
-public class TipDTO implements ITipDTO{
+public class TipDTO implements IdbTipDTO {
 
     private AUserDTO author;
-    private String message;
+    private String message, docId;
     private int rating;
     private Date creationDate;
     private String g; //location geohash
@@ -125,5 +127,10 @@ public class TipDTO implements ITipDTO{
                 ", message = '" + message + "'\n" +
                 ", location = " + l + "'\n" +
                 '}';
+    }
+
+    @Override
+    public String getDocName() {
+        return docId;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.p_kontrol.UI.ViewModelLiveData;
 
-import android.app.Service;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -10,10 +9,9 @@ import androidx.lifecycle.ViewModel;
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
-import com.example.p_kontrol.DataTypes.IRatingDTO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -201,7 +199,7 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
-                TipDTO dto = tipCreateObject.getValue();
+                ITipDTO dto = tipCreateObject.getValue();
                 if (dto.getAuthor() != null) {
                     dao.createTip(dto);
                 } else {

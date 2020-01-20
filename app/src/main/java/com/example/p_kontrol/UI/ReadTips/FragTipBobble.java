@@ -17,14 +17,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.p_kontrol.DataTypes.TipDTO;
-import com.example.p_kontrol.DataTypes.IRatingDTO;
-import com.example.p_kontrol.DataTypes.ITipDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.RatingDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 import java.text.SimpleDateFormat;

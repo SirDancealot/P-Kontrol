@@ -2,14 +2,10 @@ package com.example.p_kontrol.UI.Map;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
-import android.util.Log;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;

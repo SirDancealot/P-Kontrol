@@ -1,5 +1,6 @@
-package com.example.p_kontrol.DataTypes;
+package com.example.p_kontrol.DataTypes.Interfaces;
 
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
