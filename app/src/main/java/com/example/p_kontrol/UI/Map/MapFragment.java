@@ -105,39 +105,82 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
 
 
-    // IMapFragment
+    // interface IMapFragment
+        // States
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateParking(){
         currentState = new StateParking(this );
         isFreeParkEnabled = false;
         isParkingEnabled = true;
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateStandby(){
         currentState = new StateStandby(this );
         isFreeParkEnabled = false;
         isParkingEnabled = false;
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateFreePark(){
         currentState = new StateFreePark(this );
         isFreeParkEnabled = true;
         isParkingEnabled = false;
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateSelectLocation() {
         currentState = new StateSelectLocation(this );
         isFreeParkEnabled = false;
         isParkingEnabled = false;
     }
-    @Override
-    public void centerMap() {
-        currentState.centerMethod();
-    }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public IState getCurrentState() {
         return currentState;
     }
+
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public boolean isFreeParkEnabled() {
+        return isFreeParkEnabled;
+    }
+
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public boolean isParkingEnabled(){return isParkingEnabled; }
+
+        // not States
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void centerMap() {
+        currentState.centerMethod();
+    }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void updatePermissions() {
         map.setMyLocationEnabled(true);
@@ -153,39 +196,44 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
                     }
                 });
     }
-    @Override
-    public boolean isFreeParkEnabled() {
-        return isFreeParkEnabled;
-    }
-    @Override
-    public boolean isParkingEnabled(){return isParkingEnabled; }
-
 
 
     // States Need these
-    @NonNull
+    /**
+     * @return GoogleMap, is needed to hand out the map, when needed. is a way to keep the State Constructor simple.
+     * */
     public GoogleMap getMap() {
         return map;
     }
-    @NonNull
+
+    /**
+     * @return Owning Activity, is needed to hand out the map, when needed. is a way to keep the State Constructor simple.
+     * */
     public Activity getContext(){
         return context;
     }
-    @NonNull
+
+    /**
+     * @return IMapFragmentListener, is needed to hand out the map, when needed. is a way to keep the State Constructor simple.
+     *
+     * IMapFragmentListener has one method, onTipClick();
+     * @see {@link com.example.p_kontrol.UI.Map.IMapFragmentListener}
+     * */
     public IMapFragmentListener getFragmentListener() {
         return listener;
     }
-    @NonNull
+
+    /**
+     * FusedLocationProviderClient is a GoogleMap specifik,
+     * @return FusedLocationProviderClient, is needed to hand out the map, when needed. is a way to keep the State Constructor simple.
+     * */
     public FusedLocationProviderClient getFusedLocationProviderClient() {
         return fusedLocationProviderClient;
     }
-//    @NonNull
-//    public LiveDataViewModel getViewModel() {
-//        return viewModel;
-//    }
 
-
-    // Internal methods
+    /**
+     * is used to drag out a style json file from the Storage to style the map with.
+     * */
     private void styleMapCall() {
         // Styling the Map
         try {
@@ -201,6 +249,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         }
 
     }
+    /**
+     * is a way to pass permission to GoogleMap Object .
+     * */
     private void getPermission() {
         if (ContextCompat.checkSelfPermission( (context).getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,19 +21,34 @@ public class StateSelectLocation extends State {
 
     String TAG = "State Select Loaction ";
 
-
+    /** Select Location is a state where you can place a location on the map, in addition it automaticly sets your currentlocation
+     * as the standard placement of the selected location.
+     *
+     * StateSelectLocation Extends State
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateSelectLocation(MapFragment parent) {
         super(parent);
         map.clear();
 
+        // Setting marker to location in the center of the map.
         map.addMarker(new MarkerOptions().position(map.getCameraPosition().target));
-        TipDTO dto = viewModel.getTipCreateObject().getValue();
+
+        // initiating the new tip object in the ViewModel.
+        ITipDTO dto = viewModel.getTipCreateObject().getValue();
         dto.setL(new GeoPoint(parent.DEFAULT_LOCATION.latitude, parent.DEFAULT_LOCATION.longitude));
         viewModel.setTipCreateObject(dto);
-
     }
 
-    // Listeners
+    /**
+     * Overides the current listeners such that when you click on the map you set a marker,
+     * click again and it removes the previous marker, and adds a new.
+     *
+     * and no Marker on click listener.
+     * */
     @Override
     public void setListeners(){
 
@@ -41,7 +57,7 @@ public class StateSelectLocation extends State {
             public void onMapClick(LatLng latLng) {
                 map.clear();
 
-                TipDTO dto = viewModel.getTipCreateObject().getValue();
+                ITipDTO dto = viewModel.getTipCreateObject().getValue();
                 dto.setL(new GeoPoint(latLng.latitude, latLng.longitude));
                 viewModel.setTipCreateObject(dto);
 
@@ -57,36 +73,12 @@ public class StateSelectLocation extends State {
         });
 
     }
+
+    /**
+     * empty method.
+            * */
     @Override
-    public void updateMap(List<TipDTO> list) {
-
-    }
-    @Override
-    public void centerMethod(){
-        try {
-            Task locationResult = parent.getFusedLocationProviderClient().getLastLocation();
-            locationResult.addOnCompleteListener( parent.getContext() , new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if ( task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        Location location = (Location) task.getResult();
-                        LatLng result = new LatLng(location.getLatitude(),location.getLongitude());
-                        viewModel.getCurrentLocation().setValue(result);
-                        map.addMarker(new MarkerOptions().position(viewModel.getCurrentLocation().getValue()));
-                        animeCamara(result);
-
-                    } else {
-                        // if location cannot be found.
-                        viewModel.getCurrentLocation().setValue( parent.DEFAULT_LOCATION );
-                        animeCamara( parent.DEFAULT_LOCATION );
-                    }
-                }
-            });
-
-        } catch(SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
+    public void updateMap(List<ITipDTO> list) {
     }
 
 }

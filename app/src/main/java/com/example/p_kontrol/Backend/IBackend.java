@@ -4,6 +4,7 @@ import android.app.Service;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
@@ -14,9 +15,9 @@ import java.util.List;
 public interface IBackend {
 
     //Tips
-    List<TipDTO> getTips(LatLng location, MutableLiveData<List<TipDTO>> list);
-    void createTip(TipDTO tip);
-    void rateTip(int star, TipDTO tip);
+    List<ITipDTO> getTips(LatLng location, MutableLiveData<List<ITipDTO>> list);
+    void createTip(ITipDTO tip);
+    void rateTip(int star, ITipDTO tip);
 
 
     void getPVagter(LatLng location, MutableLiveData<List<PVagtDTO>> list);

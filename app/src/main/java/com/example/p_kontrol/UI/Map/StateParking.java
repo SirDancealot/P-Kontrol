@@ -22,33 +22,38 @@ import java.util.List;
 
 public class StateParking extends State {
 
-
-    MutableLiveData pVagtList;
     Activity context;
 
-    //Active Alert Time
-    //20 min
-    int time = 1200000;
-
-    //Mediaplayer
+    //Alert
+    int time = 1200000;//20 min
     MediaPlayer m;
 
     LatLng currentLocation;
 
-
+    /** Parking state is a state where you set your current location to be your parking spot. and then
+     *  you set the app to listen for P-Vagt Warnings.
+     *
+     * if you are warned of a P-vagt then a small tone will play, if the alert is older than 20min it is a grayer version of the alert symbol
+     *
+     * StateParking Extends State
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateParking(MapFragment parent) {
         super(parent);
-        map.clear();
         this.context = parent.getContext();
+        map.clear();
 
         // MediaPlayer
         m = MediaPlayer.create(context, R.raw.alarm);
 
+        //Data
         LiveDataViewModel model = ViewModelProviders.of(parent.getActivity()).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
         model.updatePVagter(currentLocation);
-
 
         //Pin
         Pins pin = Pins.parkingSpot;
@@ -57,15 +62,16 @@ public class StateParking extends State {
         int pinX = pin.getDimX() / scalingConst;
         int pinY = pin.getDimY() / scalingConst;
 
-
         //Mark Current Location of Car parking
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
         map.addMarker(markerOptions.position(currentLocation));
 
-
     }
 
-
+    /**
+     * a method to update the P-vagt's shown on the map
+     * @param pVagtList a list of the Pvagt alerts in the area.
+     * */
     public void updatePVagter(List<PVagtDTO> pVagtList) {
         int i = 0;
 

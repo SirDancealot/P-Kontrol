@@ -3,18 +3,19 @@ package com.example.p_kontrol.Backend.NetworkAsyncCalls;
 import android.os.AsyncTask;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 
 import java.util.List;
 
-public class AsyncCreateTip extends AsyncTask<TipDTO, Void, Void> {
+public class AsyncCreateTip extends AsyncTask<ITipDTO, Void, Void> {
 
     FirestoreDAO DAO = new FirestoreDAO();
 
 
 
     @Override
-    protected Void doInBackground(TipDTO... params) {
+    protected Void doInBackground(ITipDTO... params) {
         try {
             DAO.createTip(params[0]);
 
@@ -26,7 +27,7 @@ public class AsyncCreateTip extends AsyncTask<TipDTO, Void, Void> {
 
     }
 
-    protected void onPostExecute(List<TipDTO> result) {
+    protected void onPostExecute(List<ITipDTO> result) {
 
 
 

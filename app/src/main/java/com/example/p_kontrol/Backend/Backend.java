@@ -37,7 +37,7 @@ public class Backend implements IBackend {
 
     //TODO make backend handle preferences
 
-    List<TipDTO> tipDTOS;
+    List<ITipDTO> tipDTOS;
 
     // Android internal
     private String TAG = "Backend";
@@ -47,15 +47,15 @@ public class Backend implements IBackend {
     final int PVAGT_SEARCH_RADIUS = 120;
 
     // private data
-    private List<TipDTO> dtoList = new LinkedList<>();
+    private List<ITipDTO> dtoList = new LinkedList<>();
 
     @Override // when needing tips from new location
-    public List<TipDTO> getTips(LatLng location, MutableLiveData<List<TipDTO>> tipList) {
+    public List<ITipDTO> getTips(LatLng location, MutableLiveData<List<ITipDTO>> tipList) {
         // todo rethink getTips and updateTipsFromDB
         updateTipsFromDB( location, tipList);
          return tipDTOS;
     }
-    private void updateTipsFromDB(LatLng location, MutableLiveData<List<TipDTO>> tipList) {
+    private void updateTipsFromDB(LatLng location, MutableLiveData<List<ITipDTO>> tipList) {
         dtoList = new LinkedList<>();
         AsyncGetTips async = new AsyncGetTips(location, TIP_SEARCH_RADIUS, tipList);
         async.execute();
@@ -74,7 +74,7 @@ public class Backend implements IBackend {
 
 
     @Override
-    public void createTip(TipDTO tip) {
+    public void createTip(ITipDTO tip) {
         Log.d(TAG, "createTip: ");
         UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
         if(userInfoDTO.getToken() != null){
@@ -89,7 +89,7 @@ public class Backend implements IBackend {
     }
 
     @Override
-    public void rateTip(int star, TipDTO tip) {
+    public void rateTip(int star, ITipDTO tip) {
 
     }
 

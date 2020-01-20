@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter;
@@ -23,33 +24,50 @@ import java.util.List;
 
 class ComponentFragmentOperator implements IFragmentOperator {
 
-    MainMenuActivity context;
-    View view;
+    // Android Specifics
+    private MainMenuActivity context;
     private String TAG = this.getClass().getName();
 
-    FragMessageWrite fragment_messageWrite   ;
-    FragTopMessageBar fragment_topMessage     ;
+    // Views and Fragments
+    private View view;
+    private FragMessageWrite fragment_messageWrite  ;
+    private FragTopMessageBar fragment_topMessage   ;
 
-    //ViewPager - Tip bobbles.
-    FragmentPagerAdapter adapter_TipBobbles;
-    ViewPager viewPager_tipBobles;
+    // The ViewPager
+    private FragmentPagerAdapter adapter_TipBobbles ;
+    private ViewPager viewPager_tipBobles           ;
 
     //Specials
-    FragmentManager fragmentManager;
-    FragmentTransaction transaction;
+    private FragmentManager fragmentManager         ;
+    private FragmentTransaction transaction         ;
 
     //Booleans for Open Closing Fragments.
-    boolean boolFragMessageWrite    ;
-    boolean boolFragTipBobble       ;
-    boolean boolFragTopMessageBar   ;
+    private boolean boolFragMessageWrite    ;
+    private boolean boolFragTipBobble       ;
+    private boolean boolFragTopMessageBar   ;
 
+    // Data Access
+    private LiveDataViewModel model;
+    private LiveData<List<ITipDTO>> tipList;
 
-    // DAta Acces
-    LiveDataViewModel model;
-    LiveData<List<TipDTO>> tipList;
-
-
-    public ComponentFragmentOperator(MainMenuActivity context, View view){
+    /**
+     *  ComponentFragmentOperator is the Component which has the Delegated responsibility to Manage the Opening and Closing of Fragments. Not when and where they open, but simply to open them
+     *  @param context  the Parent Activity, such that the reference can be passed on to the fragments. its necessary due to lifeCycle things.
+     *  @param view     the layout view, needed to search for xml views in the layout.
+     *
+     *  The Fragments it manages .
+     *  @see {@link com.example.p_kontrol.UI.WriteTip.FragMessageWrite}
+     *  @see {@link com.example.p_kontrol.UI.ReadTips.FragTipBobble}
+     *  @see {@link com.example.p_kontrol.UI.TopMessageBar.FragTopMessageBar}
+     *
+     *  Relevant Listeners , only for writing tips.
+     *  @See {@link com.example.p_kontrol.UI.WriteTip.ITipWriteListener}
+     *
+     *  Relevant Adapters , only for reading tips.
+     *  @See {@link com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter}
+     *
+     * */
+    ComponentFragmentOperator(MainMenuActivity context, View view){
 
         this.context = context;
         this.view = view;
@@ -64,7 +82,7 @@ class ComponentFragmentOperator implements IFragmentOperator {
 
         //Open topMessageBar. is not Opened from anywhere but here, but hidden and Shown.
         fragment_topMessage   = new FragTopMessageBar() ;
-        FragmentToogleTransaction(R.id.mainMenu_topMsgBarContainer,  fragment_topMessage, true);
+        FragmentToggleTransaction(R.id.mainMenu_topMsgBarContainer,  fragment_topMessage, true);
 
         // Live Data list , that calls adapter to notify of changes when changes are made.
         model = ViewModelProviders.of(context).get(LiveDataViewModel.class);
@@ -79,8 +97,96 @@ class ComponentFragmentOperator implements IFragmentOperator {
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tipList,this);
     }
 
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void openWriteTip(ITipWriteListener writeListener) {
+        fragment_messageWrite = new FragMessageWrite(writeListener,this.context);
+        FragmentToggleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
+        boolFragMessageWrite = true;
+    }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void closeWriteTip(){
+        FragmentToggleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
+        boolFragMessageWrite = false;
+    }
+
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void showTipBobbles(int index) {
+
+        List<ITipDTO> list = null;
+
+        viewPager_tipBobles.setVisibility(View.VISIBLE);
+        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
+        viewPager_tipBobles.setCurrentItem(index);
+
+    }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void closeTipBobbles(){
+        viewPager_tipBobles.setVisibility(View.GONE);
+    }
+
+    //TopMessageBar
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void showTopMsgBar(int imageId, String header, String subTitle) {
+
+        fragment_topMessage.setHeader(header);
+        fragment_topMessage.setSubtitle(subTitle);
+        fragment_topMessage.setImage(imageId);
+        fragment_topMessage.show();
+    }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void hideTopMsgBar() {
+        fragment_topMessage.hide();
+    }
+
+    // Booleans
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public boolean isWriteTipOpen(){
+        return boolFragMessageWrite;
+    }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public boolean isTipBobbleOpen(){
+        return boolFragTipBobble;
+    }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public boolean isTopBarOpen(){
+        return boolFragTopMessageBar;
+    }
+
     // Open Close Fragments and or Views.
-    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
+    /**
+     FragmentToggleTransaction is a method to open and close fragments using a slightly complicated Transaction method
+     @param containerId the container the fragment will be placed into, note it must be an Android View item id, in the current layout
+     @param fragment    teh fragment to place into the container
+     @param Open        true if open, false if remove
+     * */
+    private void FragmentToggleTransaction(int containerId, Fragment fragment, boolean Open){
         if(Open){
             transaction = fragmentManager.beginTransaction();
             try {
@@ -98,65 +204,6 @@ class ComponentFragmentOperator implements IFragmentOperator {
             transaction.commit();
             Log.v("transaction","Removing fragment");
         }
-    }
-
-    // Toggles
-
-    // write Tip
-    @Override
-    public void openWriteTip(ITipWriteListener writeListener) {
-        fragment_messageWrite = new FragMessageWrite(writeListener,this.context);
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
-        boolFragMessageWrite = true;
-    }
-    @Override
-    public void closeWriteTip(){
-        FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
-        boolFragMessageWrite = false;
-    }
-
-    // Tip Boobles
-    @Override
-    public void showTipBobbles(int index) {
-
-        List<TipDTO> list = null;
-
-        viewPager_tipBobles.setVisibility(View.VISIBLE);
-        viewPager_tipBobles.setAdapter(adapter_TipBobbles);
-        viewPager_tipBobles.setCurrentItem(index);
-
-    }
-    @Override
-    public void closeTipBobbles(){
-        viewPager_tipBobles.setVisibility(View.GONE);
-    }
-
-    //TopMsgBar
-    @Override
-    public void showTopMsgBar(int imageId, String header, String subTitle) {
-
-        fragment_topMessage.setHeader(header);
-        fragment_topMessage.setSubtitle(subTitle);
-        fragment_topMessage.setImage(imageId);
-        fragment_topMessage.show();
-    }
-    @Override
-    public void hideTopMsgBar() {
-        fragment_topMessage.hide();
-    }
-
-    // Booleans
-    @Override
-    public boolean isWriteTipOpen(){
-        return boolFragMessageWrite;
-    }
-    @Override
-    public boolean isTipBobbleOpen(){
-        return boolFragTipBobble;
-    }
-    @Override
-    public boolean isTopBarOpen(){
-        return boolFragTopMessageBar;
     }
 
 //    @Override

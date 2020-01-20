@@ -12,10 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.p_kontrol.R;
-
+/**
+* Used to Close MainMenu and being used by the backstack, only in the mainAcitivty.
+* */
 public class MainMenuCloseFragment extends DialogFragment {
-    Activity caller;
 
+    Activity caller;
     public MainMenuCloseFragment(Activity caller) {
         this.caller = caller;
     }
@@ -39,6 +41,4 @@ public class MainMenuCloseFragment extends DialogFragment {
 
         return builder.create();
     }
-
-
 }

@@ -15,68 +15,127 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 
 class ComponentMapOperator implements IMapOperator   {
 
-    AppCompatActivity context;
-    IMapOperatorController mapController;
-    View view;
+    // Android Specifics
+    private AppCompatActivity context;
+    private IMapOperatorController mapController;
     private String TAG = this.getClass().getName();
 
-    MapFragment mapFragment;
-    IMapFragmentListener mapListener     ;
+    // Views
+    private View view,  mapView_btnContainerAceptCancel;;
+    private MapFragment mapFragment;
+    private IMapFragmentListener mapListener     ;
 
-    Button mapView_centerBtn;
-    Button mapView_acceptBtn;
-    Button mapView_cancelBtn;
-    View mapView_btnContainerAceptCancel;
+    private Button mapView_centerBtn;
+    private Button mapView_acceptBtn;
+    private Button mapView_cancelBtn;
 
-    public ComponentMapOperator(AppCompatActivity context, View view, IMapOperatorController mapController ){
+
+    /**
+     *  ComponentMapOperator is the Component which has the Delegated responsibility to Manage the map, it uses the IMapFragment to do this.
+     *  @see {@link com.example.p_kontrol.UI.Map.IMapFragment}
+     *
+     *  @param context       the Parent Activity, such that the reference can be passed on to the Fragment.
+     *  @param view          the layout view, needed to search for xml views in the layout.
+     *  @param mapController is an interface to determine what happens when clicked on a tip.
+     *
+     *  the MapFragment implementation is a StateController relevant Classes are
+     *  @see {@link com.example.p_kontrol.UI.Map.State}
+     *  @see {@link com.example.p_kontrol.UI.Map.StateFreePark}
+     *  @see {@link com.example.p_kontrol.UI.Map.StateSelectLocation}
+     *  @see {@link com.example.p_kontrol.UI.Map.StateStandby}
+     *  @see {@link com.example.p_kontrol.UI.Map.MapFragment}
+     *
+     * */
+    ComponentMapOperator(AppCompatActivity context, View view, IMapOperatorController mapController ){
+
+        // getting variables from Constructor
         this.context = context;
         this.view = view;
         this.mapController = mapController;
 
+        // Setting Views
         mapView_centerBtn = view.findViewById(R.id.mainMenu_Map_centerBtn);
         mapView_acceptBtn = view.findViewById(R.id.mainMenu_map_acceptBtn);
         mapView_cancelBtn = view.findViewById(R.id.mainMenu_map_cancelBtn);
         mapView_btnContainerAceptCancel = view.findViewById(R.id.mainMenu_acceptCancelContainer);
-        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
+        mapView_btnContainerAceptCancel.setVisibility(View.GONE); // todo move this into the individual state.
 
+        //map listener for clicking on a tip
         mapListener = new IMapFragmentListener() {
             @Override
             public void onTipClick(int index) {
                 mapController.onTipClick(index);
             }
         };
-        mapFragment = new MapFragment(context, mapListener);
 
+
+        // Setting up the map Fragment
+        mapFragment = new MapFragment(context, mapListener);
         FragmentManager fragmentManager = context.getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+        // Setting the map on the layout,
         transaction.add( R.id.mainMenu_map , mapFragment);
-
         transaction.addToBackStack(null);
         transaction.commit();
 
-        mapView_centerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mapController.onCenterClick(v);
-                //mapFragment.centerMap();
-            }
-        });
     }
 
+    //GoogleMap Specifiks
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void updatePermissions(){
+        mapFragment.updatePermissions();
+    }
+
+    // Button Clicks
+    @Override
+    public void onAcceptClick(View.OnClickListener onclick){
+      mapView_acceptBtn.setOnClickListener(onclick);
+  }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void onCancelClick(View.OnClickListener onclick){
+        mapView_cancelBtn.setOnClickListener(onclick);
+    }
+    /**
+     * @inheritDoc
+     * */
+    @Override
+    public void onCenterClick(View.OnClickListener onclick){
+        mapView_cancelBtn.setOnClickListener(onclick);
+    }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void centerOnUserLocation(){
         mapFragment.centerMap();
     }
+
+    //States
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateSelection() {
         mapFragment.setStateSelectLocation();
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void setStateStandby() {
         mapFragment.setStateStandby();
         mapView_btnContainerAceptCancel.setVisibility(View.GONE);
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void toggleStateParking() {
         if(mapFragment.isParkingEnabled()){
@@ -85,6 +144,9 @@ class ComponentMapOperator implements IMapOperator   {
             mapFragment.setStateParking();
         }
     }
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void toggleStateFreePark() {
         if(mapFragment.isFreeParkEnabled()){
@@ -93,27 +155,17 @@ class ComponentMapOperator implements IMapOperator   {
             mapFragment.setStateFreePark();
         }
     }
-
-    @Override
-    public void onAcceptClick(View.OnClickListener onclick){
-        mapView_acceptBtn.setOnClickListener(onclick);
-    }
-    @Override
-    public void onCancelClick(View.OnClickListener onclick){
-        mapView_cancelBtn.setOnClickListener(onclick);
-    }
-
-
+    /**
+     * @inheritDoc
+     * */
     @Override
     public IState getCurrentState() {
         return mapFragment.getCurrentState();
     }
-    @Override
-    public void updatePermissions(){
-        mapFragment.updatePermissions();
-    }
 
 
+    //todo move into States. Obs! its called in MainMenuActivity
+    // also remove from interface.
     @Override
     public void visibilityOfInteractBtns(int visibility){
         mapView_btnContainerAceptCancel.setVisibility(visibility);

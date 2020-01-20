@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
@@ -23,9 +24,9 @@ public class LiveDataViewModel extends ViewModel {
 
     private String TAG = "ViewModelMaster";
 
-    private MutableLiveData<List<TipDTO>> tipList;
+    private MutableLiveData<List<ITipDTO>> tipList;
     private MutableLiveData<List<PVagtDTO>> pVagtList;
-    private MutableLiveData<TipDTO> tipCreateObject;
+    private MutableLiveData<ITipDTO> tipCreateObject;
     private MutableLiveData<LatLng> currentLocation;
 
     // Map Data.MutableLiveData<
@@ -36,7 +37,7 @@ public class LiveDataViewModel extends ViewModel {
 
     // todo er dette rigtigt? August
     // Write tip
-    private TipDTO currentTip;
+    private ITipDTO currentTip;
 
     public LiveDataViewModel(){
         tipList = new MutableLiveData<>();
@@ -46,10 +47,10 @@ public class LiveDataViewModel extends ViewModel {
 
 
 
-    public TipDTO getCurrentTip() {
+    public ITipDTO getCurrentTip() {
         return currentTip;
     }
-    public void setCurrentTip(TipDTO currentTip) {
+    public void setCurrentTip(ITipDTO currentTip) {
         this.currentTip = currentTip;
     }
 
@@ -63,21 +64,21 @@ public class LiveDataViewModel extends ViewModel {
     //######    Setters     ######
 
 
-    public void setTipCreateObject(TipDTO tipCreateObject) {
+    public void setTipCreateObject(ITipDTO tipCreateObject) {
         Log.d(TAG, "setTipCreateObject: " + this + "\n" + tipCreateObject + "\n");
 
         this.tipCreateObject.setValue(tipCreateObject);
     }
 
     //######    Getters     ######
-    public LiveData<List<TipDTO>> getTipList() {
+    public LiveData<List<ITipDTO>> getTipList() {
         Log.d(TAG, "getTipList: " + this);
         if (tipList == null) {
             tipList = new MutableLiveData<>();
         }
 
         if (tipList.getValue() == null)
-            tipList.setValue(new ArrayList<TipDTO>());
+            tipList.setValue(new ArrayList<ITipDTO>());
 
         return tipList;
     }
@@ -89,7 +90,7 @@ public class LiveDataViewModel extends ViewModel {
         }
         return pVagtList;
     }
-    public LiveData<TipDTO> getTipCreateObject() { //TODO make getter and let this
+    public LiveData<ITipDTO> getTipCreateObject() { //TODO make getter and let this
         Log.d(TAG, "getTipCreateObject: " + this);
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>();
@@ -153,7 +154,7 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
-                TipDTO dto = tipCreateObject.getValue();
+                ITipDTO dto = tipCreateObject.getValue();
                // firestoreDAO.createTip(dto);
             } else {
                 Log.e(TAG, "createTip: tipCreateObject.getValue() is null");

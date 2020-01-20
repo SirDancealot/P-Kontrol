@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -41,8 +40,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     //Service Connection , also Data Access
     private LiveDataViewModel model;            //
-    protected FirestoreDAO mService;    //
-    private boolean bound = false;              //
+    protected FirestoreDAO mService;
+    private boolean bound = false;
     private ServiceConnection connection = new ServiceConnection() {
 
         @Override
@@ -63,20 +62,27 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     // Android LifeCycle Calls, onCreate onStart onResume.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // setup the Layout and the Main View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
         container = findViewById(R.id.mainMenu_layout);
 
-        // setting compositions
-        // delegates responsibility for Creating Views out to keep code simple, however, each referes back here
-        // for controll.
+        // setting responsibility delegating components
         menuOperator     = new ComponentMenuOperator(this, container );
         mapOperator      = new ComponentMapOperator(this,container, this);
         fragmentOperator = new ComponentFragmentOperator(this,container);
 
+        // getting data
         model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
         fragment_close= new MainMenuCloseFragment(this);
 
+        // setting up the center Click button , since it dosent change, set it here.
+        mapOperator.onCenterClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapOperator.centerOnUserLocation();
+            }
+        });
     }
 
     @Override
@@ -100,13 +106,11 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         }
     }
 
-
     //  -- * -- * -- * -- * -- * IMenuOperationsController -- * -- * -- * -- * -- * -- *
+
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Profile Button is clicked
-     * @return void
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_profile(){
         Log.i("click","Profile btn clicked \n");
@@ -115,39 +119,33 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when FreePark Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_FreePark(){
         Log.i("click","FreePark btn clicked \n");
         mapOperator.toggleStateFreePark();
-        menuOperator.toggleFreeParkEnabled();
+        menuOperator.toggleMenuBtnFreePark();
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Contribute Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_Contribute(){
 
         // Closing and hide the Menu down.
-        menuOperator.toggleMenu();
-        menuOperator.visibilityOfMenu(View.GONE);
+        menuOperator.closeMenu();
         // Go out of parking state or free parking state.
-        menuOperator.toggleCreateTip();
+        menuOperator.deToggleMenuButton();
 
-
-        // starting Contribute process at index 0. meaning the very first step.
         createTip();
 
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Feedback Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_FeedBack(){
         Log.i("click","Community btn clicked \n");
@@ -156,20 +154,18 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when Parking Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_Parking(){
         Log.i("click","Park Alarm btn clicked \n");
         mapOperator.toggleStateParking();
-        menuOperator.toggleParking();
+        menuOperator.toggleMenuBtnParking();
     }
 
     /**
-     * implements interface IMenuOperationsController.
-     * to controll what happens when P-Vagt Button is clicked
-     */
+     * @inheritDoc
+     * */
     @Override
     public void menuBtn_PVagt(){
         Log.i("click","P-Vagt btn clicked \n");
@@ -182,9 +178,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     // -- * -- * -- * -- * -- * Map IMapOperatorController -- * -- * -- * -- * -- * -- *
 
     /**
-     * implements interface IMapOperatorController.
-     * to controll what happens when a Tip marker is clicked on the map.
-     */
+     * @inheritDoc
+     * */
     @Override
     public void onTipClick(int index){
         fragmentOperator.showTipBobbles(index);
@@ -192,9 +187,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     /**
-     * implements interface IMapOperatorController.
-     * to controll what happens when the CenterButton is clicked.
-     */
+     * @inheritDoc
+     * */
     @Override
     public void onCenterClick(View v){
         mapOperator.centerOnUserLocation();
@@ -216,6 +210,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     private void createTip_Process(int i){
         switch (i) {
             case 0: // Chose location
+                menuOperator.setMenuHandleVisibility(View.GONE);
                 showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, getResources().getString(R.string.topbar_createTip_header), getResources().getString(R.string.topbar_createTip_subTitle));
 
                 mapOperator.setStateSelection();
@@ -233,7 +228,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
                         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
-                        menuOperator.visibilityOfMenu(View.VISIBLE);
+                        menuOperator.setMenuHandleVisibility(View.VISIBLE);
                     }
                 });
                 break;
@@ -251,13 +246,13 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                     public void onCancelTip() {
                         fragmentOperator.closeWriteTip();
                         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
-                        menuOperator.visibilityOfMenu(View.VISIBLE);
+                        menuOperator.setMenuHandleVisibility(View.VISIBLE);
                     }
                 });
                 break;
             case 2: // finish Tip and send to back end for saving.
                 showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
-                menuOperator.visibilityOfMenu(View.VISIBLE);
+                menuOperator.setMenuHandleVisibility(View.VISIBLE);
                 model.createTip();
                 break;
         }
