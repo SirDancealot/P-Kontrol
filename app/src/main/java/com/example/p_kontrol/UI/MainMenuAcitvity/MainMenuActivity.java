@@ -106,8 +106,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         }
     }
 
-
     //  -- * -- * -- * -- * -- * IMenuOperationsController -- * -- * -- * -- * -- * -- *
+
     /**
      * @inheritDoc
      * */
