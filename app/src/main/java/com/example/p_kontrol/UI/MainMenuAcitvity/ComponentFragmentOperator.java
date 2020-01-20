@@ -23,33 +23,50 @@ import java.util.List;
 
 class ComponentFragmentOperator implements IFragmentOperator {
 
-    MainMenuActivity context;
-    View view;
+    // Android Specifics
+    private MainMenuActivity context;
     private String TAG = this.getClass().getName();
 
-    FragMessageWrite fragment_messageWrite   ;
-    FragTopMessageBar fragment_topMessage     ;
+    // Views and Fragments
+    private View view;
+    private FragMessageWrite fragment_messageWrite  ;
+    private FragTopMessageBar fragment_topMessage   ;
 
-    //ViewPager - Tip bobbles.
-    FragmentPagerAdapter adapter_TipBobbles;
-    ViewPager viewPager_tipBobles;
+    // The ViewPager
+    private FragmentPagerAdapter adapter_TipBobbles ;
+    private ViewPager viewPager_tipBobles           ;
 
     //Specials
-    FragmentManager fragmentManager;
-    FragmentTransaction transaction;
+    private FragmentManager fragmentManager         ;
+    private FragmentTransaction transaction         ;
 
     //Booleans for Open Closing Fragments.
-    boolean boolFragMessageWrite    ;
-    boolean boolFragTipBobble       ;
-    boolean boolFragTopMessageBar   ;
+    private boolean boolFragMessageWrite    ;
+    private boolean boolFragTipBobble       ;
+    private boolean boolFragTopMessageBar   ;
 
+    // Data Access
+    private LiveDataViewModel model;
+    private LiveData<List<TipDTO>> tipList;
 
-    // DAta Acces
-    LiveDataViewModel model;
-    LiveData<List<TipDTO>> tipList;
-
-
-    public ComponentFragmentOperator(MainMenuActivity context, View view){
+    /**
+     *  ComponentFragmentOperator is the Component which has the Delegated responsibility to Manage the Opening and Closing of Fragments. Not when and where they open, but simply to open them
+     *  @param context  the Parent Activity, such that the reference can be passed on to the fragments. its necessary due to lifeCycle things.
+     *  @param view     the layout view, needed to search for xml views in the layout.
+     *
+     *  The Fragments it manages .
+     *  @see {@link com.example.p_kontrol.UI.WriteTip.FragMessageWrite}
+     *  @see {@link com.example.p_kontrol.UI.ReadTips.FragTipBobble}
+     *  @see {@link com.example.p_kontrol.UI.TopMessageBar.FragTopMessageBar}
+     *
+     *  Relevant Listeners , only for writing tips.
+     *  @See {@link com.example.p_kontrol.UI.WriteTip.ITipWriteListener}
+     *
+     *  Relevant Adapters , only for reading tips.
+     *  @See {@link com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter}
+     *
+     * */
+    ComponentFragmentOperator(MainMenuActivity context, View view){
 
         this.context = context;
         this.view = view;
@@ -79,43 +96,35 @@ class ComponentFragmentOperator implements IFragmentOperator {
         adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tipList,this);
     }
 
-    // Open Close Fragments and or Views.
-    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
-        if(Open){
-            transaction = fragmentManager.beginTransaction();
-            try {
-                Log.v("transaction", "Adding fragment");
-                transaction.add(containerId, fragment);
-            }catch (IllegalStateException e){
-                Log.v("transaction", "Replacing fragment");
-                transaction.replace(containerId, fragment);
-            }
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }else{
-            transaction = fragmentManager.beginTransaction();
-            transaction.remove(fragment);
-            transaction.commit();
-            Log.v("transaction","Removing fragment");
-        }
-    }
-
-    // Toggles
-
-    // write Tip
+    /**
+     * opens the WriteTip Fragment
+     * creates a new fragment and opens i using a fragment transaction to do so.
+     * @param writeListener is a listener that seperates Continue from Cancel.
+     * @see {@link com.example.p_kontrol.UI.WriteTip.FragMessageWrite}
+     * @See {@link com.example.p_kontrol.UI.WriteTip.ITipWriteListener}
+     * */
     @Override
     public void openWriteTip(ITipWriteListener writeListener) {
         fragment_messageWrite = new FragMessageWrite(writeListener,this.context);
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , true);
         boolFragMessageWrite = true;
     }
+    /**
+     * close the WriteTip Fragment
+     * uses a fragment transaction to do so.
+     * @see {@link com.example.p_kontrol.UI.WriteTip.FragMessageWrite}
+     * */
     @Override
     public void closeWriteTip(){
         FragmentToogleTransaction(R.id.mainMenu_midScreenFragmentContainer, fragment_messageWrite , false);
         boolFragMessageWrite = false;
     }
 
-    // Tip Boobles
+    /**
+     * show tip bobble fragment, uses an adapter to do so.
+     * @see {@link com.example.p_kontrol.UI.ReadTips.FragTipBobble}
+     * @see {@link com.example.p_kontrol.UI.ReadTips.TipBobblesAdapter}
+     * */
     @Override
     public void showTipBobbles(int index) {
 
@@ -126,12 +135,17 @@ class ComponentFragmentOperator implements IFragmentOperator {
         viewPager_tipBobles.setCurrentItem(index);
 
     }
+    /**
+     * closes the tipbobbles Fragment
+     * sets the View.Visibility(GONE)
+     * @see {@link com.example.p_kontrol.UI.ReadTips.FragTipBobble}
+     * */
     @Override
     public void closeTipBobbles(){
         viewPager_tipBobles.setVisibility(View.GONE);
     }
 
-    //TopMsgBar
+    //TopMessageBar
     @Override
     public void showTopMsgBar(int imageId, String header, String subTitle) {
 
@@ -157,6 +171,27 @@ class ComponentFragmentOperator implements IFragmentOperator {
     @Override
     public boolean isTopBarOpen(){
         return boolFragTopMessageBar;
+    }
+
+    // Open Close Fragments and or Views.
+    private void FragmentToogleTransaction(int containerId, Fragment fragment, boolean Open){
+        if(Open){
+            transaction = fragmentManager.beginTransaction();
+            try {
+                Log.v("transaction", "Adding fragment");
+                transaction.add(containerId, fragment);
+            }catch (IllegalStateException e){
+                Log.v("transaction", "Replacing fragment");
+                transaction.replace(containerId, fragment);
+            }
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else{
+            transaction = fragmentManager.beginTransaction();
+            transaction.remove(fragment);
+            transaction.commit();
+            Log.v("transaction","Removing fragment");
+        }
     }
 
 //    @Override

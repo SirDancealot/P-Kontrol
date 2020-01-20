@@ -8,20 +8,29 @@ import com.example.p_kontrol.R;
 
 class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
-    IMenuOperationsController context;
+    private IMenuOperationsController context;
     private String TAG = this.getClass().getName();
 
     // Menu Views.
-    View menuBtnContainer,dragHandle;
-    Button menuBtn_profile      ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   ,menuBtn_Parking    ,menuBtn_PVagt      ;
+    private View menuBtnContainer,dragHandle;
+    private Button  menuBtn_profile      ,menuBtn_FreePark   ,menuBtn_Contribute ,
+                    menuBtn_Community   ,menuBtn_Parking    ,menuBtn_PVagt      ;
 
     // menu Open or Close State
-    boolean drag_State      = false ;
-    boolean stateFreePark   = false ;
-    boolean stateParking    = false ;
+    private boolean drag_State      = false ;
+    private boolean stateFreePark   = false ;
+    private boolean stateParking    = false ;
 
-    public ComponentMenuOperator(IMenuOperationsController context, View view){
+    /**
+     *  ComponentMenuOperator is the Component which has the Delegated responsibility to Manage the menu.
+     *  @param context       is an interface IMenuOperationsController to manage callbacks, because this class does not have the responsibility to manage what happens on menubuttons clicks. that is reserved for the context
+     *  @param view          the layout view, needed to search for xml views in the layout.
+     *
+     *  the relevant interface
+     *  @see {@link com.example.p_kontrol.UI.MainMenuAcitvity.IMenuOperationsController}
+     *
+     * */
+    ComponentMenuOperator(IMenuOperationsController context, View view){
         this.context = context;
 
         // Menu Buttons.
