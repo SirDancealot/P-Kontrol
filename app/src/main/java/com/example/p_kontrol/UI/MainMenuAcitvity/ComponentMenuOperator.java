@@ -146,6 +146,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             menuBtn_FreePark.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
         }
         stateFreePark = !stateFreePark;
+        if(stateParking){
+            menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
+            stateParking = !stateParking;
+        }
     }
 
     /**
@@ -159,6 +163,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             menuBtn_Parking.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
         }
         stateParking = !stateParking;
+        if(stateFreePark){
+            menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
+            stateFreePark = !stateFreePark;
+        }
     }
 
     /**
