@@ -85,10 +85,10 @@ public class TipDTO implements ITipDTO{
         g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
     }
 
-
+    // todo MADS
     @Override
-    public TipDTO copy(){
-        TipDTO newDTO = new TipDTO();
+    public ITipDTO copy(){
+        ITipDTO newDTO = new TipDTO();
         newDTO.setAuthor(author);
         newDTO.setCreationDate(creationDate);
         newDTO.setL(l);

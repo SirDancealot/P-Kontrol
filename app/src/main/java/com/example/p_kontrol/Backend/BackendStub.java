@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
@@ -32,9 +33,9 @@ public class BackendStub implements IBackend{
     Date date = new Date(millis);
     UserInfoDTO userInfoDTO = UserInfoDTO.getUserInfoDTO();
 
-    TipDTO tip1 = new TipDTO();
+    ITipDTO tip1 = new TipDTO();
 
-    List<TipDTO> demoList = new ArrayList<>();
+    List<ITipDTO> demoList = new ArrayList<>();
     List<PVagtDTO> l;
 
     MutableLiveData<List<PVagtDTO>> pvagtlist;
@@ -71,21 +72,21 @@ public class BackendStub implements IBackend{
     }
 
     @Override
-    public List<TipDTO> getTips(LatLng location, MutableLiveData<List<TipDTO>> list) {
+    public List<ITipDTO> getTips(LatLng location, MutableLiveData<List<ITipDTO>> list) {
         // todo ViewModel Se Her
         list.setValue(demoList);
         return demoList;
     }
 
     @Override
-    public void createTip(TipDTO tip) {
+    public void createTip(ITipDTO tip) {
         tip.setAuthor(userInfoDTO.getSimpleUser());
         tip.setCreationDate( new Date() );
         demoList.add(tip);
     }
 
     @Override
-    public void rateTip(int star, TipDTO tip) {
+    public void rateTip(int star, ITipDTO tip) {
 
     }
 

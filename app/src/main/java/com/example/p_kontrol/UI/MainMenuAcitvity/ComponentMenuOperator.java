@@ -8,25 +8,34 @@ import com.example.p_kontrol.R;
 
 class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
 
-    IMenuOperationsController context;
+    private IMenuOperationsController context;
     private String TAG = this.getClass().getName();
 
     // Menu Views.
-    View menuBtnContainer,dragHandle, menuBtnMenu;
-    Button menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
-            menuBtn_Community   , menuBtn_Parking,menuBtn_PVagt      ;
-    // menu Open or Close State
-    boolean drag_State;
-    boolean stateFreePark = false;
-    boolean stateParking = false;
+    private View menuBtnContainer,dragHandle;
+    private Button  menuBtn_profile      ,menuBtn_FreePark   ,menuBtn_Contribute ,
+                    menuBtn_Community   ,menuBtn_Parking    ,menuBtn_PVagt      ;
 
-    public ComponentMenuOperator(IMenuOperationsController context, View view){
+    // menu Open or Close State
+    private boolean drag_State      = false ;
+    private boolean stateFreePark   = false ;
+    private boolean stateParking    = false ;
+
+    /**
+     *  ComponentMenuOperator is the Component which has the Delegated responsibility to Manage the menu.
+     *  @param context       is an interface IMenuOperationsController to manage callbacks, because this class does not have the responsibility to manage what happens on menubuttons clicks. that is reserved for the context
+     *  @param view          the layout view, needed to search for xml views in the layout.
+     *
+     *  the relevant interface
+     *  @see {@link com.example.p_kontrol.UI.MainMenuAcitvity.IMenuOperationsController}
+     *
+     * */
+    ComponentMenuOperator(IMenuOperationsController context, View view){
         this.context = context;
 
         // Menu Buttons.
         menuBtnContainer     = view.findViewById(R.id.menu_btnContainer)           ;
         dragHandle           = view.findViewById(R.id.menuBtn_draggingHandle)      ;
-        menuBtnMenu          = view.findViewById(R.id.menuBtn_menu)                ;
 
         // Menu Category Buttons
         menuBtn_profile      = view.findViewById(R.id.menuBtn_profile)             ;
@@ -46,10 +55,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         menuBtn_PVagt.setOnClickListener(this);
 
         // Setup Menu Toggle Position
-        drag_State = false;
         menuBtnContainer.setVisibility(View.GONE);
     }
 
+    // interface View.OnClickListener
     @Override
     public void onClick(View v){
         switch(v.getId()){
@@ -79,7 +88,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         }
     }
 
-    // Interface
+    // Interface IMenuOperator
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void toggleMenu( ){
         // drag state is a boolean, so if 1 its open, if 0 its closed. standard is 0.
@@ -93,61 +105,56 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             drag_State = true;
         }
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void closeMenu() {
         menuBtnContainer.setVisibility(View.GONE);
         drag_State = false;
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public void openMenu() {
         menuBtnContainer.setVisibility(View.VISIBLE);
         drag_State = true;
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
     public boolean isMenuOpen() {
         return drag_State;
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
-    public void toggleFreeParkEnabled() {
+    public void toggleMenuBtnFreePark() {
         if(stateFreePark){
             menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
         }else{
             menuBtn_FreePark.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
         }
         stateFreePark = !stateFreePark;
-
-        if(stateParking){
-            menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
-            stateParking = !stateParking;
-        }
     }
+
+    /**
+     * @inheritDoc
+     * */
     @Override
-    public void toggleParking(){
+    public void toggleMenuBtnParking(){
         if(stateParking){
             menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
         }else{
             menuBtn_Parking.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
         }
         stateParking = !stateParking;
-        if(stateFreePark){
-            menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
-            stateFreePark = !stateFreePark;
-        }
     }
-    @Override
-    public void toggleCreateTip(){
-        if(stateFreePark){
-            menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
-            stateFreePark = !stateFreePark;
-        }
-        if(stateParking){
-            menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
-            stateParking = !stateParking;
-        }
-    }
-    @Override
-    public void visibilityOfMenu(int visibility){
-        menuBtnMenu.setVisibility(visibility);
-    }
-
 }

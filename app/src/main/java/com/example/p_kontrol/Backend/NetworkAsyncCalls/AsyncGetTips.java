@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.Backend.IOnTaskComplete;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -19,12 +20,12 @@ public class AsyncGetTips extends AsyncTask< Void, Void, Void >{
     private IDatabase DAO = new FirestoreDAO();
     private double radius;
     private LatLng location;
-    private MutableLiveData<List<TipDTO>> tipList;
+    private MutableLiveData<List<ITipDTO>> tipList;
 
     private IOnTaskComplete onTaskComplete;
 
 
-    public AsyncGetTips(LatLng location, double radius, MutableLiveData<List<TipDTO>> tipList){
+    public AsyncGetTips(LatLng location, double radius, MutableLiveData<List<ITipDTO>> tipList){
         this.location = location;
         this.radius = radius;
         this.tipList = tipList;
@@ -45,7 +46,7 @@ public class AsyncGetTips extends AsyncTask< Void, Void, Void >{
         return null;
     }
 
-    protected void onPostExecute(List<TipDTO> result) {
+    protected void onPostExecute(List<ITipDTO> result) {
 
     }
 

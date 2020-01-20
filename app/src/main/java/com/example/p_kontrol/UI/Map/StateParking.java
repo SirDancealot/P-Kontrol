@@ -35,7 +35,17 @@ public class StateParking extends State {
 
     LatLng currentLocation;
 
-
+    /** Parking state is a state where you set your current location to be your parking spot. and then
+     *  you set the app to listen for P-Vagt Warnings.
+     *
+     * if you are warned of a P-vagt then a small tone will play, if the alert is older than 20min it is a grayer version of the alert symbol
+     *
+     * StateParking Extends State
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateParking(MapFragment parent) {
         super(parent);
         map.clear();
@@ -65,7 +75,9 @@ public class StateParking extends State {
 
     }
 
-
+    /**
+     * a method to update the P-vagt's shown on the map
+     * */
     public void updatePVagter(List<PVagtDTO> pVagtList) {
         int i = 0;
 

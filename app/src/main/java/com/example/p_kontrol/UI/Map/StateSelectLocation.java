@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,13 +21,21 @@ public class StateSelectLocation extends State {
 
     String TAG = "State Select Loaction ";
 
-
+    /** Select Location is a state where you can place a location on the map, in addition it automaticly sets your currentlocation
+     * as the standard placement of the selected location.
+     *
+     * StateSelectLocation Extends State
+     * @see {@link com.example.p_kontrol.UI.Map.State}
+     *
+     * and there fore implements
+     * @see {@link com.example.p_kontrol.UI.Map.IState}
+     * */
     public StateSelectLocation(MapFragment parent) {
         super(parent);
         map.clear();
 
         map.addMarker(new MarkerOptions().position(map.getCameraPosition().target));
-        TipDTO dto = viewModel.getTipCreateObject().getValue();
+        ITipDTO dto = viewModel.getTipCreateObject().getValue();
         dto.setL(new GeoPoint(parent.DEFAULT_LOCATION.latitude, parent.DEFAULT_LOCATION.longitude));
         viewModel.setTipCreateObject(dto);
 
@@ -41,7 +50,7 @@ public class StateSelectLocation extends State {
             public void onMapClick(LatLng latLng) {
                 map.clear();
 
-                TipDTO dto = viewModel.getTipCreateObject().getValue();
+                ITipDTO dto = viewModel.getTipCreateObject().getValue();
                 dto.setL(new GeoPoint(latLng.latitude, latLng.longitude));
                 viewModel.setTipCreateObject(dto);
 
@@ -58,7 +67,7 @@ public class StateSelectLocation extends State {
 
     }
     @Override
-    public void updateMap(List<TipDTO> list) {
+    public void updateMap(List<ITipDTO> list) {
 
     }
     @Override

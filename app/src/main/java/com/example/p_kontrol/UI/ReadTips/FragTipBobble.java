@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.p_kontrol.DataTypes.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
@@ -35,21 +36,21 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     String URL;
     int type;
     UserInfoDTO userInfoDTO;
-    List<TipDTO> tips;
+    List<ITipDTO> tips;
     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     // regular Variables
     private View view, tipcontainer,suroundings;
     private TextView readMore, tip, name;
     private CircleImageView profImg;
-    private TipDTO tipDTO;
+    private ITipDTO tipDTO;
     private LinearLayout topBar;
     private ImageView like, dislike;
     private int likeStatus;
 
     private IFragmentOperator fragmentOperator;
 
-    public FragTipBobble(IFragmentOperator fragmentOperator, TipDTO tipDTO){
+    public FragTipBobble(IFragmentOperator fragmentOperator, ITipDTO tipDTO){
     this.fragmentOperator = fragmentOperator;
         this.tipDTO = tipDTO;
         // Requiired empty public constructor
