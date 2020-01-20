@@ -9,6 +9,7 @@ import com.example.p_kontrol.Backend.NetworkAsyncCalls.AsyncGetTips;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 /**
@@ -80,7 +81,8 @@ public class Backend implements IBackend {
         if(userInfoDTO.getToken() != null){
 
         }
-
+        tip.setAuthor(userInfoDTO.getSimpleUser());
+        tip.setCreationDate(new Date());
         // todo do this.
         dtoList.add(tip);
         Log.i(TAG, "createTip: ");

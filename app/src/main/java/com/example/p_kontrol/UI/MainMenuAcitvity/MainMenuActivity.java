@@ -210,7 +210,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     private void createTip_Process(int i){
         switch (i) {
             case 0: // Chose location
-                menuOperator.setMenuHandleVisibility(View.GONE);
+                menuOperator.setMenuHandleVisibility(View.INVISIBLE);
                 showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, getResources().getString(R.string.topbar_createTip_header), getResources().getString(R.string.topbar_createTip_subTitle));
 
                 mapOperator.setStateSelection();
@@ -234,7 +234,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                 break;
             case 1: // Write Tip
                 showTopMsgBar(R.drawable.ic_topmsgbar_writing, getResources().getString(R.string.topbar_writeTip_heaeder), getResources().getString(R.string.topbar_writeTip_subTitle));
-                mapOperator.visibilityOfInteractBtns(View.GONE);
+                mapOperator.visibilityOfInteractBtns(View.INVISIBLE);
                 mapOperator.setStateStandby();
                 fragmentOperator.openWriteTip(new ITipWriteListener() {
                     @Override
@@ -283,6 +283,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         else if ( fragmentOperator.isTipBobbleOpen()) {
             Log.d(TAG, "onBackPressed: viewPager");
             fragmentOperator.closeTipBobbles();
+            menuOperator.setMenuHandleVisibility(View.VISIBLE);
         }
         else if (menuOperator.isMenuOpen()) {
             Log.d(TAG, "onBackPressed: Bottom menue");
