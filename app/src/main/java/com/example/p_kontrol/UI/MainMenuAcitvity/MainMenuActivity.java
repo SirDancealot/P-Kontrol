@@ -86,9 +86,14 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     protected void onStart() {
         super.onStart();
         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         //connect to service
-        Log.d(TAG, "onStart: start");
+        Log.d(TAG, "onResume: ");
         Intent startService = new Intent(this, FirestoreDAO.class);
         bindService(startService, connection, Context.BIND_AUTO_CREATE);
     }
