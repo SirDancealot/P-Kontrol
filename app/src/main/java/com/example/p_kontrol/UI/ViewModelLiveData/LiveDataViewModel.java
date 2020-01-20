@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI.ViewModelLiveData;
 
+import android.app.Service;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -9,6 +10,9 @@ import androidx.lifecycle.ViewModel;
 import com.example.p_kontrol.Backend.BackendStub;
 import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.Backend.IDatabase;
+import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -30,10 +34,23 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<LatLng> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
 
+
     // todo er dette rigtigt? August
     // Write tip
     private TipDTO currentTip;
     public TipDTO getCurrentTip() {
+
+
+    public LiveDataViewModel(){
+        tipList = new MutableLiveData<>();
+        pVagtList = new MutableLiveData<>();
+        tipCreateObject = new MutableLiveData<>(new ATipDTO());
+
+    }
+
+
+
+    public ATipDTO getCurrentTip() {
         return currentTip;
     }
     public void setCurrentTip(TipDTO currentTip) {
@@ -44,20 +61,10 @@ public class LiveDataViewModel extends ViewModel {
     List<PVagtDTO> l = new LinkedList<>();
 
 
-    public void updateTips(LatLng location){
-        Log.d(TAG, "updateTips: " + this);
-        bk.getTips(location, tipList);
-    }
-    public void createTip() {
-        Log.d(TAG, "createTip: " + this + "\n" + tipCreateObject.getValue());
-        if (tipCreateObject != null) {
-            TipDTO dto = tipCreateObject.getValue();
-            bk.createTip(dto);
-            updateTips(new LatLng(55.43521, 12.23504));//todo make this not hardcoded
-        }
-    }
 
-
+    public void updatePVagter(LatLng location){
+        bk.getPVagter(location, pVagtList.getValue());
+    }
 
 
 
@@ -87,13 +94,6 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "getPvagtList: " + this);
         if (pVagtList == null) {
             pVagtList = new MutableLiveData<>();
-            //l.add(new PVagtDTO(new LatLng(55.676098,12.568337), new Date(), "123"));
-            //l.add(new PVagtDTO(new LatLng(55.686098,12.568337), new Date(1000), "123"));
-            //l.add(new PVagtDTO(new LatLng(55.696098,12.568337), new Date(), "123"));
-            //l.add(new PVagtDTO(new LatLng(55.626098,12.568337), new Date(1000000000), "123"));
-            //pVagtList.setValue(l);
-        }
-
 
         return pVagtList;
     }
@@ -148,4 +148,25 @@ public class LiveDataViewModel extends ViewModel {
     }
 
 
+
+
+
+    //######    Service calls     ######
+    public void startTipQuery(FirestoreDAO firestoreDAO){
+        firestoreDAO.queryByLocation(map_currentLocation.getValue(), 20, tipList);
+    }
+
+    public void createTip(FirestoreDAO firestoreDAO) {
+        Log.d(TAG, "createTip: \n" + tipCreateObject.getValue());
+        if (tipCreateObject != null) {
+            if (tipCreateObject.getValue() != null) {
+                ATipDTO dto = tipCreateObject.getValue();
+                firestoreDAO.createTip(dto);
+            } else {
+                Log.e(TAG, "createTip: tipCreateObject.getValue() is null");
+            }
+        } else {
+            Log.e(TAG, "createTip: tipCreateObject is null");
+        }
+    }
 }

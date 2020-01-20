@@ -1,13 +1,20 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
@@ -19,6 +26,7 @@ import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import java.util.Date;
 
 public  class MainMenuActivityController extends AppCompatActivity implements IMenuOperationsController , IMapOperatorController{
+    String TAG = "MenuController";
 
     // THIS IS THE CONTROLLER CLASS
     final static TipDTO newTipDTO = new TipDTO(); // Static methods require a Static object to maneuver
@@ -30,6 +38,25 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     // -- ** -- View Model stuff  -- ** -- **  -- ** -- **  -- ** -- **
 
     LiveDataViewModel model;
+
+    //Service Connection
+    protected FirestoreDAO mService;
+    boolean bound = false;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
+            mService = binder.getService();
+            bound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +71,7 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
         mapOperator      = new CompositionMapOperator(this,container, this);
         fragmentOperator = new CompositionFragmentOperator(this,container);
 
-        model = ViewModelProviders.of(this).get(LiveDataViewModel.class); //getParent().getViewModel()
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
 
     }
 
@@ -52,6 +79,21 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
     protected void onStart() {
         super.onStart();
         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+
+        //connect to service
+        Log.d(TAG, "onStart: start");
+        Intent startService = new Intent(this, FirestoreDAO.class);
+        bindService(startService, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (bound){
+            model.startTipQuery(mService);
+        } else {
+            Log.d(TAG, "onStart: service not bound");
+        }
     }
 
     // this class is the top of the Stack so where the controll of Avitivity what to do fist()
@@ -96,8 +138,6 @@ public  class MainMenuActivityController extends AppCompatActivity implements IM
 
         //report pVagt at current location
         model.createPVagt(new PVagtDTO(model.getCurrentLocation().getValue(), new Date(), "123" ));
-
-
 
     }
 

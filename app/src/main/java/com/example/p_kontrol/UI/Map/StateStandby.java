@@ -33,7 +33,7 @@ public class StateStandby extends State {
             }
         } );
         // todo ViewModel Se Her
-        viewModel.updateTips(null);
+        //viewModel.updateTips(null); TODO this might be redundant with the service implementation
     }
 
     @Override

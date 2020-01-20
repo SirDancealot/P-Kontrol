@@ -1,5 +1,7 @@
 package com.example.p_kontrol.Backend;
 
+import android.app.Service;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.p_kontrol.DataTypes.TipDTO;

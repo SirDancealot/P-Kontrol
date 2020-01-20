@@ -1,13 +1,23 @@
 package com.example.p_kontrol.DataBase;
 
+import android.app.Service;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Binder;
+import android.os.IBinder;
+import android.util.AtomicFile;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,12 +37,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class FirestoreDAO implements IDatabase {
+public class FirestoreDAO extends Service implements IDatabase {
     String TAG = "FirestoreDAO";
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
     GeoFirestore geoFirestore = new GeoFirestore(tips);
     GeoQuery query;
+    private final IBinder daoBinder = new DAOBinder();
+
+    public class DAOBinder extends Binder {
+        public FirestoreDAO getService() {
+            return FirestoreDAO.this;
+        }
+    }
 
     /**
      * Retrieves a list of documents by id in from the provided location.
@@ -73,9 +90,10 @@ public class FirestoreDAO implements IDatabase {
         try {
             Tasks.await(
                     Tasks.whenAllComplete(
-                            taskList.toArray(new Task[0]) //hvorfor er vi på main thread her??????
+                            taskList.toArray(new Task[taskList.size()]) //hvorfor er vi på main thread her??????
                     )
             );
+            Log.d(TAG, "getDocumentList: got past await");
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -83,7 +101,7 @@ public class FirestoreDAO implements IDatabase {
         for (Task<DocumentSnapshot> task : taskList) {
             list.add(task.getResult());
         }
-
+        Log.d(TAG, "getDocumentList: return");
         return list;
     }
 
@@ -150,6 +168,12 @@ public class FirestoreDAO implements IDatabase {
         query.addGeoQueryEventListener(new CustomGeoQueryLocation(this, tipList, tips));
     }
 
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return daoBinder;
+    }
+
     /**
      * Inner class for at kunne udvide den eksisterende GeoQueryLocation primært med en constructor
      */
@@ -179,8 +203,8 @@ public class FirestoreDAO implements IDatabase {
          */
         @Override
         public void onGeoQueryReady() {
-            Log.d(TAG, "onGeoQueryReady: begin");
-            
+           /* Log.d(TAG, "onGeoQueryReady: begin");
+
             updateIndividual = true;
             List<TipDTO> tips = tipList.getValue();
             List<DocumentSnapshot> snapshots = dao.getDocumentList(collection, documents);
@@ -195,24 +219,32 @@ public class FirestoreDAO implements IDatabase {
             }
 
             Log.d(TAG, "onGeoQueryReady: post value");
-            tipList.postValue(tips);
+            tipList.postValue(tips);*/
         }
 
         @Override
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: ");
             
-            if (updateIndividual) {
+            //if (updateIndividual) {
                 List<String> list = new ArrayList<>();
                 list.add(s);
 
-                TipDTO tipDTO = getDocumentList(tips,  list).get(0).toObject(TipDTO.class);
-                if (tipDTO != null) {
-                    Objects.requireNonNull(tipList.getValue()).add(tipDTO);
-                }
-            } else {
-                documents.add(s);
-            }
+                tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
+                    TipDTO tipDTO = documentSnapshot.toObject(TipDTO.class);
+
+                    List<ATipDTO> temp = tipList.getValue();
+                    if (temp != null) {
+                        temp.add(tipDTO);
+                        tipList.postValue(temp);
+                    }
+                });
+
+
+
+            //} else {
+              //  documents.add(s);
+            //}
         }
 
         @Override
@@ -234,7 +266,10 @@ public class FirestoreDAO implements IDatabase {
                     );
 
             if (tips != null) {
-                tips.remove(exitedTip);
+                for (ATipDTO tip : tips) {
+                    if (tip.equals(exitedTip[0]))
+                        tips.remove(tip);
+                }
             }
 
             tipList.setValue(tips);

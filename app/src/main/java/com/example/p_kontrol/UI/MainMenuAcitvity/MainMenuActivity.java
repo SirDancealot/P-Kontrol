@@ -1,10 +1,17 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.ATipDTO;
+import com.example.p_kontrol.DataTypes.AUserDTO;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,11 +33,13 @@ public class MainMenuActivity extends MainMenuActivityController{
     private String TAG = "MainMenuActivity_androidMethods";
     static final int RC_SIGN_IN = 3452;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragment_close= new MainMenuCloseFragment(this);
     }
+
 
     // Android Specifiks
     @Override
@@ -75,7 +84,6 @@ public class MainMenuActivity extends MainMenuActivityController{
 
 
 }
-
 
 
 
