@@ -97,6 +97,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             drag_State = true;
         }
     }
+
     /**
      *  closes the menu
      * */
@@ -105,6 +106,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         menuBtnContainer.setVisibility(View.GONE);
         drag_State = false;
     }
+
     /**
      *  opens the menu
      * */
@@ -113,6 +115,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         menuBtnContainer.setVisibility(View.VISIBLE);
         drag_State = true;
     }
+
     /**
      *  returns false if map is closed, true if it is open.
      * */
@@ -120,6 +123,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     public boolean isMenuOpen() {
         return drag_State;
     }
+
     /**
      *  Enables and Disables the FreePark State.
      *  Free Park is a Filter state that only shows tips in the category of free tips.
@@ -133,6 +137,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         }
         stateFreePark = !stateFreePark;
     }
+
     /**
     * Enables and Disables the Parking State
     * Parking state is a state where you place down your location as a parking location,
