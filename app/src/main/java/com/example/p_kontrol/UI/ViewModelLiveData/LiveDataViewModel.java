@@ -12,10 +12,12 @@ import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,11 +40,13 @@ public class LiveDataViewModel extends ViewModel {
     // todo er dette rigtigt? August
     // Write tip
     private ITipDTO currentTip;
+    private UserInfoDTO userInfoDTO;
 
     public LiveDataViewModel(){
         tipList = new MutableLiveData<>();
         pVagtList = new MutableLiveData<>();
         tipCreateObject = new MutableLiveData<>(new TipDTO());
+        userInfoDTO = UserInfoDTO.getUserInfoDTO();
     }
 
 
@@ -106,7 +110,8 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "getTipCreateObject: " + this);
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>();
-            tipCreateObject.setValue(new TipDTO());
+            ITipDTO tip = new TipDTO();
+            tipCreateObject.setValue(tip);
         }
 
         return tipCreateObject;
@@ -202,11 +207,10 @@ public class LiveDataViewModel extends ViewModel {
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
                 ITipDTO dto = tipCreateObject.getValue();
-                if (dto.getAuthor() != null) {
-                    dao.createTip(dto);
-                } else {
-                    Log.e(TAG, "createTip: tipCreateObject.getAuthor is null");
-                }
+                dto.setAuthor(userInfoDTO.getSimpleUser());
+                dto.setCreationDate(new Date());
+                dao.createTip(dto);
+                //firestoreDAO.createTip(dto);
             } else {
                 Log.e(TAG, "createTip: tipCreateObject.getValue() is null");
             }

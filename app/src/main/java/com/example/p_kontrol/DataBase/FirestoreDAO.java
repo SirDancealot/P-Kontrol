@@ -184,6 +184,9 @@ public class FirestoreDAO extends Service implements IDatabase {
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: " + s);
 
+                List<String> list = new ArrayList<>();
+                list.add(s);
+
                 tips.document(s).get().addOnSuccessListener(documentSnapshot -> {
                     ITipDTO tipDTO = documentSnapshot.toObject(ITipDTO.class);
 

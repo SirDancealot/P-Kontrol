@@ -45,6 +45,8 @@ abstract public class State implements IState  {
         // Setting Listeners
         setListeners();
     }
+
+
     // interface
     /**
      * @inheritDoc
@@ -83,6 +85,8 @@ abstract public class State implements IState  {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
+
 
     // methods every State needs for it self
     /**

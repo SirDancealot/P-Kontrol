@@ -45,6 +45,9 @@ public class StateStandby extends State {
         updateMap(tipList.getValue());
     }
 
+    /** sets all tips onto the map ready to read.
+     * @param list, a list of all the tips in memory, all will be shown
+     * */
     @Override
     public void updateMap(List<ITipDTO> list ) {
         MarkerOptions markerOptions = null;

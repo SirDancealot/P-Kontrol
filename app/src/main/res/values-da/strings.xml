@@ -34,6 +34,8 @@
     <string name="profile_Rating_3"> sejt! </string>
     <string name="profile_Rating_4"> Woa du er god </string>
     <string name="profile_Rating_5"> Master rated </string>
+    <string name="deleteBtn"> Slet al data! </string>
+    <string name="logOutBtn"> Log ud </string>
 
     <!-- profile Rating Table  -->
     <string name="profile_template_tableColumn_1">deltagen</string>

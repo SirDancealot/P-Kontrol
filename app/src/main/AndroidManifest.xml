@@ -40,10 +40,8 @@
         <activity
             android:name=".UI.UserPersonalisation.ActivityProfile"
             android:noHistory="true" />
-        <activity android:name=".UI.LogIn.Activity_LoginScreen_03"/>
         <activity
-            android:name=".UI.LogIn.Activity_LoginScreen_02"
-            android:noHistory="true" />
+            android:name=".UI.LogIn.Activity_LoginScreen_02"/>
         <activity
             android:name=".UI.LogIn.Activity_LoginScreen_01"
             android:noHistory="true">

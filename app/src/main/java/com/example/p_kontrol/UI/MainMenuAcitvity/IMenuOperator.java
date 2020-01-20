@@ -29,4 +29,13 @@ interface IMenuOperator{
      * and that location is then set to listens for P alerts.
      * */
     void toggleMenuBtnParking();
+
+    /**
+     * shows or hides the Menu Container handle with an animation
+     * */
+    void setMenuHandleVisibility(int visibility);
+    /**
+     * is Used to disable all toggled menu Buttons
+     * */
+    void deToggleMenuButton();
 }

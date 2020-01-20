@@ -8,38 +8,44 @@
     android:layout_height="match_parent"
     android:background="#00923B3B"
     android:animateLayoutChanges="true"
+    android:id="@+id/menuBtn_menu"
     >
 
     <!-- Dragging Handle -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:id="@+id/menuBtn_draggingHandle">
 
         <FrameLayout
             android:layout_centerInParent="true"
-            android:id="@+id/menuBtn_draggingHandle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_squarerounded_top"
             android:padding="5dp"
             >
 
-            <ImageView
-                android:paddingTop="3dp"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
+            <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+                <ImageView
+                    android:paddingTop="3dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/hello_blank_fragment"
-                android:background="@drawable/ic_dragginghandle"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/hello_blank_fragment"
+                    android:background="@drawable/ic_dragginghandle"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
 
-                />
+                    />
+            </FrameLayout>
         </FrameLayout>
     </RelativeLayout>
 
@@ -69,17 +75,16 @@
                 />
             <!-- Free Park btn -->
             <Button
-                android:paddingTop="10dp"
                 android:id="@+id/menuBtn_FreePark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/color_pureWhite"
                 android:drawableTop="@drawable/ic_icon_freepark"
+                android:drawablePadding="4dp"
+                android:paddingTop="10dp"
                 android:text="@string/menu_txt_freePark"
                 android:textAllCaps="false"
-                android:drawablePadding="0dp"
-                android:textSize="15sp"
-                />
+                android:textSize="15sp" />
             <!-- CreateTip btn -->
             <Button
                 android:paddingTop="15dp"
@@ -122,7 +127,6 @@
 
                 android:textAllCaps="false"
                 android:textSize="15sp"
-                android:textColor="@color/color_lightGray"
                 />
             <!-- P Vagt btn -->
             <Button
@@ -136,7 +140,6 @@
                 android:textAllCaps="false"
                 android:drawablePadding="15dp"
                 android:textSize="15sp"
-                android:textColor="@color/color_lightGray"
                 />
         </TableRow>
     </TableLayout>
