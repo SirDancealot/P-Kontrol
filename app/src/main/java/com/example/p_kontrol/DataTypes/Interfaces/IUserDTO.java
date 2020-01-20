@@ -10,13 +10,13 @@ public interface IUserDTO {
         return EmptyUser;
     }
 
-    int getUserId();
+    String getUserId();
     String getFirstName();
     String getLastName();
     String getProfileSRC();
 
     // Sets
-    void setUserId(int userId);
+    void setUserId(String userId);
     void setFirstName(String firstName);
     void setLastName(String lastName);
     void setProfileSRC(String profileSrc);

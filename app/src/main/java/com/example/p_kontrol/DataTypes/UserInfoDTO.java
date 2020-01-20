@@ -46,6 +46,8 @@ public class UserInfoDTO {
         simpleUser.setFirstName(this.name);
         simpleUser.setLastName(this.name2);
         simpleUser.setProfileSRC(this.url);
+        simpleUser.setUserId(this.user.getUid());
+
         return simpleUser;
     }
 

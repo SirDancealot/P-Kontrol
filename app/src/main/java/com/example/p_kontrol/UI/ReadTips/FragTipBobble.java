@@ -202,7 +202,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         if(tipText != null) {
             String[] split_tip_test = tipText.split("\n");
             if (split_tip_test.length > 4) {
-                tipText = split_tip_test[0] + split_tip_test[1] + split_tip_test[2] + split_tip_test[3];
+                tipText = split_tip_test[0] + " " + split_tip_test[1] + " " + split_tip_test[2] + " " + split_tip_test[3];
             } else {
                 if (tipText.length() > 65) {
                     tipText = tipText.substring(0, 65) + "...";
