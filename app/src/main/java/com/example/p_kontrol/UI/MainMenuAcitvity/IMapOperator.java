@@ -19,6 +19,7 @@ interface IMapOperator{
     void toggleStateParking();
     void toggleStateFreePark();
     void centerOnUserLocation();
+
 }
 
 // interfaces Menu

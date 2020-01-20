@@ -12,7 +12,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     private String TAG = this.getClass().getName();
 
     // Menu Views.
-    View menuBtnContainer,dragHandle;
+    View menuBtnContainer,dragHandle, menuBtnMenu;
     Button menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
             menuBtn_Community   , menuBtn_Parking,menuBtn_PVagt      ;
     // menu Open or Close State
@@ -26,6 +26,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         // Menu Buttons.
         menuBtnContainer     = view.findViewById(R.id.menu_btnContainer)           ;
         dragHandle           = view.findViewById(R.id.menuBtn_draggingHandle)      ;
+        menuBtnMenu          = view.findViewById(R.id.menuBtn_menu)                ;
 
         // Menu Category Buttons
         menuBtn_profile      = view.findViewById(R.id.menuBtn_profile)             ;
@@ -143,6 +144,10 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
             stateParking = !stateParking;
         }
+    }
+    @Override
+    public void visibilityOfMenu(int visibility){
+        menuBtnMenu.setVisibility(visibility);
     }
 
 }

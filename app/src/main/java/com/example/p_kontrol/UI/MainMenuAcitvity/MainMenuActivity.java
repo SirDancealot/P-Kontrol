@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -131,10 +132,12 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void menuBtn_Contribute(){
 
-        // Closing the Menu down.
+        // Closing and hide the Menu down.
         menuOperator.toggleMenu();
+        menuOperator.visibilityOfMenu(View.GONE);
         // Go out of parking state or free parking state.
         menuOperator.toggleCreateTip();
+
 
         // starting Contribute process at index 0. meaning the very first step.
         createTip();
@@ -230,6 +233,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
                         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+                        menuOperator.visibilityOfMenu(View.VISIBLE);
                     }
                 });
                 break;
@@ -247,11 +251,13 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                     public void onCancelTip() {
                         fragmentOperator.closeWriteTip();
                         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+                        menuOperator.visibilityOfMenu(View.VISIBLE);
                     }
                 });
                 break;
             case 2: // finish Tip and send to back end for saving.
                 showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+                menuOperator.visibilityOfMenu(View.VISIBLE);
                 model.createTip();
                 break;
         }

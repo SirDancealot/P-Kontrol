@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:background="#00923B3B"
     android:animateLayoutChanges="true"
+    android:id="@+id/menuBtn_menu"
     >
 
     <!-- Dragging Handle -->
