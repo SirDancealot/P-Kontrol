@@ -2,6 +2,7 @@ package com.example.p_kontrol.DataBase;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -16,10 +17,13 @@ import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import org.imperiumlabs.geofirestore.GeoFirestore;
 import org.imperiumlabs.geofirestore.GeoQuery;
@@ -36,6 +40,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
     CollectionReference pVagter = fireDB.collection("pvagter");
+    CollectionReference users = fireDB.collection("usr");
     GeoFirestore geoFirestoreTips = new GeoFirestore(tips);
     GeoFirestore geoFirestorePVagt = new GeoFirestore(pVagter);
     GeoQuery tipQuery, pVagtQuery;
@@ -70,7 +75,7 @@ public class FirestoreDAO extends Service implements IDatabase {
 
     @Override
     public void createTip(ITipDTO tip) {
-        String id = tip.getAuthor().getUserId()+ "-" + System.currentTimeMillis();
+        String id = tip.getAuthor().getUid()+ "-" + tip.getG();
         tips.document(id).set(tip)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
                 .addOnCompleteListener(task -> {
@@ -85,7 +90,7 @@ public class FirestoreDAO extends Service implements IDatabase {
     @Override
     public void createPVagt(IPVagtDTO pVagt) {
         String id = pVagt.getL().toString() + "-" + System.currentTimeMillis();
-        pVagter.document(id).set(pVagt)
+        pVagter.document(id).set(pVagt, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "createTip: tip \"" + id + "\" added to database"))
                 .addOnCompleteListener(task -> {
                     if (task.isCanceled()) {
@@ -100,8 +105,25 @@ public class FirestoreDAO extends Service implements IDatabase {
     public void updateTip(ITipDTO tip) { }
 
     @Override
-    public AUserDTO getUser(int id) {
-        return null;
+    public void getUser(String id, UserFactory factory, FirebaseUser user) { // TODO implement get user
+        users.document(id).get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    factory.setDto(documentSnapshot.toObject(UserInfoDTO.class));
+                } else {
+                    factory.setUser(user);
+                    createUser(factory.getDto());
+                }
+        });
+    }
+
+    @Override
+    public void createUser(UserInfoDTO user) { // TODO implement create user
+        users.document(user.getUid()).set(user, SetOptions.merge());
+    }
+
+    @Override
+    public void updateUser(UserInfoDTO user, String id) { // TODO implement update user
+
     }
 
     @Override
@@ -209,11 +231,11 @@ public class FirestoreDAO extends Service implements IDatabase {
         public void onKeyEntered(@NotNull String s, @NotNull GeoPoint geoPoint) {
             Log.d(TAG, "onKeyEntered: " + s);
 
-                List<String> list = new ArrayList<>();
-                list.add(s);
+            List<String> list = new ArrayList<>();
+            list.add(s);
 
-                collection.document(s).get().addOnSuccessListener(documentSnapshot -> {
-                    T DTO = documentSnapshot.toObject(typeClass);
+            collection.document(s).get().addOnSuccessListener(documentSnapshot -> {
+                T DTO = documentSnapshot.toObject(typeClass);
 
                 List<I> temp = targetList.getValue();//TODO make this thread safe
                 if (temp != null && DTO != null) {

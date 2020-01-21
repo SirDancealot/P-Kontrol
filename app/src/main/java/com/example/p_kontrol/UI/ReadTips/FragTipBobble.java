@@ -1,10 +1,15 @@
 package com.example.p_kontrol.UI.ReadTips;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +20,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.RatingDTO;
 import com.example.p_kontrol.DataTypes.TipTypes;
+import com.example.p_kontrol.DataTypes.UserFactory;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
@@ -30,6 +37,7 @@ import com.google.firebase.firestore.GeoPoint;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,6 +62,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private LinearLayout topBar;
     private ImageView like, dislike;
     private int likeStatus;
+    LiveDataViewModel vm;
 
     private IFragmentOperator fragmentOperator;
 
@@ -64,6 +73,12 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     public FragTipBobble(IFragmentOperator fragmentOperator, ITipDTO tipDTO){
         this.fragmentOperator = fragmentOperator;
         this.tipDTO = tipDTO;
+
+        userInfoDTO = UserFactory.getFactory().getDto();
+        if (userInfoDTO.getRatings().containsKey(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG()))
+            likeStatus = (userInfoDTO.getRatings().get(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG()).equals("1") ? 1 : -1);
+        else
+            likeStatus = 0;
     }
 
 // android things
@@ -75,6 +90,8 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_tip_bobble, container, false);
 
+        vm = ViewModelProviders.of(getActivity()).get(LiveDataViewModel.class);
+
         // find View objects
         name        = view.findViewById(R.id.bobbelTip_PersonName)  ;
         profImg     = view.findViewById(R.id.bobbelTip_Img)         ;
@@ -83,18 +100,15 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         container   = view.findViewById(R.id.bobbelTip_container)   ;
         topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
         tipcontainer= view.findViewById(R.id.bobbelTip_container)   ;
-        topBar      = view.findViewById(R.id.bobbelTip_top_bar)    ;
-        like        = view.findViewById(R.id.bobbelTip_like)              ;
-        dislike     = view.findViewById(R.id.bobbelTip_dislike)           ;
+        topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
+        like        = view.findViewById(R.id.bobbelTip_like)        ;
+        dislike     = view.findViewById(R.id.bobbelTip_dislike)     ;
 
         like.setOnClickListener(this);
         dislike.setOnClickListener(this);
         tipcontainer.setOnClickListener(this);
         view.setOnClickListener(this);
         readMore.setOnClickListener(this);
-
-        likeStatus = 0;
-
 
         //Get Arguments
         preRenderLikes();
@@ -130,30 +144,52 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 break;
             case (R.id.bobbelTip_like):         // Like a Tip
                 if(likeStatus == 1){
+                    Map<String, String> ratings = userInfoDTO.getRatings();
+                    ratings.remove(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG());
+                    userInfoDTO.setRatings(ratings);
                     like.setImageResource(R.drawable.ic_tip_like);
+                    tipDTO.setLikers(tipDTO.getLikers() - 1);
                     likeStatus = 0;
                 } else {
+                    Map<String, String> ratings = userInfoDTO.getRatings();
+                    ratings.put(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG(), "1");
+
+                    //tip.getAuthor().getUid()+ "-" + tip.getG()
+
+                    userInfoDTO.setRatings(ratings);
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     like.setImageResource(R.drawable.ic_tip_like_on);
+                    if (likeStatus == -1)
+                        tipDTO.setDislikers(tipDTO.getDislikers() - 1);
+                    tipDTO.setLikers(tipDTO.getLikers() + 1);
                     likeStatus = 1;
                 }
                 break;
             case (R.id.bobbelTip_dislike):      // Dislike a Tip
                 if(likeStatus == -1){
+                    Map<String, String> ratings = userInfoDTO.getRatings();
+                    ratings.remove(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG());
+                    userInfoDTO.setRatings(ratings);
                     dislike.setImageResource(R.drawable.ic_tip_dislike);
                     likeStatus = 0;
-                    //todo remove dislike
+                    tipDTO.setDislikers(tipDTO.getDislikers() - 1);
                 } else {
+                    Map<String, String> ratings = userInfoDTO.getRatings();
+                    ratings.put(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG(), "0");
+                    userInfoDTO.setRatings(ratings);
                     dislike.setImageResource(R.drawable.ic_tip_dislike_on);
+                    if (likeStatus == 1)
+                        tipDTO.setLikers(tipDTO.getLikers() - 1);
                     like.setImageResource(R.drawable.ic_tip_like);
                     likeStatus = -1;
-                    // todo set dislike
+                    tipDTO.setDislikers(tipDTO.getDislikers() + 1);
                 }
                 break;
             default:
                 // do nothing
                 break;
         }
+        vm.updateRating(tipDTO, userInfoDTO);
     }
 
 
@@ -161,19 +197,13 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
      * determine the Images for likes button, based on if a user have liked or not.
      * */
     private void preRenderLikes(){
-        if(tipDTO.getLikers() != null) {
-            if (tipDTO.getLikers().contains(userInfoDTO.getId())) {
-                dislike.setImageResource(R.drawable.ic_tip_dislike);
-                like.setImageResource(R.drawable.ic_tip_like_on);
-                likeStatus = 1;
-            }
+        if(likeStatus == 1) {
+            dislike.setImageResource(R.drawable.ic_tip_dislike);
+            like.setImageResource(R.drawable.ic_tip_like_on);
         }
-        if(tipDTO.getDislikers() != null) {
-            if (tipDTO.getDislikers().contains(userInfoDTO.getId())) {
-                dislike.setImageResource(R.drawable.ic_tip_dislike_on);
-                like.setImageResource(R.drawable.ic_tip_like);
-                likeStatus = -1;
-            }
+        if(likeStatus == -1) {
+            dislike.setImageResource(R.drawable.ic_tip_dislike_on);
+            like.setImageResource(R.drawable.ic_tip_like);
         }
     }
     /**
@@ -215,10 +245,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
      * */
     private void getProfileImage(){
         if (tipDTO .getAuthor() != null ) {
-            if (tipDTO.getAuthor().getProfileSRC() != null) {
+            if (tipDTO.getAuthor().getImageUrl() != null) {
                 System.out.println("kkkkk ---------- henter img");
-                System.out.println(tipDTO.getAuthor().getProfileSRC());
-                URL = tipDTO.getAuthor().getProfileSRC();
+                System.out.println(tipDTO.getAuthor().getImageUrl());
+                URL = tipDTO.getAuthor().getImageUrl();
                 RequestOptions requestOptions = new RequestOptions();
                 requestOptions.dontAnimate();
                 Glide.with(FragTipBobble.this).load(URL).into(profImg);

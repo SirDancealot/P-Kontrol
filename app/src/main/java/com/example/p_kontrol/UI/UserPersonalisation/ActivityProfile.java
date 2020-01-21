@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.p_kontrol.DataTypes.UserFactory;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_01;
@@ -47,7 +48,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        userInfoDTO = UserFactory.getFactory().getDto();
         dialogDelete = new YesNoDialogFragment(this, 1);
 
         fimg = findViewById(R.id.profilePic);
@@ -58,10 +59,10 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         logOut.setOnClickListener(this);
         delete.setOnClickListener(this);
 
-        fname.setText(userInfoDTO.getName() + " " + userInfoDTO.getName2());
+        fname.setText(userInfoDTO.getFirstName() + " " + userInfoDTO.getLastName());
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.dontAnimate();
-        Glide.with(ActivityProfile.this).load(userInfoDTO.getUrl()).into(fimg);
+        Glide.with(ActivityProfile.this).load(userInfoDTO.getImageUrl()).into(fimg);
 
     }
 
@@ -76,7 +77,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             // todo delete all user data
         }
         if (v == logOut){
-            userInfoDTO.logOut();
+            UserFactory.getFactory().setDto(null);
             AuthUI.getInstance()
                     .signOut(this)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {

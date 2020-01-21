@@ -1,7 +1,11 @@
 package com.example.p_kontrol.UI.LogIn;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,11 +13,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.UserFactory;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
 import com.example.p_kontrol.UI.MainMenuAcitvity.YesNoDialogFragment;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,6 +29,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -56,14 +65,37 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
     UserInfoDTO userInfoDTO;
     View loding;
 
+    //Service Connection , also Data Access
+    private LiveDataViewModel model;
+    protected FirestoreDAO mService;
+    private boolean bound = false;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
+            mService = binder.getService();
+            bound = true;
+            model.setDao(mService);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+            model.setDao(null);
+        }
+    };
+
     // android specifics
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginscreen_02);
 
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+
         mAuth = FirebaseAuth.getInstance();
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        userInfoDTO = UserFactory.getFactory().getDto();
         findViewById(R.id.LoginScreen_3_SignIn_Google).setOnClickListener(this);
         dialogDelete = new YesNoDialogFragment(this, 1);
 
@@ -112,6 +144,22 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        //connect to service
+        Intent startService = new Intent(this, FirestoreDAO.class);
+        bindService(startService, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unbindService(connection);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -155,8 +203,11 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         if (task.isSuccessful()) {
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
+
             FirebaseUser user = mAuth.getCurrentUser();
-            userInfoDTO.setUser(user);
+            UserFactory factory = UserFactory.getFactory();
+            mService.getUser(user.getUid(), factory, user);
+
             ChangeActivityNext();
         } else {
             // If sign in fails, display a message to the user.
@@ -207,11 +258,4 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(this);
     }
-
-
-
-
-
-
-
 }

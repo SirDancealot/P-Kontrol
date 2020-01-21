@@ -61,6 +61,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         @Override
         public void onServiceDisconnected(ComponentName name) {
             bound = false;
+            model.setDao(null);
         }
     };
 
@@ -105,7 +106,6 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         super.onResume();
 
         //connect to service
-        Log.d(TAG, "onResume: ");
         Intent startService = new Intent(this, FirestoreDAO.class);
         bindService(startService, connection, Context.BIND_AUTO_CREATE);
     }
@@ -113,14 +113,12 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     protected void onPause() {
         super.onPause();
-
         unbindService(connection);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        model.setDao(null);
     }
 
     //  -- * -- * -- * -- * -- * IMenuOperationsController -- * -- * -- * -- * -- * -- *

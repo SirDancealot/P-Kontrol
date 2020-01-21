@@ -7,7 +7,10 @@ import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.example.p_kontrol.DataTypes.UserFactory;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -21,7 +24,11 @@ public interface IDatabase {
 
     void updateTip(ITipDTO tip);
 
-    AUserDTO getUser(int id);
+    void getUser(String id, UserFactory factory, FirebaseUser user);
+
+    void createUser(UserInfoDTO user);
+
+    void updateUser(UserInfoDTO user, String id);
 
     boolean checkPAlert(LatLng location);
 

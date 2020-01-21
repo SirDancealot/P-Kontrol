@@ -3,18 +3,26 @@ package com.example.p_kontrol.UI.LogIn;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.UserFactory;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.R;
 
 import com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity;
+import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 /**
@@ -28,13 +36,31 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
     View trans_logo;
     View trans_background;
 
-    private UserInfoDTO userInfoDTO;
+    //Service Connection , also Data Access
+    private LiveDataViewModel model;
+    protected FirestoreDAO mService;
+    private boolean bound = false;
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
+            mService = binder.getService();
+            bound = true;
+            model.setDao(mService);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+            model.setDao(null);
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkLoginSession();
         setContentView(R.layout.activity_loginscreen_01);
 
 
@@ -44,6 +70,29 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         trans_logo      = findViewById(R.id.LoginScreen_LogoContainer)  ;
         trans_background= findViewById(R.id.LoginScreen_BackgroundBlue) ;
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //connect to service
+        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        Intent startService = new Intent(this, FirestoreDAO.class);
+        bindService(startService, connection, Context.BIND_AUTO_CREATE);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            checkLoginSession();
+        }, 500);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unbindService(connection);
     }
 
     public void changeAct() {
@@ -69,12 +118,13 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         startActivity(login_intent, transitionParameters.toBundle());
     }
     public void checkLoginSession(){
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        //userInfoDTO = UserInfoDTO.getUserInfoDTO();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
         if(user != null){
-            userInfoDTO.setUser(user);
+            UserFactory factory = UserFactory.getFactory();
+            mService.getUser(user.getUid(), factory, user);
+
             Intent changeActivity = new Intent( this , MainMenuActivity.class);
             startActivity(changeActivity);
         } else {

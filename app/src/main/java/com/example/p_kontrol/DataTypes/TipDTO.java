@@ -12,14 +12,22 @@ import java.util.Objects;
 
 public class TipDTO implements IdbTipDTO {
 
-    private AUserDTO author;
+    private UserInfoDTO author;
     private String message, docId;
     private int rating;
     private Date creationDate;
     private String g; //location geohash
     private GeoPoint l; //location
     private int type;
-    private List<String> likers, dislikers;
+    private int likers, dislikers;
+
+    public String getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
+    }
 
     public TipDTO(){}
 
@@ -33,11 +41,11 @@ public class TipDTO implements IdbTipDTO {
     }
 
     @Override
-    public AUserDTO getAuthor() {
+    public UserInfoDTO getAuthor() {
         return author;
     }
     @Override
-    public void setAuthor(AUserDTO author) {
+    public void setAuthor(UserInfoDTO author) {
         this.author = author;
     }
 
@@ -102,22 +110,22 @@ public class TipDTO implements IdbTipDTO {
     }
 
     @Override
-    public List<String> getLikers() {
+    public int getLikers() {
         return this.likers;
     }
 
     @Override
-    public void setLikers(List<String> likers) {
+    public void setLikers(int likers) {
         this.likers = likers;
     }
 
     @Override
-    public List<String> getDislikers() {
+    public int getDislikers() {
         return this.dislikers;
     }
 
     @Override
-    public void setDislikers(List<String> dislikers) {
+    public void setDislikers(int dislikers) {
         this.dislikers = dislikers;
     }
 

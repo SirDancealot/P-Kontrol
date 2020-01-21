@@ -1,7 +1,6 @@
 package com.example.p_kontrol.UI.ViewModelLiveData;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,13 +11,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.p_kontrol.Backend.BackendStub;
-import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.IRatingDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
+import com.example.p_kontrol.DataTypes.UserFactory;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -57,7 +55,7 @@ public class LiveDataViewModel extends ViewModel {
         tipList = new MutableLiveData<>(new ArrayList<>());
         pVagtList = new MutableLiveData<>(new ArrayList<>());
         tipCreateObject = new MutableLiveData<>(new TipDTO());
-        userInfoDTO = UserInfoDTO.getUserInfoDTO();
+        userInfoDTO = UserFactory.getFactory().getDto();
     }
 
 
@@ -219,7 +217,7 @@ public class LiveDataViewModel extends ViewModel {
         if (tipCreateObject != null) {
             if (tipCreateObject.getValue() != null) {
                 ITipDTO dto = tipCreateObject.getValue();
-                dto.setAuthor(userInfoDTO.getSimpleUser());
+                dto.setAuthor(UserFactory.getFactory().getDto());
                 dto.setCreationDate(new Date());
                 dao.createTip(dto);
                 //firestoreDAO.createTip(dto);
@@ -297,5 +295,10 @@ public class LiveDataViewModel extends ViewModel {
         }
 
         return null;
+    }
+
+    public void updateRating(ITipDTO tip, UserInfoDTO user) {
+        dao.createUser(user);
+        dao.createTip(tip);
     }
 }

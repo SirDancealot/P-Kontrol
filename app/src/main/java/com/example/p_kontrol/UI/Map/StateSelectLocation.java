@@ -34,12 +34,14 @@ public class StateSelectLocation extends State {
         super(parent);
         map.clear();
 
+        LatLng cameraLocation = map.getCameraPosition().target;
+
         // Setting marker to location in the center of the map.
-        map.addMarker(new MarkerOptions().position(map.getCameraPosition().target));
+        map.addMarker(new MarkerOptions().position(cameraLocation));
 
         // initiating the new tip object in the ViewModel.
         ITipDTO dto = viewModel.getTipCreateObject().getValue();
-        dto.setL(new GeoPoint(parent.DEFAULT_LOCATION.latitude, parent.DEFAULT_LOCATION.longitude));
+        dto.setL(new GeoPoint(cameraLocation.latitude, cameraLocation.longitude));
         viewModel.setTipCreateObject(dto);
     }
 

@@ -1,6 +1,7 @@
 package com.example.p_kontrol.DataTypes.Interfaces;
 
 import com.example.p_kontrol.DataTypes.AUserDTO;
+import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
@@ -11,8 +12,8 @@ public interface ITipDTO {
     int getType();
     void setType(int type);
 
-    AUserDTO getAuthor();
-    void setAuthor(AUserDTO author);
+    UserInfoDTO getAuthor();
+    void setAuthor(UserInfoDTO author);
 
     String getMessage();
     void setMessage(String message);
@@ -32,9 +33,12 @@ public interface ITipDTO {
 
     ITipDTO copy();
 
-    List<String> getLikers();
-    void setLikers(List<String> likers);
+    int getLikers();
+    void setLikers(int likers);
 
-    List<String> getDislikers();
-    void setDislikers(List<String> dislikers);
+    int getDislikers();
+    void setDislikers(int dislikers);
+
+    String getDocId();
+    void setDocId(String id);
 }
