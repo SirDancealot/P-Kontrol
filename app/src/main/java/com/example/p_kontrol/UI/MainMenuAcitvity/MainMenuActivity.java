@@ -317,16 +317,10 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-        System.out.println(requestCode);
-        if(requestCode == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mapOperator.updatePermissions();
-            } else {
-                // Permission was denied. Display an error message.
-                Log.d(TAG, "onRequestPermissionsResult: false");
-                Intent i = new Intent(this, Activity_LoginScreen_01.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            mapOperator.updatePermissions();
+        } else if ( grantResults[0] == PackageManager.PERMISSION_DENIED) {
+            Log.d(TAG, "onRequestPermissionsResult: false");
         }
     }
 }

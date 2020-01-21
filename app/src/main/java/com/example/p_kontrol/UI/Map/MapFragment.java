@@ -122,7 +122,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
         getPermission();
         setStateStandby();
-        currentState.centerMethod(); // todo Hans!! har jeg gjort noget forkert? her?
+        currentState.centerMethod();
         map.setOnCameraIdleListener(() -> {
             viewModel.getCurrentWindowLocation().setValue(map.getCameraPosition().target);
             viewModel.getCurrentWindowZoom().setValue(map.getCameraPosition().zoom);
@@ -300,7 +300,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         } else {
             ActivityCompat.requestPermissions((context),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    1);
+                    27);
             Log.d(TAG, "getPermission: false");
         }
     }

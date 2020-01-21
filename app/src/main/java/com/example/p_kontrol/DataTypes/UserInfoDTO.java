@@ -126,7 +126,6 @@ public class UserInfoDTO {
 
     public void setUser(FirebaseUser user) {
         this.user = user;
-        this.token = user.getIdToken(true);
         if(user.getDisplayName() != null){
             if( user.getDisplayName().split(" ").length > 1) {
                 this.name = user.getDisplayName().split(" ")[0];
