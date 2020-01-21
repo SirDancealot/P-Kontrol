@@ -2,11 +2,13 @@
 <resources>
 
     <!-- ColorScheme -->
-    <color name="colorPrimary">         #7DCBED</color><!-- darkblue --><color name="colorPrimaryDark">#5C9DB8</color>
-    <color name="colorSecondary">       #ADDCF1</color><!-- lightBlue -->
-    <color name="colorHighlight">       #86DEB7</color><!-- lightGreen --> <color name="colorHighlightShadow">#4ddf9c</color><!-- lightGreen Shadow -->
-    <color name="colorHighlightSecond"> #ADEEE3</color><!-- lighterGreen -->
-    <color name="colorAccent">#D6C5A6</color>
+    <color name="colorPrimary">         #7DCBED </color><!-- darkblue -->
+        <color name="colorPrimaryDark">#5C9DB8</color>
+        <color name="colorPrimary_transparent">         #CC7DCBED </color>
+    <color name="colorSecondary">       #ADDCF1 </color><!-- lightBlue -->
+    <color name="colorHighlight">       #86DEB7 </color><!-- lightGreen --> <color name="colorHighlightShadow">#4ddf9c</color><!-- lightGreen Shadow -->
+    <color name="colorHighlightSecond"> #ADEEE3 </color><!-- lighterGreen -->
+    <color name="colorAccent">#FFDB73           </color><!-- lighterGreen -->
 
     <!-- Alarm Color -->
     <color name="colorAlarm">#de9786</color><!-- lightGreen --> <color name="colorAlarmShadow">#e06d52</color><!-- lightGreen Shadow --><color name="colorAlarmShadowDark">#9f4733</color><!-- lightGreen Shadow -->

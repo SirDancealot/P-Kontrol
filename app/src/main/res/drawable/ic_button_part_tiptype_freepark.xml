@@ -6,9 +6,9 @@
 
   <path
       android:pathData="M44.3709,49.6742L5.3033,49.6742c-2.938,0 -5.3033,-2.3653 -5.3033,-5.3033L0,5.3033c0,-2.938 2.3653,-5.3033 5.3033,-5.3033L44.3709,0L44.3709,12.7311L54.4472,24.8371 44.3709,36.9905Z"
-      android:fillColor="@color/colorHighlightShadow"
+      android:fillColor="@color/colorHighlight"
       />
   <path
       android:pathData="M27.2236,24.8371m-9.4688,0a9.4688,9.4688 0,1 1,18.9375 0a9.4688,9.4688 0,1 1,-18.9375 0"
-      android:fillColor="@color/color_lightGray" />
+      android:fillColor="@color/colorHighlightShadow" />
 </vector>

@@ -1,5 +1,6 @@
 package com.example.p_kontrol.UI.TopMessageBar;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -13,10 +14,10 @@ import android.widget.TextView;
 
 import com.example.p_kontrol.R;
 
-public class FragTopMessageBar extends Fragment implements IFragTopMessageBar , View.OnClickListener{
+public class FragTopMessageBar extends Fragment implements IFragTopMessageBar{
 
     // Views from Fragment
-
+    int ALPHA = 255;
     View view,layout;
     ImageView image;
     TextView header, subtitle;
@@ -43,7 +44,6 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar , 
         header  = view.findViewById(R.id.topMsgBar_header   );
         subtitle= view.findViewById(R.id.topMsgBar_subTitle );
 
-        layout.setOnClickListener(this);
         hide();
         return view;
     }
@@ -93,9 +93,17 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar , 
     public void setImage(Drawable newImage) {
         image.setImageDrawable(newImage);
     }
-
     @Override
-    public void onClick(View v) {
-        layout.setVisibility(View.GONE);
+    public void setBackgroundColor(int color, float alpha ) {
+
+        int newAlpha = Math.round(Color.alpha(color) * alpha);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+
+        int newColor = Color.argb(newAlpha, red, green, blue);
+        layout.setBackgroundColor(newColor);
     }
+
+
 }

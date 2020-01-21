@@ -32,13 +32,13 @@ interface IMenuOperator{
      * and that location is then set to listens for P alerts.
      * */
     void toggleMenuBtnParking();
-
     /**
-     * shows or hides the Menu Container handle with an animation
+     * Enables and Disables the Contribute state on the Menu
      * */
-    void setMenuHandleVisibility(int visibility);
+    void toggleMenuBtnContribute(boolean open);
+
     /**
      * is Used to disable all toggled menu Buttons
      * */
-    void deToggleMenuButton();
+    void deToggleMenuButtons();
 }

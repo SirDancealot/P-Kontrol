@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.IBinder;
@@ -56,13 +57,14 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
     // regular Variables
     private View view, tipcontainer;
-    private TextView readMore, tip, name;
+    private TextView readMore, tip, name, distance;
     private CircleImageView profImg;
     private ITipDTO tipDTO;
     private LinearLayout topBar;
     private ImageView like, dislike;
     private int likeStatus;
     LiveDataViewModel vm;
+    Context context;
 
     private IFragmentOperator fragmentOperator;
 
@@ -87,6 +89,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_tip_bobble, container, false);
 
@@ -103,6 +106,8 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
         like        = view.findViewById(R.id.bobbelTip_like)        ;
         dislike     = view.findViewById(R.id.bobbelTip_dislike)     ;
+        topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
+        distance     = view.findViewById(R.id.bobbelTip_Distance)   ;
 
         like.setOnClickListener(this);
         dislike.setOnClickListener(this);
@@ -112,7 +117,9 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
         //Get Arguments
         preRenderLikes();
+        context = getContext();
         evalTipType();
+        addDistance();
         trimText(); // if text is to loong, trim it down.
         try{
             //name of Profile
@@ -128,8 +135,8 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             name.setText("Unknown Name");
             tip.setText("Unknown Tip");
         }
-        getProfileImage();
 
+        getProfileImage();
         return view;
     }
     @Override
@@ -270,7 +277,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
      * @return the distance from {@code LiveDataViewModel.getCurrentLocation()} to the location of the tip contained in {@code this FragTipBobble}
      */
     private double distanceToUser() {
-        LiveDataViewModel vm = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        LiveDataViewModel vm = ViewModelProviders.of((FragmentActivity) context).get(LiveDataViewModel.class);
         LatLng userPosition = vm.getCurrentLocation().getValue();
         LatLng tipPosition = new LatLng(tipDTO.getL().getLatitude(), tipDTO.getL().getLongitude());
 
@@ -286,5 +293,24 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             dist = dist * 1.609344;
             return (dist);
         }
+    }
+
+
+    private void addDistance() {
+
+        double dist = distanceToUser();
+        String distText = "";
+
+
+
+        if (dist >= 1){
+            distText = String.format("%.2f km", dist);
+        } else {
+            distText = String.format("%.0f m", dist*1000);
+
+
+        }
+
+        distance.setText(distText);
     }
 }

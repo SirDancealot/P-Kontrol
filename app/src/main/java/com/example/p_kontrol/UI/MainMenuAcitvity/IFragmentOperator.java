@@ -51,7 +51,7 @@ public interface IFragmentOperator {
      * @see {@link com.example.p_kontrol.UI.TopMessageBar.IFragTopMessageBar}
      * @see {@link com.example.p_kontrol.UI.TopMessageBar.FragTopMessageBar}
      * */
-    void showTopMsgBar(int imageId, String header , String subTitle);
+    void showTopMsgBar(int imageId, String header , String subTitle, int colorId, float alpha);
     /**
      * hide Top Message Bar
      * using Interface specified .hide() method
@@ -67,10 +67,7 @@ public interface IFragmentOperator {
      @return true if open, false if closed;
       * */
     boolean isTipBobbleOpen();
-    /**
-     @return true if open, false if closed;
-      * */
-    boolean isTopBarOpen();
+
 
 }
 
