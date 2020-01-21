@@ -46,7 +46,6 @@ class ComponentFragmentOperator implements IFragmentOperator {
     //Booleans for Open Closing Fragments.
     private boolean boolFragMessageWrite    ;
     private boolean boolFragTipBobble       ;
-    private boolean boolFragTopMessageBar   ;
 
     // Data Access
     private LiveDataViewModel model;
@@ -176,13 +175,6 @@ class ComponentFragmentOperator implements IFragmentOperator {
     @Override
     public boolean isTipBobbleOpen(){
         return boolFragTipBobble;
-    }
-    /**
-     * @inheritDoc
-     * */
-    @Override
-    public boolean isTopBarOpen(){
-        return boolFragTopMessageBar;
     }
 
     // Open Close Fragments and or Views.

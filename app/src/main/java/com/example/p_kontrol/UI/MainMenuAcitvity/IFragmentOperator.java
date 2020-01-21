@@ -67,10 +67,7 @@ public interface IFragmentOperator {
      @return true if open, false if closed;
       * */
     boolean isTipBobbleOpen();
-    /**
-     @return true if open, false if closed;
-      * */
-    boolean isTopBarOpen();
+
 
 }
 
