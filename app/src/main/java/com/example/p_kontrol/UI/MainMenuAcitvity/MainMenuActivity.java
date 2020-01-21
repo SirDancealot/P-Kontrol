@@ -208,11 +208,12 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
         model.createPVagt(pvagt);
 
-        showTopMsgBar(R.drawable.ic_topmsgbar_readtip,
+        showTopMsgBar(
+                R.drawable.ic_pin_pvagt,
                 getResources().getString(R.string.topbar_alertedPVagt_header),
                 getResources().getString(R.string.topbar_alertedPVagt_subTitle),
                 getResources().getColor(R.color.colorAlarm),
-                1f);
+                0.5f);
 
 
         // resetting the TopMsgBar

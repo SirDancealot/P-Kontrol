@@ -116,7 +116,7 @@
                 android:drawableTop="@drawable/ic_icon_chat"
                 android:text="@string/menu_txt_feedback"
                 android:textAllCaps="false"
-                android:drawablePadding="15dp"
+                android:drawablePadding="10dp"
                 android:textSize="15sp"
                 />
             <!-- Free Park btn -->
@@ -141,7 +141,7 @@
                 android:drawableTop="@drawable/ic_icon_lines"
                 android:text="@string/menu_txt_profile"
                 android:textAllCaps="false"
-                android:drawablePadding="15dp"
+                android:drawablePadding="10dp"
                 android:textSize="15sp"
                 />
         </TableRow>

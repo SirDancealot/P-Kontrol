@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.p_kontrol.R;
 
-public class FragTopMessageBar extends Fragment implements IFragTopMessageBar , View.OnClickListener{
+public class FragTopMessageBar extends Fragment implements IFragTopMessageBar{
 
     // Views from Fragment
     int ALPHA = 255;
@@ -44,7 +44,6 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar , 
         header  = view.findViewById(R.id.topMsgBar_header   );
         subtitle= view.findViewById(R.id.topMsgBar_subTitle );
 
-        layout.setOnClickListener(this);
         hide();
         return view;
     }
@@ -106,8 +105,5 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar , 
         layout.setBackgroundColor(newColor);
     }
 
-    @Override
-    public void onClick(View v) {
-        layout.setVisibility(View.GONE);
-    }
+
 }
