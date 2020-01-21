@@ -145,13 +145,15 @@ class ComponentFragmentOperator implements IFragmentOperator {
      * @inheritDoc
      * */
     @Override
-    public void showTopMsgBar(int imageId, String header, String subTitle) {
+    public void showTopMsgBar(int imageId, String header, String subTitle, int colorId) {
 
         fragment_topMessage.setHeader(header);
         fragment_topMessage.setSubtitle(subTitle);
         fragment_topMessage.setImage(imageId);
+        fragment_topMessage.setBackgroundColor(colorId);
         fragment_topMessage.show();
     }
+
     /**
      * @inheritDoc
      * */

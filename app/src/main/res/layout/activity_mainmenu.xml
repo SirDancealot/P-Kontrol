@@ -47,6 +47,7 @@
                 android:background="@drawable/shape_squarerounded_full"
                 >
                 <!-- MAP Cancel Tip location Button -->
+                <!-- this button is hidden permanently . However all funktionality is stil there -->
                 <Button
                     android:id="@+id/mainMenu_map_cancelBtn"
                     android:layout_width="26dp"

@@ -93,6 +93,10 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar , 
     public void setImage(Drawable newImage) {
         image.setImageDrawable(newImage);
     }
+    @Override
+    public void setBackgroundColor(int colorId) {
+        layout.setBackgroundColor(colorId);
+    }
 
     @Override
     public void onClick(View v) {

@@ -66,7 +66,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
     // create Tip Process required data
     private int stageOfProcess = 0;
-
+    private final Handler handler = new Handler();
 // METHODS
 
     // Android LifeCycle Calls, onCreate onStart onResume.
@@ -194,6 +194,17 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
         model.createPVagt(pvagt);
 
+        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle), R.color.colorAlarm);
+
+
+        // resetting the TopMsgBar
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+            }
+        }, 3000);
+
     }
 
     // -- * -- * -- * -- * -- * Map IMapOperatorController -- * -- * -- * -- * -- * -- *
@@ -271,7 +282,6 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                 model.createTip();
                 stageOfProcess = 0;
 
-                final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -306,7 +316,10 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * by using a find usages in the same class.
      */
     private void showTopMsgBar(int imageId, String header, String subtitle){
-        fragmentOperator.showTopMsgBar(imageId, header, subtitle);
+        fragmentOperator.showTopMsgBar(imageId, header, subtitle, R.color.color_pureWhite);
+    }
+    private void showTopMsgBar(int imageId, String header, String subtitle, int colorId){
+        fragmentOperator.showTopMsgBar(imageId, header, subtitle, colorId);
     }
 
 
