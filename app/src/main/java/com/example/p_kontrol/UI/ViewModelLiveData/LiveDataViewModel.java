@@ -102,7 +102,7 @@ public class LiveDataViewModel extends ViewModel {
     public MutableLiveData<List<IPVagtDTO>> getPvagtList() {
         Log.d(TAG, "getPvagtList: " + this);
         if (pVagtList == null) {
-            pVagtList = new MutableLiveData<>();
+            pVagtList = new MutableLiveData<>(new ArrayList<>());
         }
         return pVagtList;
     }
@@ -146,7 +146,7 @@ public class LiveDataViewModel extends ViewModel {
         Log.d(TAG, "CreatePVagt: " + this);
 
         if (pVagtList == null) {
-            pVagtList = new MutableLiveData<>();
+            pVagtList = new MutableLiveData<>(new ArrayList<>());
         }
         dao.createPVagt(vagt);
     }

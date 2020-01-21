@@ -72,9 +72,15 @@ public class StateParking extends State {
     public void updatePVagter(List<IPVagtDTO> pVagtList) {
         int i = 0;
 
+        map.setOnMarkerClickListener(marker -> {
+            // listener.onTipClick(Integer.parseInt(marker.getTitle()));
+            return true;
+        });
+
         for (IPVagtDTO vagt : pVagtList) {
 
-            if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + time) {
+            if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + (time * 6)) {
+            } else if (System.currentTimeMillis() > vagt.getCreationDate().getTime() + time) {
 
                 //Pin
                 Pins pin = Pins.pVagtOld;
@@ -83,17 +89,8 @@ public class StateParking extends State {
                 int pinX = pin.getDimX() / scalingConst;
                 int pinY = pin.getDimY() / scalingConst;
 
-
                 MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
                 map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
-                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        listener.onTipClick(Integer.parseInt(marker.getTitle()));
-                        return true;
-                    }
-                });
-
             } else {
 
                 //Pin
@@ -104,18 +101,9 @@ public class StateParking extends State {
                 int pinY = pin.getDimY() / scalingConst;
 
                 MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
-
                 map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
-                map.setOnMarkerClickListener(marker -> {
-                    listener.onTipClick(Integer.parseInt(marker.getTitle()));
-                    return true;
-                });
 
-
-              m.start();
-
-
-
+                m.start();
             }
         }
     }

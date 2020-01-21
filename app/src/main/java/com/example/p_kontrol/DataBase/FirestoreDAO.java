@@ -36,7 +36,8 @@ public class FirestoreDAO extends Service implements IDatabase {
     FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
     CollectionReference tips = fireDB.collection("tips");
     CollectionReference pVagter = fireDB.collection("pvagter");
-    GeoFirestore geoFirestore = new GeoFirestore(tips);
+    GeoFirestore geoFirestoreTips = new GeoFirestore(tips);
+    GeoFirestore geoFirestorePVagt = new GeoFirestore(pVagter);
     GeoQuery tipQuery, pVagtQuery;
     private final IBinder daoBinder = new DAOBinder();
 
@@ -118,7 +119,7 @@ public class FirestoreDAO extends Service implements IDatabase {
             tipQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
         else {
             //tipQuery =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
-            tipQuery =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
+            tipQuery =  geoFirestoreTips.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 10f);
             tipQuery.addGeoQueryEventListener(new CustomGeoQueryLocation<>(this, tipList, tips, TipDTO.class));
         }
 
@@ -145,7 +146,7 @@ public class FirestoreDAO extends Service implements IDatabase {
         if (pVagtQuery != null)
             pVagtQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
         else {
-            pVagtQuery =  geoFirestore.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
+            pVagtQuery =  geoFirestorePVagt.queryAtLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), radius.getValue());
             pVagtQuery.addGeoQueryEventListener(new CustomGeoQueryLocation<>(this, PVagtList, pVagter, PVagtDTO.class));
         }
 
@@ -215,7 +216,7 @@ public class FirestoreDAO extends Service implements IDatabase {
                     T DTO = documentSnapshot.toObject(typeClass);
 
                 List<I> temp = targetList.getValue();//TODO make this thread safe
-                if (temp != null) {
+                if (temp != null && DTO != null) {
                     temp.add(DTO);
                     targetList.postValue(temp);
                 }
