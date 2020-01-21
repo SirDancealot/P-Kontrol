@@ -48,7 +48,7 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
 
         userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        dialogDelete= new YesNoDialogFragment(this, 1);
+        dialogDelete = new YesNoDialogFragment(this, 1);
 
         fimg = findViewById(R.id.profilePic);
         fname = findViewById(R.id.profile_profileName);
@@ -58,23 +58,11 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         logOut.setOnClickListener(this);
         delete.setOnClickListener(this);
 
+        fname.setText(userInfoDTO.getName() + " " + userInfoDTO.getName2());
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.dontAnimate();
+        Glide.with(ActivityProfile.this).load(userInfoDTO.getUrl()).into(fimg);
 
-
-
-        setContent();
-
-/*
-        backpress = findViewById(R.id.backpressImageView);
-
-
-        changeProfilePic = findViewById(R.id.changeProfilePicTextView);
-
-        profilePic = findViewById(R.id.profilePicImageView);
-
-
-
-        backpress.setOnClickListener(this);
-        changeProfilePic.setOnClickListener(this);*/
     }
 
 
@@ -88,64 +76,15 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
             // todo delete all user data
         }
         if (v == logOut){
-            userInfoDTO.setLogin(false);
-            userInfoDTO.setUrl("");
-            userInfoDTO.setEmail("");
-            userInfoDTO.setName("");
-            userInfoDTO.setName2("");
-            Toast.makeText(ActivityProfile.this,"Logget ud",Toast.LENGTH_LONG).show();
-            setContent();
-            // [START auth_fui_signout]
+            userInfoDTO.logOut();
             AuthUI.getInstance()
                     .signOut(this)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         public void onComplete(@NonNull Task<Void> task) {
-                            // ...
+                            Intent i = new Intent(ActivityProfile.this, Activity_LoginScreen_01.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
                         }
                     });
-            // [END auth_fui_signout]
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
-                Intent i = new Intent(ActivityProfile.this, Activity_LoginScreen_01.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }, 500);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-
-    private void openGallery() {
-        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(i, PICK_IMAGE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //TODO adding error handling and tip, if wrong imageformat is chosen
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            imageUri = data.getData();
-            profilePic.setImageURI(imageUri);
-        }
-    }
-
-
-    public void setContent(){
-
-
-
-        if (userInfoDTO.getLogin()) {
-            fname.setText(userInfoDTO.getName() + " " + userInfoDTO.getName2());
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.dontAnimate();
-            Glide.with(ActivityProfile.this).load(userInfoDTO.getUrl()).into(fimg);
-        } else {
-            fname.setText("");
-            fimg.setImageResource(0);
         }
     }
 }

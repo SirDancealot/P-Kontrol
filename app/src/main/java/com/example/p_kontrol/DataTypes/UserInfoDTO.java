@@ -35,6 +35,10 @@ public class UserInfoDTO {
         }
     }
 
+    public void logOut(){
+        userInfoDTO = null;
+    }
+
 
 
     public static void newUserInfoDTO() {

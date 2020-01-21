@@ -159,11 +159,9 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void menuBtn_FeedBack(){
         Log.i("click","Community btn clicked \n");
-
         dialogFeedback.show(getSupportFragmentManager(), "closeFragment");
 
-        //Intent changeActivity = new Intent( this , ActivityFeedback.class);
-        //startActivity(changeActivity);
+
     }
 
     /**
@@ -301,10 +299,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         }
         else {
             Log.d(TAG, "onBackPressed: back pressed");
-            //TODO: find ud af om vi skal bruge dialog box eller fade out
             dialogClose.show(getSupportFragmentManager(), "closeFragment");
-            //super.onBackPressed();
-            //overridePendingTransition(0, android.R.anim.fade_out);
         }
     }
     /**
