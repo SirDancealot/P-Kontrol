@@ -151,11 +151,11 @@ public class FirestoreDAO extends Service implements IDatabase {
         }
 
         location.observeForever(local -> {
-            pVagtQuery.setLocation(new GeoPoint(local.latitude, local.longitude), 6000f /*radius.getValue()*/);
+            pVagtQuery.setLocation(new GeoPoint(local.latitude, local.longitude), 1f /*radius.getValue()*/);
         });
 
         radius.observeForever(rad -> {
-            pVagtQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 6000f /*rad*/);
+            pVagtQuery.setLocation(new GeoPoint(location.getValue().latitude, location.getValue().longitude), 1f /*rad*/);
         });
     }
 
