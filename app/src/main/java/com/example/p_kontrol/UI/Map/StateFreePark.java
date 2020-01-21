@@ -61,25 +61,22 @@ public class StateFreePark extends State {
         map.clear();
 
         Pins pin = Pins.free;
-        String pinName = pin.getName();
-        int scalingConst = pin.getDimY() / 100;       //100 is the desired height
-        int pinX = pin.getDimX() / scalingConst;
-        int pinY = pin.getDimY() / scalingConst;
 
         if(list != null) {
             int i = 0;
             for (ITipDTO tip : list) {
                 if(tip.getType() != 0){
                     if(tip.getType() == TipTypes.free.getValue()) {
-                        markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
+
+                        if (pin.getMarker() == null)
+                            pin.initMarkers(parent);
+                        markerOptions = pin.getMarker();
+
                         map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
-                        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                            @Override
-                            public boolean onMarkerClick(Marker marker) {
-                                listener.onTipClick(Integer.parseInt(marker.getTitle()));
-                                Log.i(TAG, "updateMap: PUT A PIN IN IT!!!!! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ");
-                                return true;
-                            }
+                        map.setOnMarkerClickListener(marker -> {
+                            listener.onTipClick(Integer.parseInt(marker.getTitle()));
+                            Log.i(TAG, "updateMap: PUT A PIN IN IT!!!!! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ");
+                            return true;
                         });
                     }
                 }
