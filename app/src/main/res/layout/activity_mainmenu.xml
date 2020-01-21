@@ -21,7 +21,16 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".UI.Activities.MapsActivity" />
+            tools:context=".UI.Activities.MapsActivity" >
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/mainMenu_viewPager_TipBobbles"
+                android:name="com.example.p_kontrol.Fragments.FragTipBobble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </FrameLayout>
 
         <!-- Upper UI -->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            
+
             >
 
             <LinearLayout
@@ -43,7 +52,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/mainMenu_fragContainer_menu"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/shape_squarerounded_full_highlight"
+                android:background="@drawable/shape_squarerounded_full_primary"
                 >
                 <!-- MAP Cancel Tip location Button -->
                 <!-- this button is hidden permanently . However all funktionality is stil there -->
@@ -95,16 +104,6 @@
 
         <!-- EvenHigher UI -->
         <!-- tip bobble-->
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/mainMenu_viewPager_TipBobbles"
-            android:name="com.example.p_kontrol.Fragments.FragTipBobble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
         <!-- Write Tip  -->
         <FrameLayout
             android:id="@+id/mainMenu_midScreenFragmentContainer"

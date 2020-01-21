@@ -247,7 +247,13 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         switch (stageOfProcess) {
             case 1: // Chose location
 
-                showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, getResources().getString(R.string.topbar_createTip_header), getResources().getString(R.string.topbar_createTip_subTitle));
+                showTopMsgBar(
+                        R.drawable.ic_topmsgbar_selectlocation,
+                        getResources().getString(R.string.topbar_createTip_header),
+                        getResources().getString(R.string.topbar_createTip_subTitle),
+                        getResources().getColor(R.color.colorPrimary),
+                        0.5f);
+
                 mapOperator.setStateSelection();
                 mapOperator.visibilityOfInteractBtns(View.VISIBLE);
 
@@ -267,7 +273,14 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                 });
                 break;
             case 2: // Write Tip
-                showTopMsgBar(R.drawable.ic_topmsgbar_writing, getResources().getString(R.string.topbar_writeTip_heaeder), getResources().getString(R.string.topbar_writeTip_subTitle));
+
+                showTopMsgBar(
+                        R.drawable.ic_topmsgbar_writing,
+                        getResources().getString(R.string.topbar_writeTip_heaeder),
+                        getResources().getString(R.string.topbar_writeTip_subTitle),
+                        getResources().getColor(R.color.colorPrimary),
+                        0.5f);
+
                 mapOperator.visibilityOfInteractBtns(View.INVISIBLE);
                 mapOperator.setStateStandby();
                 fragmentOperator.openWriteTip(new ITipWriteListener() {
@@ -284,7 +297,13 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                 });
                 break;
             case 3: // finish Tip and send to back end for saving.
-                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_contributedMessage_header), getResources().getString(R.string.topbar_contributedMessage_subTitle));
+
+                showTopMsgBar( R.drawable.ic_topmsgbar_readtip,
+                        getResources().getString(R.string.topbar_contributedMessage_header),
+                        getResources().getString(R.string.topbar_contributedMessage_subTitle),
+                        getResources().getColor(R.color.colorHighlight),
+                        0.5f);
+
                 model.createTip();
                 stageOfProcess = 0;
 
