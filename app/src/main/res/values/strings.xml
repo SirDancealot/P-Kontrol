@@ -104,12 +104,17 @@
     <string name="profile_google">Login with Google</string>
     <string name="profile_login">Login</string>
     <string name="profile_sign_up">Sign up</string>
+
     <string name="topbar_pTip_header">P-Tip</string>
     <string name="topbar_pTip_subTitle">read or create a tip?</string>
     <string name="topbar_createTip_header">Creating a Tip</string>
     <string name="topbar_createTip_subTitle">Select a Location to Place tip</string>
     <string name="topbar_writeTip_heaeder">Creating a Tip</string>
     <string name="topbar_writeTip_subTitle">Write the actual Tip</string>
+    <string name="topbar_contributedMessage_header">Thanks!</string>
+    <string name="topbar_contributedMessage_subTitle">Your Tip has been created</string>
+
+
     <string name="writeTip_type_freeParking">Free Parking Tip</string>
     <string name="writeTip_type_paidParking">Paid Parking Tip</string>
     <string name="writeTip_type_warningParking">Warning Tip</string>

@@ -106,8 +106,8 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
         // setList af States, this is also the ;
         statesList = new LinkedList<>();
-        statesList.add(new WriteTipState_WriteText(this));
         statesList.add(new WriteTipState_Type(this));
+        statesList.add(new WriteTipState_WriteText(this));
         statesList.add(new WriteTipState_Submit(this));
         adapter = new WriteTipAdapter(getChildFragmentManager(),statesList);
 

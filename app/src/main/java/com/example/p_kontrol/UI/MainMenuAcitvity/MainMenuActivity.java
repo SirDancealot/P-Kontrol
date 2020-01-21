@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.p_kontrol.DataBase.FirestoreDAO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
-import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -63,6 +63,9 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
             bound = false;
         }
     };
+
+    // create Tip Process required data
+    private int stageOfProcess = 0;
 
 // METHODS
 
@@ -147,7 +150,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         // Closing and hide the Menu down.
         menuOperator.closeMenu();
         // Go out of parking state or free parking state.
-        menuOperator.deToggleMenuButton();
+        menuOperator.deToggleMenuButtons();
 
         createTip();
 
@@ -211,18 +214,23 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * see createTip_Process(int i);
      */
     private void createTip(){
-        createTip_Process(0); // start the CreateTip Process at stage 0.
+        if(stageOfProcess == 0){ // if were arent already in the process of creating a tip
+            stageOfProcess = 1;
+            createTip_Process(); // start the CreateTip Process at stage 0.
+            menuOperator.toggleMenuBtnContribute(true);
+        }else{
+            createTip_Process_cancel();
+        }
     }
 
     /**
      * complicated method to controll step-by-step,  the create tip Process
      */
-    private void createTip_Process(int i){
-        switch (i) {
-            case 0: // Chose location
-                menuOperator.setMenuHandleVisibility(View.INVISIBLE);
-                showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, getResources().getString(R.string.topbar_createTip_header), getResources().getString(R.string.topbar_createTip_subTitle));
+    private void createTip_Process(){
+        switch (stageOfProcess) {
+            case 1: // Chose location
 
+                showTopMsgBar(R.drawable.ic_topmsgbar_selectlocation, getResources().getString(R.string.topbar_createTip_header), getResources().getString(R.string.topbar_createTip_subTitle));
                 mapOperator.setStateSelection();
                 mapOperator.visibilityOfInteractBtns(View.VISIBLE);
 
@@ -230,19 +238,18 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                     @Override
                     public void onClick(View v) {
                         mapOperator.setStateStandby();
-                        createTip_Process(1);
+                        ++stageOfProcess;
+                        createTip_Process();
                     }
                 });
                 mapOperator.onCancelClick(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mapOperator.setStateStandby();
-                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
-                        menuOperator.setMenuHandleVisibility(View.VISIBLE);
+                        createTip_Process_cancel();
                     }
                 });
                 break;
-            case 1: // Write Tip
+            case 2: // Write Tip
                 showTopMsgBar(R.drawable.ic_topmsgbar_writing, getResources().getString(R.string.topbar_writeTip_heaeder), getResources().getString(R.string.topbar_writeTip_subTitle));
                 mapOperator.visibilityOfInteractBtns(View.INVISIBLE);
                 mapOperator.setStateStandby();
@@ -250,22 +257,48 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                     @Override
                     public void onMessageDone() {
                         fragmentOperator.closeWriteTip();
-                        createTip_Process(2);
+                        ++stageOfProcess;
+                        createTip_Process();
                     }
                     @Override
                     public void onCancelTip() {
-                        fragmentOperator.closeWriteTip();
-                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
-                        menuOperator.setMenuHandleVisibility(View.VISIBLE);
+                        createTip_Process_cancel();
                     }
                 });
                 break;
-            case 2: // finish Tip and send to back end for saving.
-                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
-                menuOperator.setMenuHandleVisibility(View.VISIBLE);
+            case 3: // finish Tip and send to back end for saving.
+                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_contributedMessage_header), getResources().getString(R.string.topbar_contributedMessage_subTitle));
                 model.createTip();
+                stageOfProcess = 0;
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+                    }
+                }, 3000);
                 break;
         }
+    }
+
+    /**
+     * method to close the createTipProcess regardless of what stage of the process is the current stage.
+     */
+    private void createTip_Process_cancel(){
+        switch (stageOfProcess){
+            case 1: // set the map location
+                mapOperator.setStateStandby();
+                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+                break;
+            case 2: // write the message
+                fragmentOperator.closeWriteTip();
+                showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+                break;
+        }
+        menuOperator.toggleMenuBtnContribute(false);
+        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+        stageOfProcess = 0; // were not creating this .
     }
 
     /**
@@ -289,16 +322,15 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
             mapOperator.setStateStandby();
         }
 
-
         else if ( fragmentOperator.isTipBobbleOpen()) {
             Log.d(TAG, "onBackPressed: viewPager");
             fragmentOperator.closeTipBobbles();
-            menuOperator.setMenuHandleVisibility(View.VISIBLE);
         }
         else if (menuOperator.isMenuOpen()) {
             Log.d(TAG, "onBackPressed: Bottom menue");
             menuOperator.closeMenu();
         }
+
         else {
             Log.d(TAG, "onBackPressed: back pressed");
             //TODO: find ud af om vi skal bruge dialog box eller fade out

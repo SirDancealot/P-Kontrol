@@ -107,12 +107,17 @@
     <string name="profile_google">Log ind med Google</string>
     <string name="profile_login">Log ind</string>
     <string name="profile_sign_up">Opret bruger</string>
+
+
     <string name="topbar_pTip_header">P-Tip</string>
     <string name="topbar_pTip_subTitle">læs eller opret et tip?</string>
     <string name="topbar_createTip_header">Opretter tip</string>
     <string name="topbar_createTip_subTitle">Vælg en placering til dit tip</string>
     <string name="topbar_writeTip_heaeder">Opretter tip</string>
     <string name="topbar_writeTip_subTitle">Skriv selve tippet</string>
+    <string name="topbar_contributedMessage_header">Tak!</string>
+    <string name="topbar_contributedMessage_subTitle">dit tip er nu oprettet</string>
+
     <string name="writeTip_type_freeParking">Gratis parkering Tip</string>
     <string name="writeTip_type_paidParking">Betalt parkering Tip</string>
     <string name="writeTip_type_warningParking">Advarsel Tip</string>
