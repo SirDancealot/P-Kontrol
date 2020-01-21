@@ -64,7 +64,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private ImageView like, dislike;
     private int likeStatus;
     LiveDataViewModel vm;
-    Context context;
 
     private IFragmentOperator fragmentOperator;
 
@@ -100,7 +99,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         profImg     = view.findViewById(R.id.bobbelTip_Img)         ;
         tip         = view.findViewById(R.id.bobbelTip_mainTextView);
         readMore    = view.findViewById(R.id.bobbelTip_readMore)    ;
-        container   = view.findViewById(R.id.bobbelTip_container)   ;
         topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
         tipcontainer= view.findViewById(R.id.bobbelTip_container)   ;
         topBar      = view.findViewById(R.id.bobbelTip_top_bar)     ;
@@ -117,7 +115,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
         //Get Arguments
         preRenderLikes();
-        context = getContext();
         evalTipType();
         addDistance();
         trimText(); // if text is to loong, trim it down.
@@ -277,7 +274,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
      * @return the distance from {@code LiveDataViewModel.getCurrentLocation()} to the location of the tip contained in {@code this FragTipBobble}
      */
     private double distanceToUser() {
-        LiveDataViewModel vm = ViewModelProviders.of((FragmentActivity) context).get(LiveDataViewModel.class);
         LatLng userPosition = vm.getCurrentLocation().getValue();
         LatLng tipPosition = new LatLng(tipDTO.getL().getLatitude(), tipDTO.getL().getLongitude());
 
@@ -299,16 +295,12 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private void addDistance() {
 
         double dist = distanceToUser();
-        String distText = "";
-
-
+        String distText;
 
         if (dist >= 1){
             distText = String.format("%.2f km", dist);
         } else {
             distText = String.format("%.0f m", dist*1000);
-
-
         }
 
         distance.setText(distText);

@@ -90,6 +90,7 @@ class ComponentFragmentOperator implements IFragmentOperator {
         // Live Data list , that calls adapter to notify of changes when changes are made.
         model = ViewModelProviders.of(context).get(LiveDataViewModel.class);
         tipList = model.getTipList();
+        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tipList,this);
         tipList.observe(context, list -> {
             try {
                 adapter_TipBobbles.notifyDataSetChanged();
@@ -97,7 +98,6 @@ class ComponentFragmentOperator implements IFragmentOperator {
                 Log.i(TAG, "ComponentFragmentOperator: Null pointer, adapter for tips was null");
             }
         } );
-        adapter_TipBobbles = new TipBobblesAdapter(fragmentManager, tipList,this);
     }
 
     /**
@@ -124,7 +124,6 @@ class ComponentFragmentOperator implements IFragmentOperator {
     @Override
     public void showTipBobbles(int index) {
 
-        List<ITipDTO> list = null;
 
         viewPager_tipBobles.setVisibility(View.VISIBLE);
         viewPager_tipBobles.setAdapter(adapter_TipBobbles);
