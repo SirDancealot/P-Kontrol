@@ -84,23 +84,18 @@ public class StateParking extends State {
 
                 //Pin
                 Pins pin = Pins.pVagtOld;
-                String pinName = pin.getName();
-                int scalingConst = pin.getDimY() / 75;       //100 is the desired height
-                int pinX = pin.getDimX() / scalingConst;
-                int pinY = pin.getDimY() / scalingConst;
-
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
+                if (pin.getMarker() == null)
+                    pin.initMarkers(parent);
+                MarkerOptions markerOptions = pin.getMarker();
                 map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
             } else {
 
                 //Pin
                 Pins pin = Pins.pVagt;
-                String pinName = pin.getName();
-                int scalingConst = pin.getDimY() / 75;       //75 is the desired height
-                int pinX = pin.getDimX() / scalingConst;
-                int pinY = pin.getDimY() / scalingConst;
+                if (pin.getMarker() == null)
+                    pin.initMarkers(parent);
+                MarkerOptions markerOptions = pin.getMarker();
 
-                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
                 map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
 
                 m.start();

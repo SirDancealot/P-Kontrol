@@ -1,7 +1,13 @@
 package com.example.p_kontrol.UI.ViewModelLiveData;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,7 +21,9 @@ import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.DataTypes.TipDTO;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +45,8 @@ public class LiveDataViewModel extends ViewModel {
     private MutableLiveData<Float> map_WindowZoom;
     private MutableLiveData<LatLng> map_currentLocation;
 
+
+    private MarkerOptions tipPinRegular, tipPinPaid, tipPinAlarm, pVagtPinAlarm, pVagtPinAlarmOld, parkingspot;
 
     // todo er dette rigtigt? August
     // Write tip
@@ -219,5 +229,73 @@ public class LiveDataViewModel extends ViewModel {
         } else {
             Log.e(TAG, "createTip: tipCreateObject is null");
         }
+    }
+
+    public MarkerOptions getPin(String resourceName, Context context, int dimX, int dimY) {
+        /*
+            free("map_tip_pin_regular", 354, 512, R.drawable.map_tip_pin_regular),
+            paid("map_tip_pin_paid", 368, 527, R.drawable.map_tip_pin_paid),
+            alarm("map_tip_pin_alarm", 368, 527, R.drawable.map_tip_pin_alarm),
+            pVagt("map_pvagt_pin_alarm", 366, 525, R.drawable.map_pvagt_pin_alarm),
+            pVagtOld("map_pvagt_pin_alarmold", 366, 525, R.drawable.map_pvagt_pin_alarmold),
+            parkingSpot("map_parkingspot", 382, 230, R.drawable.map_parkingspot);
+        */
+
+        int scalingConst = dimY / 100;
+        dimX /= scalingConst;
+        dimY /= scalingConst;
+
+        switch (resourceName) {
+            case "map_tip_pin_regular":
+                if (tipPinRegular == null) {
+                    Drawable drawable = ContextCompat.getDrawable(context, context.getResources().getIdentifier(resourceName,"drawable",context.getPackageName()));
+                    Bitmap imageBitmap = ((BitmapDrawable)drawable).getBitmap();
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, dimX, dimY, false);
+                    tipPinRegular = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                }
+                return tipPinRegular;
+            case "map_tip_pin_paid":
+                if (tipPinPaid == null) {
+                    Drawable drawable = ContextCompat.getDrawable(context, context.getResources().getIdentifier(resourceName,"drawable",context.getPackageName()));
+                    Bitmap imageBitmap = ((BitmapDrawable)drawable).getBitmap();
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, dimX, dimY, false);
+                    tipPinPaid = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                }
+                return tipPinPaid;
+            case "map_tip_pin_alarm":
+                if (tipPinAlarm == null) {
+                    Drawable drawable = ContextCompat.getDrawable(context, context.getResources().getIdentifier(resourceName,"drawable",context.getPackageName()));
+                    Bitmap imageBitmap = ((BitmapDrawable)drawable).getBitmap();
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, dimX, dimY, false);
+                    tipPinAlarm = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                }
+                return tipPinAlarm;
+            case "map_pvagt_pin_alarm":
+                if (pVagtPinAlarm == null) {
+                    Drawable drawable = ContextCompat.getDrawable(context, context.getResources().getIdentifier(resourceName,"drawable",context.getPackageName()));
+                    Bitmap imageBitmap = ((BitmapDrawable)drawable).getBitmap();
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, dimX, dimY, false);
+                    pVagtPinAlarm = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                }
+                return pVagtPinAlarm;
+            case "map_pvagt_pin_alarmold":
+                if (pVagtPinAlarmOld == null) {
+                    Drawable drawable = ContextCompat.getDrawable(context, context.getResources().getIdentifier(resourceName,"drawable",context.getPackageName()));
+                    Bitmap imageBitmap = ((BitmapDrawable)drawable).getBitmap();
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, dimX, dimY, false);
+                    pVagtPinAlarmOld = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                }
+                return pVagtPinAlarmOld;
+            case "map_parkingspot":
+                if (parkingspot == null) {
+                    Drawable drawable = ContextCompat.getDrawable(context, context.getResources().getIdentifier(resourceName,"drawable",context.getPackageName()));
+                    Bitmap imageBitmap = ((BitmapDrawable)drawable).getBitmap();
+                    Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, dimX, dimY, false);
+                    parkingspot = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                }
+                return parkingspot;
+        }
+
+        return null;
     }
 }

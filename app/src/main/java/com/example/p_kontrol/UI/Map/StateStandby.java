@@ -56,6 +56,10 @@ public class StateStandby extends State {
 
         if(list != null) {
             int i = 0;
+            map.setOnMarkerClickListener(marker -> {
+                listener.onTipClick(Integer.parseInt(marker.getTitle()));
+                return true;
+            });
             for (ITipDTO tip : list) {
                 // todo ret navne
 
@@ -73,22 +77,12 @@ public class StateStandby extends State {
                     }
                 }
 
-                String pinName = pin.getName();
-                int scalingConst = pin.getDimY() / 100;       //100 is the desired height
-                int pinX = pin.getDimX() / scalingConst;
-                int pinY = pin.getDimY() / scalingConst;
+                if (pin.getMarker() == null)
+                    pin.initMarkers(parent);
+                markerOptions = pin.getMarker();
 
-
-                markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(pinName, pinX, pinY)));
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
-                map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                        listener.onTipClick(Integer.parseInt(marker.getTitle()));
-                        return true;
-                    }
-                });
 
             }
         }
