@@ -43,8 +43,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/mainMenu_fragContainer_menu"
                 android:layout_marginBottom="10dp"
-                android:padding="10dp"
-                android:background="@drawable/shape_squarerounded_full"
+                android:background="@drawable/shape_squarerounded_full_highlight"
                 >
                 <!-- MAP Cancel Tip location Button -->
                 <!-- this button is hidden permanently . However all funktionality is stil there -->
@@ -57,11 +56,13 @@
                     android:visibility="gone" />
                 <!-- MAP Confirm Tip location Button -->
                 <Button
+
                     android:id="@+id/mainMenu_map_acceptBtn"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:visibility="visible"
                     android:background="@drawable/ic_button_checkmark"
+                    android:elevation="10dp"
                     />
             </LinearLayout>
 

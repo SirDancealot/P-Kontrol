@@ -1,6 +1,7 @@
 package com.example.p_kontrol.UI.WriteTip;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,9 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
     private ViewPager viewPagerContent;
     private Button navNext, navPrev, navCancel;
     private CustomProgressBar progressBar;
+
+    // getting regularly exchanged drawables
+    Drawable    nextBtnGrafic, prevBtnGrafic;
 
     // States
     WriteTipAdapter adapter;
@@ -81,6 +85,12 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         progressBar         = view.findViewById(R.id.WriteTip_NavBar)           ;
         WriteTip_outerBounds= view.findViewById(R.id.WriteTip_outerBounds)      ;
         contentContainer    = view.findViewById(R.id.WriteTip_ContentContainer)      ;
+
+        // getting regularly exchanged drawables
+        nextBtnGrafic = getContext().getResources().getDrawable(R.drawable.ic_button_next);
+        prevBtnGrafic = getContext().getResources().getDrawable(R.drawable.ic_button_prev);
+
+
 
         // Navigation Button listners
         navNext.setOnClickListener(this);
@@ -189,17 +199,21 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
      * */
     private void hideOrShowNextPrevButtons(){
         if(stateIndex == 0){
-            navPrev.setVisibility(View.GONE);
-            navNext.setVisibility(View.VISIBLE);
+            navPrev.setCompoundDrawablesWithIntrinsicBounds(null, null, null , null);
+            navNext.setCompoundDrawablesWithIntrinsicBounds(null, nextBtnGrafic, null , null);
         }else if(stateIndex == (statesList.size()-1) ){
-            navNext.setVisibility(View.GONE);
-            navPrev.setVisibility(View.VISIBLE);
+            navPrev.setCompoundDrawablesWithIntrinsicBounds(null, prevBtnGrafic, null , null);
+            navNext.setCompoundDrawablesWithIntrinsicBounds(null, null, null , null);
         }else{
-            navPrev.setVisibility(View.VISIBLE);
-            navNext.setVisibility(View.VISIBLE);
+            navPrev.setCompoundDrawablesWithIntrinsicBounds(null, prevBtnGrafic, null , null);
+            navNext.setCompoundDrawablesWithIntrinsicBounds(null, nextBtnGrafic, null , null);
         }
 
     }
+
+
+
+
     /**
      * Hides the keyboard, is called on the switching between states in the viewpager
      * */

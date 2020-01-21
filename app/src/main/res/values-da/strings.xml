@@ -117,6 +117,8 @@
     <string name="topbar_writeTip_subTitle">Skriv selve tippet</string>
     <string name="topbar_contributedMessage_header">Tak!</string>
     <string name="topbar_contributedMessage_subTitle">dit tip er nu oprettet</string>
+    <string name="topbar_alertedPVagt_header">P-Vagt Alarm!</string>
+    <string name="topbar_alertedPVagt_subTitle">Tak for tippet</string>
 
     <string name="writeTip_type_freeParking">Gratis parkering Tip</string>
     <string name="writeTip_type_paidParking">Betalt parkering Tip</string>

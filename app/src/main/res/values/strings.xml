@@ -113,7 +113,8 @@
     <string name="topbar_writeTip_subTitle">Write the actual Tip</string>
     <string name="topbar_contributedMessage_header">Thanks!</string>
     <string name="topbar_contributedMessage_subTitle">Your Tip has been created</string>
-
+    <string name="topbar_alertedPVagt_header">P-Alert!</string>
+    <string name="topbar_alertedPVagt_subTitle">Thank You</string>
 
     <string name="writeTip_type_freeParking">Free Parking Tip</string>
     <string name="writeTip_type_paidParking">Paid Parking Tip</string>

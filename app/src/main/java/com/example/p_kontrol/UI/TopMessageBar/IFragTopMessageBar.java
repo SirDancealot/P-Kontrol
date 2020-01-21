@@ -13,6 +13,6 @@ public interface IFragTopMessageBar {
     void setSubtitle(String text);
     void setImage(int imageId);
     void setImage(Drawable image);
-    void setBackgroundColor(int colorId);
+    void setBackgroundColor(int colorId, float alpha);
 
 }

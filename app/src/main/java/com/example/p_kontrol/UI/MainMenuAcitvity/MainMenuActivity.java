@@ -161,12 +161,14 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * */
     @Override
     public void menuBtn_FeedBack(){
-        Log.i("click","Community btn clicked \n");
 
-        dialogFeedback.show(getSupportFragmentManager(), "closeFragment");
+            Log.i("click", "Community btn clicked \n");
 
-        //Intent changeActivity = new Intent( this , ActivityFeedback.class);
-        //startActivity(changeActivity);
+            dialogFeedback.show(getSupportFragmentManager(), "closeFragment");
+
+            //Intent changeActivity = new Intent( this , ActivityFeedback.class);
+            //startActivity(changeActivity);
+
     }
 
     /**
@@ -194,7 +196,11 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
         model.createPVagt(pvagt);
 
-        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle), R.color.colorAlarm);
+        showTopMsgBar(R.drawable.ic_topmsgbar_readtip,
+                getResources().getString(R.string.topbar_alertedPVagt_header),
+                getResources().getString(R.string.topbar_alertedPVagt_subTitle),
+                getResources().getColor(R.color.colorAlarm),
+                1f);
 
 
         // resetting the TopMsgBar
@@ -316,12 +322,15 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * by using a find usages in the same class.
      */
     private void showTopMsgBar(int imageId, String header, String subtitle){
-        fragmentOperator.showTopMsgBar(imageId, header, subtitle, R.color.color_pureWhite);
+        fragmentOperator.showTopMsgBar(imageId, header, subtitle, getResources().getColor(R.color.color_pureWhite) ,0.5f);
     }
-    private void showTopMsgBar(int imageId, String header, String subtitle, int colorId){
-        fragmentOperator.showTopMsgBar(imageId, header, subtitle, colorId);
+    /**
+     * simple method to edit the top messageBar, such that the managing of the top bar would be easy.
+     * by using a find usages in the same class.
+     */
+    private void showTopMsgBar(int imageId, String header, String subtitle, int colorId, float alpha){
+        fragmentOperator.showTopMsgBar(imageId, header, subtitle, colorId, alpha);
     }
-
 
     // -- * -- * -- * -- * -- * Android Specific things -- * -- * -- * -- * -- * -- * -- *
     /**

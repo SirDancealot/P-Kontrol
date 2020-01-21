@@ -30,18 +30,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 >
+
                 <ImageView
                     android:id="@+id/menuBtn_draggingHandle_image"
-                    android:paddingTop="3dp"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp"
-
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:contentDescription="@string/hello_blank_fragment"
 
-                    android:src="@drawable/ic_dragginghandle_closedmenu"
-                    />
+                    android:paddingLeft="25dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="25dp"
+
+                    android:src="@drawable/ic_dragginghandle_closedmenu" />
             </FrameLayout>
         </FrameLayout>
     </RelativeLayout>
