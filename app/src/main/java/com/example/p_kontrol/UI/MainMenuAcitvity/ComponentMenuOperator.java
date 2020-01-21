@@ -3,6 +3,7 @@ package com.example.p_kontrol.UI.MainMenuAcitvity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.p_kontrol.R;
 /**
@@ -14,6 +15,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
     private String TAG = this.getClass().getName();
 
     // Menu Views.
+    private ImageView dragImage;
     private View menu_hiddenRow, dragHandle;
     private Button  menuBtn_profile     ,menuBtn_FreePark   ,menuBtn_Contribute ,
                     menuBtn_Community   ,menuBtn_Parking    ,menuBtn_PVagt      ;
@@ -36,16 +38,17 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
         this.context = context;
 
         // Menu Buttons.
-        menu_hiddenRow = view.findViewById(R.id.menu_row_2)           ;
-        dragHandle           = view.findViewById(R.id.menuBtn_draggingHandle)      ;
+        dragImage       = view.findViewById(R.id.menuBtn_draggingHandle_image)  ;
+        menu_hiddenRow = view.findViewById(R.id.menu_row_2)                     ;
+        dragHandle           = view.findViewById(R.id.menuBtn_draggingHandle)   ;
 
         // Menu Category Buttons
-        menuBtn_profile      = view.findViewById(R.id.menuBtn_profile)             ;
-        menuBtn_FreePark     = view.findViewById(R.id.menuBtn_FreePark)            ;
-        menuBtn_Contribute   = view.findViewById(R.id.menuBtn_CreateTip)          ;
-        menuBtn_Community    = view.findViewById(R.id.menuBtn_FeedBack)           ;
-        menuBtn_Parking = view.findViewById(R.id.menuBtn_ParkHere)           ;
-        menuBtn_PVagt        = view.findViewById(R.id.menuBtn_PVagt)               ;
+        menuBtn_profile      = view.findViewById(R.id.menuBtn_profile)          ;
+        menuBtn_FreePark     = view.findViewById(R.id.menuBtn_FreePark)         ;
+        menuBtn_Contribute   = view.findViewById(R.id.menuBtn_CreateTip)        ;
+        menuBtn_Community    = view.findViewById(R.id.menuBtn_FeedBack)         ;
+        menuBtn_Parking = view.findViewById(R.id.menuBtn_ParkHere)              ;
+        menuBtn_PVagt        = view.findViewById(R.id.menuBtn_PVagt)            ;
 
         // Setting Listeners
         dragHandle.setOnClickListener(this);
@@ -109,6 +112,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * */
     @Override
     public void closeMenu() {
+        dragImage.setImageResource(R.drawable.ic_dragginghandle_closedmenu);
         menu_hiddenRow.setVisibility(View.GONE);
         drag_State = false;
     }
@@ -118,6 +122,7 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * */
     @Override
     public void openMenu() {
+        dragImage.setImageResource(R.drawable.ic_dragginghandle_openmenu);
         menu_hiddenRow.setVisibility(View.VISIBLE);
         drag_State = true;
     }
