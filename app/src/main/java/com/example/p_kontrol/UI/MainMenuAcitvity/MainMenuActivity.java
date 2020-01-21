@@ -112,6 +112,13 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        unbindService(connection);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         model.setDao(null);

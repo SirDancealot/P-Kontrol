@@ -3,6 +3,7 @@ package com.example.p_kontrol.UI.ReadTips;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ import com.example.p_kontrol.DataTypes.UserInfoDTO;
 import com.example.p_kontrol.UI.MainMenuAcitvity.IFragmentOperator;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -59,7 +62,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
      * @param tipDTO this TipDto Data
      * */
     public FragTipBobble(IFragmentOperator fragmentOperator, ITipDTO tipDTO){
-    this.fragmentOperator = fragmentOperator;
+        this.fragmentOperator = fragmentOperator;
         this.tipDTO = tipDTO;
     }
 
@@ -229,5 +232,29 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         }
     }
 
+    /**
+     * used to calculate the distance between the users current location and {@code this} tip.
+     *
+     * code to convert latitude and longtitude to distance in km copied from:
+     *      https://www.geodatasource.com/developers/java
+     * @return the distance from {@code LiveDataViewModel.getCurrentLocation()} to the location of the tip contained in {@code this FragTipBobble}
+     */
+    private double distanceToUser() {
+        LiveDataViewModel vm = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        LatLng userPosition = vm.getCurrentLocation().getValue();
+        LatLng tipPosition = new LatLng(tipDTO.getL().getLatitude(), tipDTO.getL().getLongitude());
 
+        if ((userPosition.latitude == tipPosition.latitude) && (userPosition.longitude == tipPosition.longitude)) {
+            return 0;
+        }
+        else {
+            double theta = userPosition.longitude - tipPosition.longitude;
+            double dist = Math.sin(Math.toRadians(userPosition.latitude)) * Math.sin(Math.toRadians(tipPosition.latitude)) + Math.cos(Math.toRadians(userPosition.latitude)) * Math.cos(Math.toRadians(tipPosition.latitude)) * Math.cos(Math.toRadians(theta));
+            dist = Math.acos(dist);
+            dist = Math.toDegrees(dist);
+            dist = dist * 60 * 1.1515;
+            dist = dist * 1.609344;
+            return (dist);
+        }
+    }
 }
