@@ -112,7 +112,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
 
         //sets the position of the ui elements of the map, a bit lower, as to not overlap with the topbar
         // automaticly adjusts the centering to the mapped area shown with the topbar
-        map.setPadding(0,170,0,0);
+        map.setPadding(0,190,0,0);
 
         styleMapCall();
         map.getUiSettings().setMyLocationButtonEnabled(false);
