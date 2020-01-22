@@ -388,6 +388,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         if (mapOperator.getCurrentState() instanceof StateSelectLocation) {
             Log.d(TAG, "onBackPressed: stateSelect");
             mapOperator.setStateStandby();
+            menuOperator.toggleMenuBtnContribute();
         }
 
         else if ( fragmentOperator.isTipBobbleOpen()) {
