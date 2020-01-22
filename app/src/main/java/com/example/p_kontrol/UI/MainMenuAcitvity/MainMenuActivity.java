@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataBase.FirestoreDAO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
@@ -26,6 +27,8 @@ import com.example.p_kontrol.UI.WriteTip.ITipWriteListener;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
+import java.util.List;
+
 /**
  * @responsibilty to be the Main android Framework for everything in the app that uses a MainMenu, Map , ReadTips, WriteTips, Parking, and P alerts.
  *
@@ -230,8 +233,17 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * @inheritDoc
      * */
     @Override
-    public void onTipClick(int index){
-        fragmentOperator.showTipBobbles(index);
+    public void onTipClick(String index){
+        ITipDTO clicked = null;
+        List<ITipDTO> tips = model.getTipList().getValue();
+        for (ITipDTO tip : tips) {
+            if ((tip.getAuthor().getUid() + "-" + tip.getG()).equals(index)) {
+                clicked = tip;
+                break;
+            }
+        }
+        int positon = tips.indexOf(clicked);
+        fragmentOperator.showTipBobbles(positon == -1 ? 0 : positon);
         menuOperator.closeMenu();
     }
 

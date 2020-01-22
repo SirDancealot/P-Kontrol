@@ -74,7 +74,7 @@ public class StateFreePark extends State {
 
                         map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
                         map.setOnMarkerClickListener(marker -> {
-                            listener.onTipClick(Integer.parseInt(marker.getTitle()));
+                            listener.onTipClick(marker.getTitle());
                             Log.i(TAG, "updateMap: PUT A PIN IN IT!!!!! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ");
                             return true;
                         });

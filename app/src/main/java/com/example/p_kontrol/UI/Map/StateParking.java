@@ -87,7 +87,7 @@ public class StateParking extends State {
                 if (pin.getMarker() == null)
                     pin.initMarkers(parent);
                 MarkerOptions markerOptions = pin.getMarker();
-                map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
+                map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())).title(vagt.getL().toString()));
             } else {
 
                 //Pin
@@ -96,7 +96,7 @@ public class StateParking extends State {
                     pin.initMarkers(parent);
                 MarkerOptions markerOptions = pin.getMarker();
 
-                map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())));
+                map.addMarker(markerOptions.position(new LatLng(vagt.getL().getLatitude(), vagt.getL().getLongitude())).title(vagt.getL().toString()));
 
                 m.start();
             }

@@ -67,7 +67,7 @@ class ComponentMapOperator implements IMapOperator   {
         //map listener for clicking on a tip
         mapListener = new IMapFragmentListener() {
             @Override
-            public void onTipClick(int index) {
+            public void onTipClick(String index) {
                 mapController.onTipClick(index);
             }
         };
