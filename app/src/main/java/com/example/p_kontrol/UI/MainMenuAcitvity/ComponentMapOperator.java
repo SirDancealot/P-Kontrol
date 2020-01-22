@@ -127,6 +127,7 @@ class ComponentMapOperator implements IMapOperator   {
      * */
     @Override
     public void setStateSelection() {
+        mapView_btnContainerAceptCancel.setVisibility(View.VISIBLE);
         mapFragment.setStateSelectLocation();
     }
     /**
@@ -142,6 +143,7 @@ class ComponentMapOperator implements IMapOperator   {
      * */
     @Override
     public void toggleStateParking() {
+        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
         if(mapFragment.isParkingEnabled()){
             mapFragment.setStateStandby();
         }else{
@@ -153,6 +155,7 @@ class ComponentMapOperator implements IMapOperator   {
      * */
     @Override
     public void toggleStateFreePark() {
+        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
         if(mapFragment.isFreeParkEnabled()){
             mapFragment.setStateStandby();
         }else{

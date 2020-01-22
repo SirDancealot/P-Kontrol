@@ -47,55 +47,55 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
 
     // Android Specifiks
     String TAG = "Login Screen 3";
-    private YesNoDialogFragment dialogDelete;
+
+    // dialog frame.
+    private YesNoDialogFragment dialogCloseApp;
 
     // Login with Google
     private static final int RC_SIGN_IN_GOOGLE = 9001;
-    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient googleSignInClient;
 
     // Login with FaceBook
     private static final int RC_SIGN_IN_FACEBOOK = 64206;
-    private CallbackManager mCallbackManager;
+    private CallbackManager facebookCallbackManager;
 
     //General
-    private FirebaseAuth mAuth;
-    UserInfoDTO userInfoDTO;
-    View loadingSymbol;
+    private FirebaseAuth firebaseAuthenticator;
+    private UserInfoDTO userInfoDTO;
+    private View loadingSymbol;
 
     //Service Connection , also Data Access
-    private LiveDataViewModel model;
-    protected FirestoreDAO mService;
+    private LiveDataViewModel viewModel;
+    protected FirestoreDAO dao;
     private boolean bound = false;
     private ServiceConnection connection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             FirestoreDAO.DAOBinder binder = (FirestoreDAO.DAOBinder) service;
-            mService = binder.getService();
+            dao = binder.getService();
             bound = true;
-            model.setDao(mService);
+            viewModel.setDao(dao);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             bound = false;
-            model.setDao(null);
+            viewModel.setDao(null);
         }
     };
 
-    // android specifics
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loginscreen_02);
 
-        model = ViewModelProviders.of(this).get(LiveDataViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(LiveDataViewModel.class);
 
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuthenticator = FirebaseAuth.getInstance();
         userInfoDTO = UserFactory.getFactory().getDto();
         findViewById(R.id.LoginScreen_3_SignIn_Google).setOnClickListener(this);
-        dialogDelete = new YesNoDialogFragment(this, 1);
-
+        dialogCloseApp = new YesNoDialogFragment(this, 1);
 
 
         // Login Formulae Inputs
@@ -107,12 +107,12 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        mCallbackManager = CallbackManager.Factory.create();
+        facebookCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.LoginScreen_3_SignIn_FaceBook);
         loginButton.setReadPermissions("email", "public_profile");
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        loginButton.registerCallback(facebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
@@ -172,7 +172,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
                 Log.w(TAG, "Google sign in failed", e);
             }
         } else if(requestCode == RC_SIGN_IN_FACEBOOK) {
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            facebookCallbackManager.onActivityResult(requestCode, resultCode, data);
         } else {
             loadingSymbol.setVisibility(View.GONE);
 
@@ -180,13 +180,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
 
     }
 
-    /**
-     * BackStack management
-     */
-    @Override
-    public void onBackPressed() {
-        dialogDelete.show(getSupportFragmentManager(), "closeFragment");
-    }
+
 
     //interfaces
 
@@ -197,9 +191,9 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
             // Sign in success, update UI with the signed-in user's information
             Log.d(TAG, "signInWithCredential:success");
 
-            FirebaseUser user = mAuth.getCurrentUser();
+            FirebaseUser user = firebaseAuthenticator.getCurrentUser();
             UserFactory factory = UserFactory.getFactory();
-            mService.getUser(user.getUid(), factory, user);
+            dao.getUser(user.getUid(), factory, user);
 
             ChangeActivityNext();
         } else {
@@ -221,10 +215,9 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
 
 
     // internal calls
-
     /** operates the signing in with google */
     public void signIn_MethodGoogle(){
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN_GOOGLE);
 
     }
@@ -233,7 +226,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
+        firebaseAuthenticator.signInWithCredential(credential)
                 .addOnCompleteListener(this);
     }
 
@@ -249,6 +242,15 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this);
+        firebaseAuthenticator.signInWithCredential(credential).addOnCompleteListener(this);
+    }
+
+
+    /**
+     * BackStack management
+     */
+    @Override
+    public void onBackPressed() {
+        dialogCloseApp.show(getSupportFragmentManager(), "closeFragment");
     }
 }

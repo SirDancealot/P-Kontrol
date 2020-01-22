@@ -31,6 +31,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class Activity_LoginScreen_01 extends AppCompatActivity {
 
     String TAG = this.getClass().getName();
+
+    // views
     View trans_circle_1;
     View trans_circle_2;
     View trans_logo;
@@ -56,7 +58,6 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
             model.setDao(null);
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,37 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         unbindService(connection);
     }
 
-    public void changeAct() {
+
+    /**
+     * checks if the phone is already logged in.
+     * if so go in to MainMenuAcitivity
+     * @see {@link com.example.p_kontrol.UI.MainMenuAcitvity.MainMenuActivity}
+     * */
+    private void checkLoginSession(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null){
+            UserFactory factory = UserFactory.getFactory();
+            mService.getUser(user.getUid(), factory, user);
+
+            Intent changeActivity = new Intent( this , MainMenuActivity.class);
+            startActivity(changeActivity);
+        } else {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    changeAct();
+                }
+            }, 1000);
+        }
+    }
+    /**
+     * changes activity, simple method to keep code looking simple.
+     * changes to Login Screen 2. is only called if your not already logged in.
+     * @see {@link com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_02}
+     * */
+    private void changeAct() {
         Log.w(TAG, " Changing Activities " );
 
         //Android Standard Shared Elements. must or have a Clipping.
@@ -117,25 +148,4 @@ public class Activity_LoginScreen_01 extends AppCompatActivity {
         );
         startActivity(login_intent, transitionParameters.toBundle());
     }
-    public void checkLoginSession(){
-        //userInfoDTO = UserInfoDTO.getUserInfoDTO();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(user != null){
-            UserFactory factory = UserFactory.getFactory();
-            mService.getUser(user.getUid(), factory, user);
-
-            Intent changeActivity = new Intent( this , MainMenuActivity.class);
-            startActivity(changeActivity);
-        } else {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    changeAct();
-                }
-            }, 1000);
-        }
-    }
-
 }

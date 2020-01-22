@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
+import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
 import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -64,6 +65,7 @@ public class StateParking extends State {
         map.addMarker(markerOptions.position(currentLocation));
 
     }
+
 
     /**
      * a method to update the P-vagt's shown on the map

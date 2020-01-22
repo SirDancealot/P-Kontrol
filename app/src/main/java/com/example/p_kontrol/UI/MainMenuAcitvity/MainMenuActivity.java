@@ -136,7 +136,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * */
     @Override
     public void menuBtn_profile(){
-        Log.i("click","Profile btn clicked \n");
+
+        stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
         Intent changeActivity = new Intent( this , ActivityProfile.class );
         startActivity(changeActivity);
     }
@@ -146,9 +147,12 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * */
     @Override
     public void menuBtn_FreePark(){
-        Log.i("click","FreePark btn clicked \n");
+
+        stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
+        menuOperator.deToggleMenuButtons();
         mapOperator.toggleStateFreePark();
         menuOperator.toggleMenuBtnFreePark();
+
     }
 
     /**
@@ -158,9 +162,9 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     public void menuBtn_Contribute(){
 
         // Closing and hide the Menu down.
-        menuOperator.closeMenu();
-        // Go out of parking state or free parking state.
         menuOperator.deToggleMenuButtons();
+        menuOperator.closeMenu();
+
 
         createTip();
 
@@ -171,10 +175,9 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * */
     @Override
     public void menuBtn_FeedBack(){
-
+        stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
         Log.i("click","Community btn clicked \n");
         dialogFeedback.show(getSupportFragmentManager(), "closeFragment");
-
     }
 
     /**
@@ -183,8 +186,11 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void menuBtn_Parking(){
         Log.i("click","Park Alarm btn clicked \n");
+        stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
+        menuOperator.deToggleMenuButtons();
         mapOperator.toggleStateParking();
         menuOperator.toggleMenuBtnParking();
+
     }
 
     /**
@@ -192,6 +198,10 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * */
     @Override
     public void menuBtn_PVagt(){
+
+        // todo create a TopMsgBar get Status, that returns the image and texts or saves em somewhow,
+        // todo such that it can be returned to that after the thank you notice.
+
         Log.i("click","P-Vagt btn clicked \n");
 
         //report pVagt at current location
