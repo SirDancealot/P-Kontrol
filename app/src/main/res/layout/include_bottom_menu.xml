@@ -130,7 +130,7 @@
             <!-- Free Park btn -->
             <Button
                 android:id="@+id/menuBtn_FreePark"
-                android:layout_width="match_parent"
+                android:layout_width="132dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
 
