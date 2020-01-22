@@ -24,14 +24,11 @@ public interface ITipDTO {
     Date getCreationDate();
     void setCreationDate(Date date);
 
-    // todo setG setL er ikke descriptive nok, beskriv bedre
     String getG();
     void setG(String g);
 
     GeoPoint getL();
     void setL(GeoPoint location);
-
-    ITipDTO copy();
 
     int getLikers();
     void setLikers(int likers);

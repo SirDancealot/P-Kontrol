@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ *  a SingleTon User data, that contains the data of the User that is operating the app. and has logged in .
+ * */
 public class UserInfoDTO {
 
     private Object token;

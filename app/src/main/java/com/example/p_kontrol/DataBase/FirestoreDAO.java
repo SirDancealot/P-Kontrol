@@ -2,7 +2,6 @@ package com.example.p_kontrol.DataBase;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.p_kontrol.Backend.IDatabase;
 import com.example.p_kontrol.DataTypes.*;
 import com.example.p_kontrol.DataTypes.Interfaces.IPVagtDTO;
 import com.example.p_kontrol.DataTypes.Interfaces.ITipDTO;
@@ -19,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,14 +33,19 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class FirestoreDAO extends Service implements IDatabase {
-    String TAG = "FirestoreDAO";
-    FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
-    CollectionReference tips = fireDB.collection("tips");
-    CollectionReference pVagter = fireDB.collection("pvagter");
-    CollectionReference users = fireDB.collection("usr");
-    GeoFirestore geoFirestoreTips = new GeoFirestore(tips);
-    GeoFirestore geoFirestorePVagt = new GeoFirestore(pVagter);
-    GeoQuery tipQuery, pVagtQuery;
+
+    String TAG = this.getClass().getName();
+
+    // Data Access
+    private FirebaseFirestore fireDB = FirebaseFirestore.getInstance();
+    private CollectionReference tips = fireDB.collection("tips");
+    private CollectionReference pVagter = fireDB.collection("pvagter");
+    private CollectionReference users = fireDB.collection("usr");
+    private GeoFirestore geoFirestoreTips = new GeoFirestore(tips);
+    private GeoFirestore geoFirestorePVagt = new GeoFirestore(pVagter);
+    private GeoQuery tipQuery, pVagtQuery;
+
+    // Service Snask
     private final IBinder daoBinder = new DAOBinder();
 
     public class DAOBinder extends Binder {
@@ -52,6 +54,7 @@ public class FirestoreDAO extends Service implements IDatabase {
         }
     }
 
+    //Tips
     @Override
     public List<ITipDTO> getTipList(LatLng location, double radius) {
         Task<QuerySnapshot> query = tips.get();
@@ -88,6 +91,37 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
+    public void updateTip(ITipDTO tip) {
+        createTip(tip);
+    }
+
+
+    // Users
+    @Override
+    public void getUser(String id, UserFactory factory, FirebaseUser user) { // TODO implement get user
+        users.document(id).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                factory.setDto(documentSnapshot.toObject(UserInfoDTO.class));
+            } else {
+                factory.setUser(user);
+                createUser(factory.getDto());
+            }
+        });
+    }
+
+    @Override
+    public void createUser(UserInfoDTO user) { // TODO implement create user
+        users.document(user.getUid()).set(user, SetOptions.merge());
+    }
+
+    @Override
+    public void updateUser(UserInfoDTO user, String id) { // TODO implement update user
+
+    }
+
+
+    // P Alert
+    @Override
     public void createPVagt(IPVagtDTO pVagt) {
         String id = pVagt.getL().toString() + "-" + System.currentTimeMillis();
         pVagter.document(id).set(pVagt, SetOptions.merge())
@@ -102,37 +136,11 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void updateTip(ITipDTO tip) { }
-
-    @Override
-    public void getUser(String id, UserFactory factory, FirebaseUser user) { // TODO implement get user
-        users.document(id).get().addOnSuccessListener(documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    factory.setDto(documentSnapshot.toObject(UserInfoDTO.class));
-                } else {
-                    factory.setUser(user);
-                    createUser(factory.getDto());
-                }
-        });
-    }
-
-    @Override
-    public void createUser(UserInfoDTO user) { // TODO implement create user
-        users.document(user.getUid()).set(user, SetOptions.merge());
-    }
-
-    @Override
-    public void updateUser(UserInfoDTO user, String id) { // TODO implement update user
-
-    }
-
-    @Override
     public boolean checkPAlert(LatLng location) {
         return false;
     }
 
-
-
+    // Queries
     @Override
     public void queryTipByLocation(final MutableLiveData<LatLng> location, final MutableLiveData<Float> radius, final MutableLiveData<List<ITipDTO>> tipList) {
         Log.d(TAG, "queryTipByLocation: " + location);
@@ -181,12 +189,6 @@ public class FirestoreDAO extends Service implements IDatabase {
         });
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return daoBinder;
-    }
-
     /**
      * Inner class for at kunne udvide den eksisterende GeoQueryLocation primært med en constructor
      */
@@ -216,7 +218,7 @@ public class FirestoreDAO extends Service implements IDatabase {
          */
         @Override
         public void onGeoQueryReady() {
-           Log.d(TAG, "all data now found");
+            Log.d(TAG, "all data now found");
 
         }
 
@@ -292,4 +294,14 @@ public class FirestoreDAO extends Service implements IDatabase {
             //Dette er kun nødvendigt at implementere hvis tips positioner kommer til at kunne fløtte sig
         }
     }
+
+
+    // Service Snask
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return daoBinder;
+    }
+
+
 }

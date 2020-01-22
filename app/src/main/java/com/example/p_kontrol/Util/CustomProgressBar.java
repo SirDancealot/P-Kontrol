@@ -155,6 +155,8 @@ public class CustomProgressBar extends View {
 
 
     }
+
+    // gets and sets for the different values
     public int getProgressValue() {
         return progressValue;
     }

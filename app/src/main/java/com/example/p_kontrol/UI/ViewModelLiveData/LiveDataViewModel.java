@@ -125,7 +125,7 @@ public class LiveDataViewModel extends ViewModel {
     //Ratings
     public void updateRating(ITipDTO tip, UserInfoDTO user) {
         dao.createUser(user);
-        dao.createTip(tip);
+        dao.updateTip(tip);
     }
 
     //write tip

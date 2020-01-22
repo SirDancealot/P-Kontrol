@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class TipDTO implements IdbTipDTO {
+    public class TipDTO implements IdbTipDTO {
 
     private UserInfoDTO author;
     private String message, docId;
@@ -21,16 +21,34 @@ public class TipDTO implements IdbTipDTO {
     private int type;
     private int likers, dislikers;
 
-    public String getDocId() {
-        return docId;
-    }
-
-    public void setDocId(String docId) {
-        this.docId = docId;
-    }
-
     public TipDTO(){}
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(author, message, g);
+    }
+
+    @Override
+    public String toString() {
+        return "TipDTO{\n" +
+                "author = '" + author + "'\n" +
+                ", message = '" + message + "'\n" +
+                ", location = " + l + "'\n" +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TipDTO tipDTO = (TipDTO) o;
+        return Objects.equals(author, tipDTO.author) &&
+                Objects.equals(message, tipDTO.message) &&
+                Objects.equals(g, tipDTO.g);
+    }
+
+    //  IdbTipDTO extends ITIPDTO and IMetatData.
+    // interface TipDTO
     @Override
     public int getType() {
         return type;
@@ -76,44 +94,37 @@ public class TipDTO implements IdbTipDTO {
         this.creationDate = creationDate;
     }
 
-    // todo MICHAEL RENAME THESE
-    @Override
+    /**
+     * @return the location GeoHash
+     * */
     public String getG() {
         return g;
     }
-    @Override
+    /**
+     * @param g is the location GeoHash
+     * */
     public void setG(String g) {
         this.g = g;
     }
 
-    @Override
+    /**
+     * @return l GeoPoint location
+     */
     public GeoPoint getL() {
         return l;
     }
-    @Override
+    /**
+     * @param l GeoPoint location
+     */
     public void setL(GeoPoint l) {
         this.l = l;
         g = new GeoHash(l.getLatitude(), l.getLongitude()).getGeoHashString();
-    }
-
-    // todo MADS
-    @Override
-    public ITipDTO copy(){
-        ITipDTO newDTO = new TipDTO();
-        newDTO.setAuthor(author);
-        newDTO.setCreationDate(creationDate);
-        newDTO.setL(l);
-        newDTO.setG(g);
-        newDTO.setMessage(message);
-        newDTO.setRating(rating);
-        return newDTO;
     }
 
     @Override
     public int getLikers() {
         return this.likers;
     }
-
     @Override
     public void setLikers(int likers) {
         this.likers = likers;
@@ -123,43 +134,29 @@ public class TipDTO implements IdbTipDTO {
     public int getDislikers() {
         return this.dislikers;
     }
-
     @Override
     public void setDislikers(int dislikers) {
         this.dislikers = dislikers;
     }
 
     @Override
-    public String toString() {
-        return "TipDTO{\n" +
-                "author = '" + author + "'\n" +
-                ", message = '" + message + "'\n" +
-                ", location = " + l + "'\n" +
-                '}';
+    public String getDocId() {
+        return docId;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TipDTO tipDTO = (TipDTO) o;
-        return Objects.equals(author, tipDTO.author) &&
-                Objects.equals(message, tipDTO.message) &&
-                Objects.equals(g, tipDTO.g);
-    }
+    public void setDocId(String docId) {
+            this.docId = docId;
+        }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(author, message, g);
-    }
-
+    // interface MetaData
     @Override
     public String getDocName() {
         return docId;
     }
-
     @Override
     public void setDocName(String name) {
         docId = name;
     }
+
+
 }
