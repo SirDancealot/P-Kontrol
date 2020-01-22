@@ -37,8 +37,4 @@ interface IMenuOperator{
      * */
     void toggleMenuBtnContribute();
 
-    /**
-     * is Used to disable all toggled menu Buttons
-     * */
-    void deToggleMenuButtons();
 }

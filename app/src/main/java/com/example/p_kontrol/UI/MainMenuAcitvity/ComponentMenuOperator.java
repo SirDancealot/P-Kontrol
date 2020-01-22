@@ -1,6 +1,5 @@
 package com.example.p_kontrol.UI.MainMenuAcitvity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -140,16 +139,13 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * */
     @Override
     public void toggleMenuBtnFreePark() {
-        if (stateFreePark) {
-            menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
-        } else {
+        deToggleMenuButtons_graficsOnly();
+        if (!stateFreePark) {
             menuBtn_FreePark.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
-            if (stateParking)
-                toggleMenuBtnParking();
-            if (contributeState)
-                toggleMenuBtnContribute();
         }
         stateFreePark = !stateFreePark;
+        stateParking = false;
+        contributeState = false;
     }
 
     /**
@@ -157,17 +153,13 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * */
     @Override
     public void toggleMenuBtnParking(){
-        if (stateParking) {
-            menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
-        } else {
+        deToggleMenuButtons_graficsOnly();
+        if (!stateParking){
             menuBtn_Parking.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
-            if (stateFreePark)
-                toggleMenuBtnFreePark();
-            if (contributeState)
-                toggleMenuBtnContribute();
         }
         stateParking = !stateParking;
-
+        stateFreePark = false ;
+        contributeState = false;
     }
 
     /**
@@ -175,36 +167,20 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * */
     @Override
     public void toggleMenuBtnContribute(){
-        if (contributeState) {
-            menuBtn_Contribute.setBackgroundResource(R.color.color_pureWhite);
-        } else {
+        deToggleMenuButtons_graficsOnly();
+        if (!contributeState) {
             menuBtn_Contribute.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
-            if (stateFreePark)
-                toggleMenuBtnFreePark();
-            if (stateParking)
-                toggleMenuBtnParking();
         }
         contributeState = !contributeState;
-        Log.i(TAG, "toggleMenuBtnContribute: ");
+        stateParking = false;
+        stateFreePark = false ;
     }
 
-    /**
-     * @inheritDoc
-     * */
-    @Override
-    public void deToggleMenuButtons(){
-        if(stateFreePark){
+
+    private void deToggleMenuButtons_graficsOnly(){
             menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
-            stateFreePark = !stateFreePark;
-        }
-        if(stateParking){
             menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
-            stateParking = !stateParking;
-        }
-        if(contributeState){
             menuBtn_Contribute.setBackgroundResource(R.color.color_pureWhite);
-            contributeState = !contributeState;
-        }
     }
 
 }

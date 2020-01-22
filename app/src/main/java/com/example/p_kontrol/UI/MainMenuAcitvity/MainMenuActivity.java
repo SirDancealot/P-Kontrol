@@ -149,7 +149,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     public void menuBtn_FreePark(){
 
         stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
-        menuOperator.deToggleMenuButtons();
+
         mapOperator.toggleStateFreePark();
         menuOperator.toggleMenuBtnFreePark();
 
@@ -162,7 +162,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     public void menuBtn_Contribute(){
 
         // Closing and hide the Menu down.
-        menuOperator.deToggleMenuButtons();
+
         menuOperator.closeMenu();
 
 
@@ -187,7 +187,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     public void menuBtn_Parking(){
         Log.i("click","Park Alarm btn clicked \n");
         stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
-        menuOperator.deToggleMenuButtons();
+
         mapOperator.toggleStateParking();
         menuOperator.toggleMenuBtnParking();
 
