@@ -196,6 +196,8 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         vm.updateRating(tipDTO, userInfoDTO);
     }
 
+    /** a genrel method to avoid duplicating code
+     * */
 
     /**
      * determine the Images for likes button, based on if a user have liked or not.
@@ -265,7 +267,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             Log.e(TAG, "getProfileImage: author == null" );
         }
     }
-
     /**
      * used to calculate the distance between the users current location and {@code this} tip.
      *

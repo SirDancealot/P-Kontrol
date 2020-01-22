@@ -317,6 +317,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
 
                 model.createTip();
                 stageOfProcess = 0;
+                createTip_Process_cancel();
 
                 handler.postDelayed(new Runnable() {
                     @Override

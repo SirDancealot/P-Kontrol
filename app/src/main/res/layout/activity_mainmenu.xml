@@ -23,13 +23,7 @@
             android:layout_height="match_parent"
             tools:context=".UI.Activities.MapsActivity" >
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/mainMenu_viewPager_TipBobbles"
-                android:name="com.example.p_kontrol.Fragments.FragTipBobble"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
 
-                />
         </FrameLayout>
 
         <!-- Upper UI -->
@@ -104,6 +98,16 @@
 
         <!-- EvenHigher UI -->
         <!-- tip bobble-->
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mainMenu_viewPager_TipBobbles"
+            android:name="com.example.p_kontrol.Fragments.FragTipBobble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
         <!-- Write Tip  -->
         <FrameLayout
             android:id="@+id/mainMenu_midScreenFragmentContainer"
