@@ -128,10 +128,8 @@ class ComponentMapOperator implements IMapOperator   {
      * */
     @Override
     public void setStateSelection() {
-        if (mapFragment.getCurrentState() instanceof StateSelectLocation)
-            mapFragment.setStateStandby();
-        else
-            mapFragment.setStateSelectLocation();
+        mapView_btnContainerAceptCancel.setVisibility(View.VISIBLE);
+        mapFragment.setStateSelectLocation();
     }
     /**
      * @inheritDoc

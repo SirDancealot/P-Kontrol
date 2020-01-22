@@ -50,23 +50,25 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
 
     final String TAG = this.getClass().getName();
     private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private IFragmentOperator fragmentOperator;
 
     // Tip data
     private String URL;
     private int type;
     private UserInfoDTO userInfoDTO;
+    private int likeStatus;
 
-    // regular Variables
+    // Data Access
+    private LiveDataViewModel vm;
+
+    //Views
     private View view, tipcontainer;
     private TextView readMore, tip, name, distance;
     private CircleImageView profImg;
     private ITipDTO tipDTO;
     private LinearLayout topBar;
     private ImageView like, dislike;
-    private int likeStatus;
-    private LiveDataViewModel vm;
 
-    private IFragmentOperator fragmentOperator;
 
     /** @responsibilty to contain all the responsibility for showing it Data for a single tip in a specific layout
      * @param  fragmentOperator passed by adapter.
@@ -148,47 +150,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
                 tip.setText(tipDTO.getMessage());
                 break;
             case (R.id.bobbelTip_like):         // Like a Tip
-                if(likeStatus == 1){
-                    Map<String, String> ratings = userInfoDTO.getRatings();
-                    ratings.remove(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG());
-                    userInfoDTO.setRatings(ratings);
-                    like.setImageResource(R.drawable.ic_tip_like);
-                    tipDTO.setLikers(tipDTO.getLikers() - 1);
-                    likeStatus = 0;
-                } else {
-                    Map<String, String> ratings = userInfoDTO.getRatings();
-                    ratings.put(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG(), "1");
-
-                    //tip.getAuthor().getUid()+ "-" + tip.getG()
-
-                    userInfoDTO.setRatings(ratings);
-                    dislike.setImageResource(R.drawable.ic_tip_dislike);
-                    like.setImageResource(R.drawable.ic_tip_like_on);
-                    if (likeStatus == -1)
-                        tipDTO.setDislikers(tipDTO.getDislikers() - 1);
-                    tipDTO.setLikers(tipDTO.getLikers() + 1);
-                    likeStatus = 1;
-                }
+                likeOrDislike(1);
                 break;
             case (R.id.bobbelTip_dislike):      // Dislike a Tip
-                if(likeStatus == -1){
-                    Map<String, String> ratings = userInfoDTO.getRatings();
-                    ratings.remove(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG());
-                    userInfoDTO.setRatings(ratings);
-                    dislike.setImageResource(R.drawable.ic_tip_dislike);
-                    likeStatus = 0;
-                    tipDTO.setDislikers(tipDTO.getDislikers() - 1);
-                } else {
-                    Map<String, String> ratings = userInfoDTO.getRatings();
-                    ratings.put(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG(), "0");
-                    userInfoDTO.setRatings(ratings);
-                    dislike.setImageResource(R.drawable.ic_tip_dislike_on);
-                    if (likeStatus == 1)
-                        tipDTO.setLikers(tipDTO.getLikers() - 1);
-                    like.setImageResource(R.drawable.ic_tip_like);
-                    likeStatus = -1;
-                    tipDTO.setDislikers(tipDTO.getDislikers() + 1);
-                }
+                likeOrDislike(-1);
                 break;
             default:
                 // do nothing
@@ -197,7 +162,84 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         vm.updateRating(tipDTO, userInfoDTO);
     }
 
+    /**
+     * long internal method that operates the data operations needed when a Like or dislike is clicked.
+     * */
+    private void likeOrDislike(int buttonClicked){
 
+        // what happens when you click opn a like or dislike button,
+        // evaluate the status it already has and operate in that regard.
+
+        Map<String, String> ratings = userInfoDTO.getRatings();
+
+        switch (likeStatus){  // Like status us the status it already has.
+            case -1: // dislike and dislike is clicked again
+
+                // Removing the dislike if its there. on the user
+                ratings.remove(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG());
+                userInfoDTO.setRatings(ratings);
+
+                // Updating the Tips dislike
+                likeStatus = 0;
+                tipDTO.setDislikers(tipDTO.getDislikers() - 1);
+
+                // Updating the UI
+                dislike.setImageResource(R.drawable.ic_tip_dislike);
+
+                break;
+            case 1: // like and like is clicked again
+
+                // removing the like if its there on the user
+                ratings.remove(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG());
+                userInfoDTO.setRatings(ratings);
+
+                // Updating the Tips like
+                tipDTO.setLikers(tipDTO.getLikers() - 1);
+                likeStatus = 0;
+
+                like.setImageResource(R.drawable.ic_tip_like);
+
+                break;
+            case 0: // the status is 0, and like or dislike is clicked
+                switch (buttonClicked){
+                    case -1: // Dislike is Clicked
+                        // Adding  the dislike to the User
+                        ratings.put(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG(), "0");
+                        userInfoDTO.setRatings(ratings);
+
+                        // Adding the dislike to the Tip
+                        tipDTO.setDislikers(tipDTO.getDislikers() + 1);
+
+                        // Updating ui
+                        dislike.setImageResource(R.drawable.ic_tip_dislike_on);
+                        if (likeStatus == 1)
+                            tipDTO.setLikers(tipDTO.getLikers() - 1);
+                        like.setImageResource(R.drawable.ic_tip_like);
+
+                        // Updating status
+                        likeStatus = -1;
+                        break;
+                    case 1: // Like is Clicked
+
+                        // Adding the like to the Tip
+                        ratings.put(tipDTO.getAuthor().getUid() + "-" + tipDTO.getG(), "1");
+                        userInfoDTO.setRatings(ratings);
+
+                        // Adding the like to the tip
+                        tipDTO.setLikers(tipDTO.getLikers() + 1);
+
+                        // Updating the UI
+                        dislike.setImageResource(R.drawable.ic_tip_dislike);
+                        like.setImageResource(R.drawable.ic_tip_like_on);
+                        if (likeStatus == -1)
+                            tipDTO.setDislikers(tipDTO.getDislikers() - 1);
+
+                        // updating the status
+                        likeStatus = 1;
+                        break;
+                }
+        }
+    }
     /**
      * determine the Images for likes button, based on if a user have liked or not.
      * */

@@ -7,15 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.p_kontrol.Backend.Backend;
-import com.example.p_kontrol.Backend.IBackend;
 import com.example.p_kontrol.R;
 /**
  * @responsibilty to give users options to give feedback, on a facebook discussion
@@ -23,7 +16,7 @@ import com.example.p_kontrol.R;
 public class ActivityFeedback extends AppCompatActivity implements View.OnClickListener {
 
 
-    private final String FB_GROUP_ID = "1057084904626319";
+    private final String facebookGroupId = "1057084904626319";
     private Button navToFacebookBtn;
 
     @Override
@@ -39,7 +32,7 @@ public class ActivityFeedback extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
 
         //TODO This links to "DTU - brugte bøger", change this to the id in the addressbar of the desired group.
-        navToFacebookPage(FB_GROUP_ID);
+        navToFacebookPage(facebookGroupId);
     }
 
     /**

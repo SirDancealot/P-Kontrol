@@ -79,6 +79,7 @@ public class StateStandby extends State {
                     pin.initMarkers(parent);
                 markerOptions = pin.getMarker();
 
+
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(tip.getAuthor().getUid() + "-" + tip.getG()));
             }
         }

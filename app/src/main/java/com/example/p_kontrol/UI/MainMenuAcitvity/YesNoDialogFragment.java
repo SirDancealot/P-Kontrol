@@ -34,7 +34,7 @@ public class YesNoDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(caller, 0));
 
-        if( dialogType == 0) {
+        if( dialogType == 0) { // type Close app
 
             builder.setTitle(R.string.close_frag_title0);
             builder.setPositiveButton(R.string.close_frag_confirm, ((dialog, which) -> {
@@ -45,7 +45,7 @@ public class YesNoDialogFragment extends DialogFragment {
                 dialog.cancel();
             }));
 
-        } else if (dialogType == 1){
+        } else if (dialogType == 1){ // delete all personal data
 
             builder.setTitle(R.string.close_frag_title1);
             builder.setPositiveButton(R.string.close_frag_confirm, ((dialog, which) -> {
@@ -57,7 +57,7 @@ public class YesNoDialogFragment extends DialogFragment {
                 dialog.cancel();
             }));
 
-        } else {
+        } else { // facebook feedback, as requested by PO.
 
             String facebookGroupId = "1057084904626319";
             builder.setTitle(R.string.close_frag_title2);
