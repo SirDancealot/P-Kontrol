@@ -137,6 +137,9 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void menuBtn_profile(){
 
+        mapOperator.setStateStandby();
+        menuOperator.deToggleAllButtonsOnMenu();
+
         stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
         Intent changeActivity = new Intent( this , ActivityProfile.class );
         startActivity(changeActivity);
@@ -185,6 +188,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * */
     @Override
     public void menuBtn_Parking(){
+
         Log.i("click","Park Alarm btn clicked \n");
         stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
 

@@ -37,4 +37,8 @@ interface IMenuOperator{
      * */
     void toggleMenuBtnContribute();
 
+    /**
+     * deToogleAll buttons
+     * */
+    void deToggleAllButtonsOnMenu();
 }

@@ -183,4 +183,14 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
             menuBtn_Contribute.setBackgroundResource(R.color.color_pureWhite);
     }
 
+    /** @inheritDoc */
+    @Override
+    public void deToggleAllButtonsOnMenu() {
+        menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
+        menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
+        menuBtn_Contribute.setBackgroundResource(R.color.color_pureWhite);
+        contributeState = false;
+        stateParking = false;
+        stateFreePark = false ;
+    }
 }
