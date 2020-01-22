@@ -153,6 +153,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void menuBtn_FreePark(){
 
+        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+
         stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
 
         mapOperator.toggleStateFreePark();
@@ -190,6 +192,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
      * */
     @Override
     public void menuBtn_Parking(){
+
+        showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
 
         Log.i("click","Park Alarm btn clicked \n");
         stageOfProcess = 0; // bug fix, if were creating a tip and this is clicked, the stage will noe be reset unless this is here;
