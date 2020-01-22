@@ -393,6 +393,9 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
             Log.d(TAG, "onBackPressed: stateSelect");
             mapOperator.setStateStandby();
             menuOperator.toggleMenuBtnContribute();
+            showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+
+
         }
 
         else if ( fragmentOperator.isTipBobbleOpen()) {
