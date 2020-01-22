@@ -23,8 +23,8 @@ import com.example.p_kontrol.R;
 public class ActivityFeedback extends AppCompatActivity implements View.OnClickListener {
 
 
-    final String FB_GROUP_ID = "1057084904626319";
-    Button navToFacebookBtn;
+    private final String FB_GROUP_ID = "1057084904626319";
+    private Button navToFacebookBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -41,8 +41,6 @@ public class StateStandby extends State {
                 Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
             }
         } );
-        // todo ViewModel Se Her
-        //viewModel.updateTips(null); TODO this might be redundant with the service implementation
         updateMap(tipList.getValue());
     }
 
@@ -61,7 +59,6 @@ public class StateStandby extends State {
                 return true;
             });
             for (ITipDTO tip : list) {
-                // todo ret navne
 
                 Pins pin = Pins.paid;
                 if(tip.getType() != 0){
@@ -82,8 +79,6 @@ public class StateStandby extends State {
                 markerOptions = pin.getMarker();
 
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
-
-
             }
         }
     }

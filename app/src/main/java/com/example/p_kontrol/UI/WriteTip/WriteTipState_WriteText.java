@@ -39,45 +39,31 @@ public class WriteTipState_WriteText extends AbstractWriteTipState {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        view        = inflater.inflate(R.layout.fragment_write_tip_state_writetext, container, false);
-        //category    = view.findViewById(R.id.WriteTip_CategorySpinner);
-        text        = view.findViewById(R.id.WriteTip_TextInput);
+        // important Views
+        view = inflater.inflate(R.layout.fragment_write_tip_state_writetext, container, false);
+        text = view.findViewById(R.id.WriteTip_TextInput);
 
-
+        // data access
         viewModel = ViewModelProviders.of(this.getActivity()).get(LiveDataViewModel.class);
-
-
-
         dto = viewModel.getTipCreateObject().getValue();
-
-
-
         dto.setMessage("");
+        viewModel.setTipCreateObject(dto);
 
-
-        viewModel.setCurrentTip(dto); // August muligvis temp ting
-
-        System.out.println("nnnnnnn" + dto.toString());
-
+        //the data is set here, when the text has been entered.
         text.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // todo make sure this no Null pointer casts
-                dto.setMessage(s.toString());
-                viewModel.setCurrentTip(dto); // August muligvis temp ting
-                viewModel.setTipCreateObject(dto);
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+                dto.setMessage(s.toString());
+                viewModel.setTipCreateObject(dto);
+            }
         });
-
 
         return view;
     }

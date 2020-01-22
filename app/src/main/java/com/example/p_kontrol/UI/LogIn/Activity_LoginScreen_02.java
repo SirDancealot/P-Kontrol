@@ -27,7 +27,6 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -61,7 +60,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
     //General
     private FirebaseAuth mAuth;
     UserInfoDTO userInfoDTO;
-    View loding;
+    View loadingSymbol;
 
     //Service Connection , also Data Access
     private LiveDataViewModel model;
@@ -100,11 +99,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
 
 
         // Login Formulae Inputs
-        loding          = findViewById(R.id.progress_bar);
-
-
-
-
+        loadingSymbol = findViewById(R.id.progress_bar);
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -162,7 +157,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         super.onActivityResult(requestCode, resultCode, data);
 
         Log.d(TAG, "onActivityResult: " + requestCode);
-        loding.setVisibility(View.VISIBLE);
+        loadingSymbol.setVisibility(View.VISIBLE);
 
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -179,7 +174,7 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         } else if(requestCode == RC_SIGN_IN_FACEBOOK) {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
         } else {
-            loding.setVisibility(View.GONE);
+            loadingSymbol.setVisibility(View.GONE);
 
         }
 
