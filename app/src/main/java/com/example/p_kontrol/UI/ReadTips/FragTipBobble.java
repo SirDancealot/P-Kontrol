@@ -47,13 +47,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * */
 public class FragTipBobble extends Fragment implements View.OnClickListener{
 
-    // Settings
-    final String TAG = this.getClass().getName();
 
+    final String TAG = this.getClass().getName();
+    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+
+    // Tip data
     private String URL;
     private int type;
     private UserInfoDTO userInfoDTO;
-    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     // regular Variables
     private View view, tipcontainer;
@@ -63,7 +64,7 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
     private LinearLayout topBar;
     private ImageView like, dislike;
     private int likeStatus;
-    LiveDataViewModel vm;
+    private LiveDataViewModel vm;
 
     private IFragmentOperator fragmentOperator;
 
@@ -196,8 +197,6 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
         vm.updateRating(tipDTO, userInfoDTO);
     }
 
-    /** a genrel method to avoid duplicating code
-     * */
 
     /**
      * determine the Images for likes button, based on if a user have liked or not.
@@ -291,8 +290,10 @@ public class FragTipBobble extends Fragment implements View.OnClickListener{
             return (dist);
         }
     }
-
-
+    /**
+     * internal call to add a distance text for the tip header.
+     * also insets it
+     * */
     private void addDistance() {
 
         double dist = distanceToUser();

@@ -91,7 +91,6 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         prevBtnGrafic = getContext().getResources().getDrawable(R.drawable.ic_button_prev);
 
 
-
         // Navigation Button listners
         navNext.setOnClickListener(this);
         navPrev.setOnClickListener(this);
@@ -139,6 +138,10 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
         switch (v.getId()){
             case R.id.WriteTip_Navigation_next:
+                // noter
+                // statesList.size()-1) is the length of the stateList, just 0 indexed.
+                // (stateIndex + 1) is the assumed next page.
+                // so if the next page isent larger than the list, then change.
                 if( !((stateIndex + 1) > (statesList.size()-1))  ){
                     hideKeyboard();
                     viewPagerContent.setCurrentItem(++stateIndex,true);
@@ -146,6 +149,9 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
                 }
                 break;
             case R.id.WriteTip_Navigation_prev:
+                // noter
+                // (stateIndex ) is the current page.
+                // so if this page isent the first one
                 if( (stateIndex) > 0  ){
                     hideKeyboard();
                     viewPagerContent.setCurrentItem(--stateIndex,true);
@@ -168,10 +174,8 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
         boolean validated = true;
 
         //checks if message is empty or whitespace
-        if (
-//                viewModel.getCurrentTip() == null ||
-                        !(viewModel.getCurrentTip().getMessage().trim().length() > 0)
-        ) {
+        int textLength = viewModel.getTipCreateObject().getValue().getMessage().trim().length();
+        if (!(textLength > 0)) {
             validated = false;
         }
 
@@ -199,16 +203,17 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
      * */
     private void hideOrShowNextPrevButtons(){
         if(stateIndex == 0){
+            // if first page hide prev button icon
             navPrev.setCompoundDrawablesWithIntrinsicBounds(null, null, null , null);
             navNext.setCompoundDrawablesWithIntrinsicBounds(null, nextBtnGrafic, null , null);
         }else if(stateIndex == (statesList.size()-1) ){
+            // if last page hide next button icon
             navPrev.setCompoundDrawablesWithIntrinsicBounds(null, prevBtnGrafic, null , null);
             navNext.setCompoundDrawablesWithIntrinsicBounds(null, null, null , null);
         }else{
             navPrev.setCompoundDrawablesWithIntrinsicBounds(null, prevBtnGrafic, null , null);
             navNext.setCompoundDrawablesWithIntrinsicBounds(null, nextBtnGrafic, null , null);
         }
-
     }
 
 

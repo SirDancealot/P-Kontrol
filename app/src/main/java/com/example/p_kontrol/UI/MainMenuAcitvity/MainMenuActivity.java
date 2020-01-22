@@ -172,15 +172,8 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void menuBtn_FeedBack(){
 
-            Log.i("click", "Community btn clicked \n");
-
-            dialogFeedback.show(getSupportFragmentManager(), "closeFragment");
         Log.i("click","Community btn clicked \n");
         dialogFeedback.show(getSupportFragmentManager(), "closeFragment");
-
-            //Intent changeActivity = new Intent( this , ActivityFeedback.class);
-            //startActivity(changeActivity);
-
 
     }
 

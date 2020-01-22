@@ -20,10 +20,9 @@ import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
  * */
 public class WriteTipState_Type extends AbstractWriteTipState implements View.OnClickListener {
 
-    String TAG = "WriteTip STATE WriteText ";
+    String TAG = this.getClass().getName();
 
     View view;
-    LinearLayout bagground;
     LiveDataViewModel viewModel;
     Button btnFreePark, btnPaidPark, btnWarning;
     int activeButtonid = 0;
@@ -38,7 +37,6 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         view        = inflater.inflate(R.layout.fragment_write_tip_state_type, container, false);
         btnFreePark = view.findViewById(R.id.WriteTip_TipCategory_free);
         btnPaidPark = view.findViewById(R.id.WriteTip_TipCategory_paid);
@@ -55,7 +53,7 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
     @Override
     public void onClick(View v) {
 
-        dto = viewModel.getCurrentTip();
+        dto = viewModel.getTipCreateObject().getValue();
         if(dto == null){
             dto = new TipDTO();
         }
@@ -78,7 +76,7 @@ public class WriteTipState_Type extends AbstractWriteTipState implements View.On
                 updateActiveButton();
                 break;
         }
-        viewModel.setCurrentTip(dto);
+        viewModel.setTipCreateObject(dto);
 
     }
 

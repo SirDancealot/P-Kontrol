@@ -26,7 +26,7 @@ public class StateParking extends State {
     Activity context;
 
     //Alert
-    int time = 1200000;//20 min
+    int time = 1200000;//20 min //todo getData from a class somewhere.
     MediaPlayer m;
 
     LatLng currentLocation;

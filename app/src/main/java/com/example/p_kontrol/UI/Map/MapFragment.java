@@ -101,7 +101,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
             mapFragment = SupportMapFragment.newInstance();
             ft.replace(R.id.mainMenu_mapfragment, mapFragment).commit();
         }
-        viewModel.getCurrentLocation().setValue(new LatLng(DEFAULT_LOCATION.latitude, DEFAULT_LOCATION.longitude));
+        viewModel.setCurrentLocation(new LatLng(DEFAULT_LOCATION.latitude, DEFAULT_LOCATION.longitude));
         mapFragment.getMapAsync(this);
         return view;
     }
@@ -124,8 +124,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         setStateStandby();
         currentState.centerMethod();
         map.setOnCameraIdleListener(() -> {
-            viewModel.getCurrentWindowLocation().setValue(map.getCameraPosition().target);
-            viewModel.getCurrentWindowZoom().setValue(map.getCameraPosition().zoom);
+            viewModel.setCurrentWindowLocation(map.getCameraPosition().target);
+            viewModel.setCurrentWindowZoom(map.getCameraPosition().zoom);
         });
     }
 
@@ -216,7 +216,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            viewModel.getCurrentLocation().setValue(new LatLng(location.getLatitude(),location.getLongitude()));
+                            viewModel.setCurrentLocation(new LatLng(location.getLatitude(),location.getLongitude()));
                         }
                     }
                 });
@@ -288,7 +288,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
                         @Override
                         public void onSuccess(Location location) {
 
-                            viewModel.getCurrentLocation().setValue(new LatLng(location.getLatitude(), location.getLongitude()));
+                            viewModel.setCurrentLocation(new LatLng(location.getLatitude(), location.getLongitude()));
                             /*
                             if (location != null) {
                                 mLastKnownLocation = new LatLng(location.getLatitude(),location.getLongitude());

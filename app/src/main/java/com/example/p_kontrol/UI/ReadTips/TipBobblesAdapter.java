@@ -19,18 +19,12 @@ import java.util.List;
  * */
 public class TipBobblesAdapter extends FragmentPagerAdapter {
 
-    // Defaults
-    final int TIP_SHORT_MAX_LENGTH = 250;
-
-    // Argument Keys
-    final String BOBBLE_INDEX = "bobbleTip_index";
-    final String TAG = "TipAdapter";
-
-
+    final String TAG = this.getClass().getName();
 
     // Variables
-    IFragmentOperator fragmentOperator;
-    LiveData<List<ITipDTO>> tips;
+    private IFragmentOperator fragmentOperator;
+    private LiveData<List<ITipDTO>> tips;
+
     /**
      * @responsibilty to be the adapter of a list of tips, and update self on list changes.
      *

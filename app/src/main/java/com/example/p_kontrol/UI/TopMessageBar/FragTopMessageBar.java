@@ -13,17 +13,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.p_kontrol.R;
-
+/**
+ * @responsibility to display information in a bar in the top
+ * */
 public class FragTopMessageBar extends Fragment implements IFragTopMessageBar{
 
     // Views from Fragment
-    int ALPHA = 255;
     View view,layout;
     ImageView image;
     TextView header, subtitle;
 
     boolean isShown;
-
+    /**
+     * @responsibility to display information in a bar in the top
+     * */
     public FragTopMessageBar() {
         // Required empty public constructor
     }
@@ -52,16 +55,19 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar{
     // Interface
 
     // open Close.
+    /**     @inheritDoc     */
     @Override
     public void show() {
         isShown = true;
         layout.setVisibility(View.VISIBLE);
     }
+    /**     @inheritDoc     */
     @Override
     public void hide() {
         isShown = false;
         layout.setVisibility(View.GONE);
     }
+    /**     @inheritDoc     */
     @Override
     public void toogle() {
         if(isShown){
@@ -70,6 +76,7 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar{
             show();
         }
     }
+    /**     @inheritDoc     */
     @Override
     public boolean isShown() {
         return isShown;
@@ -77,22 +84,27 @@ public class FragTopMessageBar extends Fragment implements IFragTopMessageBar{
 
 
     // data
+    /**     @inheritDoc     */
     @Override
     public void setHeader(String text) {
         header.setText(text);
     }
+    /**     @inheritDoc     */
     @Override
     public void setSubtitle(String text) {
         subtitle.setText(text);
     }
+    /**     @inheritDoc     */
     @Override
     public void setImage(int imageId) {
         image.setImageResource(imageId);
     }
+    /**     @inheritDoc     */
     @Override
     public void setImage(Drawable newImage) {
         image.setImageDrawable(newImage);
     }
+    /**     @inheritDoc     */
     @Override
     public void setBackgroundColor(int color, float alpha ) {
 

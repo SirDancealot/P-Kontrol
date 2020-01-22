@@ -34,9 +34,8 @@ public class StateSelectLocation extends State {
         super(parent);
         map.clear();
 
-        LatLng cameraLocation = map.getCameraPosition().target;
-
         // Setting marker to location in the center of the map.
+        LatLng cameraLocation = map.getCameraPosition().target;
         map.addMarker(new MarkerOptions().position(cameraLocation));
 
         // initiating the new tip object in the ViewModel.

@@ -74,12 +74,12 @@ abstract public class State  {
                         if (location != null) {
                             result = new LatLng(location.getLatitude(),location.getLongitude());
                         }
-                        viewModel.getCurrentLocation().setValue(result);
+                        viewModel.setCurrentLocation(result);
                         animeCamara(result);
 
                     } else {
                         // if location cannot be found.
-                        viewModel.getCurrentLocation().setValue( parent.DEFAULT_LOCATION );
+                        viewModel.setCurrentLocation( parent.DEFAULT_LOCATION );
                         animeCamara( parent.DEFAULT_LOCATION );
                     }
                 }

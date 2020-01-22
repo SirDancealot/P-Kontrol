@@ -36,49 +36,40 @@ public class YesNoDialogFragment extends DialogFragment {
 
         if( dialogType == 0) {
 
-            builder.setTitle(R.string.close_frag_title0)
-            /*.setMessage("")*/;
-
+            builder.setTitle(R.string.close_frag_title0);
             builder.setPositiveButton(R.string.close_frag_confirm, ((dialog, which) -> {
                 caller.finish();
                 System.exit(0);
             }));
-
             builder.setNegativeButton(R.string.close_frag_deny, ((dialog, which) -> {
                 dialog.cancel();
             }));
+
         } else if (dialogType == 1){
 
-            builder.setTitle(R.string.close_frag_title1)
-            /*.setMessage("")*/;
-
+            builder.setTitle(R.string.close_frag_title1);
             builder.setPositiveButton(R.string.close_frag_confirm, ((dialog, which) -> {
-                // todo remove user data
+
                 caller.finish();
                 System.exit(0);
             }));
-
             builder.setNegativeButton(R.string.close_frag_deny, ((dialog, which) -> {
                 dialog.cancel();
             }));
+
         } else {
 
-            builder.setTitle(R.string.close_frag_title2)
-            /*.setMessage("")*/;
-
-            // our facebook grope
-            String id = "1057084904626319";
-
+            String facebookGroupId = "1057084904626319";
+            builder.setTitle(R.string.close_frag_title2);
             builder.setPositiveButton(R.string.close_frag_confirm, ((dialog, which) -> {
                 try {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://group/" + id));
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://group/" + facebookGroupId));
                     startActivity(i);
                 } catch (ActivityNotFoundException e) {
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/" + id));
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/" + facebookGroupId));
                     startActivity(i);
                 }
             }));
-
             builder.setNegativeButton(R.string.close_frag_deny, ((dialog, which) -> {
                 dialog.cancel();
             }));

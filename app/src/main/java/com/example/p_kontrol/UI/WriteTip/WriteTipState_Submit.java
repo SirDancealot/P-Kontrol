@@ -17,7 +17,7 @@ public class WriteTipState_Submit extends AbstractWriteTipState {
     View view;
 
     /**
-     *
+     * @inheritDoc
      * */
     public WriteTipState_Submit(IWriteTipStateListener listener) {
         super(listener);
@@ -26,7 +26,6 @@ public class WriteTipState_Submit extends AbstractWriteTipState {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_write_tip_state_submit, container, false);
         Button button = view.findViewById(R.id.WriteTip_SubmitButton);
 
