@@ -20,6 +20,8 @@ import com.example.p_kontrol.DataTypes.PVagtDTO;
 import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Feedback.ActivityFeedback;
 import com.example.p_kontrol.UI.LogIn.Activity_LoginScreen_01;
+import com.example.p_kontrol.UI.Map.StateFreePark;
+import com.example.p_kontrol.UI.Map.StateParking;
 import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.UserPersonalisation.ActivityProfile;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
@@ -394,9 +396,22 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
             mapOperator.setStateStandby();
             menuOperator.toggleMenuBtnContribute();
             showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
-
-
         }
+
+        if (mapOperator.getCurrentState() instanceof StateParking) {
+            Log.d(TAG, "onBackPressed: stateSelect");
+            mapOperator.setStateStandby();
+            menuOperator.toggleMenuBtnContribute();
+            showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+        }
+
+        if (mapOperator.getCurrentState() instanceof StateFreePark) {
+            Log.d(TAG, "onBackPressed: stateSelect");
+            mapOperator.setStateStandby();
+            menuOperator.toggleMenuBtnContribute();
+            showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
+        }
+
 
         else if ( fragmentOperator.isTipBobbleOpen()) {
             Log.d(TAG, "onBackPressed: viewPager");
