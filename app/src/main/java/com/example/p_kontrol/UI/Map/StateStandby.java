@@ -55,7 +55,7 @@ public class StateStandby extends State {
         if(list != null) {
             int i = 0;
             map.setOnMarkerClickListener(marker -> {
-                listener.onTipClick(Integer.parseInt(marker.getTitle()));
+                listener.onTipClick(marker.getTitle());
                 return true;
             });
             for (ITipDTO tip : list) {
@@ -79,6 +79,8 @@ public class StateStandby extends State {
                 markerOptions = pin.getMarker();
 
                 map.addMarker(markerOptions.position(new LatLng(tip.getL().getLatitude(), tip.getL().getLongitude())).title(String.valueOf(i++)));
+
+
             }
         }
     }

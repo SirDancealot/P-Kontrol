@@ -10,5 +10,5 @@ public interface IMapOperatorController{
      * implements interface IMapOperatorController.
      * to controll what happens when a Tip marker is clicked on the map.
      */
-    void onTipClick(int index);
+    void onTipClick(String index);
 }
