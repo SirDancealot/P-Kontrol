@@ -140,13 +140,16 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * */
     @Override
     public void toggleMenuBtnFreePark() {
-        if(stateFreePark){
+        if (stateFreePark) {
             menuBtn_FreePark.setBackgroundResource(R.color.color_pureWhite);
-        }else{
+        } else {
             menuBtn_FreePark.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
+            if (stateParking)
+                toggleMenuBtnParking();
+            if (contributeState)
+                toggleMenuBtnContribute();
         }
         stateFreePark = !stateFreePark;
-
     }
 
     /**
@@ -154,10 +157,14 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * */
     @Override
     public void toggleMenuBtnParking(){
-        if(stateParking){
+        if (stateParking) {
             menuBtn_Parking.setBackgroundResource(R.color.color_pureWhite);
-        }else{
+        } else {
             menuBtn_Parking.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
+            if (stateFreePark)
+                toggleMenuBtnFreePark();
+            if (contributeState)
+                toggleMenuBtnContribute();
         }
         stateParking = !stateParking;
 
@@ -167,13 +174,17 @@ class ComponentMenuOperator implements View.OnClickListener, IMenuOperator{
      * @inheritDoc
      * */
     @Override
-    public void toggleMenuBtnContribute(boolean open){
-        if(!open){
+    public void toggleMenuBtnContribute(){
+        if (contributeState) {
             menuBtn_Contribute.setBackgroundResource(R.color.color_pureWhite);
-        }else{
+        } else {
             menuBtn_Contribute.setBackgroundResource(R.drawable.shape_squarerounded_full_matwhite);
+            if (stateFreePark)
+                toggleMenuBtnFreePark();
+            if (stateParking)
+                toggleMenuBtnParking();
         }
-        contributeState = open;
+        contributeState = !contributeState;
         Log.i(TAG, "toggleMenuBtnContribute: ");
     }
 

@@ -250,7 +250,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
         if(stageOfProcess == 0){ // if were arent already in the process of creating a tip
             stageOfProcess = 1;
             createTip_Process(); // start the CreateTip Process at stage 0.
-            menuOperator.toggleMenuBtnContribute(true);
+            menuOperator.toggleMenuBtnContribute();
         }else{
             createTip_Process_cancel();
         }
@@ -348,7 +348,7 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
                 showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
                 break;
         }
-        menuOperator.toggleMenuBtnContribute(false);
+        menuOperator.toggleMenuBtnContribute();
         showTopMsgBar(R.drawable.ic_topmsgbar_readtip, getResources().getString(R.string.topbar_pTip_header), getResources().getString(R.string.topbar_pTip_subTitle));
         stageOfProcess = 0; // were not creating this .
     }

@@ -35,7 +35,7 @@ interface IMenuOperator{
     /**
      * Enables and Disables the Contribute state on the Menu
      * */
-    void toggleMenuBtnContribute(boolean open);
+    void toggleMenuBtnContribute();
 
     /**
      * is Used to disable all toggled menu Buttons

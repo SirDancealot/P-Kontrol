@@ -39,7 +39,8 @@ public class StateFreePark extends State {
         List<ITipDTO> tipList = liveDataTipList.getValue();
         liveDataTipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
-                updateMap(list);
+                if (parent.getCurrentState() instanceof StateFreePark)
+                    updateMap(list);
             }catch (NullPointerException e){
                 Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
             }

@@ -11,6 +11,7 @@ import com.example.p_kontrol.R;
 import com.example.p_kontrol.UI.Map.IMapFragmentListener;
 import com.example.p_kontrol.UI.Map.MapFragment;
 import com.example.p_kontrol.UI.Map.State;
+import com.example.p_kontrol.UI.Map.StateSelectLocation;
 import com.example.p_kontrol.UI.ViewModelLiveData.LiveDataViewModel;
 /**
  * @responsibilty to contain all the responsibility for initiating, knowing, and using the map.
@@ -127,7 +128,10 @@ class ComponentMapOperator implements IMapOperator   {
      * */
     @Override
     public void setStateSelection() {
-        mapFragment.setStateSelectLocation();
+        if (mapFragment.getCurrentState() instanceof StateSelectLocation)
+            mapFragment.setStateStandby();
+        else
+            mapFragment.setStateSelectLocation();
     }
     /**
      * @inheritDoc

@@ -50,7 +50,10 @@ public class StateParking extends State {
         //Data
         LiveDataViewModel model = ViewModelProviders.of(parent.getActivity()).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
-        model.getPvagtList().observe(parent, pVagtList -> updatePVagter(pVagtList));
+        model.getPvagtList().observe(parent, pVagtList -> {
+            if (parent.getCurrentState() instanceof StateParking)
+                updatePVagter(pVagtList);
+        });
 
         //Pin
         Pins pin = Pins.parkingSpot;

@@ -36,7 +36,8 @@ public class StateStandby extends State {
 
         tipList.observe(parent.getViewLifecycleOwner(), list -> {
             try {
-                updateMap(list);
+                if (parent.getCurrentState() instanceof StateStandby)
+                    updateMap(list);
             } catch (NullPointerException e) {
                 Log.i(TAG, "CompositionFragmentOperator: Null pointer, adapter for tips was null");
             }
