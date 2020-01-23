@@ -106,6 +106,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
         return view;
     }
 
+    // code taken from taken from:
+    //https://developers.google.com/maps/documentation/android-sdk/start
     @Override
     public void onMapReady(GoogleMap googleMap){
         map = googleMap;
@@ -277,6 +279,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback , IMapFr
     /**
      * is a way to pass permission to GoogleMap Object .
      * */
+    // code taken from taken from:
+    //https://developers.google.com/maps/documentation/android-sdk/start
     private void getPermission() {
         if (ContextCompat.checkSelfPermission( (context).getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
