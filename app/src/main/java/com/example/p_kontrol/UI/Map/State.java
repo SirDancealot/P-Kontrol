@@ -23,6 +23,8 @@ import java.util.List;
 /**
  * @responsibilty act as a base type and implementation for all states
  * */
+// code taken from taken from:
+//https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
 abstract public class State  {
 
     // Defaults.

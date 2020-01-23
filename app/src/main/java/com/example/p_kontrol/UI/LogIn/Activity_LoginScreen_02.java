@@ -85,6 +85,9 @@ public class Activity_LoginScreen_02 extends AppCompatActivity implements View.O
         }
     };
 
+    // code taken from taken from:
+    //https://firebase.google.com/docs/auth/android/google-signin
+    //https://firebase.google.com/docs/auth/android/facebook-login
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
