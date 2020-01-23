@@ -86,7 +86,7 @@
     <string name="close_frag_deny">No</string>
     <string name="close_frag_title0">Close the app?</string>
     <string name="close_frag_title1">Delete all your personal data, it can\'t be restored?</string>
-    <string name="close_frag_title2">Go to our facebook group and give os feedback!</string>
+    <string name="close_frag_title2">Go to our facebook page and give os feedback!</string>
 
     <string name="feedback_choose_category">Choose Category</string>
     <string name="feedback_title">Please provide us with feedback!</string>

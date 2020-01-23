@@ -2,6 +2,7 @@ package com.example.p_kontrol.UI.Map;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
+import android.os.Handler;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -48,12 +49,16 @@ public class StateParking extends State {
         // MediaPlayer
         m = MediaPlayer.create(context, R.raw.alarm);
 
+        Handler handler = new Handler();
+
         //Data
         LiveDataViewModel model = ViewModelProviders.of(parent.getActivity()).get(LiveDataViewModel.class);
         currentLocation = viewModel.getCurrentLocation().getValue();
         model.getPvagtList().observe(parent, pVagtList -> {
-            if (parent.getCurrentState() instanceof StateParking)
-                updatePVagter(pVagtList);
+            handler.postDelayed(()->{
+                if (parent.getCurrentState() instanceof StateParking)
+                    updatePVagter(pVagtList);
+            }, 100);
         });
 
         //Pin
