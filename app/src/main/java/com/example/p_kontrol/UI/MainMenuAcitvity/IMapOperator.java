@@ -9,7 +9,6 @@ import com.example.p_kontrol.UI.Map.State;
  * */
 interface IMapOperator{
 
-    // todo remove form here and set this functionality into each state.
     void visibilityOfInteractBtns(int visibility);
 
     // Google Map Specifics

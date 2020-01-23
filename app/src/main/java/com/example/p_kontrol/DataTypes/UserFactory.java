@@ -12,7 +12,7 @@ public class UserFactory {
 
     public void setUser(FirebaseUser user) {
         dto = new UserInfoDTO();
-        //dto.setToken(user.getIdToken(true)); TODO is token required
+        //dto.setToken(user.getIdToken(true));
         if(user.getDisplayName() != null){
             if( user.getDisplayName().split(" ").length > 1) {
                 dto.setFirstName(user.getDisplayName().split(" ")[0]);

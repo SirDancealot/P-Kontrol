@@ -169,8 +169,6 @@ public class FragMessageWrite extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onMessageSubmit(){
-
-        // todo check Message for syntax Errors
         boolean validated = true;
 
         //checks if message is empty or whitespace

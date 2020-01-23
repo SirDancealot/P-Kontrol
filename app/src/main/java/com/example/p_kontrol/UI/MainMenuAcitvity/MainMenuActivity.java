@@ -209,9 +209,6 @@ public  class MainMenuActivity extends AppCompatActivity implements IMenuOperati
     @Override
     public void menuBtn_PVagt(){
 
-        // todo create a TopMsgBar get Status, that returns the image and texts or saves em somewhow,
-        // todo such that it can be returned to that after the thank you notice.
-
         Log.i("click","P-Vagt btn clicked \n");
 
         //report pVagt at current location

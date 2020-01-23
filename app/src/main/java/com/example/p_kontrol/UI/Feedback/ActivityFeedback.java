@@ -30,8 +30,6 @@ public class ActivityFeedback extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
-        //TODO This links to "DTU - brugte bøger", change this to the id in the addressbar of the desired group.
         navToFacebookPage(facebookGroupId);
     }
 

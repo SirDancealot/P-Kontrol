@@ -63,7 +63,7 @@ class ComponentMapOperator implements IMapOperator   {
         mapView_acceptBtn = view.findViewById(R.id.mainMenu_map_acceptBtn);
         mapView_cancelBtn = view.findViewById(R.id.mainMenu_map_cancelBtn);
         mapView_btnContainerAceptCancel = view.findViewById(R.id.mainMenu_acceptCancelContainer);
-        mapView_btnContainerAceptCancel.setVisibility(View.GONE); // todo move this into the individual state.
+        mapView_btnContainerAceptCancel.setVisibility(View.GONE);
 
         //map listener for clicking on a tip
         mapListener = new IMapFragmentListener() {
@@ -179,9 +179,6 @@ class ComponentMapOperator implements IMapOperator   {
         centerOnUserLocation();
     }
 
-
-    //todo move into States. Obs! its called in MainMenuActivity
-    // also remove from interface.
     @Override
     public void visibilityOfInteractBtns(int visibility){
         mapView_btnContainerAceptCancel.setVisibility(visibility);

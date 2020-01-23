@@ -46,8 +46,6 @@ public class StateFreePark extends State {
             }
         } );
 
-        // todo ViewModel Se Her
-        //viewModel.updateTips(null); //TODO might be redundant with service db
         updateMap(tipList);
     }
 

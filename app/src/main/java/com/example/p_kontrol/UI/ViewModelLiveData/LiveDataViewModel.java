@@ -132,7 +132,7 @@ public class LiveDataViewModel extends ViewModel {
     public void setTipCreateObject(ITipDTO tipCreateObject) {
         this.tipCreateObject.setValue(tipCreateObject);
     }
-    public LiveData<ITipDTO> getTipCreateObject() { //TODO make getter and let this
+    public LiveData<ITipDTO> getTipCreateObject() {
         Log.d(TAG, "getTipCreateObject: " + this);
         if (tipCreateObject == null) {
             tipCreateObject = new MutableLiveData<>();

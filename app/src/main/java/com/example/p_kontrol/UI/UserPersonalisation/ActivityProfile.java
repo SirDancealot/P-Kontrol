@@ -65,7 +65,6 @@ public class ActivityProfile extends AppCompatActivity implements View.OnClickLi
         }
         if (v == btn_deleteData) {
             dialogDelete.show(getSupportFragmentManager(), "closeFragment");
-            // todo btn_deleteData all user data
         }
         if (v == btn_logout){
             UserFactory.getFactory().setDto(null);

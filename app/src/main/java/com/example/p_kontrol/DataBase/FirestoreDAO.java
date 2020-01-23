@@ -98,7 +98,7 @@ public class FirestoreDAO extends Service implements IDatabase {
 
     // Users
     @Override
-    public void getUser(String id, UserFactory factory, FirebaseUser user) { // TODO implement get user
+    public void getUser(String id, UserFactory factory, FirebaseUser user) {
         users.document(id).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 factory.setDto(documentSnapshot.toObject(UserInfoDTO.class));
@@ -110,12 +110,12 @@ public class FirestoreDAO extends Service implements IDatabase {
     }
 
     @Override
-    public void createUser(UserInfoDTO user) { // TODO implement create user
+    public void createUser(UserInfoDTO user) {
         users.document(user.getUid()).set(user, SetOptions.merge());
     }
 
     @Override
-    public void updateUser(UserInfoDTO user, String id) { // TODO implement update user
+    public void updateUser(UserInfoDTO user, String id) {
 
     }
 
@@ -239,7 +239,7 @@ public class FirestoreDAO extends Service implements IDatabase {
             collection.document(s).get().addOnSuccessListener(documentSnapshot -> {
                 T DTO = documentSnapshot.toObject(typeClass);
 
-                List<I> temp = targetList.getValue();//TODO make this thread safe
+                List<I> temp = targetList.getValue();
                 if (temp != null && DTO != null) {
                     temp.add(DTO);
                     targetList.postValue(temp);
